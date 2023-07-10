@@ -14,6 +14,7 @@ function App() {
       setMessage(data?.message || "");
     })();
   }, []);
+  
   return (
     <div className="App">
       <header className="App-header">
