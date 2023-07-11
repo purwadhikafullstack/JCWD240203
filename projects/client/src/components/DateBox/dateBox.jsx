@@ -60,9 +60,15 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
         onFocus={handleBoxFocus}
         onBlur={handleBoxBlur}
         value={selectedDateString}
+        
         InputProps={{
           classes: {
             input: "selected-date font-bold text-base text-black",
+            inputAdornedEnd: "center-text",
+            adornedEnd: "center-text",
+          },
+          inputProps: {
+            style: { textAlign: "center" },
           },
         }}
       />
