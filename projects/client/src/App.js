@@ -1,7 +1,8 @@
 import axios from "axios";
-import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -14,9 +15,9 @@ function App() {
       setMessage(data?.message || "");
     })();
   }, []);
-  
+ 
   return (
-    <div className="App">
+    <div className="App h-[100vh]">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         {message}
