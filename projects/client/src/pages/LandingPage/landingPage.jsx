@@ -50,17 +50,17 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </div>
-                <div className="secondCard px-48">
-                    <div className="trending font-bold mr-[840px] mb-0 mt-4">
+                <div className="secondCard">
+                    <div className="trending font-bold">
                         Trending stays in Indonesia
                     </div>
-                    <div className="these mr-[830px] mb-4">
+                    <div className="these mb-4">
                         These homes get lots attention on Rentify
                     </div>
-                    <div className="flex justify-between px-42 ">
+                    <div className="flex justify-between overflow-x-auto">
                         <div className="firstStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
                             <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-735147908258997419/original/13568434-8d18-4df7-be11-bff6fa96cffd.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
+                                <img alt="" src="https://a0.muscache.com/im/pictures/miso/Hosting-735147908258997419/original/13568434-8d18-4df7-be11-bff6fa96cffd.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
                             </div>
                             <div className="mt-44">
                                 <div className=" mt-40 pr-50 mr-8">
@@ -84,7 +84,7 @@ export default function LandingPage() {
                         </div>
                         <div className="secondStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
                             <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-864375016616936486/original/13e714f8-d3f7-4ca2-9811-a929972fb5e3.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
+                                <img alt="" src="https://a0.muscache.com/im/pictures/miso/Hosting-864375016616936486/original/13e714f8-d3f7-4ca2-9811-a929972fb5e3.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
                             </div>
                             <div className="mt-44">
                                 <div className=" mt-40 pr-50 mr-8">
@@ -108,7 +108,7 @@ export default function LandingPage() {
                         </div>
                         <div className="thirdStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
                             <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/08c599eb-f428-4cfd-a48a-2e1eda6166cd.jpg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
+                                <img alt="" src="https://a0.muscache.com/im/pictures/08c599eb-f428-4cfd-a48a-2e1eda6166cd.jpg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
                             </div>
                             <div className="mt-44">
                                 <div className=" mt-40 pr-50 mr-8">
@@ -132,7 +132,7 @@ export default function LandingPage() {
                         </div>
                         <div className="fourthStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
                             <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-49887950/original/bb12ab53-2432-4f4c-8e7d-5c7b61f89047.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
+                                <img alt="" src="https://a0.muscache.com/im/pictures/miso/Hosting-49887950/original/bb12ab53-2432-4f4c-8e7d-5c7b61f89047.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
                             </div>
                             <div className="mt-44">
                                 <div className=" mt-40 pr-50 mr-8">
@@ -157,6 +157,7 @@ export default function LandingPage() {
                     </div>
                 </div>
             </main>
+            <Footer/>
         </div>
     )
 }

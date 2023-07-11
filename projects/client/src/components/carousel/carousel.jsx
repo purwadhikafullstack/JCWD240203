@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import "./carousel.css"; 
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx'
-import CardBooking from "../cardBooking/cardBooking";
 
 
 

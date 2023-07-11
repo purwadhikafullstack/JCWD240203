@@ -1,47 +1,33 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux"
-import {
-    GlobeAltIcon,
-    SearchIcon,
-    UsersIcon,
-} from '@heroicons/react/24/outline';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-// import { logout } from "../../redux/features/Login/LoginSlice";
-import {
-    MinusCircleIcon,
-    PlusCircleIcon,
-    UserCircleIcon,
-} from '@heroicons/react/24/solid';
 import rentifyLogo from "../assets/icons/rentifyLogo.png"
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { DateRangePicker } from "react-date-range";
 
 export default function Header({ placeholder }) {
-    const [searchInput, setSearchInput] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [numberOfGuests, setNumberOfGuests] = useState(1);
+    //const [searchInput, setSearchInput] = useState("");
+    //const [startDate, setStartDate] = useState(new Date());
+    //const [endDate, setEndDate] = useState(new Date());
+    //const [numberOfGuests, setNumberOfGuests] = useState(1);
     const [active, setActive] = useState(false);
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
     // const router = useRouter();
-    const selectionRange = {
-        startDate: startDate,
-        endDate: endDate,
-        key: "selection",
-    };
+    // const selectionRange = {
+    //     startDate: startDate,
+    //     endDate: endDate,
+    //     key: "selection",
+    // };
     // const currentUser = useSelector((state) => state.Login.name);
-    const call = useDispatch();
+    //const call = useDispatch();
 
     // const onLogout = () => {
     //     call(logout())
 
     // }
-        function handleSelect(ranges) {
-            setStartDate(ranges.selection.startDate);
-            setEndDate(ranges.selection.endDate);
-        }
+        // function handleSelect(ranges) {
+        //     setStartDate(ranges.selection.startDate);
+        //     setEndDate(ranges.selection.endDate);
+        // }
         // function search() {
         //     setSearchInput("");
         //     router.push({
@@ -60,7 +46,7 @@ export default function Header({ placeholder }) {
                 <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-b bg-white p-4  shadow-md md:px-6  border-gray-500">
                     {/* Left Header */}
                     <div>
-                        <img src={rentifyLogo} className="hidden h-32 w-36 md:inline-flex" />
+                        <img alt="" src={rentifyLogo} className="hidden h-32 w-36 md:inline-flex" />
                     </div>
 
                     {/* Right Header */}
