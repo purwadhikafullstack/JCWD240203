@@ -2,6 +2,8 @@ import axios from "axios";
 import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
+import {Routes, Route} from 'react-router-dom'
+import LandingPage from "./pages/LandingPage/landingPage";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -17,10 +19,14 @@ function App() {
   
   return (
     <div className="App">
-      <header className="App-header">
+
+      <Routes>
+      <Route path={'/test'} element={<LandingPage/>} />
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         {message}
-      </header>
+      </header> */}
+      </Routes>
     </div>
   );
 }
