@@ -3,7 +3,7 @@ import "./App.css";
 import logo from "./logo.svg"
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
+import LandingPage from "./pages/LandingPage/landingPage";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -18,11 +18,11 @@ function App() {
   }, []);
  
   return (
-    <div className="App h-[100vh]">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {message}
-      </header>
+    <div className="App">
+
+      <Routes>
+        <Route path={'/'} element={<LandingPage/>} />
+      </Routes>
     </div>
   );
 }
