@@ -17,8 +17,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   price.init({
     roomId: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
-    duration: DataTypes.STRING
+    percentage: DataTypes.INTEGER,
+    start: DataTypes.DATE,
+    end: DataTypes.DATE,
+    type: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'price',

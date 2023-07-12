@@ -10,12 +10,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
+import { Button } from "@mui/material";
 import { Toaster, toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { onRegister } from '../../redux/features/user/userSlice'
 
 export default function RegisterPage() {
-    const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
     const call = useDispatch();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -24,11 +25,16 @@ export default function RegisterPage() {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowRepeat = () => setShowRepeat((show) => !show);
 
+    const handleClose = () => {
+        setShowRegister(false);
+        register.resetForm();
+    }
+
     const validate = (values) => {
         const error = {};
         
-        if(!values.name) {
-            error.name = 'Required !'
+        if(!values.username) {
+            error.username = 'Required !'
         }
 
         if(!values.email) {
@@ -54,7 +60,7 @@ export default function RegisterPage() {
 
     const register = useFormik({
         initialValues: {
-            name: '',
+            username: '',
             email: '',
             password: '',
             repeatPassword: ''
@@ -64,32 +70,42 @@ export default function RegisterPage() {
             register.setSubmitting(true)
             const loading = toast.loading('Registering User !')
             call(onRegister({
-                name: values.name,
+                username: values.username,
                 email: values.email,
                 password: values.password,
             })).then(
                 (response) => {
                     toast.success(response.message, {id: loading});
-                    register.setSubmitting(false);
+                    register.resetForm();
                 },
                 (error) => {
-                    toast.error('unable to register', {id: loading});
-                    console.log(error);
-                    register.setSubmitting(false);
+                    if(!error.response.data) {
+                        toast.error('network error !', {id: loading});
+                    }
+                    else if(!Array.isArray(error.response.data.message)) {
+                        toast.error(error.response.data.message, {id: loading});
+                    }
+                    else {
+                        toast.dismiss();
+                        error.response.data.message.map(value => {
+                            return toast.error(value.msg);
+                        });
+                    }
                 }
             )
+            register.setSubmitting(false);
         }
     })
     
     return(
         <div className="h-full ">
-            <div onClick={() => setShowLogin(!showLogin)} className="relative z-10">
-                show login
+            <div onClick={() => setShowRegister(!showRegister)} className="relative z-10">
+                show register
             </div>
-            <div className={`${showLogin? '' : 'hidden'} top-0 absolute flex justify-center items-center bg-gray-400/80 w-full h-full`}>
+            <div className={`${showRegister? '' : 'hidden'} top-0 absolute flex justify-center items-center bg-gray-400/80 w-full h-full`}>
                 <Toaster/>
                 <div className="flex flex-col relative justify-between items-center rounded-[10px] gap-[10px] w-full h-[500px] md:w-[450px] md:h-[450px] bg-gray-200 py-[10px] removeScroll overflow-y-auto">
-                    <div onClick={() => setShowLogin(false)} className="absolute top-[20px] left-[20px] cursor-pointer bg-transparent transition-all duration-400 hover:bg-gray-300 active:animate-ping rounded-full">
+                    <div onClick={handleClose} className="absolute flex justify-center items-center p-[5px] top-[20px] left-[20px] cursor-pointer bg-transparent transition-all duration-400 hover:bg-gray-300 active:animate-ping rounded-full">
                         <CloseIcon sx={{scale: '1.4'}}/>
                     </div>
                     <div className="w-full py-[10px] border-b-[1px] border-gray-400 text-[20px]">
@@ -100,9 +116,9 @@ export default function RegisterPage() {
                             Welcome to Rentify !
                         </div>
                         <div>
-                            <TextField id="name" onBlur={register.handleBlur} onChange={register.handleChange} value={register.values.name} label="Name" size="small" className="w-full" autoComplete="off"/>
+                            <TextField id="username" onBlur={register.handleBlur} onChange={register.handleChange} value={register.values.username} label="Username" size="small" className="w-full" autoComplete="off"/>
                             <div className='text-[12px] text-start'>
-                                {(register.touched.name && register.errors.name)? <div className="text-red-600 h-[15px]">{register.errors.name}</div> : <div className="h-[15px]">&nbsp;</div>}
+                                {(register.touched.username && register.errors.username)? <div className="text-red-600 h-[15px]">{register.errors.username}</div> : <div className="h-[15px]">&nbsp;</div>}
                             </div>
                         </div>
                         <div>
@@ -122,13 +138,12 @@ export default function RegisterPage() {
                                 type={showPassword ? 'text' : 'password'}
                                 endAdornment={
                                     <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
+                                        <IconButton
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
                                     </InputAdornment>
                                 }
                                 label="Password"
@@ -150,7 +165,6 @@ export default function RegisterPage() {
                                 endAdornment={
                                     <InputAdornment position="end">
                                     <IconButton
-                                        aria-label="toggle password visibility"
                                         onClick={handleClickShowRepeat}
                                         edge="end"
                                     >
@@ -166,9 +180,9 @@ export default function RegisterPage() {
                             </div>
                         </div>
                         <div>
-                            <button disabled={register.isSubmitting} onClick={register.handleSubmit} className="bg-green-600 text-center w-[250px] h-[40px] rounded-[5px] transition-all duration-200 hover:bg-green-700 active:bg-green-800 active:scale-95">
-                                Sign Up !
-                            </button>
+                            <Button disabled={register.isSubmitting} onClick={register.handleSubmit} variant="contained" color="success" fullWidth sx={{height: '40px'}}>
+                                Log In
+                            </Button>
                         </div>
                     </div>
                 </div>
