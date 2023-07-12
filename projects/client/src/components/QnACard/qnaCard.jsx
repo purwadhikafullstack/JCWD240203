@@ -13,7 +13,7 @@ const QnaCard = ({ question, answer }) => {
       <div className="flex justify-between items-center">
         <div className="question flex items-center gap-10 text-lg cursor-pointer" onClick={toggleAnswer}>
           <div className="mr-4">{question}</div>
-          <div className="arrow-icon">
+          <div className="arrow-icon items-end">
             {showAnswer ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </div>
         </div>

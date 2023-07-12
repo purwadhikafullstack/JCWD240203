@@ -5,17 +5,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Gayathri:wght@700&family=Roboto+Flex&display=swap');
 
 .experience {
-    font-family: 'Darker Grotesque', sans-serif;  
-    font-size: 42px; 
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 42px;
 }
 
 .over {
-    font-family: 'Darker Grotesque', sans-serif;   
+    font-family: 'Darker Grotesque', sans-serif;
     font-size: 40px;
 }
 
 .utilize {
-    font-family: 'Darker Grotesque', sans-serif;   
+    font-family: 'Darker Grotesque', sans-serif;
     font-size: 40px;
 }
 
@@ -44,12 +44,11 @@
     padding: 48px;
     display: flex;
     justify-content: space-between;
-  }
-  
-  .qnaCard .text-6xl {
+}
+
+.qnaCard .text-6xl {
     font-weight: 600;
     margin-bottom: 10px;
     margin-left: 4px;
     text-align: left;
-  }
-  
+}
