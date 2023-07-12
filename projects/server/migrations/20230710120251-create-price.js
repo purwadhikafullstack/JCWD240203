@@ -12,10 +12,16 @@ module.exports = {
       roomId: {
         type: Sequelize.INTEGER
       },
-      price: {
+      percentage: {
         type: Sequelize.INTEGER
       },
-      duration: {
+      start: {
+        type: Sequelize.DATE
+      },
+      end: {
+        type: Sequelize.DATE
+      },
+      type: {
         type: Sequelize.STRING
       },
       createdAt: {
