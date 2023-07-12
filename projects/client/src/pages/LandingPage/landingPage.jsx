@@ -4,7 +4,9 @@ import Footer from "../../components/footerRentify/footerPage";
 import { HiOutlineShieldCheck } from 'react-icons/hi'
 import { BiHomeHeart } from 'react-icons/bi'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
+import { IoIosArrowDown } from 'react-icons/io'
 import './landingPage.css'
+import QnaCard from "../../components/QnACard/qnaCard";
 
 
 
@@ -12,7 +14,6 @@ export default function LandingPage() {
     return (
         <div className="w-full h-[100%] bg-white">
             <Header />
-
             <Banner />
             <main className="bg-white w-full mx-auto mt-28">
                 <div className="firstCard flex justify-between px-48 mb-40">
@@ -50,7 +51,7 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </div>
-                <div className="secondCard px-48">
+                <div className="propertyCard px-48">
                     <div className="trending font-bold mr-[840px] mb-0 mt-4">
                         Trending stays in Indonesia
                     </div>
@@ -154,6 +155,40 @@ export default function LandingPage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div>
+                    <button className="exploreButton px-[50px] py-[8px] mt-8 mb-20 text-2xl font-sans rounded-[10px] border-solid border-2 border-black bg-white text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                        Explore more
+                    </button>
+                </div>
+                <div className="qnaCard px-48 py-4 justify-between flex">
+                    <div>
+                        <div className="text-6xl font-semibold mb-10 ml-4 text-left">
+                            Your questions, answered
+                        </div>
+                    </div>
+                    <div className="text-left">
+                        <QnaCard
+                            question="What is Rentify and how does it work?"
+                            answer="We verify personal profiles and listings to make sharing easy, enjoyable, and safe for millions of Hosts and travelers worldwide. Find out more about Rentify."
+                        />
+                        <QnaCard
+                            question="How do I use search filters?"
+                            answer="It’s easy to use our search filters to only show the listings that have the features you need. Learn more about using search filters and discover more flexible ways to search."
+                        />
+                        <QnaCard
+                            question="Do I need to meet my Host?"
+                            answer="Options like self check-in or booking an entire home allow you to interact with your Host mainly through in-app messaging—you can message them anytime if something comes up."
+                        />
+                        <QnaCard
+                            question="What if I need to cancel due to a problem with the listing or Host?"
+                            answer="In most cases, you can resolve any issues directly by messaging your host. If they can't help, simply contact Airbnb within 24 hours of discovering the issue."
+                        />
+                        <QnaCard
+                            question="Need more information?"
+                            answer="Visit our Help Center to get additional answers to your questions"
+                        />
                     </div>
                 </div>
             </main>

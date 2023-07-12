@@ -21,7 +21,7 @@ function App() {
     <div className="App">
 
       <Routes>
-      <Route path={'/test'} element={<LandingPage/>} />
+      <Route path={'/'} element={<LandingPage/>} />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         {message}

@@ -39,3 +39,17 @@
 .desc1 {
     font-size: 16px;
 }
+
+.qnaCard {
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .qnaCard .text-6xl {
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-left: 4px;
+    text-align: left;
+  }
+  
