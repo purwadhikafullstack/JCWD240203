@@ -181,7 +181,7 @@ export default function RegisterPage() {
                         </div>
                         <div>
                             <Button disabled={register.isSubmitting} onClick={register.handleSubmit} variant="contained" color="success" fullWidth sx={{height: '40px'}}>
-                                Log In
+                                Sign Up
                             </Button>
                         </div>
                     </div>
