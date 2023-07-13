@@ -30,9 +30,9 @@ const propertySlice = createSlice({
 
 export const getProperty = () => async(dispatch) => {
     try {
-        const response = axios.get(`${API}/properties?location=${initialState.location}&&start=${initialState.start}&&end=${initialState.end}`);
+        const response = await axios.get(`${API}/properties?location=${initialState.location}&&start=${initialState.start}&&end=${initialState.end}`);
 
-        dispatch(setProperty(response));
+        dispatch(setProperty(response.data.data));
         return Promise.resolve(response);
     }
     catch(error) {

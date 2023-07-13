@@ -1,5 +1,7 @@
 const db = require('../../models');
 const property = db.property;
+const propertyImages = db.propertyImages;
+const category = db.category;
 const room = db.room;
 
 module.exports = {
@@ -13,6 +15,12 @@ module.exports = {
                 include: [
                     {
                         model: room
+                    },
+                    {
+                        model: propertyImages
+                    },
+                    {
+                        model: category
                     }
                 ]
             });

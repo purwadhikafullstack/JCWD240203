@@ -1,17 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/header/headerPage";
 import { AiOutlineSearch } from "react-icons/ai"
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import PropertyCard from "../../components/PropertyCard/PropertyCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getProperty } from "../../redux/features/property/propertySlice";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductPage() {
+    const properties = useSelector((state) => state.property.property)
     const [date, toggleDate] = useState(false);
+    const call = useDispatch()
 
     const handleTimeClick = () => {
         toggleDate(!date)
     };
+
+    useEffect(() => {
+        call(getProperty()).then(
+            () => {
+
+            },
+            (error) => {
+                toast.error('unable to get list !');
+                console.log(error);
+            }
+        )
+    }, [])
     return (
         <div className="flex flex-col w-full h-[100vh]">
+            <Toaster/>
             <Header/>
             <div className="flex flex-col flex-grow w-full bg-blac">
                 <div className="relative flex flex-col items-center py-[5px] px-[10px]">
@@ -65,7 +84,16 @@ export default function ProductPage() {
                     </div>
                 </div>
                 <div className="grid grid-cols-4 gap-[10px] w-full h-full my-[10px] px-[50px]">
-                    
+                    {console.log(properties)}
+                    {
+                        properties?.map((value, index) => {
+                            return(
+                                <div key={index} className="h-[425px]">
+                                    <PropertyCard data={value}/>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>
