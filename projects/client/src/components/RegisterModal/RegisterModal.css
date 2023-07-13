@@ -1,1 +1,8 @@
+.removeScroll {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
+.removeScroll::-webkit-scrollbar {
+    display: none;
+}
