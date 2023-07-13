@@ -36,8 +36,10 @@ function App() {
 
       <Routes>
         <Route path={'/'} element={<LandingPage/>} />
-        <Route path={'/test'} element={<RegisterPage/>}/>
-        <Route path={'/logintest'} element={<LoginModal/>}/>
+      {/* <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        {message}
+      </header> */}
       </Routes>
     </div>
   );

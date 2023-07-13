@@ -42,8 +42,9 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
         border: isFocused ? "3px solid black" : "3px solid transparent",
         borderRadius: "10px",
         width: "100%",
-        height: "auto",
-        backgroundColor: "#ffffff"
+        maxWidth: "320px",
+        backgroundColor: "#ffffff",
+        p: 2,
       }}
       
     >
@@ -59,10 +60,17 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
         variant="outlined"
         fullWidth
         onFocus={handleBoxFocus}
-        value={dateString}
+        onBlur={handleBoxBlur}
+        value={selectedDateString}
+        
         InputProps={{
           classes: {
             input: "selected-date font-bold text-base text-black",
+            inputAdornedEnd: "center-text",
+            adornedEnd: "center-text",
+          },
+          inputProps: {
+            style: { textAlign: "center" },
           },
         }}
       />
