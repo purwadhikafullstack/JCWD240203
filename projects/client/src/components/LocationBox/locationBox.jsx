@@ -30,8 +30,7 @@ export default function LocationBox({ handleFocus, handleBlur }) {
                 flexDirection: "column",
                 borderRadius: "10px",
                 width: "100%",
-                py: 2,
-                px: 4,
+                py: 2
             }}
             onClick={handleBoxFocus}
             onBlur={handleBoxBlur}

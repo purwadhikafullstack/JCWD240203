@@ -39,14 +39,25 @@ export default function TrendingCarausel() {
     ];
   
     return (
-      <div className="flex flex-col justify-center items-center overflow-hidden md:justify-start md:items-start mx-[20px]">
+      <div className="flex flex-col items-center overflow-hidden mx-[20px]">
         <div className="text-left text-[60px] font-bold">
           Trending stays in Indonesia
         </div>
         <div className="text-left text-[48px] font-thin">
           These homes get lots attention on Rentify
         </div>
-        <div className="flex overflow-x-auto gap-[50px]">
+        <div className="flex w-full overflow-x-auto gap-[25px]">
+          {properties.map((property, index) => (
+            <PropertyCard
+              key={index}
+              imageUrl={property.imageUrl}
+              title={property.title}
+              description={property.description}
+              bedType={property.bedType}
+              date={property.date}
+              price={property.price}
+            />
+          ))}
           {properties.map((property, index) => (
             <PropertyCard
               key={index}
