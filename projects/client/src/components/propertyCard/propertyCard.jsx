@@ -1,4 +1,5 @@
 import React from "react";
+import './propertyCard.css'
 
 const StayCard = ({ imageUrl, title, description, bedType, date, price }) => {
   return (
@@ -36,7 +37,7 @@ const PropertyCard = () => {
     <div className="propertyCard">
       <div className="trending font-bold">Trending stays in Indonesia</div>
       <div className="these mb-4">These homes get lots attention on Rentify</div>
-      <div className="flex justify-between overflow-x-auto">
+      <div className="scroll-container">
         {properties.map((property, index) => (
           <StayCard
             key={index}

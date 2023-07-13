@@ -39,7 +39,8 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
         flexDirection: "column",
         border: isFocused ? "3px solid black" : "1px solid transparent",
         borderRadius: "10px",
-        width: "320px",
+        width: "100%",
+        maxWidth: "320px",
         backgroundColor: "#ffffff",
         p: 2,
       }}

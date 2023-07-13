@@ -1,0 +1,6 @@
+.scroll-container {
+    overflow-y: auto;
+    max-height: 400px; /* Adjust the value as needed */
+    display: flex;
+    flex-direction: column;
+  }
