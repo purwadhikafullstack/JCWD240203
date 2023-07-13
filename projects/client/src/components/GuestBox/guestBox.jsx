@@ -24,9 +24,9 @@ export default function GuestBox({ label }) {
 
     return (
         <Box
-            className="guest-box"
             onFocus={handleBoxFocus}
             onBlur={handleBoxBlur}
+            sx={{width: '100%' }}
         >
             <Typography
                 variant="subtitle1"

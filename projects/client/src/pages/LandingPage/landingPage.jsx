@@ -24,35 +24,35 @@ export default function LandingPage() {
             <Header showLogin={showLogin} showRegister={showRegister} setShowLogin={setShowLogin} setShowRegister={setShowRegister}/>
             <Banner />
             <main className="bg-white w-full mx-auto mt-28">
-                <div className="firstCard flex flex-wrap justify-between px-4 md:px-48 mb-40">
-                    <div className="mt-6 ml-4 z-40 bg-white w-full md:w-[440px] h-[250px] md:h-auto overflow-y-auto">
+                <div className="flex gap-[50px] justify-between mb-[75px] px-[25px]">
+                    <div className="bg-white w-full md:w-[440px] h-[250px] md:h-auto overflow-y-auto">
                         <div className="check text-4xl ml-4 md:ml-48 mb-4 mt-2">
                             <HiOutlineShieldCheck />
                         </div>
-                        <div className="experience flex justify-start text-2xl md:text-5xl mb-4">
+                        <div className="experience flex justify-start text-2xl md:text-3xl mb-4">
                             Experience a level of versatility
                         </div>
                         <div className="advantage flex justify-start text-base md:text-lg">
                             Take advantage of the convenience provided by flexible cancellation, allowing for easy re-booking in case of plan adjustments.
                         </div>
                     </div>
-                    <div className="mt-6 ml-4 z-40 bg-white w-full md:w-[440px] h-[250px] md:h-auto overflow-y-auto">
+                    <div className="bg-white w-full md:w-[440px] h-[250px] md:h-auto overflow-y-auto">
                         <div className="home text-4xl ml-4 md:ml-52 mb-4 mt-2">
                             <BiHomeHeart />
                         </div>
-                        <div className="over flex justify-start text-2xl md:text-5xl mt-0 mb-4">
+                        <div className="over flex justify-start text-2xl md:text-3xl mt-0 mb-4">
                             Over 7 million listings currently available
                         </div>
                         <div className="connect flex justify-start text-base md:text-lg">
                             Connect with over 1 billion fellow travelers who have successfully explored getaways across 220 countries and destinations.
                         </div>
                     </div>
-                    <div className="mt-6 ml-4 z-40 bg-white w-full md:w-[394px] h-[250px] md:h-auto overflow-y-auto">
+                    <div className="bg-white w-full md:w-[394px] h-[250px] md:h-auto overflow-y-auto">
                         <div className="home text-4xl ml-4 md:ml-44 mb-4 mt-2">
                             <TbAdjustmentsHorizontal />
                         </div>
-                        <div className="utilize flex justify-start text-2xl md:text-5xl mb-4">
-                            Utilize 100+ filters to refine and tailor your stay
+                        <div className="utilize flex justify-start text-2xl md:text-3xl mb-4">
+                            Utilize 100+ filters to tailor your stay
                         </div>
                         <div className="customize flex justify-start text-base md:text-lg">
                             Customize your stay by setting price range, specifying room count, and considering essential amenities for a perfect fit.
@@ -67,7 +67,7 @@ export default function LandingPage() {
                 </div>
                 <div className="qnaCard justify-between flex flex-col lg:flex-row px-[20px]">
                     <div>
-                        <div className="text-6xl font-semibold mb-10 ml-4 text-left">
+                        <div className="text-[49px] md:text-6xl font-semibold mb-10 text-left">
                             Your questions, answered
                         </div>
                     </div>
