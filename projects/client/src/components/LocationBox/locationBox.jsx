@@ -28,7 +28,6 @@ export default function LocationBox({ handleFocus, handleBlur }) {
             sx={{
                 display: "flex",
                 flexDirection: "column",
-                border: isFocused ? "3px solid black" : "1px solid transparent",
                 borderRadius: "10px",
                 width: "100%",
                 py: 2,

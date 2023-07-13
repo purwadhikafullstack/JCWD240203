@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, Typography } from "@material-tailwind/react";
+import { Card, CardBody } from "@material-tailwind/react";
 import LocationBox from "../LocationBox/locationBox";
 import DateBox from "../DateBox/dateBox";
 import GuestBox from "../GuestBox/guestBox";
@@ -15,18 +15,18 @@ export default function CardBooking() {
             Find places to stay in Indonesia
           </h5>
           <h4>
-            Whether you’re looking for a cabin, a condo, or a castle—find your getaway on Rentify.
+            Whether you're looking for a cabin, a condo, or a castle—find your getaway on Rentify.
           </h4>
         </div>
         <div className="locationBox flex">
           <LocationBox handleFocus={() => {}} handleBlur={() => {}} />
         </div>
-        <div className="dateBox relative h-[100px] z-20">
-          <div className="absolute flex left-[20px]">
-            <div>
+        <div className="dateBox relative w-full h-[100px] z-20">
+          <div className="absolute w-full px-[30px] flex gap-[10px]">
+            <div className="w-full">
               <DateBox label="CHECK IN" handleFocus={() => {}} handleBlur={() => {}} />
             </div>
-            <div>
+            <div className="w-full">
               <DateBox label="CHECK OUT" handleFocus={() => {}} handleBlur={() => {}} />
             </div>
           </div>

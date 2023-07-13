@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import { DayPicker } from 'react-day-picker';
 import { format } from "date-fns";
-import './dayPickerStyles.module.css'
+import 'react-day-picker/dist/style.css';
 
 export default function DateBox({ label, handleFocus, handleBlur }) {
   const [isFocused, setIsFocused] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [dateString, setDateString] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   const handleBoxFocus = () => {
@@ -22,30 +23,30 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
   };
 
   const handleDayClick = (date) => {
-    setSelectedDate(date);
-    setIsOpen(false);
+    if(date) {
+      setSelectedDate(date);
+      setDateString(formatDate(date));
+      setIsOpen(false);
+    }
   };
 
   const formatDate = (date) => {
     return format(date, "MM/dd/yyyy");
   };
 
-  const selectedDateString = selectedDate ? formatDate(selectedDate) : "";
-
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        border: isFocused ? "3px solid black" : "1px solid transparent",
+        border: isFocused ? "3px solid black" : "3px solid transparent",
         borderRadius: "10px",
         width: "100%",
         maxWidth: "320px",
         backgroundColor: "#ffffff",
         p: 2,
       }}
-      onClick={handleBoxFocus}
-      onBlur={handleBoxBlur}
+      
     >
       <Typography
         variant="subtitle1"
@@ -73,13 +74,19 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
           },
         }}
       />
-      {isOpen && (
-        <DayPicker
-          selected={selectedDate}
-          onDayClick={handleDayClick}
-          
-        />
-      )}
+      {
+        (isOpen)?
+        <div className="w-[1px]">
+          <DayPicker
+            selected={selectedDate}
+            onDayClick={handleDayClick}
+            style={{scale: '0.85'}}
+          />
+        </div>
+        :
+        <>
+        </>
+      }
     </Box>
   );
 }
