@@ -1,25 +1,24 @@
 import axios from "axios";
 import "./App.css";
 import logo from "./logo.svg"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import LoginModal from "./pages/LoginModal/LoginModal";
+import ProductPage from "./pages/ProductPage/ProductPage";
 import { keepLogin } from "./redux/features/user/userSlice";
 import { useDispatch } from "react-redux";
 
 function App() {
-  const [message, setMessage] = useState("");
+  //const [message, setMessage] = useState("");
   const call = useDispatch();
 
   useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/greetings`
-      );
-      setMessage(data?.message || "");
-    })();
+    // (async () => {
+    //   const { data } = await axios.get(
+    //     `${process.env.REACT_APP_API_BASE_URL}/greetings`
+    //   );
+    //   setMessage(data?.message || "");
+    // })();
     
     call(keepLogin()).then(
       () => {
@@ -32,14 +31,10 @@ function App() {
   }, []);
  
   return (
-    <div className="App">
-
+    <div className="App h-[100vh]">
       <Routes>
         <Route path={'/'} element={<LandingPage/>} />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {message}
-      </header> */}
+        <Route path={'/browse'} element={<ProductPage/>}/>
       </Routes>
     </div>
   );

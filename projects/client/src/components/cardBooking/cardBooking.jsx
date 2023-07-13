@@ -8,7 +8,7 @@ import './cardBooking.css'
 
 export default function CardBooking() {
   return (
-    <Card className="mt-6 mb-12w-full md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto z-10 drop-shadow-2xl bg-white rounded-lg">
+    <Card className="mt-6 mb-12 w-full md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto z-10 drop-shadow-2xl bg-white rounded-lg">
       <CardBody>
         <div className="typography">
           <h5 color="blue-gray" className="mb-2 text-6xl font-bold text-gray-900 ">
@@ -32,7 +32,7 @@ export default function CardBooking() {
           </div>
         </div>
         <div className="guestBox relative h-[100px] z-10">
-          <div className="absolute flex left-[20px]">
+          <div className="flex justify-center gap-[10px]">
             <div>
               <GuestBox label="ADULTS" />
             </div>

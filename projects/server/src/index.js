@@ -2,7 +2,7 @@ require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
-const { users } = require("./router");
+const { users, properties } = require("./router");
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -61,11 +61,12 @@ const clientPath = "../../client/build";
 app.use(express.static(join(__dirname, clientPath)));
 
 // Serve the HTML page
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(join(__dirname, clientPath, "index.html"));
 });
 
 app.use("/users", users);
+app.use("/properties", properties);
 
 //#endregion
 

@@ -9,7 +9,7 @@ const QnaCard = ({ question, answer }) => {
   };
 
   return (
-    <div className="qnaCard px-48 py-4">
+    <div className="flex flex-col w-[600px] h-[125px]">
       <div className="flex justify-between items-center">
         <div className="question flex items-center gap-10 text-lg cursor-pointer" onClick={toggleAnswer}>
           <div className="mr-4">{question}</div>

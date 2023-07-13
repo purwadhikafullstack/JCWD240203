@@ -4,17 +4,24 @@ import Footer from "../../components/footerRentify/footerPage";
 import { HiOutlineShieldCheck } from 'react-icons/hi'
 import { BiHomeHeart } from 'react-icons/bi'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
-import { IoIosArrowDown } from 'react-icons/io'
 import './landingPage.css'
-import QnaCard from "../../components/qnaCard/qnaCard";
-import PropertyCard from "../../components/propertyCard/propertyCard";
+import { useState } from "react";
+import QnaCard from "../../components/QnACard/qnaCard";
+import TrendingCarausel from '../../components/TrendingCarausel/TrendingCarausel';
+import LoginModal from '../../components/LoginModal/LoginModal';
+import RegisterModal from '../../components/RegisterModal/RegisterModal';
 
 
 
 export default function LandingPage() {
+    const [showRegister, setShowRegister] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+
     return (
-        <div className="w-full h-[100%] bg-white">
-            <Header />
+        <div className={`${(showLogin || showRegister)? 'overflow-y-hidden' : ''} w-full h-[100%] bg-white`}>
+            <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
+            <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
+            <Header showLogin={showLogin} showRegister={showRegister} setShowLogin={setShowLogin} setShowRegister={setShowRegister}/>
             <Banner />
             <main className="bg-white w-full mx-auto mt-28">
                 <div className="firstCard flex flex-wrap justify-between px-4 md:px-48 mb-40">
@@ -52,13 +59,13 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </div>
-                <PropertyCard />
+                <TrendingCarausel/>
                 <div>
                     <button className="exploreButton px-[50px] py-[8px] mt-8 mb-20 text-2xl font-sans rounded-[10px] border-solid border-2 border-black bg-white text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
                         Explore more
                     </button>
                 </div>
-                <div className="qnaCard px-48 py-4 justify-between flex">
+                <div className="qnaCard justify-between flex flex-col lg:flex-row px-[20px]">
                     <div>
                         <div className="text-6xl font-semibold mb-10 ml-4 text-left">
                             Your questions, answered

@@ -42,11 +42,9 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
         border: isFocused ? "3px solid black" : "3px solid transparent",
         borderRadius: "10px",
         width: "100%",
-        maxWidth: "320px",
         backgroundColor: "#ffffff",
-        p: 2,
       }}
-      
+      onBlur={handleBoxBlur}
     >
       <Typography
         variant="subtitle1"
@@ -60,8 +58,7 @@ export default function DateBox({ label, handleFocus, handleBlur }) {
         variant="outlined"
         fullWidth
         onFocus={handleBoxFocus}
-        onBlur={handleBoxBlur}
-        value={selectedDateString}
+        value={dateString}
         
         InputProps={{
           classes: {
