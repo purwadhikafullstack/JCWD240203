@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
-import { keepLogin } from "./redux/features/user/userSlice";
+import { keepLogin } from "./redux/features/User/userSlice";
 import { useDispatch } from "react-redux";
 
 function App() {
