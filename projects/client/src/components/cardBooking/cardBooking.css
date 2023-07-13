@@ -29,4 +29,13 @@
 
 .searchButton {
     font-family: 'Alata', sans-serif;
+    width: 270px;
 }
+
+@media (max-width: 600px) {
+    .searchButton {
+      /* Adjusted width for smaller screens */
+      width: 100%;
+      max-width: 270px; /* Set a maximum width if desired */
+    }
+  }

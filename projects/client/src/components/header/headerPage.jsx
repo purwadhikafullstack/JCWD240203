@@ -5,17 +5,13 @@ import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useSelector } from "react-redux";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import RegisterModal from "../RegisterModal/RegisterModal";
-import LoginModal from "../LoginModal/LoginModal";
 
-export default function Header({ placeholder }) {
+export default function Header(props) {
     //const [searchInput, setSearchInput] = useState("");
     //const [startDate, setStartDate] = useState(new Date());
     //const [endDate, setEndDate] = useState(new Date());
     //const [numberOfGuests, setNumberOfGuests] = useState(1);
     const [menu, toggleMenu] = useState(false);
-    const [showRegister, setShowRegister] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
     //const [loading, setLoading] = useState(false);
     // const router = useRouter();
     // const selectionRange = {
@@ -40,7 +36,14 @@ export default function Header({ placeholder }) {
     // }
 
     const onClickSignUp = () => {
-        setShowRegister(!showRegister);
+        if(props.setShowRegister) {
+            props.setShowRegister(!props.showRegister);
+        }
+    }
+    const onClickLogin = () => {
+        if(props.setShowLogin) {
+            props.setShowLogin(!props.showLogin);
+        }
     }
     //const call = useDispatch();
 
@@ -67,9 +70,7 @@ export default function Header({ placeholder }) {
 
         return (
             <div>
-                <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
-                <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
-                <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-b bg-white p-4  shadow-md md:px-6  border-gray-500">
+                <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-b bg-white p-4  shadow-md md:px-6  border-gray-500 z-10">
                     {/* Left Header */}
                     <div className="relative h-[50px] w-[100px]">
                         <img alt="" src={rentifyLogo} className="absolute top-[-10px]" />
@@ -106,8 +107,8 @@ export default function Header({ placeholder }) {
                                     <UserCircleIcon className="h-8 w-8" />
                                 )}
                             </div>
-                            <div className={`${menu? 'h-[70px]' : 'h-[0px] border-[0px]'} transition-all duration-300 absolute overflow-y-hidden flex flex-col right-[-10px] w-[100px] rounded-[5px] top-[50px] bg-white border-[1px] border-gray-400`}>
-                                <div onClick={() => setShowLogin(!showLogin)} className="w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95">
+                            <div className={`${menu? 'h-[70px]' : 'h-[0px] border-transparent'} transition-all duration-300 absolute overflow-y-hidden flex flex-col right-[-10px] w-[100px] rounded-[5px] top-[50px] bg-white border-[1px] border-gray-400 z-20`}>
+                                <div onClick={onClickLogin} className="w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95">
                                     Log In
                                 </div>
                                 <div className="w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95">

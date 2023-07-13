@@ -102,7 +102,7 @@ export default function RegisterModal(props) {
     })
     
     return(
-        <div className={`${props.showRegister? '' : 'hidden'} top-0 absolute flex justify-center items-center bg-gray-400/80 w-full h-full z-50`}>
+        <div className={`${props.showRegister? '' : 'hidden'} top-0 absolute flex justify-center items-center bg-gray-400/80 w-full h-[100vh] z-50`}>
             <Toaster/>
             <div className="flex flex-col relative justify-between items-center rounded-[10px] gap-[10px] w-full h-[500px] md:w-[450px] md:h-[450px] bg-gray-200 py-[10px] removeScroll overflow-y-auto">
                 <div onClick={handleClose} className="absolute flex justify-center items-center p-[5px] top-[20px] left-[20px] cursor-pointer bg-transparent transition-all duration-400 hover:bg-gray-300 active:animate-ping rounded-full">

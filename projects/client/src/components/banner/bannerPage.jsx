@@ -5,10 +5,10 @@ import CardBooking from "../cardBooking/cardBooking";
 
 export default function Banner () {
     return (
-        <div className="relative h-[780px] bg-white">
-            <div className="flex justify-between">
-                <CardBooking className='z-40'/>
-                <Carousel/>
+        <div className="relative bg-white">
+            <div className="flex flex-col justify-between md:flex-row">
+                <CardBooking className='flex-1'/>
+                <Carousel className="flex-1 absolute top-0 left-0 right-0"/>
             </div>
         </div>
     )

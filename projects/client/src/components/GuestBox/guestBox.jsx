@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, TextField, MenuItem, Typography } from "@mui/material";
+import './guestBox.css'
 
 
 const guestOptions = [0, 1, 2, 3, 4, 5, 6];
@@ -23,14 +24,7 @@ export default function GuestBox({ label }) {
 
     return (
         <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                border: isFocused ? "3px solid black" : "1px solid transparent",
-                borderRadius: "10px",
-                width: "20rem",
-                p: 2,
-            }}
+            className="guest-box"
             onFocus={handleBoxFocus}
             onBlur={handleBoxBlur}
         >

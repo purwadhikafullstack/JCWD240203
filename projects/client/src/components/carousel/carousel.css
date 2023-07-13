@@ -1,5 +1,13 @@
 .carousel {
     animation: sliding 12s infinite;
+    @media (max-width: 768px) {
+        /* Styles for tablets */
+      }
+    
+      @media (max-width: 480px) {
+        /* Styles for phones */
+      }
 }
+
 
 
