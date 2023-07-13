@@ -6,7 +6,8 @@ import { BiHomeHeart } from 'react-icons/bi'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
 import { IoIosArrowDown } from 'react-icons/io'
 import './landingPage.css'
-import QnaCard from "../../components/QnACard/qnaCard";
+import QnaCard from "../../components/qnaCard/qnaCard";
+import PropertyCard from "../../components/propertyCard/propertyCard";
 
 
 
@@ -51,115 +52,7 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </div>
-
-                <div className="propertyCard px-48">
-                    <div className="text-center md:text-left">
-                        <div className="trending font-bold mb-0 mt-4 text-lg">
-                            Trending stays in Indonesia
-                        </div>
-                        <div className="these mb-4 text-sm">
-                            These homes get lots attention on Rentify
-                        </div>
-                    </div>
-                    <div className="flex justify-between px-42 ">
-                        <div className="firstStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
-                            <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-735147908258997419/original/13568434-8d18-4df7-be11-bff6fa96cffd.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
-                            </div>
-                            <div className="mt-44">
-                                <div className=" mt-40 pr-50 mr-8">
-                                    <div className="executive text-lg mb-1 font-black">
-                                        Executive Suite Ocean View
-                                    </div>
-                                    <div className="desc1 mr-2 text-slate-800 text-base">
-                                        You won’t want to leave this charming...
-                                    </div>
-                                    <div className="king1 mr-[214px] text-slate-600">
-                                        1 king Bed
-                                    </div>
-                                    <div className="date1 mr-[214px] text-slate-600">
-                                        Nov 18-23
-                                    </div>
-                                    <div className="price1 mr-[155px]">
-                                        Rp2,890,000 night
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="secondStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
-                            <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-864375016616936486/original/13e714f8-d3f7-4ca2-9811-a929972fb5e3.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
-                            </div>
-                            <div className="mt-44">
-                                <div className=" mt-40 pr-50 mr-8">
-                                    <div className="executive text-lg mb-1 font-black">
-                                        Cozy Unique Cabin in Cikole
-                                    </div>
-                                    <div className="desc1 mr-2 text-slate-800 text-base">
-                                        This cozy unique cabin offers a true c...
-                                    </div>
-                                    <div className="king1 mr-[214px] text-slate-600">
-                                        1 king Bed
-                                    </div>
-                                    <div className="date1 mr-[214px] text-slate-600">
-                                        Okt 18-23
-                                    </div>
-                                    <div className="price1 mr-[157px]">
-                                        Rp1,341,000 night
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="thirdStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
-                            <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/08c599eb-f428-4cfd-a48a-2e1eda6166cd.jpg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
-                            </div>
-                            <div className="mt-44">
-                                <div className=" mt-40 pr-50 mr-8">
-                                    <div className="executive text-lg mb-1 font-black mr-2">
-                                        Cozy Studio Madison Park
-                                    </div>
-                                    <div className="desc1 mr-6 text-slate-800 text-base">
-                                        Oemah 1, an inviting and luxurious...
-                                    </div>
-                                    <div className="king1 mr-[214px] text-slate-600">
-                                        1 king Bed
-                                    </div>
-                                    <div className="date1 mr-[214px] text-slate-600">
-                                        Aug 18-23
-                                    </div>
-                                    <div className="price1 mr-[170px]">
-                                        Rp273,150  night
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="fourthStay mt-6 ml-4 z-40 w-[330px] h-[560px] bg-white">
-                            <div className="w-[330px] h-[240px] mb-10 rounded-md">
-                                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-49887950/original/bb12ab53-2432-4f4c-8e7d-5c7b61f89047.jpeg?im_w=1200" className="w-[330px] h-[400px] rounded-lg" />
-                            </div>
-                            <div className="mt-44">
-                                <div className=" mt-40 pr-50 mr-8">
-                                    <div className="executive text-lg mb-1 font-black">
-                                        Bamboo Riverfront Villa View
-                                    </div>
-                                    <div className="desc1 mr-2 text-slate-800 text-base">
-                                        Amarta Pesagi Retreat means itself a...
-                                    </div>
-                                    <div className="king1 mr-[214px] text-slate-600">
-                                        1 king Bed
-                                    </div>
-                                    <div className="date1 mr-[214px] text-slate-600">
-                                        Dec 18-23
-                                    </div>
-                                    <div className="price1 mr-[155px]">
-                                        Rp2,291,218  night
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <PropertyCard />
                 <div>
                     <button className="exploreButton px-[50px] py-[8px] mt-8 mb-20 text-2xl font-sans rounded-[10px] border-solid border-2 border-black bg-white text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
                         Explore more
@@ -207,5 +100,5 @@ export default function LandingPage() {
             </main>
             <Footer />
         </div>
-    )
+    );
 }
