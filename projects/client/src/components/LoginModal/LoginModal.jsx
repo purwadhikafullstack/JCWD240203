@@ -81,7 +81,6 @@ export default function LoginModal(props) {
     
     return(
         <div className={`${(props.showLogin)? '' : 'hidden'} flex justify-center items-center absolute top-0 w-full h-[100vh] bg-gray-400/80 z-50`}>
-            <Toaster/>
             <div className="relative flex flex-col items-center bg-gray-200 w-[300px] md:w-[450px] h-[400px] rounded-[10px] ">
                 <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300 active:animate-ping">
                     <CloseIcon sx={{scale: '1.4'}}/>
