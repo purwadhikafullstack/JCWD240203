@@ -11,8 +11,8 @@ export default function PropertyCard(props) {
         <div className="stayTitle text-[12px] sm:text-[14px] md:text-[16px]">{props?.data?.name || 'name'}</div>
         <div className="flex justify-between mt-auto">
           <div className="stayInfoItem text-[12px]">{props?.data?.category?.type || 'type'}</div>
-          <div className="stayInfoItem text-[12px]">{props?.data?.date || 'date'}</div>
           <div className="stayInfoItem text-[12px]">{props?.data?.price || 'price'}</div>
+          <div className="stayInfoItem text-[12px]">{(props?.data?.room?.length > 0)? 'Available' : 'Unavailable'}</div>
         </div>
       </div>
     </div>

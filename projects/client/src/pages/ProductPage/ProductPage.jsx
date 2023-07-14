@@ -3,7 +3,7 @@ import Header from "../../components/header/headerPage";
 import { AiOutlineSearch } from "react-icons/ai"
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import PropertyCard from "../../components/PropertyCard/PropertyCard";
+import PropertyCard from "../../components/PropertyCard/propertyCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getProperty } from "../../redux/features/property/propertySlice";
 import { Toaster, toast } from "react-hot-toast";

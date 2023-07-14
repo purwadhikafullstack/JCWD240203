@@ -19,15 +19,16 @@ function App() {
     //   );
     //   setMessage(data?.message || "");
     // })();
-    
-    call(keepLogin()).then(
-      () => {
-
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
+    if(localStorage.getItem('user')) {
+      call(keepLogin()).then(
+        () => {
+  
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+    }
   }, []);
  
   return (

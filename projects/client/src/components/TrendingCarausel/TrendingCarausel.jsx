@@ -1,6 +1,6 @@
 // { imageUrl, title, description, bedType, date, price }
 import './TrendingCarausel.css';
-import PropertyCard from '../PropertyCard/PropertyCard';
+import PropertyCard from '../PropertyCard/propertyCard';
 
 export default function TrendingCarausel() {
     const properties = [

@@ -10,9 +10,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Button } from "@mui/material";
 import { onLogin } from "../../redux/features/user/userSlice";
+import rentifyLogo from "../assets/icons/rentifyLogo.png";
+import './LoginModal.css';
 
 export default function LoginModal(props) {
     const call = useDispatch();
@@ -85,8 +87,14 @@ export default function LoginModal(props) {
                 <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300 active:animate-ping">
                     <CloseIcon sx={{scale: '1.4'}}/>
                 </div>
-                <div className="w-full py-[10px] text-center text-[20px] border-b-[1px] border-gray-400">
-                    Log In
+                <div className="loginTitle w-full py-[10px] text-center text-[20px] font-display font-semibold text-zinc-700/90 border-b-[1px] border-gray-400">
+                    Login
+                </div>
+                <div className="h-[65px] w-[110px]">
+                    <img alt="" src={rentifyLogo} />
+                </div>
+                <div className="welcomeBack mt-2 text-[20px] font-display font-medium ">
+                   Hello, Welcome Back! 
                 </div>
                 <div className="w-[250px] md:w-[300px] flex flex-col gap-[20px] mb-auto mt-[10px]">
                     <div className="w-full">

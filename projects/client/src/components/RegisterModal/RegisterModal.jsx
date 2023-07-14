@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from "@mui/material";
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { onRegister } from '../../redux/features/user/userSlice'
 
