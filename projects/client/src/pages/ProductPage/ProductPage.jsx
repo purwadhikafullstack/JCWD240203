@@ -1,19 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "../../components/header/headerPage";
 import { AiOutlineSearch } from "react-icons/ai"
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import PropertyCard from "../../components/PropertyCard/PropertyCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getProperty } from "../../redux/features/property/propertySlice";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductPage() {
+    const limit = 8;
+    const properties = useSelector((state) => state.property.property);
+    const totalProperties = Math.ceil(useSelector((state) => state.property.totalProperty) / limit);
     const [date, toggleDate] = useState(false);
+    const [page, setPage] = useState(1);
+    const call = useDispatch()
 
+    const listInnerRef = useRef();
+    const checkScroll = () => {
+        if (listInnerRef.current) {
+          const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+          if (Math.ceil(scrollTop + clientHeight) === scrollHeight) {
+            if(page + 1 <= totalProperties) {
+                setPage(page+1);
+            }
+          }
+        }
+    };
+    
     const handleTimeClick = () => {
         toggleDate(!date)
     };
+
+    useEffect(() => {
+        call(getProperty({
+            page: page,
+            limit: limit
+        })).then(
+            () => {
+
+            },
+            (error) => {
+                toast.error('unable to get list !');
+                console.log(error);
+            }
+        )
+    }, [page])
     return (
-        <div className="flex flex-col w-full h-[100vh]">
+        <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto">
+            <Toaster/>
             <Header/>
-            <div className="flex flex-col flex-grow w-full bg-blac">
+            <div className="flex flex-col flex-grow w-full">
                 <div className="relative flex flex-col items-center py-[5px] px-[10px]">
                     <div className={`w-[350px] h-[45px] flex justify-center items-center rounded-full bg-white shadow-gray-500 border-[1px] border-gray-300`}>
                         <div className="flex flex-grow h-full justify-center items-center rounded-full">
@@ -64,8 +101,16 @@ export default function ProductPage() {
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-4 gap-[10px] w-full h-full my-[10px] px-[50px]">
-                    
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[10px] w-full h-full my-[10px] px-[50px]">
+                    {
+                        properties?.map((value, index) => {
+                            return(
+                                <div key={index} className="h-[275px] md:h-[350px]">
+                                    <PropertyCard data={value}/>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>

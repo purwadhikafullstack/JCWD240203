@@ -1,5 +1,7 @@
 const db = require('../../models');
 const property = db.property;
+const propertyImages = db.propertyImages;
+const category = db.category;
 const room = db.room;
 
 module.exports = {
@@ -8,19 +10,32 @@ module.exports = {
             const location = req.query.location || ''
             const startDate = new Date(req.query.start).getTime()|| Date.now();
             const endDate = req.query.end || '';
+            const { limit, page } = req.query;
 
             const result = await property.findAll({
                 include: [
                     {
                         model: room
+                    },
+                    {
+                        model: propertyImages
+                    },
+                    {
+                        model: category
                     }
-                ]
+                ],
+                limit: limit*page || 5
             });
+
+            const count = await property.count();
             
             return res.status(200).send({
                 isError: true,
                 message: 'data fetched !',
-                data: result
+                data: {
+                    count: count,
+                    rows: result
+                }
             });
         }
         catch(error) {

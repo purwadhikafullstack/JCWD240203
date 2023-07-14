@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       property.hasMany(models.propertyFacility, {
         foreignKey: 'propertyId'
       });
+
+      property.hasMany(models.review, {
+        foreignKey: 'propertyId'
+      });
     }
   }
   property.init({

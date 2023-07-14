@@ -1,81 +1,11 @@
-.stayCard {
-  margin-top: 6px;
-  margin-left: 4px;
-  flex: 0 0 300px;
-}
-
-.stayImage {
-  width: 100%;
-  height: 240px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.stayImageInner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.stayDetails {
-  margin-top: 44px;
-  padding-right: 50px;
-  margin-right: 8px;
-}
-
 .stayTitle {
-  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 4px;
 }
 
 .stayDescription {
-  font-size: 14px;
-  margin-right: 2px;
   color: #333;
 }
 
-.stayInfo {
-  display: flex;
-  justify-content: space-between;
-}
-
 .stayInfoItem {
-  font-size: 12px;
   color: #666;
-}
-
-@media (min-width: 768px) {
-  .stayCard {
-    margin-top: 0;
-    margin-left: 0;
-    width: auto;
-    height: auto;
-    flex: 0 0 300px;
-  }
-
-  .stayImage {
-    width: 100%;
-    height: 300px;
-    border-radius: 5px;
-  }
-
-  .stayDetails {
-    margin-top: 20px;
-    padding-right: 20px;
-    margin-right: 0;
-  }
-
-  .stayTitle {
-    font-size: 18px;
-  }
-
-  .stayDescription {
-    font-size: 14px;
-  }
-
-  .stayInfoItem {
-    font-size: 14px;
-  }
 }
