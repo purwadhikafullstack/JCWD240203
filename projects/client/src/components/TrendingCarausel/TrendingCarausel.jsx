@@ -48,7 +48,7 @@ export default function TrendingCarausel() {
         </div>
         <div className="flex w-full overflow-x-auto overflow-y-hidden gap-[25px] px-[20px] py-[15px]">
           {properties.map((property, index) => (
-            <div key={index} className='w-[250px] h-[275px] md:h-[350px]'>
+            <div key={index} className='w-[250px] h-[275px] md:h-[325px]'>
               <PropertyCard/>
             </div>
           ))}

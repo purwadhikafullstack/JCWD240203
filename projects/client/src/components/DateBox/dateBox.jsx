@@ -91,6 +91,10 @@ export default function DateBox(props) {
         <DayPicker
           selected={(props.type === 'checkIn')?  new Date(start) : new Date(end)}
           onDayClick={handleDayClick}
+          disabled={{
+            before: new Date()
+          }}
+          fromMonth={new Date()}
           style={{scale: '0.80', margin: '0', padding: '0'}}
         />
       </div>

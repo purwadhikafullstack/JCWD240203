@@ -67,7 +67,7 @@ export default function Header(props) {
 
         return (
             <div>
-                <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-b bg-white p-4  shadow-md md:px-6  border-gray-500 z-10">
+                <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-[1px] bg-white p-4 md:px-6 border-gray-500 z-10">
                     {/* Left Header */}
                     <div className="relative h-[50px] w-[100px]">
                         <img alt="" src={rentifyLogo} className="absolute top-[-10px]" />
@@ -87,7 +87,7 @@ export default function Header(props) {
                             </p>
                         }
                         <div className="relative">
-                            <div className="flex cursor-pointer items-center space-x-2 rounded-2xl border p-2 shadow-sm transition-all duration-400 ease-in-out hover:scale-105 hover:shadow-md active:scale-95"
+                            <div className="flex cursor-pointer items-center space-x-2 rounded-2xl border p-2 transition-all duration-400 ease-in-out hover:scale-105 active:scale-95"
                                 onClick={() => { toggleMenu(!menu); }}
                             >
                                 <MenuRoundedIcon className="h-6 w-6" />
@@ -105,7 +105,7 @@ export default function Header(props) {
                                     <UserCircleIcon className="h-8 w-8" />
                                 }
                             </div>
-                            <div className={`${menu? 'h-[35px]' : 'h-[0px] border-transparent'} transition-all duration-300 absolute overflow-y-hidden flex flex-col right-[-10px] w-[100px] rounded-[5px] top-[50px] bg-white border-[1px] border-gray-400 z-20`}>
+                            <div className={`${menu? 'h-[35px]' : 'h-[0px] border-transparent'} transition-all duration-300 absolute overflow-y-hidden flex flex-col right-[-10px] w-[100px] rounded-[5px] top-[50px] bg-white border-[1px] border-gray-400 z-10`}>
                                 <div onClick={onClickLogin} className={`${(Object.keys(currentUser).length === 0)? '' : 'hidden'} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     Log In
                                 </div>
