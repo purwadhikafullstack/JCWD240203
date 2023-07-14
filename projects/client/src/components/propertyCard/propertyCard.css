@@ -1,29 +1,11 @@
 .stayTitle {
-  font-size: 16px;
   font-weight: bold;
 }
 
 .stayDescription {
-  font-size: 14px;
   color: #333;
 }
 
 .stayInfoItem {
-  font-size: 12px;
   color: #666;
-}
-
-@media (min-width: 768px) {
-
-  .stayTitle {
-    font-size: 18px;
-  }
-
-  .stayDescription {
-    font-size: 14px;
-  }
-
-  .stayInfoItem {
-    font-size: 14px;
-  }
 }

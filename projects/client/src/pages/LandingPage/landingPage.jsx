@@ -10,6 +10,7 @@ import QnaCard from "../../components/QnACard/qnaCard";
 import TrendingCarausel from '../../components/TrendingCarausel/TrendingCarausel';
 import LoginModal from '../../components/LoginModal/LoginModal';
 import RegisterModal from '../../components/RegisterModal/RegisterModal';
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -19,39 +20,40 @@ export default function LandingPage() {
 
     return (
         <div className={`${(showLogin || showRegister)? 'overflow-y-hidden' : ''} w-full h-[100%] bg-white`}>
+            <Toaster/>
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
             <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
             <Header showLogin={showLogin} showRegister={showRegister} setShowLogin={setShowLogin} setShowRegister={setShowRegister}/>
             <Banner />
             <main className="bg-white w-full mx-auto mt-28">
-                <div className="flex gap-[50px] justify-between mb-[75px] px-[25px]">
-                    <div className="bg-white w-full md:w-[440px] h-[250px] md:h-auto overflow-y-auto">
-                        <div className="check text-4xl ml-4 md:ml-48 mb-4 mt-2">
+                <div className="flex gap-[50px] justify-between px-[25px]">
+                    <div className="bg-white w-full md:w-[440px] h-auto">
+                        <div className="check text-4xl flex justify-center w-full mb-4 mt-2">
                             <HiOutlineShieldCheck />
                         </div>
-                        <div className="experience flex justify-start text-2xl md:text-3xl mb-4">
+                        <div className="experience flex justify-start text-[25px] md:text-[35px] mb-4">
                             Experience a level of versatility
                         </div>
                         <div className="advantage flex justify-start text-base md:text-lg">
                             Take advantage of the convenience provided by flexible cancellation, allowing for easy re-booking in case of plan adjustments.
                         </div>
                     </div>
-                    <div className="bg-white w-full md:w-[440px] h-[250px] md:h-auto overflow-y-auto">
-                        <div className="home text-4xl ml-4 md:ml-52 mb-4 mt-2">
+                    <div className="bg-white w-full md:w-[440px] h-auto">
+                        <div className="home text-4xl flex justify-center w-full mb-4 mt-2">
                             <BiHomeHeart />
                         </div>
-                        <div className="over flex justify-start text-2xl md:text-3xl mt-0 mb-4">
+                        <div className="over flex justify-start text-[25px] md:text-[35px] mt-0 mb-4">
                             Over 7 million listings currently available
                         </div>
                         <div className="connect flex justify-start text-base md:text-lg">
                             Connect with over 1 billion fellow travelers who have successfully explored getaways across 220 countries and destinations.
                         </div>
                     </div>
-                    <div className="bg-white w-full md:w-[394px] h-[250px] md:h-auto overflow-y-auto">
-                        <div className="home text-4xl ml-4 md:ml-44 mb-4 mt-2">
+                    <div className="bg-white w-full md:w-[440px] h-auto">
+                        <div className="home text-4xl flex justify-center w-full mb-4 mt-2">
                             <TbAdjustmentsHorizontal />
                         </div>
-                        <div className="utilize flex justify-start text-2xl md:text-3xl mb-4">
+                        <div className="utilize flex justify-start text-[25px] md:text-[35px] mb-4">
                             Utilize 100+ filters to tailor your stay
                         </div>
                         <div className="customize flex justify-start text-base md:text-lg">
