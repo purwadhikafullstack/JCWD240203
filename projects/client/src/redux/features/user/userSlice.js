@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import API from "../../../constant/URLAPI";
 import axios from "axios";
-import API from "../../../constants/URLAPI";
 
 const initialState = {
     currentUser: {}
