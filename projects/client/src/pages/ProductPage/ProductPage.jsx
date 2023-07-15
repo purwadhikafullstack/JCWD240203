@@ -45,7 +45,7 @@ export default function ProductPage() {
     }, [call, page, start, end])
 
     return (
-        <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto">
+        <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto removeScroll">
             <Toaster/>
             <Header/>
             <div className="flex flex-col flex-grow w-full">

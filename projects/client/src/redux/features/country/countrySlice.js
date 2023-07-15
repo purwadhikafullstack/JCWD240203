@@ -11,7 +11,7 @@ const countrySlice = createSlice({
     initialState,
     reducers: {
         setCountry: (initialState, action) => {
-            initialState.countries = action.payload
+            initialState.country = action.payload
         }
     }
 });

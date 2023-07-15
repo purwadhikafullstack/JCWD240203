@@ -6,6 +6,7 @@ const initialState = {
     property: [],
     totalProperty: 0,
     location: '',
+    guest: '1',
     start: '',
     end: ''
 }
@@ -23,12 +24,15 @@ const propertySlice = createSlice({
         setLocation: (initialState, action) => {
             initialState.location = action.payload;
         },
+        setGuest: (initialState, action) => {
+            initialState.guest = action.payload;
+        },
         setStart: (initialState, action) => {
             initialState.start = action.payload;
         },
         setEnd: (initialState, action) => {
             initialState.end = action.payload;
-        },
+        }
     }
 })
 
@@ -45,5 +49,5 @@ export const getProperty = (data) => async(dispatch) => {
     }
 }
 
-export const { setProperty, setTotalProperty, setLocation, setStart, setEnd } = propertySlice.actions;
+export const { setProperty, setTotalProperty, setLocation, setGuest, setStart, setEnd } = propertySlice.actions;
 export default propertySlice.reducer;
