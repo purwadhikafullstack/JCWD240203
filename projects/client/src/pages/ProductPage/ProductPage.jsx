@@ -9,6 +9,8 @@ import FilterBar from "../../components/FilterBar/FilterBar";
 export default function ProductPage() {
     const limit = 8;
     const properties = useSelector((state) => state.property.property);
+    const start = useSelector((state) => state.property.start);
+    const end = useSelector((state) => state.property.end);
     const totalProperties = Math.ceil(useSelector((state) => state.property.totalProperty) / limit);
     const [page, setPage] = useState(1);
     const call = useDispatch()
@@ -17,7 +19,7 @@ export default function ProductPage() {
     const checkScroll = () => {
         if (listInnerRef.current) {
           const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-          if (Math.ceil(scrollTop + clientHeight) === scrollHeight) {
+          if (scrollTop + clientHeight >= scrollHeight) {
             if(page + 1 <= totalProperties) {
                 setPage(page+1);
             }
@@ -28,7 +30,9 @@ export default function ProductPage() {
     useEffect(() => {
         call(getProperty({
             page: page,
-            limit: limit
+            limit: limit,
+            start: start,
+            end: end
         })).then(
             () => {
 
@@ -38,7 +42,8 @@ export default function ProductPage() {
                 console.log(error);
             }
         )
-    }, [page])
+    }, [call, page, start, end])
+
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto">
             <Toaster/>
