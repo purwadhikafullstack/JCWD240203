@@ -1,26 +1,15 @@
-import { Button, Menu, MenuItem } from "@mui/material"
-import { useState } from "react"
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux";
 import { setGuest } from "../../redux/features/property/propertySlice";
 
 
 export default function GuestSelection(props) {
     const guest = useSelector((state) => state.property.guest);
-    const data = ['2', '3', '4', '5 +'];
+    const data = ['1' ,'2', '3', '4', '5 +'];
     const call = useDispatch();
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const openGuest = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
-    };
-
-    const handleCloseMenu = (data) => {
-        if(typeof data === 'string') {
-            setAnchorEl(null)
-            call(setGuest(data));
-        }
-        setAnchorEl(null);
+    const handleChange = (event) => {
+        call(setGuest(event.target.value));
     };
 
     const handleClose = () => {
@@ -30,33 +19,25 @@ export default function GuestSelection(props) {
     };
 
     return (
-        <div className={`${(props?.guest)? 'h-[150px]' : 'h-0 border-transparent'} z-[2] absolute top-0 w-full bg-gray-300 transition-all duration-400 border-b-[1px] border-black overflow-hidden whitespace-nowrap`}>
-            <div>
+        <div className={`${(props?.guest)? 'h-[175px]' : 'h-0 border-transparent'} z-[2] absolute top-0 w-full bg-gray-300 transition-all duration-400 border-b-[1px] border-black overflow-hidden whitespace-nowrap`}>
+            <div className="font-bold text-[20px]">
                 How many will be coming with you ?
             </div>
             <div className="flex justify-center py-[20px]">
                 <div className="w-[175px]">
-                    <Button
-                    variant="contained"
-                    size="large"
-                    fullWidth
-                    onClick={handleClick}
-                    >
-                        Guests: {guest}
-                    </Button>
-                    <Menu
-                    anchorEl={anchorEl}
-                    open={openGuest}
-                    fullWidth
-                    onClose={handleCloseMenu}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                    >
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Guest</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={guest}
+                        label="Guest"
+                        onChange={handleChange}
+                      >
                         {
                             data?.map((value,index) => {
                                 return(
-                                    <MenuItem key={index} onClick={() => handleCloseMenu(value)} className="w-[175px] bg-black h-[25px]">
+                                    <MenuItem key={index} value={value} className="w-[175px] bg-black h-[40px]">
                                         <div className="flex justify-center w-full">
                                             {value}
                                         </div>
@@ -64,7 +45,8 @@ export default function GuestSelection(props) {
                                 )
                             })
                         }
-                    </Menu>
+                      </Select>
+                    </FormControl>
                 </div>
             </div>
             <div className="flex justify-center w-full h-full">

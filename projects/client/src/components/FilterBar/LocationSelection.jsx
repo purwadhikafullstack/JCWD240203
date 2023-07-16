@@ -1,12 +1,20 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getCountry } from "../../redux/features/country/countrySlice";
+import { setLocation } from "../../redux/features/property/propertySlice";
 
 export default function LocationSelection(props) {
     const country = useSelector((state) => state.country.country);
     const call = useDispatch();
 
     const handleClose = () => {
+        if(props.toggleLocation) {
+            props.toggleLocation(false);
+        }
+    }
+
+    const handleClick = (data) => {
+        call(setLocation(data));
         if(props.toggleLocation) {
             props.toggleLocation(false);
         }
@@ -21,7 +29,7 @@ export default function LocationSelection(props) {
                 console.log(error)
             }
         )
-    }, [])
+    }, [call])
 
     return(
         <div className={`${(props.location)? 'h-[375px]' : 'h-[0px] border-transparent'} z-[2] top-0 border-b-[1px] border-black absolute transition-all duration-400 w-full bg-gray-300 whitespace-nowrap overflow-hidden`}>
@@ -34,13 +42,13 @@ export default function LocationSelection(props) {
                         return(
                             <div key={index}>
                                 <div className="text-start font-bold text-[20px]">
-                                    Indonesia
+                                    {value.name}
                                 </div>
                                 <div className="grid grid-cols-3 md:grid-cols-4 gap-[10px]">
                                     {
                                         value?.cities?.map((value, index) => {
                                             return(
-                                                <div key={index} className="flex transition-all duration-400 hover:bg-gray-500 active:bg-gray-600 px-[10px] items-center justify-center w-full h-[50px] border-[1px] border-gray-700 rounded-[10px]">
+                                                <div key={index} onClick={() => handleClick(`${value.countryCode}/${value.name}`)} className="flex transition-all duration-400 hover:bg-gray-500 active:bg-gray-600 px-[10px] items-center justify-center w-full h-[50px] border-[1px] border-gray-700 rounded-[10px]">
                                                     {value?.name}
                                                 </div>
                                             )

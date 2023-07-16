@@ -95,7 +95,7 @@ export default function DateBox(props) {
             before: new Date()
           }}
           fromMonth={new Date()}
-          style={{scale: '0.80', margin: '0', padding: '0'}}
+          style={{scale: '0.83', margin: '0', padding: '0'}}
         />
       </div>
     </Box>

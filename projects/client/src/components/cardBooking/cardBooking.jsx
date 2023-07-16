@@ -20,7 +20,7 @@ export default function CardBooking() {
           </h4>
         </div>
         <div className="locationBox flex px-[10px] md:px-[30px]">
-          <LocationBox handleFocus={() => {}} handleBlur={() => {}} />
+          <LocationBox/>
         </div>
         <div className="dateBox relative w-full h-[100px] z-20">
           <div className="absolute w-full px-[10px] md:px-[30px] flex gap-[10px]">
@@ -35,10 +35,7 @@ export default function CardBooking() {
         <div className="guestBox relative w-full h-[100px] z-10">
           <div className="flex justify-center gap-[10px] px-[10px] md:px-[30px]">
             <div className="w-full">
-              <GuestBox label="ADULTS" />
-            </div>
-            <div className="w-full">
-              <GuestBox label="CHILDREN" />
+              <GuestBox label="GUESTS" />
             </div>
           </div>
         </div>

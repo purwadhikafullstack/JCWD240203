@@ -46,12 +46,11 @@ export default function DateSelection(props) {
                     <div>
                         Select dates
                     </div>
-                    {/* DayPicker DayPicker-Months DayPicker-Month DayPicker-wrapper */}
                     <div>
                         <DayPicker
                         selected={{
-                            from: (start !== '')? new Date(start) : new Date(),
-                            to: (end !== '')?new Date(end) : new Date()
+                            from: (start !== '')? new Date(start) : '',
+                            to: (end !== '')?new Date(end) : ''
                         }}
                         onSelect={handleSelect}
                         disabled={{before: new Date()}}
