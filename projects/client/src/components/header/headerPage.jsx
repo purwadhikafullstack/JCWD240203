@@ -6,26 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { onLogout } from "../../redux/features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Header(props) {
-    //const [searchInput, setSearchInput] = useState("");
-    //const [startDate, setStartDate] = useState(new Date());
-    //const [endDate, setEndDate] = useState(new Date());
-    //const [numberOfGuests, setNumberOfGuests] = useState(1);
     const [menu, toggleMenu] = useState(false);
     const currentUser = useSelector((state) => state.user.currentUser);
     const call = useDispatch();
-    //const [loading, setLoading] = useState(false);
-    // const router = useRouter();
-    // const selectionRange = {
-    //     startDate: startDate,
-    //     endDate: endDate,
-    //     key: "selection",
-    // };
-      
-    // const enableScroll = () => {
-    //     window.onscroll = function() {};
-    // }
+    const navigate = useNavigate();
 
     const onClickSignUp = () => {
         if(props.setShowRegister) {
@@ -38,32 +25,15 @@ export default function Header(props) {
         }
         toggleMenu(false)
     }
+    const onClickProfile = () => {
+        console.log(currentUser)
+        navigate(`/profile/${currentUser?.id}`)
+    }
+
     const onClickLogout = () => {
         call(onLogout());
         toggleMenu(false);
     }
-    //const call = useDispatch();
-
-    // const onLogout = () => {
-    //     call(logout())
-
-    // }
-        // function handleSelect(ranges) {
-        //     setStartDate(ranges.selection.startDate);
-        //     setEndDate(ranges.selection.endDate);
-        // }
-        // function search() {
-        //     setSearchInput("");
-        //     router.push({
-        //         pathname: "/search",
-        //         query: {
-        //             location: searchInput,
-        //             startDate: startDate.toISOString(),
-        //             endDate: endDate.toISOString(),
-        //             numberOfGuests,
-        //         },
-        //     });
-        // }
 
         return (
             <div>
@@ -106,7 +76,7 @@ export default function Header(props) {
                                 }
                             </div>
                             <div className={`${(!menu)? 'h-[0px] border-transparent' : 'h-auto'} absolute overflow-y-hidden flex flex-col right-[-10px] w-[100px] rounded-[5px] top-[50px] bg-white border-[1px] border-gray-400 z-10`}>
-                                <div className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                                <div onClick={onClickProfile} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     Profile
                                 </div>
                                 <div onClick={onClickLogin} className={`${(Object.keys(currentUser).length === 0)? '' : 'hidden'} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>

@@ -27,7 +27,8 @@ module.exports = {
                 email: email,
                 gender: gender,
                 birthDate: birthDate || null,
-                phoneNumber: phoneNumber || null
+                phoneNumber: phoneNumber || null,
+                status: 'unverified'
             });
 
             return res.status(200).send({
@@ -88,6 +89,7 @@ module.exports = {
                 isError: false,
                 message: `Welcome ${existingUser.username}`,
                 data: {
+                    id: existingUser.id,
                     username: existingUser.username,
                     email: existingUser.email,
                     phoneNumber: existingUser.phoneNumber,
@@ -95,7 +97,7 @@ module.exports = {
                     birthDate: existingUser.birthDate,
                     profilePicture: existingUser.profilePicture,
                     idCard: existingUser.idCard,
-                    states: existingUser.status
+                    status: existingUser.status
                 }
             })
         }
