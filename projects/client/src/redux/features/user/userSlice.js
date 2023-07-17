@@ -53,7 +53,7 @@ export const onLogout = () => (dispatch) => {
 
 export const keepLogin = () => (dispatch) => {
     try {
-        const user = JSON.parse(localStorage.getItem('user'), null, 2)
+        const user = JSON.parse(localStorage.getItem('user'), null, 2);
         dispatch(setUser(user));
 
         return Promise.resolve();
