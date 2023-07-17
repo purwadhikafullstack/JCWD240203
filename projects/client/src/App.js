@@ -33,7 +33,7 @@ function App() {
   }, []);
  
   return (
-    <div className="App h-[100vh]">
+    <div className="h-[100vh]">
       <Routes>
         <Route path={'/'} element={<LandingPage/>} />
         <Route path={'/browse'} element={<ProductPage/>}/>
