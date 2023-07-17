@@ -1,31 +1,19 @@
-import React, { useState } from "react";
 import { Box, TextField, MenuItem, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { setGuest } from "../../redux/features/property/propertySlice";
 import './guestBox.css'
 
-
-const guestOptions = [0, 1, 2, 3, 4, 5, 6];
-
-
 export default function GuestBox({ label }) {
-    const [isFocused, setIsFocused] = useState(false);
-    const [selectedGuest, setSelectedGuest] = useState(guestOptions[0]);
-
-    const handleBoxFocus = () => {
-        setIsFocused(true);
-    };
-
-    const handleBoxBlur = () => {
-        setIsFocused(false);
-    };
+    const data = ['1', '2', '3', '4', '5 +'];
+    const guest = useSelector((state) => state.property.guest);
+    const call = useDispatch();
 
     const handleGuestChange = (event) => {
-        setSelectedGuest(event.target.value);
+        call(setGuest(event.target.value));
     };
 
     return (
         <Box
-            onFocus={handleBoxFocus}
-            onBlur={handleBoxBlur}
             sx={{width: '100%' }}
         >
             <Typography
@@ -40,7 +28,7 @@ export default function GuestBox({ label }) {
                 select
                 variant="outlined"
                 fullWidth
-                value={selectedGuest}
+                value={guest}
                 onChange={handleGuestChange}
                 InputProps={{
                     classes: {
@@ -48,11 +36,13 @@ export default function GuestBox({ label }) {
                     },
                 }}
             >
-                {guestOptions.map((option) => (
-                    <MenuItem key={option} value={option}>
+                {
+                data.map((option, index) => (
+                    <MenuItem key={index} value={option}>
                         {option}
                     </MenuItem>
-                ))}
+                ))
+                }
             </TextField>
         </Box>
     );

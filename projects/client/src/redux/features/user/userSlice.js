@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import API from "../../../constant/URLAPI";
+import API from "../../../constants/URLAPI";
 import axios from "axios";
 
 const initialState = {
@@ -29,7 +29,7 @@ export const onRegister = (userData) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
 
 export const onLogin = (loginCredentials) => async(dispatch) => {
     try {
@@ -45,7 +45,12 @@ export const onLogin = (loginCredentials) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
+
+export const onLogout = () => (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch(setUser({}));;
+};
 
 export const keepLogin = () => (dispatch) => {
     try {
@@ -57,7 +62,7 @@ export const keepLogin = () => (dispatch) => {
     catch(error) {
         return Promise.reject(error)
     }
-}
+};
 
 export const { setUser } = userSlice.actions;
 export default userSlice.reducer;

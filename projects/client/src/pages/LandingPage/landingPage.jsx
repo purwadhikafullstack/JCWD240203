@@ -19,7 +19,7 @@ export default function LandingPage() {
     const [showLogin, setShowLogin] = useState(false);
 
     return (
-        <div className={`${(showLogin || showRegister)? 'overflow-y-hidden' : ''} w-full h-[100%] bg-white`}>
+        <div className={`${(showLogin || showRegister)? 'overflow-y-hidden' : 'overflow-y-auto'} removeScroll w-full h-[100%] bg-white`}>
             <Toaster/>
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
             <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
