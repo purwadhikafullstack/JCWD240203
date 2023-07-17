@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import { keepLogin } from "./redux/features/user/userSlice";
 import { useDispatch } from "react-redux";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -36,6 +37,7 @@ function App() {
       <Routes>
         <Route path={'/'} element={<LandingPage/>} />
         <Route path={'/browse'} element={<ProductPage/>}/>
+        <Route path={'/profile/:id'} element={<ProfilePage/>}/>
       </Routes>
     </div>
   );

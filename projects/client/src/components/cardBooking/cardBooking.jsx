@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from 'react-router-dom'
 import { Card, CardBody } from "@material-tailwind/react";
 import LocationBox from "../LocationBox/locationBox";
 import DateBox from "../DateBox/dateBox";
@@ -7,9 +7,14 @@ import './cardBooking.css'
 
 
 export default function CardBooking() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/browse');
+  }
 
   return (
-    <Card className="mt-6 mb-12 w-full md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto z-10 drop-shadow-2xl bg-white rounded-lg">
+    <Card className="mt-6 mb-12 w-full md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto drop-shadow-2xl bg-white rounded-lg">
       <CardBody>
         <div className="typography">
           <h5 color="blue-gray" className="mb-2 text-6xl font-bold text-gray-900 ">
@@ -39,10 +44,10 @@ export default function CardBooking() {
             </div>
           </div>
         </div>
-        <div>
-          <button className="searchButton py-[8px] my-[15px] text-2xl font-sans rounded-[10px] bg-green-600 text-white font-extrabold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+        <div className='flex justify-center'>
+          <div onClick={handleClick} className="searchButton py-[8px] my-[15px] text-2xl font-sans rounded-[10px] bg-green-600 text-white font-extrabold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
             Search
-          </button>
+          </div>
         </div>
       </CardBody>
     </Card>

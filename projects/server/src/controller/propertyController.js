@@ -15,7 +15,7 @@ module.exports = {
             const result = await property.findAll({
                 include: [
                     {
-                        model: room
+                        model: room,
                     },
                     {
                         model: propertyImages
@@ -23,6 +23,9 @@ module.exports = {
                     {
                         model: category
                     }
+                ],
+                order: [
+                    ['rooms', 'price', 'ASC']
                 ],
                 limit: limit*page || 5
             });

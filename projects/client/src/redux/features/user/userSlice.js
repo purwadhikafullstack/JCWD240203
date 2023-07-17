@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import API from "../../../constants/URLAPI";
 import axios from "axios";
 
 const initialState = {
@@ -18,7 +17,7 @@ const userSlice = createSlice({
 
 export const onRegister = (userData) => async(dispatch) => {
     try {
-        const response = await axios.post(`${API}/users`, {
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users`, {
             username: userData.username,
             email: userData.email,
             password: userData.password
@@ -33,7 +32,7 @@ export const onRegister = (userData) => async(dispatch) => {
 
 export const onLogin = (loginCredentials) => async(dispatch) => {
     try {
-        const response = await axios.post(`${API}/users/login`, {
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/login`, {
             username: loginCredentials.username,
             password: loginCredentials.password
         });

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import API from "../../../constants/URLAPI";
 import axios from "axios";
 
 const initialState = {
@@ -18,7 +17,7 @@ const countrySlice = createSlice({
 
 export const getCountry = () => async(dispatch) => {
     try {
-        const response = await axios.get(`${API}/countries`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/countries`);
 
         dispatch(setCountry(response.data.data));
         return Promise.resolve(response);
