@@ -1,8 +1,11 @@
 const express = require('express');
 const { checkSchema, validationResult } = require('express-validator');
 const { users } = require('../controller');
+const Authorization = require('../middleware/Authorization');
 
 const Router = express.Router();
+
+Router.get('/:id', users.getUser);
 
 Router.post('/', async(req, res, next) => {
     await checkSchema({

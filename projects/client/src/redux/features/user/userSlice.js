@@ -46,6 +46,21 @@ export const onLogin = (loginCredentials) => async(dispatch) => {
     }
 };
 
+export const getUser = (data) => async() => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${data.id}`, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        })
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
 export const onLogout = () => (dispatch) => {
     localStorage.removeItem('user');
     dispatch(setUser({}));;

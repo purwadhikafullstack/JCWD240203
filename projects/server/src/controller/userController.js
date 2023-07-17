@@ -1,5 +1,7 @@
 const db = require('../../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const user = db.user;
 
 module.exports = {
@@ -85,6 +87,62 @@ module.exports = {
                 })
             }
 
+            if(existingUser.username !== username) {
+                if(existingUser.email !== username) {
+                    return res.status(400).send({
+                        isError: true,
+                        message: 'incorrent credentials !',
+                        data: null
+                    }) 
+                }
+            }
+
+            const token = jwt.sign({
+                id: existingUser.id,
+                username: existingUser.username,
+                email: existingUser.email,
+                phoneNumber: existingUser.phoneNumber,
+                gender: existingUser.gender,
+                birthDate: existingUser.birthDate,
+                profilePicture: existingUser.profilePicture,
+                idCard: existingUser.idCard,
+                status: existingUser.status
+            }, process.env.KEY);
+
+            return res.status(200).send({
+                isError: false,
+                message: `Welcome ${existingUser.username}`,
+                data: {
+                    id: existingUser.id,
+                    username: existingUser.username,
+                    email: existingUser.email,
+                    phoneNumber: existingUser.phoneNumber,
+                    gender: existingUser.gender,
+                    birthDate: existingUser.birthDate,
+                    profilePicture: existingUser.profilePicture,
+                    idCard: existingUser.idCard,
+                    status: existingUser.status,
+                    token: token
+                }
+            })
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            });
+        }
+    },
+    getUser: async(req, res) => {
+        try {
+            const id = req.params.id;
+            const existingUser = await user.findOne({
+                where: {
+                    id: id
+                }
+            });
+
             return res.status(200).send({
                 isError: false,
                 message: `Welcome ${existingUser.username}`,
@@ -106,7 +164,7 @@ module.exports = {
                 isError: true,
                 message: error.message,
                 data: null
-            });
+            })
         }
     }
 }
