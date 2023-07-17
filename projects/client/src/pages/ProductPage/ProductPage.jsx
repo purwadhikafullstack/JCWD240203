@@ -8,6 +8,8 @@ import FilterBar from "../../components/FilterBar/FilterBar";
 
 export default function ProductPage() {
     const limit = 8;
+    const [showRegister, setShowRegister] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
     const properties = useSelector((state) => state.property.property);
     const start = useSelector((state) => state.property.start);
     const end = useSelector((state) => state.property.end);
@@ -47,7 +49,7 @@ export default function ProductPage() {
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto removeScroll">
             <Toaster/>
-            <Header/>
+            <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
             <div className="flex flex-col flex-grow w-full">
                 <FilterBar/>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[10px] w-full h-full my-[10px] px-[5px] sm:px-[20px] md:px-[30px] lg:px-[50px]">

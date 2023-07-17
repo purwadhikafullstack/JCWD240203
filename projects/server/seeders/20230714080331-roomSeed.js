@@ -59,6 +59,54 @@ module.exports = {
         description: 'A standard Javanese Limas House',
         capacity: 2,
         stock: 3
+      },
+      {
+        propertyId: 6,
+        name: '2 bed cabin',
+        price: 1000000,
+        description: 'A cabin with 2 beds',
+        capacity: 2,
+        stock: 3
+      },
+      {
+        propertyId: 7,
+        name: 'A room with twin beds',
+        price: 1200000,
+        description: 'A nice medium room with 2 beds, cozy and comfy.',
+        capacity: 2,
+        stock: 3
+      },
+      {
+        propertyId: 8,
+        name: 'Small Studio Villa',
+        price: 500000,
+        description: 'A small studio with 1 bed.',
+        capacity: 1,
+        stock: 10
+      },
+      {
+        propertyId: 8,
+        name: 'Medium Studio Villa',
+        price: 750000,
+        description: 'A small studio with 2 bed.',
+        capacity: 2,
+        stock: 5
+      },
+      {
+        propertyId: 9,
+        name: 'Standard Villa',
+        price: 1050000,
+        description: 'A room with a queen sized bed.',
+        capacity: 2,
+        stock: 3
+      },
+      {
+        propertyId: 10,
+        name: 'Executive Room',
+        price: 1800000,
+        description: 'A spacious room with a queen sized bed, a bathub, and a private kitchen',
+        capacity: 2,
+        stock: 3
       }
     ], {});
   },

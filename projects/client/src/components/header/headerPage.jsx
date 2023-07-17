@@ -105,7 +105,10 @@ export default function Header(props) {
                                     <UserCircleIcon className="h-8 w-8" />
                                 }
                             </div>
-                            <div className={`${menu? 'h-[35px]' : 'h-[0px] border-transparent'} transition-all duration-300 absolute overflow-y-hidden flex flex-col right-[-10px] w-[100px] rounded-[5px] top-[50px] bg-white border-[1px] border-gray-400 z-10`}>
+                            <div className={`${(!menu)? 'h-[0px] border-transparent' : 'h-auto'} absolute overflow-y-hidden flex flex-col right-[-10px] w-[100px] rounded-[5px] top-[50px] bg-white border-[1px] border-gray-400 z-10`}>
+                                <div className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                                    Profile
+                                </div>
                                 <div onClick={onClickLogin} className={`${(Object.keys(currentUser).length === 0)? '' : 'hidden'} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     Log In
                                 </div>

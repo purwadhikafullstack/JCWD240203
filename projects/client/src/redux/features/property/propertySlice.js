@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import API from "../../../constants/URLAPI";
 
 const initialState = {
     property: [],
@@ -38,7 +37,7 @@ const propertySlice = createSlice({
 
 export const getProperty = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${API}/properties?location=${initialState.location}&&start=${initialState.start}&&end=${initialState.end}&&page=${data.page || null}&&limit=${data.limit || null}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties?location=${initialState.location}&&start=${initialState.start}&&end=${initialState.end}&&page=${data.page || null}&&limit=${data.limit || null}`);
 
         dispatch(setProperty(response.data.data.rows));
         dispatch(setTotalProperty(response.data.data.count));
