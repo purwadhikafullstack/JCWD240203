@@ -1,7 +1,7 @@
 import axios from "axios";
 import "./App.css";
 import logo from "./logo.svg"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
@@ -33,7 +33,7 @@ function App() {
   }, []);
  
   return (
-    <div className="h-[100vh]">
+    <div className="App h-[100vh]">
       <Routes>
         <Route path={'/'} element={<LandingPage/>} />
         <Route path={'/browse'} element={<ProductPage/>}/>

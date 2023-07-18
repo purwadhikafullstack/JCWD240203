@@ -1,6 +1,7 @@
 const db = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { deleteFiles } = require('../helper/deleteFiles');
 require('dotenv').config();
 const user = db.user;
 
@@ -29,6 +30,7 @@ module.exports = {
                 email: email,
                 gender: gender,
                 birthDate: birthDate || null,
+                profilePicture: `${process.env.LINK}/Default/DefaultProfile.png`,
                 phoneNumber: phoneNumber || null,
                 status: 'unverified'
             });
@@ -99,13 +101,6 @@ module.exports = {
 
             const token = jwt.sign({
                 id: existingUser.id,
-                username: existingUser.username,
-                email: existingUser.email,
-                phoneNumber: existingUser.phoneNumber,
-                gender: existingUser.gender,
-                birthDate: existingUser.birthDate,
-                profilePicture: existingUser.profilePicture,
-                idCard: existingUser.idCard,
                 status: existingUser.status
             }, process.env.KEY);
 
@@ -116,6 +111,7 @@ module.exports = {
                     id: existingUser.id,
                     username: existingUser.username,
                     email: existingUser.email,
+                    desc: existingUser.desc,
                     phoneNumber: existingUser.phoneNumber,
                     gender: existingUser.gender,
                     birthDate: existingUser.birthDate,
@@ -140,23 +136,14 @@ module.exports = {
             const existingUser = await user.findOne({
                 where: {
                     id: id
-                }
+                },
+                attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
             });
 
             return res.status(200).send({
                 isError: false,
                 message: `Welcome ${existingUser.username}`,
-                data: {
-                    id: existingUser.id,
-                    username: existingUser.username,
-                    email: existingUser.email,
-                    phoneNumber: existingUser.phoneNumber,
-                    gender: existingUser.gender,
-                    birthDate: existingUser.birthDate,
-                    profilePicture: existingUser.profilePicture,
-                    idCard: existingUser.idCard,
-                    status: existingUser.status
-                }
+                data: existingUser
             })
         }
         catch(error) {
@@ -165,6 +152,76 @@ module.exports = {
                 message: error.message,
                 data: null
             })
+        }
+    },
+    updateUser: async(req, res) => {
+        const t = await db.sequelize.transaction();
+        const id = req.params.id;
+        const newUsername = req.body.newUsername;
+        const newEmail = req.body.newEmail;
+        const newPhoneNumber = req.body.newPhoneNumber;
+        const newDesc = req.body.newDesc;
+        const newPFP = req?.files?.newPFP;
+        const newId = req?.files?.newId;
+        try {
+            const dataExist = await user.findOne({
+                where : {
+                    id: id
+                }
+            })
+
+            if(!dataExist) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'User does not exist !',
+                    data: null
+                })
+            }
+
+            await user.update({
+                username: newUsername,
+                email: newEmail,
+                desc: newDesc,
+                phoneNumber: newPhoneNumber,
+                profilePicture: (newPFP)? process.env.LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
+                idCard: (newId)? process.env.LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
+            }, {
+                where: {
+                    id: id
+                },
+                transaction: t
+            })
+            
+            let old = [];
+            for(let i in req?.files) {
+                if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.LINK + '/Default/DefaultProfile.png') {
+                    old.push({path: 'Public/' + dataExist.profilePicture.split(`${process.env.LINK}/`)[1]})
+                }
+                else if(i === 'newId' && dataExist.idCard) {
+                    old.push({path: 'Public/' + dataExist.idCard.split(`${process.env.LINK}/`)[1]})
+                }
+            }
+
+            await t.commit();
+
+            if(old.length > 0) {
+                deleteFiles(old);
+            }
+            
+            return res.status(200).send({
+                isError: false,
+                message: 'Changes saved !',
+                data: null
+            });
+        }
+        catch(error) {
+            for(let i in req?.files) {deleteFiles(req.files[i])};
+            await t.rollback()
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            });
         }
     }
 }

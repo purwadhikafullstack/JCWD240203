@@ -48,16 +48,49 @@ export const onLogin = (loginCredentials) => async(dispatch) => {
 
 export const getUser = (data) => async() => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${data.id}`, {
-            headers: {
-                authorization: `Bearer ${data.token}`
-            }
-        })
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${data.id}`)
 
         return Promise.resolve(response);
     }
     catch(error) {
         return Promise.reject(error);
+    }
+}
+
+export const updateUser = (data) => async(dispatch) => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/${data.id}`, {
+            newUsername: data.newUsername,
+            newEmail: data.newEmail,
+            newDesc: data.newDesc,
+            newPhoneNumber: data.newPhoneNumber,
+            newPFP: data.newPFP,
+            newId: data.newId
+        }, {
+            headers: {
+                authorization: `Bearer ${data.token}`,
+                "Content-Type": "multipart/form-data"
+            }
+        })
+
+        setTimeout(() => {
+            dispatch(getUser({id: data.id, token: data.token})).then(
+                (response) => {
+                    const token = JSON.parse(localStorage.getItem('user')).token;
+                    response.data.data.token = token;
+                    localStorage.setItem('user', JSON.stringify(response.data.data));
+                    dispatch(setUser(response.data.data));
+                },
+                (error) => {
+                    return Promise.reject(error);
+                }
+            )
+        }, 200);
+
+        return Promise.resolve(response)
+    }
+    catch(error) {
+        return Promise.reject(error)
     }
 }
 

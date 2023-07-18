@@ -1,6 +1,7 @@
 const express = require('express');
 const { checkSchema, validationResult } = require('express-validator');
 const { users } = require('../controller');
+const { uploadUserImage } = require('../middleware/upload');
 const Authorization = require('../middleware/Authorization');
 
 const Router = express.Router();
@@ -62,5 +63,7 @@ Router.post('/login', async(req, res, next) => {
         next();
     }
 }, users.login);
+
+Router.patch('/:id', Authorization.isOwner, uploadUserImage, users.updateUser);
 
 module.exports = Router;
