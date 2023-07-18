@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import { keepLogin } from "./redux/features/User/userSlice";
 import { useDispatch } from "react-redux";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
@@ -38,6 +39,7 @@ function App() {
         <Route path={'/'} element={<LandingPage/>} />
         <Route path={'/browse'} element={<ProductPage/>}/>
         <Route path={'/profile/:id'} element={<ProfilePage/>}/>
+        <Route path={'/property/:id'} element={<ProductDetail/>}/>
       </Routes>
     </div>
   );
