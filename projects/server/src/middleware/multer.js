@@ -4,17 +4,18 @@ const fs = require('fs');
 const defaultPath = 'Public';
 const storage = multer.diskStorage({
     destination: async(req, file, cb) => {
-        let directoryExists = fs.existsSync(`${defaultPath}/ProfilePicture`)
+        const folder = (file.fieldname === 'newPFP')? 'ProfilePicture' : (file.fieldname === 'newId')? 'IdCards' : 'Property';
+        let directoryExists = fs.existsSync(`${defaultPath}/${folder}`)
         if(!directoryExists) {
-            await fs.promises.mkdir(`${defaultPath}/ProfilePicture`, {
+            await fs.promises.mkdir(`${defaultPath}/${folder}`, {
                 recursive: true
             });
         }
         
-        cb(null, `${defaultPath}/ProfilePicture`);
+        cb(null, `${defaultPath}/${folder}`);
     },
     filename: (req, file, cb) => {
-        cb(null, 'PFP-' + Date.now() + '.' + file.mimetype.split('.')[1])
+        cb(null, 'PIMG-' + Date.now() + '.' + file.mimetype.split('/')[1])
     }
 });
 

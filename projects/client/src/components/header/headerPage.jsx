@@ -63,12 +63,11 @@ export default function Header(props) {
                                 <MenuRoundedIcon className="h-6 w-6" />
                                 {
                                     (Object.keys(currentUser).length !== 0) ? 
-                                    <div className="relative h-8 w-8">
+                                    <div className="relative h-[35px] w-[35px] overflow-hidden">
                                         <img
                                             alt=""
                                             src={currentUser.profilePicture}
-                                            layout="fill"
-                                            className="rounded-full"
+                                            className="rounded-full w-[35px] h-[35px]"
                                         />
                                     </div>
                                     :
@@ -89,22 +88,6 @@ export default function Header(props) {
                         </div>
                     </div>
                 </header>
-                {/* {active && (
-                    // <div className="relative z-[60]">
-                    //     <p
-                    //         className="fixed right-4 -mt-2 flex cursor-pointer items-center rounded-lg border-2 bg-white px-5 py-2 text-lg font-semibold text-gray-700 shadow-md transition duration-300 ease-in-out hover:scale-105 active:scale-95"
-                    //         onClick={() => {
-                    //             setLoading(true);
-                    //             setTimeout(() => {
-                    //                 onLogout();
-                    //             }, 1000);
-                    //         }}
-                    //     >
-                    //         <LogoutRoundedIcon className="mr-2 -mt-[2px] h-7 w-7 text-airbnb" />
-                    //         {loading ? "Logging Out..." : "Logout"}
-                    //     </p>
-                    // </div>
-                )} */}
             </div>
         )
     }

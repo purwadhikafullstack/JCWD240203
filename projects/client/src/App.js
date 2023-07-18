@@ -1,7 +1,7 @@
 import axios from "axios";
 import "./App.css";
 import logo from "./logo.svg"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
