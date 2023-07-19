@@ -1,6 +1,6 @@
 // { imageUrl, title, description, bedType, date, price }
-import './TrendingCarausel.css'
-import PropertyCard from '../propertyCard/propertyCard';
+import './TrendingCarousel'
+import PropertyCard from '../PropertyCard/propertyCard';
 
 export default function TrendingCarausel() {
     const properties = [
@@ -39,24 +39,18 @@ export default function TrendingCarausel() {
     ];
   
     return (
-      <div className="flex flex-col justify-center items-center overflow-hidden md:justify-start md:items-start mx-[20px]">
+      <div className="flex flex-col items-center overflow-hidden mx-[20px]">
         <div className="trending text-left text-[60px] font-bold">
           Trending stays in Indonesia
         </div>
         <div className="these text-left text-[48px] font-thin">
           These homes get lots attention on Rentify
         </div>
-        <div className="flex overflow-x-auto gap-[50px]">
+        <div className="flex w-full overflow-x-auto overflow-y-hidden gap-[25px] px-[20px] py-[15px]">
           {properties.map((property, index) => (
-            <PropertyCard
-              key={index}
-              imageUrl={property.imageUrl}
-              title={property.title}
-              description={property.description}
-              bedType={property.bedType}
-              date={property.date}
-              price={property.price}
-            />
+            <div key={index} className='min-w-[250px] h-[275px] md:h-[325px]'>
+              <PropertyCard/>
+            </div>
           ))}
         </div>
       </div>

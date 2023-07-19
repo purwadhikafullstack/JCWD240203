@@ -5,7 +5,6 @@ import DateSelection from "./DateSelection";
 import LocationSelection from "./LocationSelection";
 import GuestSelection from "./GuestSelection";
 
-
 export default function FilterBar() {
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Des']
     const [location, toggleLocation] = useState(false);
