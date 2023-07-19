@@ -63,6 +63,8 @@ export const updateUser = (data) => async(dispatch) => {
             newUsername: data.newUsername,
             newEmail: data.newEmail,
             newDesc: data.newDesc,
+            gender: data.gender,
+            birthDate: data.birthDate,
             newPhoneNumber: data.newPhoneNumber,
             newPFP: data.newPFP,
             newId: data.newId

@@ -1,54 +1,51 @@
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import PropertyCard from "../../components/PropertyCard/propertyCard";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { BiSolidDownload } from "react-icons/bi";
 import { useState } from "react";
+import { DayPicker } from "react-day-picker";
+import { format } from "date-fns";
+import 'react-day-picker/dist/style.css';
 
 export default function OwnerCard(props) {
     const [showPopup, setShowPopup] = useState((props?.status === 'verified')?  false : true);
 
-    const handleClose = () => {
-        setShowPopup(false);
-    }
+    const formatDate = (date) => {return format(date, "MM/dd/yyyy")};
+
+    const handleClose = () => {setShowPopup(false)};
 
     const handleChange = (event, type) => {
         if(type === 'username') {
-            if(props.setNewUsername) {
-                props.setNewUsername(event.target.value);
-            }
+            if(props.setNewUsername) {props.setNewUsername(event.target.value)};
         }
         else if(type === 'email') {
-            if(props.setNewEmail) {
-                props.setNewEmail(event.target.value);
-            }
+            if(props.setNewEmail) {props.setNewEmail(event.target.value)};
         }
         else if(type === 'phoneNumber') {
-            if(props.setNewPhoneNumber) {
-                props.setNewPhoneNumber(event.target.value);
-            }
+            if(props.setNewPhoneNumber) {props.setNewPhoneNumber(event.target.value)};
         }
     }
 
     const handleChangeDesc = (e) => {
-        if(props.setDesc) {props.setDesc(e.target.value)}
+        if(props.setDesc) {props.setDesc(e.target.value)};
+    }
+
+    const changeGender = (e) => {
+        if(props?.setGender) {props.setGender(e.target.value)};
     }
 
     const handleUploadPFP = (event) => {
-        if(props.setNewPFP) {
-            props.setNewPFP(event.target.files[0]);
-        }
+        if(props.setNewPFP) {props.setNewPFP(event.target.files[0])};
     }
 
     const handleUploadId = (event) => {
-        if(props.setNewId) {
-            props.setNewId(event.target.files[0]);
-        }
+        if(props.setNewId) {props.setNewId(event.target.files[0])};
     }
 
+    const handleChangeBirth = (date) => {if(props?.setBirthDate) {props.setBirthDate(formatDate(date))}};
+
     const handleClick = () => {
-        if(props.onSaveChange) {
-            props.onSaveChange()
-        }
+        if(props.onSaveChange) {props.onSaveChange()};
     }
 
     return(
@@ -106,11 +103,11 @@ export default function OwnerCard(props) {
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row w-[300px] md:w-full justify-center items-center border-b-[1px] border-gray-500 px-[10px] py-[5px] gap-[50px]">
-                    <div className={`flex flex-col gap-[10px] justify-center items-center w-[300px] px-[10px] py-[5px] ${(props.newId)? '' : 'bg-red-500/50 border-[1px] border-red-900'}`}>
+                    <div className={`flex flex-col gap-[10px] justify-center items-center px-[10px] py-[5px] ${(props.newId)? '' : 'bg-red-500/50 border-[1px] border-red-900'}`}>
                         <div className="text-[14px]">
                             Id Card:
                         </div>
-                        <div className="w-[270px] h-[175px]">
+                        <div className="w-[225px] h-[175px]">
                             {
                                 (typeof props?.newId === 'string' || props?.newId === null) ?
                                 <img src={props?.newId} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600"/>
@@ -130,30 +127,43 @@ export default function OwnerCard(props) {
                     </div>
                     <div className="flex flex-col gap-[40px] justify-center items-center md:items-start w-full md:w-[auto]">
                         <div className="flex flex-col gap-[10px] justify-center md:justify-start md:w-[200px] text-start">
-                            <TextField size="small" label='Email' value={props?.newEmail || ''} sx={{width: '200px'}}/>
+                            <div className="h-[55px]">
+                                <TextField onChange={(e) => handleChange(e, 'email')} size="small" label='Email' value={props?.newEmail || ''} sx={{width: '200px'}}/>
+                                <div className={`${(!/^(?=.*[@]).*\.com$/g.test(props.newEmail))? '' : 'hidden'} text-[12px] text-red-600`}>
+                                    Must be valid email !
+                                </div>
+                            </div>
                             <div className={`${(props?.status === 'verified')? 'hidden' : ''} flex justify-center items-center h-[40px] w-[200px] bg-yellow-400 rounded-[5px] transition-all duration-400 hover:bg-yellow-500 active:scale-95 active:bg-yellow-600 cursor-pointer`}>
                                 Verify Email !
                             </div>
                         </div>
-                        <div className="w-[200px]">
-                            <TextField size="small" label='Phone number' value={props?.newPhoneNumber || ''}/>
+                        <div className="flex flex-col gap-[10px] w-[200px]">
+                            <TextField onChange={(e) => handleChange(e, 'phoneNumber')} size="small" label='Phone number' value={props?.newPhoneNumber || ''}/>
+                            <FormControl fullWidth>
+                                <InputLabel>Gender</InputLabel>
+                                <Select size="small" label='Gender' value={props?.gender} onChange={changeGender}>
+                                    <MenuItem value='Male'>Male</MenuItem>
+                                    <MenuItem value='Female'>Female</MenuItem>
+                                </Select>
+                            </FormControl>
                         </div>
+                    </div>
+                    <div className="flex flex-col justify-start items-center md:items-start w-[400px] h-full">
+                        <DayPicker 
+                        selected={(isNaN(new Date(props?.birthDate)))? '' : new Date (props?.birthDate)}
+                        defaultMonth={(isNaN(new Date(props?.birthDate)))? '' : new Date (props?.birthDate)}
+                        captionLayout="dropdown" fromYear={2000} toYear={new Date().getFullYear()}
+                        onDayClick={handleChangeBirth}
+                        footer={`Birthdate: ${(isNaN(new Date(props?.birthDate)))? 'not selected' : formatDate(new Date (props?.birthDate))}`}
+                        style={{scale: '0.95' ,padding: 0, margin: 0}}
+                        />
                     </div>
                 </div>
                 <div className="flex flex-col justify-start items-start w-[300px] md:w-full px-[10px] py-[5px]">
                     <div>
-                        your listings
+                        Your listings
                     </div>
                     <div className="w-full flex gap-[25px] overflow-x-auto p-[10px]">
-                        <div className="min-w-[250px] h-[300px]">
-                            <PropertyCard/>
-                        </div>
-                        <div className="min-w-[250px] h-[300px]">
-                            <PropertyCard/>
-                        </div>
-                        <div className="min-w-[250px] h-[300px]">
-                            <PropertyCard/>
-                        </div>
                         <div className="min-w-[250px] h-[300px]">
                             <PropertyCard/>
                         </div>

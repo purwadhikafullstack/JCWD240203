@@ -160,6 +160,8 @@ module.exports = {
         const newUsername = req.body.newUsername;
         const newEmail = req.body.newEmail;
         const newPhoneNumber = req.body.newPhoneNumber;
+        const gender = req.body.gender;
+        const birthDate = req.body.birthDate;
         const newDesc = req.body.newDesc;
         const newPFP = req?.files?.newPFP;
         const newId = req?.files?.newId;
@@ -178,14 +180,20 @@ module.exports = {
                 })
             }
 
-            await user.update({
+            const fields = {
                 username: newUsername,
                 email: newEmail,
                 desc: newDesc,
                 phoneNumber: newPhoneNumber,
+                gender: gender,
+                birthDate: birthDate,
                 profilePicture: (newPFP)? process.env.LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
                 idCard: (newId)? process.env.LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
-            }, {
+            }
+
+            if(newEmail !== dataExist.email) {fields.status = 'unverified'};
+            
+            await user.update(fields, {
                 where: {
                     id: id
                 },
