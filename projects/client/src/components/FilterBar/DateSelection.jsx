@@ -83,7 +83,7 @@ export default function DateSelection(props) {
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <div onClick={handleClose} className="closeButton text-[25px] text-white flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-600 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl mb-6">
+                    <div onClick={handleClose} className="closeButton text-[25px] text-white flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl mb-6">
                         Close
                     </div>
                 </div>

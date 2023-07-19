@@ -1,5 +1,5 @@
 import React from "react";
-import './PropertyCard.css'
+import './propertyCard.css'
 
 export default function PropertyCard(props) {
   return (
