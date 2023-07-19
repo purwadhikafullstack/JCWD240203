@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       room.hasMany(models.price, {
         foreignKey: 'roomId'
       });
+
+      room.hasMany(models.transaction, {
+        foreignKey: 'roomId'
+      });
     }
   }
   room.init({

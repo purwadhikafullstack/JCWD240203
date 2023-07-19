@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
       property.hasMany(models.review, {
         foreignKey: 'propertyId'
       });
+
+      property.hasMany(models.transaction, {
+        foreignKey: 'propertyId'
+      });
     }
   }
   property.init({
