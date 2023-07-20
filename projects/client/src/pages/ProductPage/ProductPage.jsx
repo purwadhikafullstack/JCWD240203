@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProperty } from "../../redux/features/property/propertySlice";
 import { Toaster, toast } from "react-hot-toast";
 import FilterBar from "../../components/FilterBar/FilterBar";
+import Footer from "../../components/footerRentify/footerPage";
 import "./ProductPage.css"
 
 
@@ -70,6 +71,7 @@ export default function ProductPage() {
                     }
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
