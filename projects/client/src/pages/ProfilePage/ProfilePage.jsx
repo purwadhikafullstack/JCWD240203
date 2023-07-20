@@ -21,7 +21,7 @@ export default function ProfilePage() {
     const [newPhoneNumber, setNewPhoneNumber]= useState('');
     const [newEmail, setNewEmail]= useState('');
     const [newPFP, setNewPFP] = useState('');
-    const [newId, setNewId] = useState('')
+    const [newId, setNewId] = useState('');
     const [status, setStatus] = useState('');
     const [gender, setGender] = useState('');
     const [birthDate, setBirthDate] = useState('');
@@ -88,7 +88,7 @@ export default function ProfilePage() {
 
     useEffect(() => {
         setValue()
-    }, [user])
+    }, [user, params.id])
 
     return(
         <div className="flex flex-col w-full h-full overflow-hidden">

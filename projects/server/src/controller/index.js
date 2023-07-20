@@ -1,9 +1,11 @@
-const users = require('./userController');
+const usersPOST = require('./userControllerPOST');
+const usersGET = require('./userControllerGET');
 const properties = require('./propertyController');
 const countries = require('./countryController');
 
 module.exports = {
-    users,
+    usersPOST,
+    usersGET,
     properties,
     countries
 }

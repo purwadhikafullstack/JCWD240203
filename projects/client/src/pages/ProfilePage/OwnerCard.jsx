@@ -9,6 +9,7 @@ import 'react-day-picker/dist/style.css';
 
 export default function OwnerCard(props) {
     const [showPopup, setShowPopup] = useState((props?.status === 'verified')?  false : true);
+    const [currentId, setCurrentId] = useState(props?.newId);
 
     const formatDate = (date) => {return format(date, "MM/dd/yyyy")};
 
@@ -164,7 +165,7 @@ export default function OwnerCard(props) {
                         <div className="font-bold text-[18px]">
                             Your listings
                         </div>
-                        <button className="flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer">
+                        <button className={`${(props?.status === 'unverified' || !currentId)? 'hidden' : ''} flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer`}>
                             Add property
                         </button>
                     </div>
@@ -172,7 +173,7 @@ export default function OwnerCard(props) {
                         {
                             props?.listings?.map((value, index) => {
                                 return(
-                                    <div className="min-w-[250px] h-[300px]">
+                                    <div key={index} className="min-w-[250px] h-[300px]">
                                         <ListingCard data={value}/>
                                     </div>
                                 )

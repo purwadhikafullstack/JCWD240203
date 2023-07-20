@@ -18,7 +18,8 @@ export default function ListingCard(props) {
                 </div>
                 <div className="text-start text-[14px]">
                     <div className="flex gap-[5px] items-center justify-center">
-                        <AiFillStar size={20}/> 0.00
+                        {console.log(props?.data)}
+                        <AiFillStar size={20}/> {props?.data?.average}
                     </div>
                 </div>
             </div>

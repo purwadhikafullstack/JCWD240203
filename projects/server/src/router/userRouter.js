@@ -1,12 +1,12 @@
 const express = require('express');
 const { checkSchema, validationResult } = require('express-validator');
-const { users } = require('../controller');
+const { usersPOST, usersGET } = require('../controller');
 const { uploadUserImage } = require('../middleware/upload');
 const Authorization = require('../middleware/Authorization');
 
 const Router = express.Router();
 
-Router.get('/:id', users.getUser);
+Router.get('/:id', usersGET.getUser);
 
 Router.post('/', async(req, res, next) => {
     await checkSchema({
@@ -36,7 +36,7 @@ Router.post('/', async(req, res, next) => {
     else {
         next();
     }
-},users.register);
+},usersPOST.register);
 
 Router.post('/login', async(req, res, next) => {
     await checkSchema({
@@ -62,8 +62,8 @@ Router.post('/login', async(req, res, next) => {
     else {
         next();
     }
-}, users.login);
+}, usersPOST.login);
 
-Router.patch('/:id', Authorization.isOwner, uploadUserImage, users.updateUser);
+Router.patch('/:id', Authorization.isOwner, uploadUserImage, usersGET.updateUser);
 
 module.exports = Router;

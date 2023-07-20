@@ -16,6 +16,7 @@ module.exports = {
             }
 
             token = token.split(' ')[1];
+            console.log(token);
             const verify = jwt.verify(token, process.env.KEY);
             
             if(!verify || verify.id !== Number(id)) {

@@ -15,6 +15,12 @@ module.exports = {
         propertyId: 2,
         rating: 5,
         description: 'I had a wonderful stay, would come again !'
+      },
+      {
+        userId: 1,
+        propertyId: 2,
+        rating: 5,
+        description: 'I had a wonderful stay, would come again !'
       }
     ], {});
   },
