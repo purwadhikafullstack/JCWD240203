@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderDetail from "../../components/HeaderDetai/HeaderDetail";
+import HeaderDetail from "../../components/HeaderDetail/HeaderDetail";
 import { AiFillStar } from "react-icons/ai";
 import GalleryProperties from "../../components/GalleryProperties/GalleryProperties";
 import { LiaBedSolid } from 'react-icons/lia'
