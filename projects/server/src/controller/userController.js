@@ -4,6 +4,10 @@ const jwt = require('jsonwebtoken');
 const { deleteFiles } = require('../helper/deleteFiles');
 require('dotenv').config();
 const user = db.user;
+const property = db.property;
+const propertyImages = db.propertyImages;
+const category = db.category;
+const review = db.review;
 
 module.exports = {
     register: async(req, res) => {
@@ -104,22 +108,14 @@ module.exports = {
                 status: existingUser.status
             }, process.env.KEY);
 
+            existingUser.token = token;
+            existingUser = JSON.parse(JSON.stringify(existingUser)); // stringify and parse needed to delete password key
+            delete existingUser.password;
+
             return res.status(200).send({
                 isError: false,
                 message: `Welcome ${existingUser.username}`,
-                data: {
-                    id: existingUser.id,
-                    username: existingUser.username,
-                    email: existingUser.email,
-                    desc: existingUser.desc,
-                    phoneNumber: existingUser.phoneNumber,
-                    gender: existingUser.gender,
-                    birthDate: existingUser.birthDate,
-                    profilePicture: existingUser.profilePicture,
-                    idCard: existingUser.idCard,
-                    status: existingUser.status,
-                    token: token
-                }
+                data: existingUser
             })
         }
         catch(error) {
@@ -134,9 +130,29 @@ module.exports = {
         try {
             const id = req.params.id;
             const existingUser = await user.findOne({
+                include: [
+                    {
+                        model: property,
+                        include: [
+                            {
+                                model: propertyImages
+                            },
+                            {
+                                model: category
+                            },
+                            {
+                                model: review
+                            }
+                        ],
+                        required: false
+                    }
+                ],
                 where: {
                     id: id
                 },
+                order: [
+                    [{model: property}, {model: propertyImages} ,'id', 'ASC']
+                ],
                 attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
             });
 
@@ -160,6 +176,8 @@ module.exports = {
         const newUsername = req.body.newUsername;
         const newEmail = req.body.newEmail;
         const newPhoneNumber = req.body.newPhoneNumber;
+        const gender = req.body.gender;
+        const birthDate = req.body.birthDate;
         const newDesc = req.body.newDesc;
         const newPFP = req?.files?.newPFP;
         const newId = req?.files?.newId;
@@ -178,14 +196,20 @@ module.exports = {
                 })
             }
 
-            await user.update({
+            const fields = {
                 username: newUsername,
                 email: newEmail,
                 desc: newDesc,
                 phoneNumber: newPhoneNumber,
+                gender: gender,
+                birthDate: birthDate,
                 profilePicture: (newPFP)? process.env.LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
                 idCard: (newId)? process.env.LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
-            }, {
+            }
+
+            if(newEmail !== dataExist.email) {fields.status = 'unverified'};
+            
+            await user.update(fields, {
                 where: {
                     id: id
                 },

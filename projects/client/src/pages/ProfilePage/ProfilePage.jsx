@@ -23,6 +23,9 @@ export default function ProfilePage() {
     const [newPFP, setNewPFP] = useState('');
     const [newId, setNewId] = useState('')
     const [status, setStatus] = useState('');
+    const [gender, setGender] = useState('');
+    const [birthDate, setBirthDate] = useState('');
+    const [listings, setListings] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
     const params = useParams();
     const call = useDispatch();
@@ -34,13 +37,16 @@ export default function ProfilePage() {
         })).then(
             (response) => {
                 toast.dismiss();
-                setNewUsername(response.data.data.username);
-                setNewPhoneNumber(response.data.data.phoneNumber);
-                setNewEmail(response.data.data.email);
-                setDesc(response.data.data.desc);
-                setStatus(response.data.data.status);
-                setNewPFP(response.data.data.profilePicture);
-                setNewId(response.data.data.idCard);
+                setNewUsername(response.data.data?.username);
+                setNewPhoneNumber(response.data.data?.phoneNumber);
+                setNewEmail(response.data.data?.email);
+                setDesc(response.data.data?.desc);
+                setStatus(response.data.data?.status);
+                setGender(response.data.data?.gender);
+                setBirthDate(response.data.data?.birthDate);
+                setNewPFP(response.data.data?.profilePicture);
+                setNewId(response.data.data?.idCard);
+                setListings(response.data.data?.properties);
                 setIsOwner(Number(params?.id) === JSON.parse(localStorage.getItem('user'))?.id);
             },
             (error) => {
@@ -52,24 +58,32 @@ export default function ProfilePage() {
     const onSaveChange = () => {
         const token = JSON.parse(localStorage.getItem('user'), null, 2)?.token;
         const loading = toast.loading('Saving Data');
-        call(updateUser({
-            id: params.id,
-            newUsername: newUsername,
-            newEmail: newEmail,
-            newDesc: desc,
-            newPhoneNumber: newPhoneNumber,
-            newPFP: newPFP,
-            newId: newId,
-            token: token
-        })).then(
-            () => {
-                toast.success('Changes saved !', {id: loading});
-            },
-            (error) => {
-                toast.error('Unable to save changes !', {id: loading});
-                console.log(error);
-            }
-        )
+        const validate = /^(?=.*[@]).*\.com$/g.test(newEmail);
+        if(validate) {
+            call(updateUser({
+                id: params.id,
+                newUsername: newUsername,
+                newEmail: newEmail,
+                newDesc: desc,
+                gender: gender,
+                birthDate: birthDate,
+                newPhoneNumber: newPhoneNumber,
+                newPFP: newPFP,
+                newId: newId,
+                token: token
+            })).then(
+                () => {
+                    toast.success('Changes saved !', {id: loading});
+                },
+                (error) => {
+                    toast.error('Unable to save changes !', {id: loading});
+                    console.log(error);
+                }
+            )
+        }
+        else {
+            toast.error('Email must be valid !', {id: loading});
+        }
     }
 
     useEffect(() => {
@@ -84,11 +98,11 @@ export default function ProfilePage() {
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
             {
                 isOwner ?
-                <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} 
-                setNewUsername={setNewUsername} setNewPFP={setNewPFP} setNewEmail={setNewEmail} setNewPhoneNumber={setNewPhoneNumber} setNewId={setNewId} setDesc={setDesc}
+                <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} listings={listings} 
+                setNewUsername={setNewUsername} setNewPFP={setNewPFP} setNewEmail={setNewEmail} setNewPhoneNumber={setNewPhoneNumber} setNewId={setNewId} setDesc={setDesc} setGender={setGender} setBirthDate={setBirthDate}
                 onSaveChange={onSaveChange}/>
                 :
-                <UserCard username={newUsername} PFP={newPFP} status={status} id={newId} phoneNumber={newPhoneNumber} desc={desc}/>
+                <UserCard username={newUsername} PFP={newPFP} status={status} id={newId} phoneNumber={newPhoneNumber} desc={desc} listings={listings}/>
             }
         </div>
     )
