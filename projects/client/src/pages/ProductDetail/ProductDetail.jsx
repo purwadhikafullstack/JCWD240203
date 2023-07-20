@@ -10,6 +10,7 @@ import HighlightFeatures from "../../components/HighlightFeatures/HighlightFeatu
 import HostProfile from "../../components/HostProfile/HostProfile";
 import PropertyFacilities from "../../components/PropertyFacilities/PropertyFacilities";
 import OrderDetail from "../../components/OrderDetail/OrderDetail";
+import CustomerReview from "../../components/CustomerReview/CustomerReview";
 
 export default function ProductDetail() {
     return (
@@ -112,7 +113,9 @@ export default function ProductDetail() {
                     </div>
                 </div>
                 <div className="review">
-                    
+                    <div className="text-left">
+                        <CustomerReview />
+                    </div>
                 </div>
             </main >
         </div >
