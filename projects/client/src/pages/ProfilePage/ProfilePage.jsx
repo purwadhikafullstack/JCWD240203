@@ -25,6 +25,7 @@ export default function ProfilePage() {
     const [status, setStatus] = useState('');
     const [gender, setGender] = useState('');
     const [birthDate, setBirthDate] = useState('');
+    const [listings, setListings] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
     const params = useParams();
     const call = useDispatch();
@@ -45,6 +46,7 @@ export default function ProfilePage() {
                 setBirthDate(response.data.data?.birthDate);
                 setNewPFP(response.data.data?.profilePicture);
                 setNewId(response.data.data?.idCard);
+                setListings(response.data.data?.properties);
                 setIsOwner(Number(params?.id) === JSON.parse(localStorage.getItem('user'))?.id);
             },
             (error) => {
@@ -96,11 +98,11 @@ export default function ProfilePage() {
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
             {
                 isOwner ?
-                <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} 
+                <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} listings={listings} 
                 setNewUsername={setNewUsername} setNewPFP={setNewPFP} setNewEmail={setNewEmail} setNewPhoneNumber={setNewPhoneNumber} setNewId={setNewId} setDesc={setDesc} setGender={setGender} setBirthDate={setBirthDate}
                 onSaveChange={onSaveChange}/>
                 :
-                <UserCard username={newUsername} PFP={newPFP} status={status} id={newId} phoneNumber={newPhoneNumber} desc={desc}/>
+                <UserCard username={newUsername} PFP={newPFP} status={status} id={newId} phoneNumber={newPhoneNumber} desc={desc} listings={listings}/>
             }
         </div>
     )

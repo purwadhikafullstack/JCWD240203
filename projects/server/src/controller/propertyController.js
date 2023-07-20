@@ -12,14 +12,24 @@ module.exports = {
     getProperty: async(req, res) => {
         try {
             const location = req.query.location || ''
-            const startDate = new Date(req.query.start).getTime()|| Date.now();
-            const endDate = req.query.end || '';
+            const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
+            const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
             const { limit, page } = req.query;
 
-            const { where } = {
-                where: {
+            const locationFilter = {
                     city: (location)? location : {[Op.like]: '%%'}
-                }
+            };
+            let transactionFilter = {
+                status: 'completed',
+                [Op.and]: [{
+                    checkIn: {[Op.lte]: startDate},
+                    checkOut: {[Op.gt]: endDate}
+                }]
+            };
+            
+            if(startDate > endDate) {
+                delete transactionFilter[Op.and][0].checkIn;
+                transactionFilter[Op.and][0].checkOut[Op.gt] = startDate;
             }
 
             let result = await property.findAndCountAll({
@@ -29,13 +39,7 @@ module.exports = {
                         include: [
                             {
                                 model: transaction,
-                                where: {
-                                    status: 'completed',
-                                    [Op.and]: [{
-                                        checkIn: {[Op.lte]: Sequelize.fn('NOW')},
-                                        checkOut: {[Op.gte]: Sequelize.fn('NOW')}
-                                    }]
-                                },
+                                where: transactionFilter,
                                 required: false
                             }
                         ],
@@ -60,7 +64,7 @@ module.exports = {
                     ['propertyImages','id', 'ASC']
                 ],
                 limit: limit*page || 5,
-                where,
+                where: locationFilter,
                 distinct: true
             });
 
@@ -74,7 +78,6 @@ module.exports = {
                     if(room.stock > temp) {return room}; 
                 })
                 if(filteredRoom.length > 0) {return property}
-                else {result.count -= 1}
             });
             
             return res.status(200).send({
@@ -89,6 +92,41 @@ module.exports = {
                 message: error.message,
                 data: null
             });
+        }
+    },
+    getUserProperty: async(req, res) => {
+        try {
+            const id = req.params.id;
+
+            const result = await property.findAll({
+                include: [
+                    {
+                        model: propertyImages
+                    },
+                    {
+                        model: category
+                    },
+                    {
+                        model: review
+                    }
+                ],
+                where: {
+                    userId: id
+                }
+            })
+
+            return res.status(200).send({
+                isError: true,
+                message: 'GET Success !',
+                data: result
+            })
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            })
         }
     }
 }

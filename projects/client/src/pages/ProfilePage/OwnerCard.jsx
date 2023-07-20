@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import PropertyCard from "../../components/PropertyCard/propertyCard";
+import ListingCard from "../../components/ListingCard/ListingCard";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { BiSolidDownload } from "react-icons/bi";
 import { useState } from "react";
@@ -160,13 +160,24 @@ export default function OwnerCard(props) {
                     </div>
                 </div>
                 <div className="flex flex-col justify-start items-start w-[300px] md:w-full px-[10px] py-[5px]">
-                    <div>
-                        Your listings
+                    <div className="w-full flex justify-between items-center">
+                        <div className="font-bold text-[18px]">
+                            Your listings
+                        </div>
+                        <button className="flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer">
+                            Add property
+                        </button>
                     </div>
                     <div className="w-full flex gap-[25px] overflow-x-auto p-[10px]">
-                        <div className="min-w-[250px] h-[300px]">
-                            <PropertyCard/>
-                        </div>
+                        {
+                            props?.listings?.map((value, index) => {
+                                return(
+                                    <div className="min-w-[250px] h-[300px]">
+                                        <ListingCard data={value}/>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
                 <div className={`flex justify-center md:justify-end w-full py-[10px]`}>

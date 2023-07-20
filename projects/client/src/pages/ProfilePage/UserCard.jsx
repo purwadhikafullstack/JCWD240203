@@ -1,3 +1,4 @@
+import ListingCard from "../../components/ListingCard/ListingCard";
 import PropertyCard from "../../components/PropertyCard/propertyCard";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
@@ -29,7 +30,7 @@ export default function UserCard(props) {
                 </div>
             </div>
             <div className="flex flex-col w-full md:h-full justify-center items-center md:justify-start md:items-start md:px-[50px] py-[10px] overflow-y-auto removeScroll">
-                <div className="flex flex-col justify-start items-start w-full h-auto border-b-[1px] border-gray-600">
+                <div className="flex flex-col justify-start items-start w-[300px] md:w-full h-auto border-b-[1px] border-gray-600">
                     <div className="text-[24px] font-bold">
                         About {props?.username || 'name'}
                     </div>
@@ -39,24 +40,18 @@ export default function UserCard(props) {
                 </div>
                 <div className="flex flex-col justify-start items-start w-[300px] md:w-full">
                     <div>
-                        name's listings
+                        {props?.username}'s listings
                     </div>
                     <div className="w-full flex gap-[25px] overflow-x-auto p-[10px]">
-                        <div className="min-w-[250px] h-[325px]">
-                            <PropertyCard/>
-                        </div>
-                        <div className="min-w-[250px] h-[325px]">
-                            <PropertyCard/>
-                        </div>
-                        <div className="min-w-[250px] h-[325px]">
-                            <PropertyCard/>
-                        </div>
-                        <div className="min-w-[250px] h-[325px]">
-                            <PropertyCard/>
-                        </div>
-                        <div className="min-w-[250px] h-[325px]">
-                            <PropertyCard/>
-                        </div>
+                        {
+                            props?.listings?.map((value, index) => {
+                                return(
+                                    <div key={index} className="min-w-[250px] h-[300px]">
+                                        <ListingCard data={value}/>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>
