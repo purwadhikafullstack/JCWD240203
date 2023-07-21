@@ -79,6 +79,17 @@ module.exports = {
                 })
                 if(filteredRoom.length > 0) {return property}
             });
+
+            result.rows = result.rows.map((property) => {
+                let parsed = JSON.parse(JSON.stringify(property, null, 2))
+                let temp = 0;
+                property.reviews.forEach((review) => {
+                    temp += review.rating;
+                })
+                temp /= property.reviews.length;
+                parsed.average = temp;
+                return parsed;
+            })
             
             return res.status(200).send({
                 isError: true,
@@ -94,26 +105,49 @@ module.exports = {
             });
         }
     },
-    getUserProperty: async(req, res) => {
+    propertyDetailed: async(req, res) => {
         try {
             const id = req.params.id;
+            const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
+            const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
 
-            const result = await property.findAll({
+            let transactionFilter = {
+                status: 'completed',
+                [Op.and]: [{
+                    checkIn: {[Op.lte]: startDate},
+                    checkOut: {[Op.gt]: endDate}
+                }]
+            };
+            
+            if(startDate > endDate) {
+                delete transactionFilter[Op.and][0].checkIn;
+                transactionFilter[Op.and][0].checkOut[Op.gt] = startDate;
+            }
+            let result = await property.findOne({
                 include: [
                     {
-                        model: propertyImages
+                        model: room,
                     },
                     {
-                        model: category
-                    },
-                    {
-                        model: review
+                        model: transaction,
+                        where: transactionFilter,
+                        required: false
                     }
                 ],
                 where: {
                     userId: id
                 }
             })
+            result = JSON.parse(JSON.stringify(result, null, 2));
+
+            result.rooms = result.rooms.filter((room) => {
+                let temp = 0;
+                for(let transaction of result.transactions) {
+                    temp += JSON.parse(JSON.stringify(transaction, null, 2)).stock
+                    if(temp >= room.stock) {break};
+                }
+                if(room.stock > temp) {return room}; 
+            });
 
             return res.status(200).send({
                 isError: true,

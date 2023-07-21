@@ -1,5 +1,4 @@
 import ListingCard from "../../components/ListingCard/ListingCard";
-import PropertyCard from "../../components/PropertyCard/propertyCard";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
 export default function UserCard(props) {

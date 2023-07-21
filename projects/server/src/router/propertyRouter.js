@@ -5,6 +5,6 @@ const Router = express.Router();
 
 Router.get('/', properties.getProperty);
 
-Router.get('/:id', properties.getUserProperty);
+Router.get('/:id', properties.propertyDetailed);
 
 module.exports = Router;
