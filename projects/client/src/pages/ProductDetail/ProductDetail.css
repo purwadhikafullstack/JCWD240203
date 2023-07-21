@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Thasadith&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist&display=swap');
+
+.propertiesName {
+    /* font-family: 'Thasadith', sans-serif; */
+    /* font-family: 'Questrial', sans-serif; */
+    font-family: 'Urbanist', sans-serif;
+}
+
+.addressReview {
+    /* font-family: 'Questrial', sans-serif; */
+    font-family: 'Urbanist', sans-serif;
+}
+
+.roomOwner {
+font-family: 'Questrial', sans-serif;
+}
+
+.features {
+    font-family: 'Questrial', sans-serif;
+}
+
+.highlightFeatures {
+    font-family: 'Questrial', sans-serif;
+}
+
+.hostDetail {
+    font-family: 'Urbanist', sans-serif;
+}
+
+.propsDesc {
+    font-family: 'Urbanist', sans-serif;
+}
+
+.amenities {
+    font-family: 'Urbanist', sans-serif;
+}

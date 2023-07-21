@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setStart, setEnd } from "../../redux/features/property/propertySlice";
 import { format } from "date-fns";
 import 'react-day-picker/dist/style.css';
+import "./DateSelection.css"
 
 export default function DateSelection(props) {
     const start = useSelector((state) => state.property.start);
@@ -40,7 +41,7 @@ export default function DateSelection(props) {
     };
 
     return(
-        <div className={`${(props.date)? 'h-[400px] border-b-[1px] border-black' : 'h-0'} z-[2] top-0 absolute transition-all duration-400 whitespace-nowrap overflow-hidden flex justify-center w-full bg-gray-300`}>
+        <div className={`${(props.date)? 'h-[400px] border-b-[1px] border-gray-400' : 'h-0'} z-[2] top-0 absolute transition-all duration-400 whitespace-nowrap overflow-hidden flex justify-center w-full bg-white`}>
             <div className={`relative w-full flex flex-col md-flex-row justify-center`}>
                 <div className="hidden md:flex flex-col items-center">
                     <div>
@@ -62,7 +63,7 @@ export default function DateSelection(props) {
                     </div>
                 </div>
                 <div className="flex md:hidden flex-col">
-                    <div>
+                    <div className="selectDate font-display">
                         Select dates
                     </div>
                     {/* DayPicker DayPicker-Months DayPicker-Month DayPicker-wrapper */}
@@ -82,7 +83,7 @@ export default function DateSelection(props) {
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <div onClick={handleClose} className="flex justify-center items-center w-[200px] h-[40px] bg-green-600 rounded-[10px] transition-all duration-400 cursor-pointer active:scale-95 active:bg-green-900 hover:bg-green-800">
+                    <div onClick={handleClose} className="closeButton text-[25px] text-white flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl mb-6">
                         Close
                     </div>
                 </div>

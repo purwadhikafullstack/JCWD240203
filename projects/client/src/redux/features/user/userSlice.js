@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import API from "../../../constant/URLAPI";
 
 const initialState = {
     currentUser: {}
@@ -30,9 +31,11 @@ export const onRegister = (userData) => async(dispatch) => {
     }
 };
 
+
+
 export const onLogin = (loginCredentials) => async(dispatch) => {
     try {
-        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/login`, {
+        const response = await axios.post(`${API}/users/login`, {
             username: loginCredentials.username,
             password: loginCredentials.password
         });
@@ -111,7 +114,7 @@ export const keepLogin = () => (dispatch) => {
     catch(error) {
         return Promise.reject(error)
     }
-};
+}
 
 export const { setUser } = userSlice.actions;
 export default userSlice.reducer;

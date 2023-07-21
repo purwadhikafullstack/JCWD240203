@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap');
+
+.location {
+    font-family: 'Lexend Mega', sans-serif;
+}
+
+.country {
+    font-family: 'Urbanist', sans-serif;
+}
+
+.cities {
+    font-family: 'Balsamiq Sans', cursive;
+}
+
+.closeButton {
+    font-family: 'Titan One', cursive;
+    text-shadow:
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+     -1px 1px 0 #000,
+      1px 1px 0 #000;
+  
+}
