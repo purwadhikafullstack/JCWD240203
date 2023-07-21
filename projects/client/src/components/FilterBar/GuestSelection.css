@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@200&display=swap');
+
+
+.howMany {
+    font-family: 'Lexend Mega', sans-serif;
+}
+
+.closeButton {
+    font-family: 'Titan One', cursive;
+    text-shadow:
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+     -1px 1px 0 #000,
+      1px 1px 0 #000;
+  
+}

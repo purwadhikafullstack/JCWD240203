@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Button } from "@mui/material";
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { onRegister } from '../../redux/features/user/userSlice'
+import { onRegister } from '../../redux/features/User/userSlice'
 
 export default function RegisterModal(props) {
     const call = useDispatch();
