@@ -1,5 +1,5 @@
-import React from "react";
-import HeaderDetail from "../../components/HeaderDetail/HeaderDetail";
+import React, { useEffect, useState } from "react";
+import Header from "../../components/header/headerPage";
 import { AiFillStar } from "react-icons/ai";
 import GalleryProperties from "../../components/GalleryProperties/GalleryProperties";
 import { LiaBedSolid } from 'react-icons/lia'
@@ -11,42 +11,63 @@ import HostProfile from "../../components/HostProfile/HostProfile";
 import PropertyFacilities from "../../components/PropertyFacilities/PropertyFacilities";
 import OrderDetail from "../../components/OrderDetail/OrderDetail";
 import CustomerReview from "../../components/CustomerReview/CustomerReview";
+import { useDispatch } from "react-redux";
+import { getDetailed } from "../../redux/features/property/propertySlice";
+import { useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 export default function ProductDetail() {
+    const [property, setProperty] = useState({});
+    const params = useParams();
+    const call = useDispatch();
+
+    useEffect(() => {
+        const loading = toast.loading('fetching property');
+        call(getDetailed({id: params.id})).then(
+            (response) => {
+                toast.dismiss();
+                setProperty(response.data.data);
+            },
+            (error) => {
+                toast.error('network error !', {id: loading});
+                console.log(error);
+            }
+        )
+    }, [call, params.id])
+
     return (
         <div className="w-full h-[100vh] bg-white">
-            <HeaderDetail />
-            <main className="bg-white w-full mx-auto mt-[30px] px-20">
+            {console.log(property)}
+            <Header/>
+            <main className="bg-white w-full px-20">
                 <div className="propertiesHeading text-left mt-8">
                     <div className="propertiesName text-[30px] font-black">
-                        1 Bedroom Villa with Private Pool for 2 Pax
+                        {property?.name || ''}
                     </div>
                     <div className="addressReview flex gap-4 items-center font-semibold">
-                        <div className="review flex gap-1.5 items-center text-[17px] underline underline-offset-4">
-                            <div>
-                                <AiFillStar />
-                            </div>
-                            <div>5.0</div>
-                            3 reviews
+                        <div className="flex justify-center items-center gap-[10px] underline underline-offset-4">
+                            <AiFillStar /> {property?.average || 0.00}
+                        </div>
+                        <div className="underline underline-offset-4">
+                            {property?.reviews?.length || 0} reviews
                         </div>
                         <div className="address text-[17px] underline underline-offset-4">
-                            Jl. Kaya Raya UKDW Dormitory no.8 Ngropoh,  Chesurtunggal, Kec.
-                            Depok Kab.Sleman, Yogyakarta
+                            {property?.address || ''}
                         </div>
                     </div>
                 </div>
                 <div className="imageList rounded-xl">
-                    <GalleryProperties />
+                    <GalleryProperties images={property?.propertyImages}/>
                 </div>
                 <div className="flex justify-between gap-4">
                     <div className="leftSide">
                         <div className="top">
-                            <div className="roomOwner flex gap-20 text-[25px] font-bold">
+                            <div className="roomOwner flex items-center gap-20 text-[25px] font-bold">
                                 <div>
-                                    Room in a villa hosted by Bohemian Jogja
+                                    Hosted by {property?.user?.username || ''}
                                 </div>
-                                <div className="profilePictureOwner rounded-full drop-shadow-2xl">
-                                    <img src="" alt="profilePicture" />
+                                <div className="w-[75px] h-[75px]">
+                                    <img src={property?.user?.profilePicture} alt="" className="w-full h-full rounded-full" />
                                 </div>
                             </div>
                             <hr className="my-4 border-gray-300" />
@@ -77,21 +98,18 @@ export default function ProductDetail() {
                                 </div>
                             </div>
                             <hr className="my-4 border-gray-300" />
-                            <div className="highlightFeatures">
-                                <HighlightFeatures />
-                            </div>
                             <div className="hostDetail text-left">
                                 <div className="text-[30px] font-bold px-[14px] py-[10px]">
                                     Meet your host
                                 </div>
-                                <HostProfile />
+                                <HostProfile user={property.user} />
                             </div>
                             <div className="propsDesc text-left py-[30px] mt-4">
                                 <div className="text-[30px] font-bold">
                                     About this place
                                 </div>
                                 <div className="py-[13px] text-[19px]">
-                                    One Bedroom Villas for 2 is one type of our villa that can accomodate up to 2 person and free 1 child under 5 years old. It has a private pool right in front of the bedroom. It is suitable for you who want to spend your holiday.
+                                    {property?.description || ''}
                                 </div>
                             </div>
                             <hr className="my-4 border-gray-300" />
@@ -103,7 +121,7 @@ export default function ProductDetail() {
                             </div>
                         </div>
                     </div>
-                    <div className="rightSide p-[114px] py-[149px] bg-white">
+                    <div className="w-full flex flex-col justify-center items-center">
                         <OrderDetail />
                         <div>
                             <button className="text-[25px] text-white justify-center font-sans h-[45px] w-[200px] rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70 mt-4">

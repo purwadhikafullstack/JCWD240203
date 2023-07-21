@@ -7,6 +7,7 @@ const category = db.category;
 const room = db.room;
 const review = db.review;
 const transaction = db.transaction;
+const user = db.user
 
 module.exports = {
     getProperty: async(req, res) => {
@@ -132,11 +133,24 @@ module.exports = {
                         model: transaction,
                         where: transactionFilter,
                         required: false
+                    },
+                    {
+                        model: review
+                    },
+                    {
+                        model: propertyImages
+                    },
+                    {
+                        model: user,
+                        attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
                     }
                 ],
                 where: {
-                    userId: id
-                }
+                    id: id
+                },
+                order: [
+                    [{model: propertyImages} ,'id', 'ASC']
+                ],
             })
             result = JSON.parse(JSON.stringify(result, null, 2));
 
@@ -148,6 +162,15 @@ module.exports = {
                 }
                 if(room.stock > temp) {return room}; 
             });
+
+            let temp = 0;
+            if(result.reviews.length > 0) {
+                result.reviews.forEach((review) => {
+                    temp += review.rating;
+                })
+                temp /= result.reviews.length;
+            }
+            result.average = temp;
 
             return res.status(200).send({
                 isError: true,

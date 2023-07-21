@@ -1,6 +1,6 @@
 const express = require('express');
 const { checkSchema, validationResult } = require('express-validator');
-const { usersPOST, usersGET } = require('../controller');
+const { usersPOST, usersGET, usersPATCH } = require('../controller');
 const { uploadUserImage } = require('../middleware/upload');
 const Authorization = require('../middleware/Authorization');
 
@@ -64,6 +64,6 @@ Router.post('/login', async(req, res, next) => {
     }
 }, usersPOST.login);
 
-Router.patch('/:id', Authorization.isOwner, uploadUserImage, usersGET.updateUser);
+Router.patch('/:id', Authorization.isOwner, uploadUserImage, usersPATCH.updateUser);
 
 module.exports = Router;

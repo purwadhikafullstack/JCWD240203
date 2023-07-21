@@ -48,5 +48,16 @@ export const getProperty = (data) => async(dispatch) => {
     }
 }
 
+export const getDetailed = (data) => async(dispatch) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}`);
+        
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
 export const { setProperty, setTotalProperty, setLocation, setGuest, setStart, setEnd } = propertySlice.actions;
 export default propertySlice.reducer;
