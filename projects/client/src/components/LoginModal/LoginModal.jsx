@@ -142,7 +142,7 @@ export default function LoginModal(props) {
                         </div>
                     </div>
                     <div className="w-full">
-                        <button disabled={login.isSubmitting} onClick={login.handleSubmit}  color="success" fullWidth sx={{ height: '40px' }} className="py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10">
+                        <button disabled={login.isSubmitting} onClick={login.handleSubmit}  color="success" sx={{ height: '40px' }} className="py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10">
                             Log In
                         </button>
                     </div>

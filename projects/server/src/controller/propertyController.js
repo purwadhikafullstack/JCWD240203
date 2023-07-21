@@ -135,7 +135,13 @@ module.exports = {
                         required: false
                     },
                     {
-                        model: review
+                        model: review,
+                        include: [
+                            {
+                                model: user,
+                                attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
+                            }
+                        ]
                     },
                     {
                         model: propertyImages

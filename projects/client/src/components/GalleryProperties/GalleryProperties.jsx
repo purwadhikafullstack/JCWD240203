@@ -22,7 +22,7 @@ const GalleryProperties = (props) => {
           </div>
         </div>
       ) : (
-        <div className="collage">
+        <div className="collage flex-col md:flex-row gap-[10px]">
           <div className="medium-image">
             {
               (props?.images)?
