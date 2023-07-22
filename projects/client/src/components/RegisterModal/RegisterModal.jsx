@@ -10,10 +10,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { onRegister } from '../../redux/features/user/userSlice'
+import { onRegister } from '../../redux/features/User/userSlice'
 
 export default function RegisterModal(props) {
     const call = useDispatch();
@@ -176,9 +176,12 @@ export default function RegisterModal(props) {
                         </div>
                     </div>
                     <div>
-                        <Button disabled={register.isSubmitting} onClick={register.handleSubmit} variant="contained" color="success" fullWidth sx={{height: '40px'}}>
+                        {/* <Button disabled={register.isSubmitting} onClick={register.handleSubmit} variant="contained" color="success" fullWidth sx={{height: '40px'}} className=''>
                             Sign Up
-                        </Button>
+                        </Button> */}
+                        <button disabled={register.isSubmitting} onClick={register.handleSubmit}  color="success" fullWidth sx={{ height: '40px' }} className="py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10">
+                            Sign Up
+                        </button>
                     </div>
                 </div>
             </div>
