@@ -9,7 +9,7 @@ import { BsSnow } from 'react-icons/bs'
 
 export default function PropertyFacilities() {
     return (
-        <div className="propsFacilities flex justify-between gap-[-40px]">
+        <div className="propsFacilities flex justify-between">
             <div className="facilitiesLeft text-[20px]">
                 <div className="flex items-center gap-4">
                     <div className="text-[23px]">

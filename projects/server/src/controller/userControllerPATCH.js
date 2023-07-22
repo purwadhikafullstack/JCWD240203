@@ -1,4 +1,8 @@
 const db = require('../../models');
+const fs = require('fs');
+const handlebars = require('handlebars');
+const jwt = require('jsonwebtoken');
+const transporter = require('../transport/transport')
 const { deleteFiles } = require('../helper/deleteFiles');
 require('dotenv').config();
 const user = db.user;
@@ -7,19 +11,17 @@ module.exports = {
     updateUser: async(req, res) => {
         const t = await db.sequelize.transaction();
         const id = req.params.id;
-        const newUsername = req.body.newUsername;
-        const newEmail = req.body.newEmail;
-        const newPhoneNumber = req.body.newPhoneNumber;
-        const gender = req.body.gender;
-        const birthDate = req.body.birthDate;
-        const newDesc = req.body.newDesc;
+        const newUsername = req.body?.newUsername;
+        const newEmail = req.body?.newEmail;
+        const newPhoneNumber = req.body?.newPhoneNumber;
+        const gender = req?.body?.gender;
+        const birthDate = req?.body?.birthDate;
+        const newDesc = req?.body?.newDesc;
         const newPFP = req?.files?.newPFP;
         const newId = req?.files?.newId;
         try {
             const dataExist = await user.findOne({
-                where : {
-                    id: id
-                }
+                where : {id: id}
             })
 
             if(!dataExist) {
@@ -44,9 +46,7 @@ module.exports = {
             if(newEmail !== dataExist.email) {fields.status = 'unverified'};
             
             await user.update(fields, {
-                where: {
-                    id: id
-                },
+                where: {id: id},
                 transaction: t
             })
             
@@ -80,6 +80,122 @@ module.exports = {
                 message: error.message,
                 data: null
             });
+        }
+    },
+
+    sendEmail: async(req, res) => {
+        try {
+            const { id } = req.params;
+            const verify = Math.floor(Math.random()*90000) + 10000;
+            
+            const recipient = await user.findOne({
+                where: {id: id}
+            });
+
+            if(!recipient || recipient.status === 'verified') {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'Not found',
+                    data: null
+                });
+            }
+
+            const token = jwt.sign({code: verify, id: id}, process.env.KEY, {expiresIn: '1h'});
+
+            await user.update({
+                code: token
+            }, {
+                where: {
+                    id: id
+                }
+            });
+            
+            const template = handlebars.compile(
+                fs.readFileSync('./Public/templates/verifyEmail.html', {encoding: 'utf-8'})
+            );
+
+            const domain = process.env.DOMAIN;
+            const path = `$2y$10$Xe2xcXHL7.faauuauzNaOuNuWwIffUCfXT0u9Wh25uPj7IoMzJhte`;
+            const data = {
+                "username": recipient.username,
+                "domain": domain,
+                "path": path,
+                "code": token
+            }
+
+            const emailTemplate = template(data);
+            
+            transporter.sendMail({
+               from: 'nodemailer',
+               to: `${recipient.email}`,
+               subject: 'Account Verification',
+               html: emailTemplate
+            })
+
+            return res.status(200).send({
+                isError: false,
+                message: 'Email has been sent !',
+                data: null
+            });
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            });
+        }
+    },
+
+    verifyEmail: async(req, res) => {
+        try {
+            const token = req.body.token;
+            if(!token) {
+                return res.status(500).send({
+                    isError: true,
+                    message: 'invalid token !',
+                    data: null
+                })
+            }
+            const verify = jwt.verify(token, process.env.KEY);
+            
+            const result = await user.findOne({
+                where: {id: verify.id}
+            })
+
+            const userToken = jwt.verify(result.code, process.env.KEY);
+
+            if(verify.code === userToken.code) {
+                await user.update({
+                    status: 'verified',
+                    code: null
+                }, {
+                    where: {
+                        id: verify.id
+                    }
+                })
+
+                return res.status(200).send({
+                    isError: false,
+                    message: 'Email has been verified !',
+                    data: null
+                })
+            }
+            else {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'Invalid token !',
+                    data: null
+                })
+            }
+
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            })
         }
     }
 }

@@ -6,8 +6,10 @@ const Authorization = require('../middleware/Authorization');
 
 const Router = express.Router();
 
+// GET //
 Router.get('/:id', usersGET.getUser);
 
+// POST //
 Router.post('/', async(req, res, next) => {
     await checkSchema({
         'username': {
@@ -64,6 +66,11 @@ Router.post('/login', async(req, res, next) => {
     }
 }, usersPOST.login);
 
+// PATCH //
+Router.patch('/accountVerify', usersPATCH.verifyEmail);
+
 Router.patch('/:id', Authorization.isOwner, uploadUserImage, usersPATCH.updateUser);
+
+Router.patch('/verify/:id', Authorization.isOwner, usersPATCH.sendEmail);
 
 module.exports = Router;

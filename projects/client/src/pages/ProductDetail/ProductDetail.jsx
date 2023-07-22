@@ -172,7 +172,7 @@ export default function ProductDetail() {
                                 </div>
                             </div>
                             <hr className="my-4 border-gray-300" />
-                            <div className="amenities text-left mt-10">
+                            <div className="amenities text-left my-[10px]">
                                 <div className="text-[30px] mb-4 font-bold">
                                     What this place offers
                                 </div>
@@ -183,7 +183,7 @@ export default function ProductDetail() {
                     <div className="w-full flex flex-col justify-center items-center">
                         <OrderDetail selectedRoom={selectedRoom}/>
                         <div>
-                            <button className="mb-[10px] text-[25px] text-white justify-center font-sans h-[45px] w-[250px] rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70 mt-4">
+                            <button className="mb-[20px] text-[25px] text-white justify-center font-sans h-[45px] w-[250px] rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70 mt-4">
                                 Reserve room
                             </button>
                         </div>

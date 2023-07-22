@@ -1,5 +1,4 @@
 const db = require('../../models');
-const { deleteFiles } = require('../helper/deleteFiles');
 require('dotenv').config();
 const user = db.user;
 const property = db.property;
