@@ -8,7 +8,6 @@ import FilterBar from "../../components/FilterBar/FilterBar";
 import Footer from "../../components/footerRentify/footerPage";
 import "./ProductPage.css"
 
-
 export default function ProductPage() {
     const limit = 8;
     const [showRegister, setShowRegister] = useState(false);

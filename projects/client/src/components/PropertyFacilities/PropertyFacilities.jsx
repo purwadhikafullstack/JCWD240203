@@ -9,9 +9,12 @@ import { BsSnow } from 'react-icons/bs'
 
 export default function PropertyFacilities() {
     return (
-        <div className="propsFacilities flex justify-between">
-            <div className="facilitiesLeft text-[20px]">
-                <div className="flex items-center gap-4">
+        <div className="propsFacilities flex flex-col justify-between">
+            <div className="text-[30px] mb-4 font-bold">
+                What this place offers
+            </div>
+            <div className="columns-2 h-[100px]">
+                <div className="flex items-center gap-4 h-[25px]">
                     <div className="text-[23px]">
                         <BsFileLock2 />
                     </div>
@@ -19,7 +22,7 @@ export default function PropertyFacilities() {
                         Lock on bedroom door
                     </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 h-[25px]">
                     <div className="text-[23px]">
                         <AiOutlineCar />
                     </div>
@@ -27,7 +30,7 @@ export default function PropertyFacilities() {
                         Free parking on premises
                     </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 h-[25px]">
                     <div className="text-[23px]">
                         <FiMonitor />
                     </div>
@@ -35,7 +38,7 @@ export default function PropertyFacilities() {
                         TV
                     </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 h-[25px] break-inside-avoid">
                     <div className="text-[23px]">
                         <BiCctv />
                     </div>
@@ -43,9 +46,7 @@ export default function PropertyFacilities() {
                         Security cameras on property
                     </div>
                 </div>
-            </div>
-            <div className="facilitiesRight text-[20px]">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 h-[25px]">
                     <div className="text-[23px]">
                         <MdWifi />
                     </div>
@@ -53,7 +54,7 @@ export default function PropertyFacilities() {
                         Wifi
                     </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 h-[25px]">
                     <div className="text-[23px]">
                         <LiaSwimmingPoolSolid />
                     </div>
@@ -61,7 +62,7 @@ export default function PropertyFacilities() {
                         Pool
                     </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 h-[25px]">
                     <div className="text-[23px]">
                         <BsSnow />
                     </div>

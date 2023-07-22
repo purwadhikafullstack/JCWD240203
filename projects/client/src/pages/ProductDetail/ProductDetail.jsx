@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/header/headerPage";
 import { AiFillStar } from "react-icons/ai";
 import GalleryProperties from "../../components/GalleryProperties/GalleryProperties";
@@ -11,15 +11,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setStart, setEnd } from "../../redux/features/property/propertySlice";
 import { getDetailed } from "../../redux/features/property/propertySlice";
 import { useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
+import PaymentModal from "../../components/PaymentModal/PaymentModal";
 
 export default function ProductDetail() {
     const start = useSelector((state) => state.property.start);
     const end = useSelector((state) => state.property.end);
+    const guest = useSelector((state) => state.property.guest);
     const [property, setProperty] = useState({});
     const [selectedRoom, setSelectedRoom] = useState({});
+    const [showPayment, setShowPayment] = useState(false);
     const params = useParams();
     const call = useDispatch();
 
@@ -62,19 +65,23 @@ export default function ProductDetail() {
     }, [call, params.id])
 
     return (
-        <div className="w-full h-[100vh] bg-white">
+        <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
+            <Toaster/>
             <Header/>
+            <PaymentModal showPayment={showPayment} selectedProperty={property} selectedRoom={selectedRoom} start={start} end={end} guest={guest} setShowPayment={setShowPayment}/>
             <main className="w-full px-20">
                 <div className="propertiesHeading text-left mt-8">
                     <div className="propertiesName text-[30px] font-black">
                         {property?.name || ''}
                     </div>
-                    <div className="addressReview flex gap-4 items-center font-semibold">
-                        <div className="flex justify-center items-center gap-[10px] underline underline-offset-4">
-                            <AiFillStar /> {property?.average || 0.00}
-                        </div>
-                        <div className="underline underline-offset-4">
-                            {property?.reviews?.length || 0} reviews
+                    <div className="addressReview flex flex-col md:flex-row gap-4 items-center font-semibold">
+                        <div className="flex justify-start w-full md:w-auto gap-[10px]">
+                            <div className="flex justify-center items-center gap-[10px] underline underline-offset-4">
+                                <AiFillStar /> {property?.average || 0.00}
+                            </div>
+                            <div className="underline underline-offset-4">
+                                {property?.reviews?.length || 0} reviews
+                            </div>
                         </div>
                         <div className="address text-[17px] underline underline-offset-4">
                             {property?.address || ''}
@@ -109,9 +116,12 @@ export default function ProductDetail() {
                                     property?.rooms?.map((value, index) => {
                                         return(
                                             <div key={index} className="flex w-full bg-gray-200 p-[10px] rounded-[10px] justify-between h-[125px]">
-                                                <div className="flex flex-col items-start gap-[30px] justify-center">
+                                                <div className="flex flex-col items-start gap-[5px] justify-center">
                                                     <div className="text-[24px] font-bold">
                                                         {value?.name} 
+                                                    </div>
+                                                    <div>
+                                                        Room capacity: {value?.capacity}
                                                     </div>
                                                     <div>
                                                         {value?.description}
@@ -123,7 +133,7 @@ export default function ProductDetail() {
                                                     </div>
                                                     <div>
                                                         <button onClick={() => handleClick(value)} className="w-[100px] h-[40px] bg-green-500 rounded-[5px] transition-all duration-400 hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer">
-                                                            Book room
+                                                            Select room
                                                         </button>
                                                     </div>
                                                 </div>
@@ -160,8 +170,8 @@ export default function ProductDetail() {
                                 <div className="flex md:hidden">
                                     <DayPicker
                                     selected={{
-                                        from: new Date(start) || '',
-                                        to: new Date(end) || ''
+                                        from: (start !== '')? new Date(start) : '',
+                                        to: (end !== '')?new Date(end) : ''
                                     }}
                                     mode="range"
                                     disabled={{before: new Date()}}
@@ -173,20 +183,12 @@ export default function ProductDetail() {
                             </div>
                             <hr className="my-4 border-gray-300" />
                             <div className="amenities text-left my-[10px]">
-                                <div className="text-[30px] mb-4 font-bold">
-                                    What this place offers
-                                </div>
                                 <PropertyFacilities />
                             </div>
                         </div>
                     </div>
                     <div className="w-full flex flex-col justify-center items-center">
-                        <OrderDetail selectedRoom={selectedRoom}/>
-                        <div>
-                            <button className="mb-[20px] text-[25px] text-white justify-center font-sans h-[45px] w-[250px] rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70 mt-4">
-                                Reserve room
-                            </button>
-                        </div>
+                        <OrderDetail selectedRoom={selectedRoom} setShowPayment={setShowPayment}/>
                     </div>
                 </div>
                 <div className="review w-full">
