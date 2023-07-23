@@ -9,6 +9,7 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import { keepLogin } from "./redux/features/user/userSlice";
 import { useDispatch } from "react-redux";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import TransactionPage from "./pages/TransactionPage/TransactionPage";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -40,6 +41,7 @@ function App() {
         <Route path={'/browse'} element={<ProductPage/>}/>
         <Route path={'/profile/:id'} element={<ProfilePage/>}/>
         <Route path={'/property/:id'} element={<ProductDetail/>}/>
+        <Route path={'/history'} element={<TransactionPage/>}/>
       </Routes>
     </div>
   );

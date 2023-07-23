@@ -12,9 +12,11 @@ export default function ProductPage() {
     const limit = 8;
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+    const [applyFilter, setApplyFilter] = useState(false);
     const properties = useSelector((state) => state.property.property);
     const start = useSelector((state) => state.property.start);
     const end = useSelector((state) => state.property.end);
+    const location = useSelector((state) => state.property.location);
     const totalProperties = Math.ceil(useSelector((state) => state.property.totalProperty) / limit);
     const [page, setPage] = useState(1);
     const call = useDispatch()
@@ -36,7 +38,8 @@ export default function ProductPage() {
             page: page,
             limit: limit,
             start: start,
-            end: end
+            end: end,
+            location: location
         })).then(
             () => {
 
@@ -46,7 +49,11 @@ export default function ProductPage() {
                 console.log(error);
             }
         )
-    }, [call, page, start, end])
+
+        setTimeout(() => {
+            setApplyFilter(false)
+        }, 200)
+    }, [call, page, applyFilter])
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto removeScroll">
@@ -54,7 +61,7 @@ export default function ProductPage() {
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister} />
             <div className="flex flex-col flex-grow w-full">
                 <div>
-                    <FilterBar />
+                    <FilterBar applyFilter={applyFilter} setApplyFilter={setApplyFilter}/>
                 </div>
                 <div className="ml-10 mb-8 mt-4">
                 </div>
@@ -62,7 +69,7 @@ export default function ProductPage() {
                     {
                         properties?.map((value, index) => {
                             return (
-                                <div key={index} className="h-[275px] md:h-[325px]">
+                                <div key={index} className="h-[350px]">
                                     <PropertyCard data={value} />
                                 </div>
                             )

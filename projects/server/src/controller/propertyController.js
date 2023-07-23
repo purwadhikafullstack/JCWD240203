@@ -1,6 +1,5 @@
 const db = require('../../models');
 const { Op } = require('sequelize');
-const { Sequelize } = require('sequelize')
 const property = db.property;
 const propertyImages = db.propertyImages;
 const category = db.category;
@@ -62,35 +61,42 @@ module.exports = {
                 ],
                 order: [
                     ['rooms', 'price', 'ASC'],
-                    ['propertyImages','id', 'ASC']
+                    ['propertyImages','id', 'ASC'],
+                    ['reviews', 'rating', 'ASC']
                 ],
                 limit: limit*page || 5,
                 where: locationFilter,
                 distinct: true
             });
 
+            result = JSON.parse(JSON.stringify(result, null, 2));
+
             result.rows = result.rows.filter((property) => {
                 filteredRoom = property.rooms.filter((room) => {
                     let temp = 0;
                     for(let transaction of room.transactions) {
-                        temp += JSON.parse(JSON.stringify(transaction, null, 2)).stock
+                        if(room.id === transaction.roomId) {temp += transaction.stock};
                         if(temp >= room.stock) {break};
                     }
                     if(room.stock > temp) {return room}; 
                 })
+                property.rooms = filteredRoom;
                 if(filteredRoom.length > 0) {return property}
             });
 
             result.rows = result.rows.map((property) => {
-                let parsed = JSON.parse(JSON.stringify(property, null, 2))
                 let temp = 0;
-                property.reviews.forEach((review) => {
-                    temp += review.rating;
-                })
-                temp /= property.reviews.length;
-                parsed.average = temp;
-                return parsed;
+                if(property.reviews.length > 0) {
+                    property.reviews.forEach((review) => {
+                        temp += review.rating;
+                    })
+                    temp /= property.reviews.length;
+                }
+                property.average = temp;
+                return property;
             })
+
+            result.rows = result.rows.sort((p1, p2) => (p1.average < p2.average) ? 1 : (p1.average > p2.average) ? -1 : 0);
             
             return res.status(200).send({
                 isError: true,
@@ -160,20 +166,18 @@ module.exports = {
             })
             result = JSON.parse(JSON.stringify(result, null, 2));
 
-            result.rooms = result.rooms.filter((room) => {
-                let temp = 0;
-                for(let transaction of result.transactions) {
-                    temp += JSON.parse(JSON.stringify(transaction, null, 2)).stock
-                    if(temp >= room.stock) {break};
-                }
-                if(room.stock > temp) {return room}; 
-            });
+            // result.rooms = result.rooms.filter((room) => {
+            //     let temp = 0;
+            //     for(let transaction of result.transactions) {
+            //         if(room.id === transaction.roomId) {temp += transaction.stock};
+            //         if(temp >= room.stock) {break};
+            //     }
+            //     if(room.stock > temp) {return room}; 
+            // });
 
             let temp = 0;
             if(result.reviews.length > 0) {
-                result.reviews.forEach((review) => {
-                    temp += review.rating;
-                })
+                result.reviews.forEach((review) => {temp += review.rating});
                 temp /= result.reviews.length;
             }
             result.average = temp;

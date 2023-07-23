@@ -60,7 +60,7 @@ export default function LoginModal(props) {
             })).then(
                 (response) => {
                     toast.success(response.message, { id: loading });
-                    login.resetForm();
+                    handleClose();
                 },
                 (error) => {
                     if (!error.response.data) {

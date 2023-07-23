@@ -5,7 +5,7 @@ import DateSelection from "./DateSelection";
 import LocationSelection from "./LocationSelection";
 import GuestSelection from "./GuestSelection";
 
-export default function FilterBar() {
+export default function FilterBar(props) {
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Des']
     const [location, toggleLocation] = useState(false);
     const [date, toggleDate] = useState(false);
@@ -28,11 +28,15 @@ export default function FilterBar() {
     const handleGuestClick = () => {
         toggleGuest(!guest);
     };
+    
+    const handleSearch = () => {
+        if(props?.setApplyFilter) {props?.setApplyFilter(true)};
+    }
     return (
         <div className="filterBar relative flex flex-col items-center py-[5px] px-[10px]">
-            <div className={`w-[300px] md:w-[400px] h-[50px] flex justify-center items-center rounded-full bg-white shadow-gray-500 border-[1px] border-gray-300 overflow-hidden`}>
+            <div className={`w-[400px] h-[50px] flex justify-center items-center rounded-full bg-white shadow-gray-500 border-[1px] border-gray-300 overflow-hidden`}>
                 <div onClick={handleLocationClick} className="flex flex-grow h-full font-bold justify-center items-center transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 cursor-pointer">
-                    {selectedLocation?.split('/')[1] || 'Anywhere'}
+                    {selectedLocation || 'Anywhere'}
                 </div>
                 <div className="w-[1px] h-full bg-gray-400">
                     &nbsp;
@@ -60,9 +64,9 @@ export default function FilterBar() {
                     &nbsp;
                 </div>
                 <div className="px-[3px]">
-                    <div className="flex justify-center items-center transition-all duration-400 hover:bg-green-800/70 w-[40px] h-[40px] rounded-full mx-[5px] cursor-pointer bg-green-700">
+                    <button onClick={handleSearch} disabled={props?.applyFilter} className="flex justify-center items-center transition-all duration-400 hover:bg-green-800/70 w-[40px] h-[40px] rounded-full mx-[5px] cursor-pointer bg-green-700">
                         <AiOutlineSearch size={25} color="white"/>
-                    </div>
+                    </button>
                 </div>
             </div>
             <DateSelection date={date} toggleDate={toggleDate}/>

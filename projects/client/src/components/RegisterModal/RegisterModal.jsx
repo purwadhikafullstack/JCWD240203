@@ -28,9 +28,6 @@ export default function RegisterModal(props) {
         if(props.setShowRegister) {
             props.setShowRegister(false);
         }
-        if(props.enableScroll) {
-            props.enableScroll();
-        }
         register.resetForm();
     }
 
@@ -80,7 +77,7 @@ export default function RegisterModal(props) {
             })).then(
                 (response) => {
                     toast.success(response.message, {id: loading});
-                    register.resetForm();
+                    handleClose();
                 },
                 (error) => {
                     if(!error.response.data) {

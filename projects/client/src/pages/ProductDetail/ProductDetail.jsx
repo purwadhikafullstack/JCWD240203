@@ -15,14 +15,20 @@ import { Toaster, toast } from "react-hot-toast";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import PaymentModal from "../../components/PaymentModal/PaymentModal";
+import LoginModal from "../../components/LoginModal/LoginModal";
+import RegisterModal from "../../components/RegisterModal/RegisterModal";
+import RoomCard from "../../components/RoomCard/RoomCard";
 
 export default function ProductDetail() {
     const start = useSelector((state) => state.property.start);
     const end = useSelector((state) => state.property.end);
     const guest = useSelector((state) => state.property.guest);
     const [property, setProperty] = useState({});
+    const [showRegister, setShowRegister] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
     const [selectedRoom, setSelectedRoom] = useState({});
     const [showPayment, setShowPayment] = useState(false);
+    
     const params = useParams();
     const call = useDispatch();
 
@@ -48,8 +54,6 @@ export default function ProductDetail() {
         }
     }
 
-    const handleClick = (value) => {setSelectedRoom(value)};
-
     useEffect(() => {
         const loading = toast.loading('fetching property');
         call(getDetailed({id: params.id})).then(
@@ -67,8 +71,10 @@ export default function ProductDetail() {
     return (
         <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
             <Toaster/>
-            <Header/>
-            <PaymentModal showPayment={showPayment} selectedProperty={property} selectedRoom={selectedRoom} start={start} end={end} guest={guest} setShowPayment={setShowPayment}/>
+            <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
+            <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
+            <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
+            <PaymentModal showPayment={showPayment} selectedProperty={property} selectedRoom={selectedRoom} start={start} end={end} guest={guest} setShowPayment={setShowPayment} setShowLogin={setShowLogin}/>
             <main className="w-full px-20">
                 <div className="propertiesHeading text-left mt-8">
                     <div className="propertiesName text-[30px] font-black">
@@ -115,28 +121,8 @@ export default function ProductDetail() {
                                 {
                                     property?.rooms?.map((value, index) => {
                                         return(
-                                            <div key={index} className="flex w-full bg-gray-200 p-[10px] rounded-[10px] justify-between h-[125px]">
-                                                <div className="flex flex-col items-start gap-[5px] justify-center">
-                                                    <div className="text-[24px] font-bold">
-                                                        {value?.name} 
-                                                    </div>
-                                                    <div>
-                                                        Room capacity: {value?.capacity}
-                                                    </div>
-                                                    <div>
-                                                        {value?.description}
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col gap-[20px] justify-center items-end">
-                                                    <div className="text-[24px] font-bold">
-                                                        Rp.{value?.price?.toLocaleString('ID-id')}
-                                                    </div>
-                                                    <div>
-                                                        <button onClick={() => handleClick(value)} className="w-[100px] h-[40px] bg-green-500 rounded-[5px] transition-all duration-400 hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer">
-                                                            Select room
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                            <div key={index}>
+                                                <RoomCard data={value} setSelectedRoom={setSelectedRoom}/>
                                             </div>
                                         )
                                     })
