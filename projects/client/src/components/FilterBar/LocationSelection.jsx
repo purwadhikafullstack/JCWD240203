@@ -33,7 +33,7 @@ export default function LocationSelection(props) {
     }, [call])
 
     return (
-        <div className={`${(props.location) ? 'h-[420lepx]' : 'h-[0px] border-transparent'} z-[2] top-0 border-b-[1px] border-gray-400 absolute transition-all duration-400 w-full bg-white whitespace-nowrap overflow-hidden`}>
+        <div className={`${(props.location) ? 'h-[420px]' : 'h-[0px] border-transparent'} z-[2] top-0 border-b-[1px] border-gray-400 absolute transition-all duration-400 w-full bg-white whitespace-nowrap overflow-hidden`}>
             <div className="location text-[46px] text-black font-semibold">
                 Locations 
             </div>

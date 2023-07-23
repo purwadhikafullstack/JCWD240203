@@ -9,7 +9,7 @@ const GalleryProperties = (props) => {
   };
 
   return (
-    <div className="relative gallery-properties drop-shadow-sm">
+    <div className="relative my-[20px] drop-shadow-sm">
       {showAllPhotos ? (
         <div className='w-full h-full'>
           <h2>All Photos</h2>

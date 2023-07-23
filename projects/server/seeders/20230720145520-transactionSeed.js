@@ -15,8 +15,8 @@ module.exports = {
       },
       {
         userId: 2,
-        propertyId: 1,
-        roomId: 1,
+        propertyId: 2,
+        roomId: 3,
         stock: 2,
         status: "completed",
         checkIn: "2023-07-4",

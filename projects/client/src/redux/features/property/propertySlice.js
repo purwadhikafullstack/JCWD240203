@@ -37,7 +37,7 @@ const propertySlice = createSlice({
 
 export const getProperty = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties?location=${initialState.location}&&start=${initialState.start}&&end=${initialState.end}&&page=${data.page || null}&&limit=${data.limit || null}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties?location=${data.location?.split('/')[1] || ''}&&start=${data.start || ''}&&end=${data.end || ''}&&page=${data.page || null}&&limit=${data.limit || null}`);
 
         dispatch(setProperty(response.data.data.rows));
         dispatch(setTotalProperty(response.data.data.count));
