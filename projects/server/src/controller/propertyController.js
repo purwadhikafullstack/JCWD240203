@@ -166,14 +166,14 @@ module.exports = {
             })
             result = JSON.parse(JSON.stringify(result, null, 2));
 
-            // result.rooms = result.rooms.filter((room) => {
-            //     let temp = 0;
-            //     for(let transaction of result.transactions) {
-            //         if(room.id === transaction.roomId) {temp += transaction.stock};
-            //         if(temp >= room.stock) {break};
-            //     }
-            //     if(room.stock > temp) {return room}; 
-            // });
+            result.rooms = result.rooms.filter((room) => {
+                let temp = 0;
+                for(let transaction of result.transactions) {
+                    if(room.id === transaction.roomId) {temp += transaction.stock};
+                    if(temp >= room.stock) {break};
+                }
+                if(room.stock > temp) {return room}; 
+            });
 
             let temp = 0;
             if(result.reviews.length > 0) {

@@ -3,7 +3,8 @@ const usersGET = require('./userControllerGET');
 const usersPATCH = require('./userControllerPATCH');
 const properties = require('./propertyController');
 const countries = require('./countryController');
-const transactions = require('./transactionController')
+const transactions = require('./transactionController');
+const transactionsPATCH = require('./transactionControllerPATCH');
 
 module.exports = {
     usersPOST,
@@ -11,5 +12,6 @@ module.exports = {
     usersPATCH,
     properties,
     countries,
-    transactions
+    transactions,
+    transactionsPATCH
 }

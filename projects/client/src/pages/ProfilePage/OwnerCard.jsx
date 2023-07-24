@@ -1,25 +1,28 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import ListingCard from "../../components/ListingCard/ListingCard";
-import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { BiSolidDownload } from "react-icons/bi";
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import 'react-day-picker/dist/style.css';
+import OwnerProfileCard from "./OwnerProfileCard";
+import { useDispatch } from "react-redux";
+import { sendEmail } from "../../redux/features/user/userSlice";
+import { toast } from "react-hot-toast";
 
 export default function OwnerCard(props) {
     const [showPopup, setShowPopup] = useState((props?.status === 'verified')?  false : true);
     const [currentId, setCurrentId] = useState(props?.newId);
+    const [isSending, setIsSending] = useState(false);
+    const call = useDispatch();
 
     const formatDate = (date) => {return format(date, "MM/dd/yyyy")};
 
     const handleClose = () => {setShowPopup(false)};
 
     const handleChange = (event, type) => {
-        if(type === 'username') {
-            if(props.setNewUsername) {props.setNewUsername(event.target.value)};
-        }
-        else if(type === 'email') {
+        if(type === 'email') {
             if(props.setNewEmail) {props.setNewEmail(event.target.value)};
         }
         else if(type === 'phoneNumber') {
@@ -35,10 +38,6 @@ export default function OwnerCard(props) {
         if(props?.setGender) {props.setGender(e.target.value)};
     }
 
-    const handleUploadPFP = (event) => {
-        if(props.setNewPFP) {props.setNewPFP(event.target.files[0])};
-    }
-
     const handleUploadId = (event) => {
         if(props.setNewId) {props.setNewId(event.target.files[0])};
     }
@@ -47,6 +46,30 @@ export default function OwnerCard(props) {
 
     const handleClick = () => {
         if(props.onSaveChange) {props.onSaveChange()};
+    }
+
+    const onVerifyEmail = () => {
+        setIsSending(true)
+        if(localStorage.getItem('user')) {
+            call(sendEmail({
+                id: JSON.parse(localStorage.getItem('user'))?.id,
+                token: JSON.parse(localStorage.getItem('user'))?.token
+            })).then(
+                    () => {
+                        toast.success(`Verification link has been sent !`)
+                    },
+                    (error) => {
+                        toast.error('Network error, try again later !')
+                        console.log(error);
+                    }
+                )
+        }
+        else {
+            toast.error('Unauthorized access !')
+        }
+        setTimeout(() => {
+            setIsSending(false);
+        }, 1000)
     }
 
     return(
@@ -59,41 +82,7 @@ export default function OwnerCard(props) {
                     <AiOutlineClose/>
                 </div>
             </div>
-            <div className="flex flex-col gap-[20px] w-full md:w-auto justify-center items-center">
-                <div className="flex flex-col gap-[15px] justify-center items-center w-[300px] h-[250px] bg-white border-[1px] border-gray-500 rounded-[10px]">
-                    <div className="w-[125px] h-[125px] rounded-full overflow-hidden">
-                        {
-                            (typeof props?.newPFP === 'string' || props?.newId === null) ?
-                            <img src={props?.newPFP} alt="" className="w-full h-full"/>
-                            :
-                            <img src={URL.createObjectURL(props?.newPFP)} alt="" className="w-full h-full"/>
-                        }
-                    </div>
-                    <div className="">
-                        <input id="ProfilePicture" type="file" className="hidden" onChange={handleUploadPFP}/>
-                        <label htmlFor="ProfilePicture" className="flex justify-center items-center gap-[10px] bg-white border-[1px] border-black w-[150px] py-[5px] cursor-pointer transition-all duration-400 hover:bg-black/50">
-                            <BiSolidDownload size={20}/> Change Picture
-                        </label>
-                    </div>
-                    <div className="w-[175px]">
-                        <TextField size="small" label="Username" value={props.newUsername} onChange={(e) => handleChange(e, 'username')}/>
-                    </div>
-                </div>
-                <div className="flex flex-col gap-[20px] justify-center items-start w-[300px] h-[250px] p-[10px] bg-white border-[1px] border-gray-500 rounded-[10px]">
-                    <div className="text-[22px] font-bold">
-                        your confirmed info
-                    </div>
-                    <div className="flex h-[35px] gap-[10px] items-center">
-                        {(props?.id)? <AiOutlineCheck size={30}/> : <AiOutlineClose size={30}/>} Identity
-                    </div>
-                    <div className="flex h-[35px] gap-[10px] items-center">
-                        {(props?.status === 'verified')? <AiOutlineCheck size={30}/> : <AiOutlineClose size={30}/>} Email
-                    </div>
-                    <div className="flex h-[35px] gap-[10px] items-center">
-                        {(props?.newPhoneNumber)? <AiOutlineCheck size={30}/> : <AiOutlineClose size={30}/>} Phone Number
-                    </div>
-                </div>
-            </div>
+            <OwnerProfileCard newPFP={props?.newPFP} newUsername={props?.newUsername} setNewUsername={props?.setNewUsername} setNewPFP={props?.setNewPFP} status={props?.status} phoneNumber={props?.phoneNumber} id={props?.id}/>
             <div className="flex flex-col w-full md:h-full justify-center items-center md:justify-start md:items-start md:px-[50px] py-[10px] overflow-y-auto removeScroll">
                 <div className="flex flex-col justify-start items-start w-[300px] md:w-full h-auto border-b-[1px] border-gray-600">
                     <div className="text-[24px] font-bold">
@@ -134,9 +123,9 @@ export default function OwnerCard(props) {
                                     Must be valid email !
                                 </div>
                             </div>
-                            <div className={`${(props?.status === 'verified')? 'hidden' : ''} flex justify-center items-center h-[40px] w-[200px] bg-yellow-400 rounded-[5px] transition-all duration-400 hover:bg-yellow-500 active:scale-95 active:bg-yellow-600 cursor-pointer`}>
+                            <button disabled={isSending} onClick={onVerifyEmail} className={`${(props?.status === 'verified')? 'hidden' : ''} flex justify-center items-center h-[40px] w-[200px] bg-yellow-400 rounded-[5px] transition-all duration-400 hover:bg-yellow-500 active:scale-95 active:bg-yellow-600 cursor-pointer`}>
                                 Verify Email !
-                            </div>
+                            </button>
                         </div>
                         <div className="flex flex-col gap-[10px] w-[200px]">
                             <TextField onChange={(e) => handleChange(e, 'phoneNumber')} size="small" label='Phone number' value={props?.newPhoneNumber || ''}/>

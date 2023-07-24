@@ -2,7 +2,9 @@ const db = require('../../models');
 const { Op } = require('sequelize');
 const transaction = db.transaction;
 const property = db.property;
+const propertyImages = db.propertyImages;
 const room = db.room;
+require('dotenv').config();
 
 module.exports = {
     createTransaction: async(req, res) => {
@@ -64,7 +66,8 @@ module.exports = {
                 propertyId: propertyId,
                 roomId: roomId,
                 stock: stock,
-                status: 'completed',
+                paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
+                status: 'pending',
                 checkIn: checkIn,
                 checkOut: checkOut
             })
@@ -86,12 +89,32 @@ module.exports = {
 
     getTransaction: async(req, res) => {
         try {
-            const { id }= req.params
+            const { id }= req.params;
+            const { limit, page } = req.query;
 
-            const result = await transaction.findAll({
+            const result = await transaction.findAndCountAll({
                 where: {
                     userId: id
-                }
+                },
+                include: [
+                    {
+                        model: property,
+                        include: [
+                            {
+                                model: propertyImages
+                            }
+                        ]
+                    },
+                    {
+                        model: room
+                    }
+                ],
+                order: [
+                    [{model: property}, {model: propertyImages} ,'id', 'ASC'],
+                    ['id', 'ASC']
+                ],
+                limit: limit * page || 5,
+                distinct: true
             });
 
             return res.status(200).send({

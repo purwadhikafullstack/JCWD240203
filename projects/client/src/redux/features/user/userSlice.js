@@ -30,8 +30,6 @@ export const onRegister = (userData) => async(dispatch) => {
     }
 };
 
-
-
 export const onLogin = (loginCredentials) => async(dispatch) => {
     try {
         const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/login`, {
@@ -95,6 +93,52 @@ export const updateUser = (data) => async(dispatch) => {
     }
     catch(error) {
         return Promise.reject(error)
+    }
+};
+
+export const sendEmail = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/verify/${data.id}`, {}, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
+export const verifyAccount = (data) => async(dispatch) => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/accountVerify`, {
+            token: data.code
+        }, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        setTimeout(() => {
+            dispatch(getUser({id: data.id, token: data.token})).then(
+                (response) => {
+                    const token = JSON.parse(localStorage.getItem('user')).token;
+                    response.data.data.token = token;
+                    localStorage.setItem('user', JSON.stringify(response.data.data));
+                    dispatch(setUser(response.data.data));
+                },
+                (error) => {
+                    return Promise.reject(error);
+                }
+            )
+        }, 200);
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
     }
 }
 
