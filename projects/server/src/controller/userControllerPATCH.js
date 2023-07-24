@@ -115,7 +115,7 @@ module.exports = {
             );
 
             const domain = process.env.DOMAIN;
-            const path = `$2y$10$Xe2xcXHL7.faauuauzNaOuNuWwIffUCfXT0u9Wh25uPj7IoMzJhte`;
+            const path = `verify`;
             const data = {
                 "username": recipient.username,
                 "domain": domain,
@@ -165,7 +165,7 @@ module.exports = {
 
             const userToken = jwt.verify(result.code, process.env.KEY);
 
-            if(verify.code === userToken.code) {
+            if(verify.code === userToken.code && verify.id === userToken.id) {
                 await user.update({
                     status: 'verified',
                     code: null

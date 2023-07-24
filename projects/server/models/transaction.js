@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     propertyId: DataTypes.INTEGER,
     roomId: DataTypes.INTEGER,
     stock: DataTypes.INTEGER,
+    paymentProof: DataTypes.STRING,
     status: DataTypes.STRING,
     checkIn: DataTypes.DATE,
     checkOut: DataTypes.DATE

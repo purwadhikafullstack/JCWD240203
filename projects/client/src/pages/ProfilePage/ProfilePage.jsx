@@ -19,6 +19,7 @@ export default function ProfilePage() {
     const [desc, setDesc] = useState('');
     const [newUsername, setNewUsername]= useState('');
     const [newPhoneNumber, setNewPhoneNumber]= useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [newEmail, setNewEmail]= useState('');
     const [newPFP, setNewPFP] = useState('');
     const [newId, setNewId] = useState('');
@@ -36,9 +37,10 @@ export default function ProfilePage() {
             id: params.id
         })).then(
             (response) => {
-                toast.dismiss();
+                toast.dismiss(loading);
                 setNewUsername(response.data.data?.username);
                 setNewPhoneNumber(response.data.data?.phoneNumber);
+                setPhoneNumber(response.data.data?.phoneNumber);
                 setNewEmail(response.data.data?.email);
                 setDesc(response.data.data?.desc);
                 setStatus(response.data.data?.status);
@@ -98,7 +100,7 @@ export default function ProfilePage() {
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
             {
                 isOwner ?
-                <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} listings={listings} 
+                <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} listings={listings} phoneNumber={phoneNumber}
                 setNewUsername={setNewUsername} setNewPFP={setNewPFP} setNewEmail={setNewEmail} setNewPhoneNumber={setNewPhoneNumber} setNewId={setNewId} setDesc={setDesc} setGender={setGender} setBirthDate={setBirthDate}
                 onSaveChange={onSaveChange}/>
                 :
