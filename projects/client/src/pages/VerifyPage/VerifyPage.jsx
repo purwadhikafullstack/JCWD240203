@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/header/headerPage";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { verifyAccount } from "../../redux/features/user/userSlice";
+import { verifyAccount } from "../../redux/features/User/userSlice";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function VerifyPage() {

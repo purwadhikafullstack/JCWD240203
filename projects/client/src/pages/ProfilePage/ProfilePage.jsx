@@ -9,6 +9,8 @@ import OwnerCard from "./OwnerCard";
 import { updateUser } from "../../redux/features/User/userSlice";
 import LoginModal from "../../components/LoginModal/LoginModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
+import './ProfilePage.css'
+
 
 export default function ProfilePage() {
     const user = useSelector((state) => state.user.currentUser);
