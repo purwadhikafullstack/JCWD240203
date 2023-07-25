@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Belanosima&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+.yourOrder {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.propertyName {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.address {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.yourRoom {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.selectedRoom {
+    font-family: 'Belanosima', sans-serif;
+    font-size: 23px;
+}
+
+.capacity {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.totalguest {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.duration{
+    font-family: 'Belanosima', sans-serif;
+}
+
+.totalnight {
+    font-family: 'Belanosima', sans-serif;
+    font-size: 23px;
+}
+
+.totalRoom {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.totalPrice {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.payNow {
+    font-family: 'Lalezar', cursive;
+    text-shadow: 2px 2px 4px #000000;
+}
+
