@@ -1,7 +1,7 @@
 import axios from "axios";
 import "./App.css";
 import logo from "./logo.svg"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
+import OrderPage from "./pages/OrderPage/OrderPage";
+import SalesReport from "./pages/SalesReport/SalesReport";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -43,7 +45,9 @@ function App() {
         <Route path={'/profile/:id'} element={<ProfilePage/>}/>
         <Route path={'/property/:id'} element={<ProductDetail/>}/>
         <Route path={'/history'} element={<TransactionPage/>}/>
+        <Route path={'/orders'} element={<OrderPage/>}/>
         <Route path={'/verify/:code'} element={<VerifyPage/>}/>
+        <Route path={'/sales'} element={<SalesReport/>}/>
       </Routes>
     </div>
   );

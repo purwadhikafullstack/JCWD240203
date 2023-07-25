@@ -1,15 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
 import Header from "../../components/header/headerPage";
-import TransactionCard from "../../components/TransactionCard/TransactionCard";
-import { useEffect, useState } from "react";
-import { getHistory } from "../../redux/features/transaction/transactionSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrder } from "../../redux/features/transaction/transactionSlice";
 import { Toaster, toast } from "react-hot-toast";
-import { useRef } from "react";
+import OrderCard from "../../components/OrderCard/OrderCard";
 
-export default function TransactionPage() {
+export default function OrderPage() {
     const limit = 8;
-    const totalTransaction = Math.ceil(useSelector((state) => state.transaction.totalTransaction) / limit);
-    const history = useSelector((state) => state.transaction.transaction);
+    const orders = useSelector((state) => state.transaction.order);
+    const totalOrder = Math.ceil(useSelector((state) => state.transaction.totalOrder) / limit);
     const [page, setPage] = useState(1);
     const call = useDispatch();
 
@@ -18,7 +17,7 @@ export default function TransactionPage() {
         if (listInnerRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
             if (scrollTop + clientHeight >= scrollHeight - 100) {
-                if (page + 1 <= totalTransaction) {
+                if (page + 1 <= totalOrder) {
                     setPage(page + 1);
                 }
             }
@@ -27,7 +26,7 @@ export default function TransactionPage() {
 
     useEffect(() => {
         if(localStorage.getItem('user')) {
-            call(getHistory({
+            call(getOrder({
                 id: JSON.parse(localStorage.getItem('user')).id,
                 page: page,
                 limit: limit
@@ -44,7 +43,8 @@ export default function TransactionPage() {
         else {
             toast.error('unauthorized access !')
         }
-    }, [call, page])
+    }, [call, page]);
+
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-full overflow-y-auto removeScroll">
             <Toaster/>
@@ -55,18 +55,18 @@ export default function TransactionPage() {
                 </div>
                 <div className="flex flex-col py-[10px]">
                     {
-                        (history?.length > 0)?
-                        history?.map((value, index) => {
+                        (orders?.length > 0)?
+                        orders?.map((value, index) => {
                             return(
-                            <div key={index}>
-                                <TransactionCard data={value} page={page} limit={limit} index={index}/>
+                            <div key={index} className="w-full">
+                                <OrderCard data={value} page={page} limit={limit}/>
                                 <hr className="my-4 border-gray-300" />
                             </div>
                             )
                         })
                         :
                         <div className="text-[30px] font-bold">
-                            You have not made any bookings !
+                            You do not have any orders !
                         </div>
                     }
                 </div>

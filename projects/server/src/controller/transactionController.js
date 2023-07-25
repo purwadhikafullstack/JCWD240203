@@ -130,5 +130,50 @@ module.exports = {
                 data: null
             })
         }
+    },
+
+    getOrder: async(req, res) => {
+        try {
+            const { id }= req.params;
+            const { limit, page } = req.query;
+
+            const result = await transaction.findAndCountAll({
+                include: [
+                    {
+                        model: property,
+                        include: [
+                            {
+                                model: propertyImages
+                            }
+                        ],
+                        where: {
+                            'userId': id
+                        },
+                    },
+                    {
+                        model: room
+                    }
+                ],
+                order: [
+                    [{model: property}, {model: propertyImages} ,'id', 'ASC'],
+                    ['id', 'ASC']
+                ],
+                limit: limit * page || 5,
+                distinct: true
+            });
+
+            return res.status(200).send({
+                isError: false,
+                message: 'GET Success',
+                data: result
+            })
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            })
+        }
     }
 }

@@ -81,6 +81,9 @@ export default function Header(props) {
                                 <div className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     History
                                 </div>
+                                <div className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                                    Orders
+                                </div>
                                 <div onClick={onClickLogout} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     Log Out
                                 </div>

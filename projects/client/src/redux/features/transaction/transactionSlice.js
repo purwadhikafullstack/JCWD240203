@@ -3,7 +3,9 @@ import axios from "axios";
 
 const initialState = {
     transaction: [],
-    totalTransaction: 0
+    totalTransaction: 0,
+    order: [],
+    totalOrder: 0
 };
 
 const transactionSlice = createSlice({
@@ -15,6 +17,12 @@ const transactionSlice = createSlice({
         },
         setTotalTransaction: (initialState, action) => {
             initialState.totalTransaction = action.payload;
+        },
+        setOrder: (initialState, action) => {
+            initialState.order = action.payload;
+        },
+        setTotalOrder: (initialState, action) => {
+            initialState.totalOrder = action.payload;
         }
     }
 });
@@ -38,7 +46,7 @@ export const createTransaction = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
 
 export const getHistory = (data) => async(dispatch) => {
     try {
@@ -51,12 +59,24 @@ export const getHistory = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
+};
+
+export const getOrder = (data) => async(dispatch) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}`);
+
+        dispatch(setOrder(response.data.data.rows));
+        dispatch(setTotalOrder(response.data.data.count));
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
 }
 
 export const updatePaymentProof = (data) => async(dispatch) => {
     try {
-        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/transactions`, {
-            id: data.id,
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/transactions/${data.id}`, {
             userId: data.userId,
             paymentProof: data.paymentProof
         }, {
@@ -82,7 +102,36 @@ export const updatePaymentProof = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
 
-export const { setTransaction, setTotalTransaction } = transactionSlice.actions;
+export const updateStatus = (data) => async(dispatch) => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/transactions/status/${data.id}`, {
+            userId: data.userId,
+            response: data.response
+        }, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        setTimeout(() => {
+            dispatch(getOrder({
+                id: data.userId,
+                page: data.page,
+                limit: data.limit
+            })).then(
+                () => {},
+                (error) => {return Promise.reject(error)}
+            )
+        }, 400);
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+} 
+
+export const { setTransaction, setTotalTransaction, setOrder, setTotalOrder } = transactionSlice.actions;
 export default transactionSlice.reducer;
