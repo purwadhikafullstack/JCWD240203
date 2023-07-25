@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import 'react-day-picker/dist/style.css';
 import OwnerProfileCard from "./OwnerProfileCard";
 import { useDispatch } from "react-redux";
-import { sendEmail } from "../../redux/features/user/userSlice";
+import { sendEmail } from "../../redux/features/User/userSlice";
 import { toast } from "react-hot-toast";
 import './OwnerCard.css'
 
