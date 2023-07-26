@@ -13,7 +13,6 @@ import { toast } from "react-hot-toast";
 
 export default function OwnerCard(props) {
     const [showPopup, setShowPopup] = useState((props?.status === 'verified')?  false : true);
-    const [currentId, setCurrentId] = useState(props?.newId);
     const [isSending, setIsSending] = useState(false);
     const call = useDispatch();
 
@@ -130,8 +129,8 @@ export default function OwnerCard(props) {
                         <div className="flex flex-col gap-[10px] w-[200px]">
                             <TextField onChange={(e) => handleChange(e, 'phoneNumber')} size="small" label='Phone number' value={props?.newPhoneNumber || ''}/>
                             <FormControl fullWidth>
-                                <InputLabel>Gender</InputLabel>
-                                <Select size="small" label='Gender' value={props?.gender} onChange={changeGender}>
+                                <InputLabel size="small">Gender</InputLabel>
+                                <Select size="small" label='Gender' value={props?.gender || ''} onChange={changeGender}>
                                     <MenuItem value='Male'>Male</MenuItem>
                                     <MenuItem value='Female'>Female</MenuItem>
                                 </Select>
@@ -154,7 +153,7 @@ export default function OwnerCard(props) {
                         <div className="font-bold text-[18px]">
                             Your listings
                         </div>
-                        <button className={`${(props?.status === 'unverified' || !currentId)? 'hidden' : ''} flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer`}>
+                        <button className={`${(props?.status === 'unverified' || !props?.currentId)? 'hidden' : ''} flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer`}>
                             Add property
                         </button>
                     </div>

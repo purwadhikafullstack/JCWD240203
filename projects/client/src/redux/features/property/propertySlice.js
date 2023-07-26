@@ -50,7 +50,7 @@ export const getProperty = (data) => async(dispatch) => {
 
 export const getDetailed = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}?start=${data.start}&&end=${data.end}`);
         
         return Promise.resolve(response);
     }

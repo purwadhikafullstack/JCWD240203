@@ -122,14 +122,10 @@ module.exports = {
                 status: 'completed',
                 [Op.and]: [{
                     checkIn: {[Op.lte]: startDate},
-                    checkOut: {[Op.gt]: endDate}
+                    checkOut: {[Op.gte]: startDate}
                 }]
             };
             
-            if(startDate > endDate) {
-                delete transactionFilter[Op.and][0].checkIn;
-                transactionFilter[Op.and][0].checkOut[Op.gt] = startDate;
-            }
             let result = await property.findOne({
                 include: [
                     {
