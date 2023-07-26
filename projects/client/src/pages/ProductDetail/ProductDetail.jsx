@@ -56,7 +56,7 @@ export default function ProductDetail() {
 
     useEffect(() => {
         const loading = toast.loading('fetching property');
-        call(getDetailed({id: params.id})).then(
+        call(getDetailed({id: params.id, start: start, end: end})).then(
             (response) => {
                 toast.dismiss();
                 setProperty(response.data.data);

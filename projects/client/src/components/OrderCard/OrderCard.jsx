@@ -76,10 +76,13 @@ export default function OrderCard(props) {
                     Rp.{props?.data?.room?.price.toLocaleString('ID-id')}/night
                 </div>
                 <div>
+                    Rooms rented: {props?.data?.stock}
+                </div>
+                <div>
                     Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
                 </div>
                 <div className="mt-auto text-[20px] font-bold">
-                    Grand total: {((((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) * props?.data?.room?.price).toLocaleString('ID-id')) || 0}
+                    Grand total: {((((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) * (props?.data?.room?.price * props?.data?.stock)).toLocaleString('ID-id')) || 0}
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-1 gap-[15px] p-[10px]">

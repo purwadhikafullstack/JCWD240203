@@ -50,7 +50,7 @@ export const createTransaction = (data) => async(dispatch) => {
 
 export const getHistory = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/user/${data.id}?page=${data.page}&&limit=${data.limit}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/user/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}`);
 
         dispatch(setTransaction(response.data.data.rows));
         dispatch(setTotalTransaction(response.data.data.count));
@@ -63,7 +63,20 @@ export const getHistory = (data) => async(dispatch) => {
 
 export const getOrder = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}`);
+
+        dispatch(setOrder(response.data.data.rows));
+        dispatch(setTotalOrder(response.data.data.count));
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
+export const getCompleted = (data) => async(dispatch) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/sales/${data.id}?year=${data.year}`);
 
         dispatch(setOrder(response.data.data.rows));
         dispatch(setTotalOrder(response.data.data.count));
