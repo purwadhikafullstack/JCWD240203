@@ -4,8 +4,9 @@ import Header from "../../components/header/headerPage";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCompleted } from "../../redux/features/transaction/transactionSlice";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import SalesFilterBar from "./SalesFilterBar";
+import { useNavigate } from "react-router-dom";
 
 export default function SalesReport() {
     Chart.register(
@@ -18,6 +19,7 @@ export default function SalesReport() {
     const [chartData, setChartData] = useState([]);
     const [startingMonth, setStartingMonth] = useState(0);
     const [endingMonth, setEndingMonth] = useState(11);
+    const navigate = useNavigate();
 
     const formatChartData = (rawData) => {
         let temp = [];
@@ -26,8 +28,7 @@ export default function SalesReport() {
                 let totalSales = 0;
                 rawData.forEach((transaction) => {
                     let transactionMonth = new Date(transaction.updatedAt).getMonth();
-                    let transactionYear = new Date(transaction.updatedAt).getFullYear();
-                    if(months[transactionMonth] === month && transactionYear === year) {
+                    if(months[transactionMonth] === month) {
                         let total = ((new Date(transaction?.checkOut).getTime() - new Date(transaction?.checkIn).getTime())/ 86400000) * (transaction?.room?.price * transaction?.stock);
                         totalSales += total;
                     }
@@ -49,7 +50,7 @@ export default function SalesReport() {
             )
         }
         else {
-            toast.error('unauthorized access !');
+            navigate('/')
         }
     }, [call, year]);
 

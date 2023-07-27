@@ -6,11 +6,14 @@ import { getHistory } from "../../redux/features/transaction/transactionSlice";
 import { Toaster, toast } from "react-hot-toast";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import TransactionFilterBar from "./TransactionFilterBar";
 
 export default function TransactionPage() {
     const limit = 8;
     const totalTransaction = Math.ceil(useSelector((state) => state.transaction.totalTransaction) / limit);
     const history = useSelector((state) => state.transaction.transaction);
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const [month, setMonth] = useState(new Date().getMonth());
     const [status, setStatus] = useState('all');
     const [page, setPage] = useState(1);
     const call = useDispatch();
@@ -34,7 +37,8 @@ export default function TransactionPage() {
                 id: JSON.parse(localStorage.getItem('user')).id,
                 page: page,
                 limit: limit,
-                status: status
+                status: status,
+                month: month + 1
             })).then(
                 () => {
 
@@ -48,7 +52,7 @@ export default function TransactionPage() {
         else {
             navigate('/');
         }
-    }, [call, page, status, navigate])
+    }, [call, page, status, month, navigate])
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-full overflow-y-auto removeScroll">
             <Toaster/>
@@ -58,9 +62,7 @@ export default function TransactionPage() {
                     Your history
                 </div>
                 <div className="flex flex-col py-[10px]">
-                    <div className="flex items-center justify-center w-full h-[45px] rounded-[10px] border-gray-600 border-[1px] mb-[10px]">
-                        test
-                    </div>
+                    <TransactionFilterBar status={status} setStatus={setStatus} months={months} month={month} setMonth={setMonth}/>
                     {
                         (history?.length > 0)?
                         history?.map((value, index) => {
