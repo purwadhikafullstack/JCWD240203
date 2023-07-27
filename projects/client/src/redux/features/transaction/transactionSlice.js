@@ -76,7 +76,11 @@ export const getOrder = (data) => async(dispatch) => {
 
 export const getCompleted = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/sales/${data.id}?year=${data.year}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/sales/${data.id}?type=${data.type}&&year=${data.year}&&month=${data.month}`, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
 
         dispatch(setOrder(response.data.data.rows));
         dispatch(setTotalOrder(response.data.data.count));

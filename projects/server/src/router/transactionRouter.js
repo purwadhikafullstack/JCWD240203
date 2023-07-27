@@ -9,7 +9,7 @@ Router.get('/user/:id', transactionsGET.getTransaction);
 
 Router.get('/order/:id', transactionsGET.getOrder);
 
-Router.get('/sales/:id', transactionsGET.getCompleted);
+Router.get('/sales/:id', Authorization.isOwner, transactionsGET.getCompleted);
 
 Router.post('/', transactionsPOST.createTransaction);
 

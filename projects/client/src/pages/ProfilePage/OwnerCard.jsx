@@ -157,11 +157,11 @@ export default function OwnerCard(props) {
                             Add property
                         </button>
                     </div>
-                    <div className="w-full flex gap-[25px] overflow-x-auto p-[10px]">
+                    <div className="w-full flex flex-nowrap gap-[25px] overflow-x-auto mobileScroll p-[10px] whitespace-nowrap">
                         {
                             props?.listings?.map((value, index) => {
                                 return(
-                                    <div key={index} className="min-w-[250px] h-[300px]">
+                                    <div key={index} className="min-w-[250px] h-[300px] inline-block">
                                         <ListingCard data={value}/>
                                     </div>
                                 )

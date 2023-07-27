@@ -51,7 +51,7 @@ export default function OrderPage() {
         else {
             navigate('/')
         }
-    }, [call, page, status, month]);
+    }, [call, page, status, month, navigate]);
 
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-full overflow-y-auto removeScroll">
