@@ -13,6 +13,9 @@ import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
 import SalesReport from "./pages/SalesReport/SalesReport";
+import Hostings from "./pages/HostingPage/HostingPage";
+import CalendarHosting from "./pages/HostingPage/CalendarHosting";
+import ListingList from "./pages/HostingPage/ListingList";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -48,6 +51,9 @@ function App() {
         <Route path={'/orders'} element={<OrderPage/>}/>
         <Route path={'/verify/:code'} element={<VerifyPage/>}/>
         <Route path={'/sales'} element={<SalesReport/>}/>
+        <Route path={'/hostings'} element={<Hostings/>}/>
+        <Route path={'/hostings/calendar'} element={<CalendarHosting/>}/>
+        <Route path={'/hostings/listing'} element={<ListingList/>}/>
       </Routes>
     </div>
   );

@@ -24,6 +24,13 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fullcalendar/core": "^6.1.8",
+    "@fullcalendar/daygrid": "^6.1.8",
+    "@fullcalendar/react": "^6.1.8",
+    "@fullcalendar/timegrid": "^6.1.8",
+    "dayjs": "^1.11.9",
+    "react-content-loader": "^6.2.1",
+    "react-loading-skeleton": "^3.3.1",
     "styled-icons": "^10.47.0"
   }
 }
