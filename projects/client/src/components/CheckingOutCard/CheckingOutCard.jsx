@@ -1,11 +1,12 @@
 import React from "react";
+import './CheckingOutCard.css'
 
 
 export default function CheckingOutCard() {
     return (
         <div className="w-full bg-slate-200/25 h-full py-1 rounded-[10px]">
-            <div className="flex flex-col h-full w-[360px] bg-[#F0EFE9]  drop-shadow-xl rounded-[10px] border-2 mx-3 my-6">
-                <div className="px-[10px] py-[10px] text-green-800 text-[20px] font-semibold">
+            <div className="checkingOutCard flex flex-col h-full w-[360px] bg-[#F0EFE9]  drop-shadow-xl rounded-[10px] border-2 mx-3 my-6">
+                <div className=" px-[10px] py-[10px] text-green-800 text-[20px] font-semibold">
                     {/* input end date here */}
                     Checking out on 17-08-2023
                 </div>

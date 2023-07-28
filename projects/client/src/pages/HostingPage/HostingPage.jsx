@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import TopAddProperty from "../../components/TopAddProperty/TopAddProperty";
 import CheckingOutCard from "../../components/CheckingOutCard/CheckingOutCard";
-import CurrentlyCheckin from "../../components/CurrentlyCheckin/CurrentlyCheckin";
+import CurrentlyStaying from "../../components/CurrentlyStaying/CurrentlyStaying";
 import UpcomingBooked from "../../components/UpcomingBooked/UpcomingBooked";
 import QnaCard from "../../components/QnACard/qnaCard";
 import Footer from "../../components/footerRentify/footerPage";
+import './HostingPage.css'
 
 export default function Hostings() {
     // State to keep track of the active filter
@@ -18,7 +19,7 @@ export default function Hostings() {
             contentToShow = <CheckingOutCard />;
             break;
         case "CurrentlyStaying":
-            contentToShow = <CurrentlyCheckin />;
+            contentToShow = <CurrentlyStaying />;
             break;
         case "Upcoming":
             contentToShow = <UpcomingBooked />;
@@ -67,7 +68,7 @@ export default function Hostings() {
                     </div>
                     <div className="w-full">{contentToShow}
                     </div>
-                    <div className="resourceTips justify-between flex flex-col lg:flex-row px-[20px] py-[120px]">
+                    <div className="qnaCard justify-between flex flex-col lg:flex-row px-[20px] py-[120px]">
                         <div>
                             <div className="text-[49px] md:text-6xl font-semibold mb-10 text-left">
                                 Resources and tips

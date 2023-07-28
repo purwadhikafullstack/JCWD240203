@@ -3,8 +3,6 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
 import { onLogout } from "../../redux/features/User/userSlice";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from 'react-icons/io';
@@ -73,6 +71,16 @@ export default function HeaderProperty(props) {
         toggleMenu(false);
     };
 
+    const handleMenuReservationClick = () => {
+        navigate('/hostings/reservation');
+        toggleMenu(false);
+    };
+
+    const handleMenuCreateClick = () => {
+        navigate('/hostings/addproperty');
+        toggleMenu(false);
+    };
+
     return (
         <div>
             <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-[1px] bg-white p-4 md:px-6 border-gray-500 z-10 items-center">
@@ -122,7 +130,7 @@ export default function HeaderProperty(props) {
 
                             {/* Menu Dropdown Content */}
                             {menu && menuItemClicked && (
-                                <div className="absolute top-full left-0 mt-2 w-[200px] bg-white border border-black rounded text-left">
+                                <div className="dropdownMenu absolute top-full left-0 mt-2 w-[200px] bg-white border border-black rounded text-left">
                                     <a
                                         href="#"
                                         className="block py-2 px-4 text-black hover:bg-slate-300/50"
@@ -133,12 +141,14 @@ export default function HeaderProperty(props) {
                                     <a
                                         href="#"
                                         className="block py-2 px-4 text-black hover:bg-slate-300/50"
+                                        onClick={handleMenuReservationClick}
                                     >
                                         Reservation
                                     </a>
                                     <a
                                         href="#"
                                         className="block py-2 px-4 text-black hover:bg-slate-300/50"
+                                        onClick={handleMenuCreateClick}
                                     >
                                         Create a new listing
                                     </a>

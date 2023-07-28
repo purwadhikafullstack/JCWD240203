@@ -16,6 +16,8 @@ import SalesReport from "./pages/SalesReport/SalesReport";
 import Hostings from "./pages/HostingPage/HostingPage";
 import CalendarHosting from "./pages/HostingPage/CalendarHosting";
 import ListingList from "./pages/HostingPage/ListingList";
+import ReservationHosting from "./pages/HostingPage/ReservationHosting";
+import CreateListing from "./pages/HostingPage/CreateListing";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -54,6 +56,8 @@ function App() {
         <Route path={'/hostings'} element={<Hostings/>}/>
         <Route path={'/hostings/calendar'} element={<CalendarHosting/>}/>
         <Route path={'/hostings/listing'} element={<ListingList/>}/>
+        <Route path={'/hostings/reservation'} element={<ReservationHosting/>}/>
+        <Route path={'/hostings/addproperty'} element={<CreateListing/>}/>
       </Routes>
     </div>
   );

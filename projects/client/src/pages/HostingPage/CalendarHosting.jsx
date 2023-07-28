@@ -5,6 +5,7 @@ import EventCalendar from "./EventCalendar";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import SidebarCalendar from "../../components/SidebarCalendar/SidebarCalendar";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
+import Footer from "../../components/footerRentify/footerPage";
 
 export default function CalendarHosting() {
     const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +46,7 @@ export default function CalendarHosting() {
                     <SidebarCalendar />
                 </div>
             </div>
-
+        <Footer/>
         </div>
     );
 }

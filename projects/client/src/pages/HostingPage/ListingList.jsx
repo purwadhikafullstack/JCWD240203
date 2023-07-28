@@ -1,6 +1,8 @@
 import React from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingListCard from "../../components/ListingListCard/ListingListCard";
+import Footer from "../../components/footerRentify/footerPage";
+import './ListingList.css'
 
 export default function ListingList() {
     return (
@@ -31,18 +33,21 @@ export default function ListingList() {
                             <div className="flex items-center text-left w-[200px] px-[10px] py-[10px]">
                                 ROOM
                             </div>
-                            <div className="flex items-center text-left w-[350px] px-[10px] py-[10px]">
+                            <div className="flex items-center text-left w-[400px] px-[10px] py-[10px]">
                                 LOCATION
                             </div>
                         </div>
                     </div>
                     <hr className="my-4 border-gray-300" />
                     <div className="filledDetail">
-                        <ListingListCard/>
+                        <ListingListCard />
                     </div>
                 </div>
 
             </main>
+            <div className=" sticky bottom-0">
+                <Footer />
+            </div>
         </div >
     )
 }
