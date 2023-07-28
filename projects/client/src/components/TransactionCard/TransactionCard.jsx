@@ -38,7 +38,7 @@ export default function TransactionCard(props) {
     }
 
     return(
-        <div className="flex flex-col w-full h-auto md:h-[250px] md:flex-row gap-[15px] justify-between">
+        <div className="flex flex-col w-full h-auto lg:h-[250px] lg:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px]">
             <div className="w-full md:w-[250px] h-[250px] md:h-full">
                 <img src={props?.data?.property?.propertyImages[0]?.url || ''} alt="" className="w-full h-full rounded-[5px]"/>
             </div>

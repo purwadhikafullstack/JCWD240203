@@ -50,7 +50,7 @@ export const createTransaction = (data) => async(dispatch) => {
 
 export const getHistory = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/user/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/user/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}&&month=${data.month}`);
 
         dispatch(setTransaction(response.data.data.rows));
         dispatch(setTotalTransaction(response.data.data.count));
@@ -63,7 +63,7 @@ export const getHistory = (data) => async(dispatch) => {
 
 export const getOrder = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}&&month=${data.month}`);
 
         dispatch(setOrder(response.data.data.rows));
         dispatch(setTotalOrder(response.data.data.count));
@@ -76,7 +76,11 @@ export const getOrder = (data) => async(dispatch) => {
 
 export const getCompleted = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/sales/${data.id}?year=${data.year}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/sales/${data.id}?type=${data.type}&&year=${data.year}&&month=${data.month}`, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
 
         dispatch(setOrder(response.data.data.rows));
         dispatch(setTotalOrder(response.data.data.count));

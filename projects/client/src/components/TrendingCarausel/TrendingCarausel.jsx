@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getProperty } from '../../redux/features/property/propertySlice';
 import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 export default function TrendingCarausel() {
     const limit = 6;
@@ -34,11 +35,11 @@ export default function TrendingCarausel() {
         <div className="these text-left text-[48px] font-thin">
           These homes get lots attention on Rentify
         </div>
-        <div className="flex w-full overflow-x-auto overflow-y-hidden gap-[25px] px-[20px] py-[15px]">
+        <div className="flex w-full overflow-x-auto mobileScroll gap-[25px] px-[20px] py-[15px]">
           {properties.map((property, index) => (
-            <div key={index} className='min-w-[250px] h-[350px]'>
+            <Link to={`/property/${property?.id}`} key={index} className='min-w-[250px] h-[350px]'>
               <PropertyCard data={property}/>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

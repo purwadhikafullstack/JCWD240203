@@ -25,3 +25,8 @@ code {
 .removeScroll::-webkit-scrollbar {
   display: none;
 }
+
+/* mobile scrolling */
+.mobileScroll {
+  -webkit-overflow-scrolling: touch;
+}

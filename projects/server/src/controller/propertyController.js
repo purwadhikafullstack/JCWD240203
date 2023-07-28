@@ -2,6 +2,8 @@ const db = require('../../models');
 const { Op } = require('sequelize');
 const property = db.property;
 const propertyImages = db.propertyImages;
+const propertyFacility = db.propertyFacility;
+const facility = db.facility;
 const category = db.category;
 const room = db.room;
 const review = db.review;
@@ -49,15 +51,9 @@ module.exports = {
                             }
                         }
                     },
-                    {
-                        model: propertyImages
-                    },
-                    {
-                        model: category
-                    },
-                    {
-                        model: review
-                    }
+                    { model: propertyImages },
+                    { model: category },
+                    { model: review }
                 ],
                 order: [
                     ['rooms', 'price', 'ASC'],
@@ -129,9 +125,6 @@ module.exports = {
             let result = await property.findOne({
                 include: [
                     {
-                        model: room,
-                    },
-                    {
                         model: transaction,
                         where: transactionFilter,
                         required: false
@@ -146,12 +139,15 @@ module.exports = {
                         ]
                     },
                     {
-                        model: propertyImages
-                    },
-                    {
                         model: user,
                         attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
-                    }
+                    },
+                    { 
+                        model: propertyFacility,
+                        include: [{model: facility}]
+                    },
+                    { model: room },
+                    { model: propertyImages },
                 ],
                 where: {
                     id: id

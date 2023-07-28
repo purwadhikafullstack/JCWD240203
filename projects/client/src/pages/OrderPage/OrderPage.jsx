@@ -5,11 +5,14 @@ import { getOrder } from "../../redux/features/transaction/transactionSlice";
 import { Toaster, toast } from "react-hot-toast";
 import OrderCard from "../../components/OrderCard/OrderCard";
 import { useNavigate } from "react-router-dom";
+import OrderFilterBar from "./OrderFilterBar";
 
 export default function OrderPage() {
     const limit = 8;
     const orders = useSelector((state) => state.transaction.order);
     const totalOrder = Math.ceil(useSelector((state) => state.transaction.totalOrder) / limit);
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const [month, setMonth] = useState(new Date().getMonth());
     const [status, setStatus] = useState('all');
     const [page, setPage] = useState(1);
     const call = useDispatch();
@@ -33,7 +36,8 @@ export default function OrderPage() {
                 id: JSON.parse(localStorage.getItem('user')).id,
                 page: page,
                 limit: limit,
-                status: status
+                status: status,
+                month: month + 1
             })).then(
                 () => {
 
@@ -47,7 +51,7 @@ export default function OrderPage() {
         else {
             navigate('/')
         }
-    }, [call, page, status]);
+    }, [call, page, status, month, navigate]);
 
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-full overflow-y-auto removeScroll">
@@ -58,6 +62,7 @@ export default function OrderPage() {
                     Your bookings
                 </div>
                 <div className="flex flex-col py-[10px]">
+                    <OrderFilterBar months={months} month={month} setMonth={setMonth} status={status} setStatus={setStatus}/>
                     {
                         (orders?.length > 0)?
                         orders?.map((value, index) => {

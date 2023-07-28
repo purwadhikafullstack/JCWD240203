@@ -58,7 +58,7 @@ export default function ProductDetail() {
         const loading = toast.loading('fetching property');
         call(getDetailed({id: params.id, start: start, end: end})).then(
             (response) => {
-                toast.dismiss();
+                toast.dismiss(loading);
                 setProperty(response.data.data);
             },
             (error) => {
@@ -66,7 +66,7 @@ export default function ProductDetail() {
                 console.log(error);
             }
         )
-    }, [call, params.id])
+    }, [call, params.id, start])
 
     return (
         <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
@@ -75,8 +75,8 @@ export default function ProductDetail() {
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
             <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
             <PaymentModal showPayment={showPayment} selectedProperty={property} selectedRoom={selectedRoom} start={start} end={end} guest={guest} setShowPayment={setShowPayment} setShowLogin={setShowLogin}/>
-            <main className="w-full px-20">
-                <div className="propertiesHeading text-left mt-8">
+            <main className="w-full px-5 lg:px-20 py-[20px]">
+                <div className="propertiesHeading text-left">
                     <div className="propertiesName text-[30px] font-black">
                         {property?.name || ''}
                     </div>
@@ -140,7 +140,7 @@ export default function ProductDetail() {
                                 <div className="text-[30px] font-bold px-[14px] py-[10px]">
                                     Check in & Check out
                                 </div>
-                                <div className="hidden md:flex">
+                                <div className="hidden md:flex h-[325px]">
                                     <DayPicker
                                     selected={{
                                         from: (start !== '')? new Date(start) : '',
@@ -153,7 +153,7 @@ export default function ProductDetail() {
                                     numberOfMonths={2}
                                     />
                                 </div>
-                                <div className="flex md:hidden">
+                                <div className="flex md:hidden h-[325px]">
                                     <DayPicker
                                     selected={{
                                         from: (start !== '')? new Date(start) : '',
@@ -169,7 +169,7 @@ export default function ProductDetail() {
                             </div>
                             <hr className="my-4 border-gray-300" />
                             <div className="amenities text-left my-[10px]">
-                                <PropertyFacilities />
+                                <PropertyFacilities data={property.propertyFacilities}/>
                             </div>
                         </div>
                     </div>

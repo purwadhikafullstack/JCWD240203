@@ -10,15 +10,16 @@ module.exports = {
     getTransaction: async(req, res) => {
         try {
             const { id }= req.params;
-            const { limit, page, status } = req.query;
+            const { limit, page, status, month } = req.query;
 
-            const filter = {
-                userId: id
-            };
-
+            const filter = {userId: id};
             if(status !== 'all' && (status === 'pending' || status === 'completed' || status === 'cancelled')) {
                 filter.status = status
             };
+
+            if(month > 0 && month < 13) {
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month)
+            }
             
             const result = await transaction.findAndCountAll({
                 where: filter,
@@ -61,12 +62,16 @@ module.exports = {
     getOrder: async(req, res) => {
         try {
             const { id }= req.params;
-            const { limit, page, status } = req.query;
+            const { limit, page, status, month } = req.query;
 
             const filter = {};
             if(status !== 'all' && (status === 'pending' || status === 'completed' || status === 'cancelled')) {
                 filter.status = status
             };
+
+            if(month > 0 && month < 13) {
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month)
+            }
 
             const result = await transaction.findAndCountAll({
                 where: filter,
@@ -113,13 +118,22 @@ module.exports = {
     getCompleted: async(req, res) => {
         try {
             const { id } = req.params;
-            const { year } = req.query;
+            const { type, year, month } = req.query;
+
+            const filter = {
+                status: 'completed'
+            }
+
+            if(type === 'Yearly') {
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), year);
+            }
+            else if (type === 'Daily') {
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
+            }
+            console.log(filter);
 
             const result = await transaction.findAndCountAll({
-                where: {
-                    status: 'completed',
-                    [Op.and]: db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), year)
-                },
+                where: filter,
                 include: [
                     {
                         model: property,
