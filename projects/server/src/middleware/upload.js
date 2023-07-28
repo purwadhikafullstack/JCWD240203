@@ -49,5 +49,29 @@ module.exports = {
                 })
             }
         }) 
-    }
+    },
+
+    uploadPropertyImages: (req, res, next) => {
+        const multerResult = multerUpload.fields([{name: 'images', maxCount: 6}]);
+        multerResult(req, res, function(err) {
+            try {
+                if(err) throw err;
+
+                req.files?.images?.forEach(value => {
+                    if(value.size > 1048576) throw {message: `${value.originalname} is too large`, fileToDelete: req.files}
+                })
+                next()
+            }
+            catch(error) {
+                if(error.fileToDelete) {
+                    deleteFiles(fileToDelete);
+                }
+                return res.status(404).send({
+                    isError: true,
+                    message: error.message,
+                    data: null
+                })
+            }
+        })
+    }, 
 }

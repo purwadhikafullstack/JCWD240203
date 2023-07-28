@@ -1,15 +1,41 @@
 const db = require('../../models');
 const deleteFiles = require('../helper/deleteFiles');
 const property = db.property;
+const category = db.category;
 const propertyImages = db.propertyImages;
 const room = db.room;
 const price = db.price;
+require('dotenv').config();
 
 module.exports = {
     addProperty: async(req, res) => {
         const t = await db.sequelize.transaction();
+        const {propertyName, propertyDescription, city, address, userId, categoryId, propertyRooms } = req.body;
+        const images = req.files.images;
         try {
-            const images = req.files.images;
+            const newProperty =  await property.create({
+                name: propertyName,
+                description: propertyDescription,
+                city: city,
+                address: address,
+                userId: userId,
+                categoryId: categoryId
+            }, {
+                transaction: t
+            });
+
+            const data = [];
+
+            for(let image of images) {
+                data.push({
+                    url: `${process.env.LINK}/Property/${image.filename}`,
+                    propertyId: newProperty.id
+                })
+            }
+
+            await propertyImages.bulkCreate(data, {transaction: t});
+
+            await room.bulkCreate(propertyRooms, {transaction: t});
 
             await t.commit();
             return res.status(201).send({

@@ -4,7 +4,7 @@ import { AiFillStar } from "react-icons/ai";
 
 export default function CustomerReview(props) {
     return (
-        <Card className="w-full drop-shadow-2xl bg-white rounded-[10px] px-[5px]">
+        <Card className="w-full drop-shadow-2xl bg-white rounded-[10px] p-[5px]">
             <CardBody>
                 <div className="flex gap-1.5 justify-between items-center text-[17px] text-left">
                     <div className="flex gap-[10px] items-center">

@@ -10,13 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      facility.belongsTo(models.propertyFacility, {
+      facility.hasOne(models.propertyFacility, {
         foreignKey: 'facilityId'
       });
     }
   }
   facility.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    icon: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'facility',

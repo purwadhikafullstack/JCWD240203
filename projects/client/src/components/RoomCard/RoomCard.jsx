@@ -2,9 +2,9 @@ export default function RoomCard(props) {
     const handleClick = (value) => {if(props?.setSelectedRoom) {props?.setSelectedRoom(value)}};
 
     return(
-        <div className="flex w-full bg-gray-200 p-[10px] rounded-[10px] justify-between h-[125px]">
-            <div className="flex flex-col items-start gap-[5px] justify-center">
-                <div className="text-[24px] font-bold">
+        <div className="flex w-full bg-gray-200 p-[10px] rounded-[10px] justify-between h-auto md:h-[125px]">
+            <div className="flex flex-col items-start text-start gap-[5px] justify-center">
+                <div className="text-[22px] md:text-[24px] font-bold">
                     {props?.data?.name} 
                 </div>
                 <div>

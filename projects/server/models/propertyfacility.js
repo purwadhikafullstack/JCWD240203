@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'propertyId'
       });
 
-      propertyFacility.hasOne(models.facility, {
+      propertyFacility.belongsTo(models.facility, {
         foreignKey: 'facilityId'
       });
     }

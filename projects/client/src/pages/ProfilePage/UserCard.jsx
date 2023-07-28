@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ListingCard from "../../components/ListingCard/ListingCard";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
@@ -28,29 +29,36 @@ export default function UserCard(props) {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col w-full md:h-full justify-center items-center md:justify-start md:items-start md:px-[50px] py-[10px] overflow-y-auto removeScroll">
-                <div className="flex flex-col justify-start items-start w-[300px] md:w-full h-auto border-b-[1px] border-gray-600">
+            <div className="flex flex-col w-full md:h-full justify-center items-center md:justify-start md:items-start md:px-[50px] py-[10px] overflow-y-auto removeScroll gap-[10px]">
+                <div className="flex flex-col justify-start items-start w-[300px] md:w-full h-auto">
                     <div className="text-[24px] font-bold">
                         About {props?.username || 'name'}
                     </div>
-                    <div className="text-start w-full">
-                        desc
+                    <div className="w-full h-[250px]">
+                        <textarea value={props?.desc} disabled className="w-full h-full overlofw-y-auto mobileScroll removeScroll resize-none border-[1px] border-gray-600 rounded-[10px] px-[10px] py-[5px]"/>
                     </div>
                 </div>
-                <div className="flex flex-col justify-start items-start w-[300px] md:w-full">
-                    <div>
-                        {props?.username}'s listings
-                    </div>
-                    <div className="w-full flex gap-[25px] overflow-x-auto p-[10px]">
-                        {
-                            props?.listings?.map((value, index) => {
-                                return(
-                                    <div key={index} className="min-w-[250px] h-[300px]">
-                                        <ListingCard data={value}/>
-                                    </div>
-                                )
-                            })
-                        }
+                <div className="w-[300px] md:w-full">
+                    <div className="flex flex-col justify-start items-start">
+                        <div>
+                            {props?.username}'s listings
+                        </div>
+                        <div className="w-full flex flex-nowrap gap-[25px] overflow-x-auto removeScroll mobileScroll gap-[25px] px-[20px] py-[15px]">
+                            {
+                                (props?.listings?.length > 0)?
+                                props?.listings?.map((value, index) => {
+                                    return(
+                                        <Link to={`/property/${value?.id}`} key={index} className="min-w-[250px] h-[300px]">
+                                            <ListingCard data={value}/>
+                                        </Link>
+                                    )
+                                })
+                                :
+                                <div className="w-full text-center font-bold">
+                                    No property listing
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
