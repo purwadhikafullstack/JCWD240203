@@ -1,8 +1,19 @@
-import React from "react";
+import { useRef, useState } from "react";
 import { Card, CardBody } from "@material-tailwind/react";
 import { AiFillStar } from "react-icons/ai";
+import { AiOutlineStar } from "react-icons/ai";
 
 export default function CustomerReview(props) {
+    const [rating, setRating] = useState(0);
+    const [description, setDescription] = useState('');
+
+    const handleChangeDesc = (e) => {
+        setDescription(e.target.value);
+    };
+
+    const handleChangeRating = (value) => {
+        setRating(value);
+    }; 
     return (
         <Card className="w-full drop-shadow-2xl bg-white rounded-[10px] p-[5px]">
             <CardBody>
@@ -15,11 +26,42 @@ export default function CustomerReview(props) {
                             {props?.average || 0}
                         </div>
                     </div>
-                    <div className="text-[24px] font-bold self-end">
+                    <div className="text-[24px] font-bold">
                         {props?.reviews?.length || 0} reviews
                     </div>
                 </div>
                 <div className="flex flex-col gap-[10px]">
+                    <div className="flex flex-col bg-gray-200 rounded-[10px] p-[10px] gap-[10px]">
+                        <div className="flex gap-[5px]">
+                            {
+                                [...Array(5)].map((value, index) => {
+                                    if(index + 1 <= rating) {
+                                        return(
+                                            <div key={index} className="cursor-pointer" onClick={() => handleChangeRating(index + 1)}>
+                                                <AiFillStar size={25}/>
+                                            </div>
+                                        )
+                                    }
+                                    else {
+                                        return(
+                                            <div key={index} className="cursor-pointer" onClick={() => handleChangeRating(index + 1)}>
+                                                <AiOutlineStar size={25}/>
+                                            </div>
+                                        )
+                                    }
+                                        
+                                })
+                            }
+                        </div>
+                        <div className="w-full text-start">
+                            <textarea maxLength={255} value={description} onChange={handleChangeDesc} className="w-full min-h-[100px] border-[1px] border-gray-600 resize-none rounded-[5px] p-[5px]"/>
+                        </div>
+                        <div className="flex justify-end w-full">
+                            <button className="w-[125px] h-[45px] bg-green-500 rounded-[5px] transition-all duration-400 hover:bg-green-600 active:bg-green-700 active:scale-95">
+                                Post Review
+                            </button>
+                        </div>
+                    </div>
                     {
                         props?.reviews?.map((value, index) => {
                             return(
@@ -43,8 +85,8 @@ export default function CustomerReview(props) {
                                             }
                                         </div>
                                     </div>
-                                    <div className="w-full text-start h-[100px]">
-                                        {value?.description}
+                                    <div className="w-full text-start">
+                                        <textarea maxLength={255} value={value?.description} disabled className="w-full min-h-[100px] resize-none rounded-[5px] p-[5px]"/>
                                     </div>
                                 </div>
                             )
