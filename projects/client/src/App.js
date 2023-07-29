@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
-import { keepLogin } from "./redux/features/User/userSlice";
+import { keepLogin } from "./redux/features/user/userSlice";
 import { useDispatch } from "react-redux";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import TransactionPage from "./pages/TransactionPage/TransactionPage";

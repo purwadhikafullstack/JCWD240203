@@ -12,7 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-hot-toast';
 // import { Button } from "@mui/material";
-import { onLogin } from "../../redux/features/User/userSlice";
+import { onLogin } from "../../redux/features/user/userSlice";
 import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import './LoginModal.css';
 

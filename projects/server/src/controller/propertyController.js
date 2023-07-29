@@ -113,7 +113,9 @@ module.exports = {
             const id = req.params.id;
             const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
             const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
-
+            const { limit, page } = req.query;
+            const userId = req.query.userId;
+            
             let transactionFilter = {
                 status: 'completed',
                 [Op.and]: [{
@@ -136,7 +138,8 @@ module.exports = {
                                 model: user,
                                 attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
                             }
-                        ]
+                        ],
+                        limit: limit*page || 5
                     },
                     {
                         model: user,
@@ -156,7 +159,10 @@ module.exports = {
                     [{model: propertyImages} ,'id', 'ASC']
                 ],
             })
+            const count = await review.count({where: {propertyId: result.id}});
             result = JSON.parse(JSON.stringify(result, null, 2));
+            result.hasReviewed = false;
+            result.totalReview = count
 
             result.rooms = result.rooms.filter((room) => {
                 let temp = 0;
@@ -169,10 +175,13 @@ module.exports = {
 
             let temp = 0;
             if(result.reviews.length > 0) {
-                result.reviews.forEach((review) => {temp += review.rating});
+                result.reviews.forEach((review) => {
+                    temp += review.rating;
+                    if(review.userId === Number(userId)) {result.hasReviewed = true}
+                });
                 temp /= result.reviews.length;
             }
-            result.average = temp;
+            result.average = temp.toFixed(2);
 
             return res.status(200).send({
                 isError: true,
