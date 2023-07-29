@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
+
+.totalList {
+    font-family: 'Alata', sans-serif;
+}
+
+.listDetail {
+    font-family: 'Baloo 2', cursive;
+    background-color: rgb(233, 235, 241);
+}
+
+.filledDetail {
+    font-family: 'Baloo 2', cursive;
+}

@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Belanosima&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gayathri:wght@700&family=Roboto+Flex&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gayathri&display=swap');
+
+.yourListings {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.reservationFilter {
+    font-family: 'Raleway', sans-serif;
+}
+
+.qnaCard {
+    font-family: 'Gayathri', sans-serif;
+}
+
+.qnaCard .text-6xl {
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-left: 4px;
+    text-align: left;
+}

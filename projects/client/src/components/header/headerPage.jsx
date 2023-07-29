@@ -5,7 +5,7 @@ import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { onLogout } from "../../redux/features/user/userSlice";
+import { onLogout } from "../../redux/features/User/userSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Header(props) {
