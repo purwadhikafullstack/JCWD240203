@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import ListingCard from "../../components/ListingCard/ListingCard";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import './UserCard.css'
 
 export default function UserCard(props) {
     return(
         <div className="md:flex flex-row h-[100vh] md:h-full w-full justify-center items-center px-[20px] py-[10px] overflow-y-auto removeScroll">
             <div className="flex flex-col gap-[20px] w-full md:w-auto justify-center items-center">
-                <div className="flex flex-col gap-[20px] justify-center items-center w-[300px] h-[250px] bg-white border-[1px] border-gray-500 rounded-[10px]">
+                <div className=" flex flex-col gap-[20px] justify-center items-center w-[300px] h-[250px] bg-white border-[1px] border-gray-500/25 rounded-[10px] drop-shadow-2xl">
                     <div className="w-[125px] h-[125px] rounded-full overflow-hidden">
                         <img src={props?.PFP} alt="" className="w-full h-full"/>
                     </div>
-                    <div>
+                    <div className="username font-extrabold">
                         {props?.username || 'name'}
                     </div>
                 </div>

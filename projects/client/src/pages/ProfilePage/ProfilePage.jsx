@@ -2,13 +2,15 @@ import { useParams } from "react-router-dom"
 import Header from "../../components/header/headerPage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getUser } from "../../redux/features/user/userSlice";
+import { getUser } from "../../redux/features/User/userSlice";
 import { Toaster, toast } from "react-hot-toast";
 import UserCard from "./UserCard";
 import OwnerCard from "./OwnerCard";
-import { updateUser } from "../../redux/features/user/userSlice";
+import { updateUser } from "../../redux/features/User/userSlice";
 import LoginModal from "../../components/LoginModal/LoginModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
+import './ProfilePage.css'
+
 
 export default function ProfilePage() {
     const user = useSelector((state) => state.user.currentUser);

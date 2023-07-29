@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+
+.username {
+    font-family: 'Comfortaa', cursive;
+    font-size: large;
+    /* font-family: 'Outfit', sans-serif; */
+}
