@@ -92,7 +92,7 @@ export default function PaymentModal(props) {
                                 Duration:
                             </div>
                             <div className='totalnight font-bold text-teal-600 hover:text-teal-700'>
-                                {nights} nights
+                                {`${nights}`} nights
                             </div>
                         </div>
                         <div className='totalRoom text-[20px] flex gap-2'>
@@ -100,7 +100,7 @@ export default function PaymentModal(props) {
                                 Total room:
                             </div>
                             <div className=' font-bold text-teal-600 hover:text-teal-700'>
-                                {rooms}
+                                {`${rooms}`}
                             </div>
                         </div>
                         <div className="totalPrice mt-auto text-start text-[23px] font-bold flex gap-2">

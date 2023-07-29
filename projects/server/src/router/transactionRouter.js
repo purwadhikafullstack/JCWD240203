@@ -11,6 +11,8 @@ Router.get('/order/:id', transactionsGET.getOrder);
 
 Router.get('/sales/:id', Authorization.isOwner, transactionsGET.getCompleted);
 
+Router.get('/current/:id', transactionsGET.getCurrent);
+
 Router.post('/', transactionsPOST.createTransaction);
 
 Router.patch('/:id', upload.uploadPaymentProof, Authorization.isCurrentUser, transactionsPATCH.updatePaymentProof);

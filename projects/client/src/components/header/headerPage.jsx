@@ -5,7 +5,7 @@ import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { onLogout } from "../../redux/features/User/userSlice";
+import { onLogout } from "../../redux/features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Header(props) {
@@ -25,10 +25,9 @@ export default function Header(props) {
         }
         toggleMenu(false)
     }
-    const onClickProfile = () => {
-        console.log(currentUser)
-        navigate(`/profile/${currentUser?.id}`)
-    }
+    const onClickProfile = () => {navigate(`/profile/${currentUser?.id}`)};
+    const onClickHistory = () => {navigate('/history')};
+    const onClickHostings = () => {navigate('/hostings')};
 
     const onClickLogout = () => {
         call(onLogout());
@@ -78,11 +77,11 @@ export default function Header(props) {
                                 <div onClick={onClickProfile} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     Profile
                                 </div>
-                                <div className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                                <div onClick={onClickHistory} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     History
                                 </div>
-                                <div className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
-                                    Orders
+                                <div onClick={onClickHostings} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                                    Hostings
                                 </div>
                                 <div onClick={onClickLogout} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     Log Out

@@ -3,7 +3,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { onLogout } from "../../redux/features/User/userSlice";
+import { onLogout } from "../../redux/features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from 'react-icons/io';
 
@@ -42,7 +42,6 @@ export default function HeaderProperty(props) {
         setMenuTodayClicked(true);
         setMenuCalendarClicked(false);
         setMenuInsightsClicked(false);
-        toggleMenu(!menu);
         navigate('/hostings');
     };
 
@@ -50,7 +49,6 @@ export default function HeaderProperty(props) {
         setMenuTodayClicked(false);
         setMenuCalendarClicked(true);
         setMenuInsightsClicked(false);
-        toggleMenu(!menu);
         navigate('/hostings/calendar')
     };
 
@@ -58,12 +56,10 @@ export default function HeaderProperty(props) {
         setMenuTodayClicked(false);
         setMenuCalendarClicked(false);
         setMenuInsightsClicked(true);
-        toggleMenu(!menu);
     };
 
     const handleMenuDropdownClick = () => {
         setMenuItemClicked(!menuItemClicked);
-        toggleMenu(!menu);
     };
 
     const handleMenuListingsClick = () => {
@@ -129,7 +125,7 @@ export default function HeaderProperty(props) {
                             </button>
 
                             {/* Menu Dropdown Content */}
-                            {menu && menuItemClicked && (
+                            {menuItemClicked && (
                                 <div className="dropdownMenu absolute top-full left-0 mt-2 w-[200px] bg-white border border-black rounded text-left">
                                     <a
                                         href="#"

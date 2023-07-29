@@ -1,8 +1,13 @@
 import React from "react";
 import './CurrentlyStaying.css'
+import { useDispatch } from "react-redux";
 
 
 export default function CurrentlyStaying() {
+    const call = useDispatch();
+
+    
+
     return (
         <div className="w-full bg-slate-200/25 h-full py-1 rounded-[10px]">
             <div className="currentlyStaying flex flex-col h-full w-[360px] bg-[#F0EFE9] drop-shadow-xl rounded-[10px] border-2 mx-3 my-6">

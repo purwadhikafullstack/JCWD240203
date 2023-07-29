@@ -32,9 +32,7 @@ module.exports = {
                             }
                         ]
                     },
-                    {
-                        model: room
-                    }
+                    {model: room}
                 ],
                 order: [
                     [{model: property}, {model: propertyImages} ,'id', 'ASC'],
@@ -88,9 +86,7 @@ module.exports = {
                         },
                         required: true
                     },
-                    {
-                        model: room
-                    }
+                    {model: room}
                 ],
                 order: [
                     [{model: property}, {model: propertyImages} ,'id', 'ASC'],
@@ -142,8 +138,50 @@ module.exports = {
                         },
                         required: true
                     },
+                    {model: room}
+                ],
+                order: [
+                    ['id', 'ASC']
+                ],
+                distinct: true
+            });
+
+            return res.status(200).send({
+                isError: false,
+                message: 'GET Success',
+                data: result
+            })
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            })
+        }
+    },
+
+    getCurrent: async(req, res) => {
+        try {
+            const { id } = req.params;
+
+            let transactionFilter = {
+                status: 'completed',
+                [Op.and]: [{
+                    checkIn: {[Op.lte]: new Date()},
+                    checkOut: {[Op.gte]: new Date()}
+                }]
+            };
+
+            const result = await transaction.findAndCountAll({
+                where: transactionFilter,
+                include: [
                     {
-                        model: room
+                        model: property,
+                        where: {
+                            userId: id
+                        },
+                        required: true
                     }
                 ],
                 order: [
