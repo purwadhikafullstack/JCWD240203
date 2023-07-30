@@ -10,6 +10,8 @@ Router.get('/', properties.getProperty);
 
 Router.get('/:id', properties.propertyDetailed);
 
+Router.get('/review/:propertyId', reviews.getPropertyReview);
+
 // POST //
 //Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, propertiesPOST.addProperty);
 

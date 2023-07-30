@@ -24,7 +24,6 @@ export default function ProductDetail() {
     const start = useSelector((state) => state.property.start);
     const end = useSelector((state) => state.property.end);
     const guest = useSelector((state) => state.property.guest);
-    const [load, setLoad] = useState(false);
     const [property, setProperty] = useState({});
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
@@ -32,7 +31,7 @@ export default function ProductDetail() {
     const [showPayment, setShowPayment] = useState(false);
     const [page, setPage] = useState(1);
     const limit = 8;
-    const [totalReview, setTotalReview] = useState(2);
+    const totalReview = Math.ceil(useSelector((state) => state.review.totalReview)/limit);
     const params = useParams();
     const call = useDispatch();
 
@@ -69,26 +68,23 @@ export default function ProductDetail() {
     };
 
     useEffect(() => {
-        const loading = toast.loading('fetching property');
+        const loading = toast.loading('fetching property', {id: 'fecthingProperty'});
         call(getDetailed({
             id: params.id,
             start: start,
             end: end,
             userId: JSON.parse(localStorage.getItem('user'))?.id || null,
-            limit: limit,
-            page: page
         })).then(
             (response) => {
                 toast.dismiss(loading);
                 setProperty(response.data.data);
-                setTotalReview(Math.ceil(response.data.data.totalReview / limit))
             },
             (error) => {
                 toast.error('network error !', {id: loading});
                 console.log(error);
             }
         )
-    }, [call, params.id, start, load, currentUser, page]);
+    }, [call, params.id, start, currentUser]);
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
@@ -200,7 +196,7 @@ export default function ProductDetail() {
                     </div>
                 </div>
                 <div className="review w-full">
-                    <CustomerReview currentUser={currentUser} hasReviewed={property?.hasReviewed} reviews={property?.reviews} load={load} setLoad={setLoad} property={property} average={property?.average}/>
+                    <CustomerReview currentUser={currentUser} page={page} limit={limit} propertyId={property?.id} hasReviewed={property?.hasReviewed}/>
                 </div>
             </main >
         </div >
