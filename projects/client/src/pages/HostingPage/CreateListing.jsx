@@ -12,7 +12,7 @@ export default function CreateListing() {
 
     // Function to toggle modal visibility
     const toggleModal = () => {
-        setShowModal((prev) => !prev);
+        setShowModal(!showModal);
     };
 
     return (
@@ -32,26 +32,7 @@ export default function CreateListing() {
                             <ListingPhotoUpload image={image} setImage={setImage}/>
                         </div>
                     </div>
-                    <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8">
-                        <div className="photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
-                            <div className="text-left text-[30px] font-bold mb-10">
-                                Listing basics
-                            </div>
-                            <div className="listingName">
-                                <div className="listTitle text-left text-[18px]">
-                                    <BasicDetails />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-end">
-                        <div
-                            className="submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl mb-6"
-                            onClick={toggleModal}
-                        >
-                            Submit
-                        </div>
-                    </div>
+                    <BasicDetails toggleModal={toggleModal}/>
                 </div>
             </main>
             <Footer />
