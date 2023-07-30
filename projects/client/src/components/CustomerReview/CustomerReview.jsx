@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardBody } from "@material-tailwind/react";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { postReview } from "../../redux/features/review/reviewSlice";
+import { getPropertyReview, postReview } from "../../redux/features/review/reviewSlice";
 import { toast } from "react-hot-toast";
 
 export default function CustomerReview(props) {
     const [rating, setRating] = useState(0);
-    const start = useSelector((state) => state.property.start);
-    const end = useSelector((state) => state.property.end);
     const [description, setDescription] = useState('');
+    const [isPosting, setIsPosting] = useState(false);
+    const reviews = useSelector((state) => state.review.review);
     const call = useDispatch();
 
     const handleChangeDesc = (e) => {
@@ -22,22 +22,41 @@ export default function CustomerReview(props) {
     };
 
     const handlePostReview = () => {
+        setIsPosting(true);
         if(localStorage.getItem('user')) {
             const loading = toast.loading('Posting review ...');
-            call(postReview({
-               userId: JSON.parse(localStorage.getItem('user')).id,
-               propertyId: props?.property?.id,
-               rating: rating,
-               description: description
-            })).then(
-                () => {
-                    toast.success('Review posted !', {id: loading});
-                    if(props?.setLoad) {props?.setLoad(!props?.load)};
-                },
+            if(rating > 0 && description) {
+                call(postReview({
+                   userId: JSON.parse(localStorage.getItem('user')).id,
+                   propertyId: props?.property?.id,
+                   rating: rating,
+                   description: description
+                })).then(
+                    () => {
+                        toast.success('Review posted !', {id: loading});
+                        if(props?.setLoad) {props?.setLoad(!props?.load)};
+                    },
+                    (error) => {console.log(error)}
+                )
+            }
+            else {
+                toast.error('Review cannot be empty !', {id: loading});
+            }
+        }
+        setTimeout(() => {
+            setIsPosting(false);
+        }, 1000)
+    };
+
+    useEffect(() => {
+        if(props?.propertyId) {
+            call(getPropertyReview({id: props?.propertyId, limit: props?.limit, page: props?.page})).then(
+                () => {},
                 (error) => {console.log(error)}
             )
         }
-    };
+    }, [props?.page, props?.propertyId])
+
     return (
         <Card className="w-full drop-shadow-2xl bg-white rounded-[10px] p-[5px]">
             <CardBody>
@@ -51,7 +70,7 @@ export default function CustomerReview(props) {
                         </div>
                     </div>
                     <div className="text-[24px] font-bold">
-                        {props?.reviews?.length || 0} reviews
+                        {reviews?.length || 0} reviews
                     </div>
                 </div>
                 <div className="flex flex-col gap-[10px]">
@@ -81,13 +100,13 @@ export default function CustomerReview(props) {
                             <textarea maxLength={255} value={description} onChange={handleChangeDesc} className="w-full min-h-[100px] border-[1px] border-gray-600 resize-none rounded-[5px] p-[5px]"/>
                         </div>
                         <div className="flex justify-end w-full">
-                            <button onClick={handlePostReview} className="w-[125px] h-[45px] bg-green-500 rounded-[5px] transition-all duration-400 hover:bg-green-600 active:bg-green-700 active:scale-95">
+                            <button disabled={isPosting} onClick={handlePostReview} className="w-[125px] h-[45px] bg-green-500 rounded-[5px] transition-all duration-400 hover:bg-green-600 active:bg-green-700 active:scale-95">
                                 Post Review
                             </button>
                         </div>
                     </div>
                     {
-                        props?.reviews?.map((value, index) => {
+                        reviews?.map((value, index) => {
                             return(
                                 <div key={index} className="bg-gray-200 rounded-[10px] p-[10px]">
                                     <div className="flex justify-between items-center">
