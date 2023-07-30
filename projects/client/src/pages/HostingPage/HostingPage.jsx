@@ -8,7 +8,7 @@ import QnaCard from "../../components/QnACard/qnaCard";
 import Footer from "../../components/footerRentify/footerPage";
 import './HostingPage.css'
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/features/user/userSlice";
 
 export default function Hostings() {
@@ -48,45 +48,49 @@ export default function Hostings() {
     return (
         <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
             <HeaderProperty/>
-            <main className="w-full px-20 py-[20px]">
+            <main className="w-full px-[10px] sm:px-10 lg:px-20 py-[20px]">
                 <TopAddProperty currentUser={currentUser}/>
                 <div className="middle text-left">
                     <div className="yourListings text-[40px] font-bold">
                         Your reservation
                     </div>
-                    <div className="reservationFilter flex items-center my-[40px] gap-14 cursor-pointer">
-                        <div
-                            className={`rounded-full py-2 px-8 text-center text-[18px] border-2 ${activeFilter === "CheckingOut"
-                                ? "border-black"
-                                : "border-gray-400 hover:border-black"
-                                }`}
-                            onClick={() => setActiveFilter("CheckingOut")}
-                        >
-                            Checking out
+                    <div className="reservationFilter flex items-center my-[40px] gap-[20px] cursor-pointer">
+                        <div className="flex flex-col md:flex-row gap-[20px]">
+                            <div
+                                className={`rounded-full py-2 px-8 text-center text-[16px] border-2 ${activeFilter === "CheckingOut"
+                                    ? "border-black"
+                                    : "border-gray-400 hover:border-black"
+                                    }`}
+                                onClick={() => setActiveFilter("CheckingOut")}
+                            >
+                                Checking out
+                            </div>
+                            <div
+                                className={`rounded-full py-2 px-8 text-center text-[16px] border-2 ${activeFilter === "CurrentlyStaying"
+                                    ? "border-black"
+                                    : "border-gray-400 hover:border-black"
+                                    }`}
+                                onClick={() => setActiveFilter("CurrentlyStaying")}
+                            >
+                                Currently staying
+                            </div>
                         </div>
-                        <div
-                            className={`rounded-full py-2 px-8 text-center text-[18px] border-2 ${activeFilter === "CurrentlyStaying"
-                                ? "border-black"
-                                : "border-gray-400 hover:border-black"
-                                }`}
-                            onClick={() => setActiveFilter("CurrentlyStaying")}
-                        >
-                            Currently staying
-                        </div>
-                        <div
-                            className={`rounded-full py-2 px-8 text-center text-[18px] border-2 ${activeFilter === "Upcoming"
-                                ? "border-black"
-                                : "border-gray-400 hover:border-black"
-                                }`}
-                            onClick={() => setActiveFilter("Upcoming")}
-                        >
-                            Upcoming
-                        </div>
-                        <div
-                            className={`rounded-full py-2 px-8 text-center text-[18px] border-2 border-gray-400 hover:border-black`}
-                            onClick={() => navigate('/orders')}
-                        >
-                            Incoming Orders
+                        <div className="flex flex-col md:flex-row gap-[20px]">
+                            <div
+                                className={`rounded-full py-2 px-8 text-center text-[16px] border-2 ${activeFilter === "Upcoming"
+                                    ? "border-black"
+                                    : "border-gray-400 hover:border-black"
+                                    }`}
+                                onClick={() => setActiveFilter("Upcoming")}
+                            >
+                                Upcoming
+                            </div>
+                            <div
+                                className={`rounded-full py-2 px-8 text-center text-[16px] border-2 border-gray-400 hover:border-black`}
+                                onClick={() => navigate('/orders')}
+                            >
+                                Incoming Orders
+                            </div>
                         </div>
                     </div>
                     <div className="w-full">

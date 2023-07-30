@@ -14,12 +14,12 @@ export default function TopAddProperty(props) {
           <div className=" welcomeBack text-left text-[45px] font-bold">
             Welcome Back, {props?.currentUser?.username}
           </div>
-          <div className="w-full grid grid-cols-4 gap-[10px]">
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[10px]">
               {
                 (props?.currentUser?.properties?.length > 0)?
                 props?.currentUser?.properties?.map((value, index) => {
                   return(
-                    <div key={index} className="w-[250px] h-[300px]">
+                    <div key={index} className="w-[200px] md:w-[250px] h-[275px] lg:h-[300px]">
                       <ListingCard data={value}/>
                     </div>
                   )

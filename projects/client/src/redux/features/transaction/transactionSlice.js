@@ -148,7 +148,18 @@ export const updateStatus = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-} 
+};
+
+export const getCurrent = (data) => async(dispatch) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/current/${data.userId}`)
+        
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
 
 export const { setTransaction, setTotalTransaction, setOrder, setTotalOrder } = transactionSlice.actions;
 export default transactionSlice.reducer;
