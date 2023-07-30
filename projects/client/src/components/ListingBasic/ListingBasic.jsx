@@ -2,6 +2,9 @@ import React from "react";
 import { TextInput, Box, Textarea, Group, Button, NumberInput } from "@mantine/core";
 import { useForm } from '@mantine/form';
 import CategoryListing from "../CategoryListing/CategoryListing";
+import LocationBox from "../../components/LocationBox/locationBox";
+import AddressBox from "../../components/AddressBox/AddressBox";
+import FacilitySelect from "../../components/FacilitySelect/FaciltySelect";
 
 export const validateString = (value) => {
   return value?.length < 3 || value === null
@@ -91,7 +94,10 @@ const BasicDetails = ({ nextStep }) => {
           label="Nightly Price"
           placeholder="Min Rp150,000"
           {...form.getInputProps("price")}
-        />       
+        />
+        <LocationBox />
+        <AddressBox />
+        <FacilitySelect />    
       </form>
     </Box>
   );

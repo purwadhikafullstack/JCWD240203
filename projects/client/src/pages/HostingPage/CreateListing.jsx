@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingPhotoUpload from "../../components/ListingPhotoUpload/ListingPhotoUpload";
 import BasicDetails from "../../components/ListingBasic/ListingBasic";
-import LocationBox from "../../components/LocationBox/locationBox";
-import AddressBox from "../../components/AddressBox/AddressBox";
-import FacilitySelect from "../../components/FacilitySelect/FaciltySelect";
 import Footer from "../../components/footerRentify/footerPage";
 import PreviewListingModal from "../../components/PreviewListingModal/PreviewListingModal";
 import "./CreateListing.css";
 
 export default function CreateListing() {
     const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+    const [image, setImage] = useState([]);
 
     // Function to toggle modal visibility
     const toggleModal = () => {
@@ -20,7 +18,8 @@ export default function CreateListing() {
     return (
         <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
             <HeaderProperty />
-            <main className="w-full px-20">
+            <PreviewListingModal showModal={showModal} onClose={toggleModal} />
+            <main className="w-full px-[10px] md:px-10 lg:px-20">
                 <div className="topCreate text-left py-[50px] my-[40px]">
                     <div className="createTitle text-left text-[35px] font-bold">
                         Create new listing
@@ -30,7 +29,7 @@ export default function CreateListing() {
                     <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8">
                         <div className="photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
                             <div className="text-left text-[30px] font-bold">Photos</div>
-                            <ListingPhotoUpload />
+                            <ListingPhotoUpload image={image} setImage={setImage}/>
                         </div>
                     </div>
                     <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8">
@@ -41,9 +40,6 @@ export default function CreateListing() {
                             <div className="listingName">
                                 <div className="listTitle text-left text-[18px]">
                                     <BasicDetails />
-                                    <LocationBox />
-                                    <AddressBox />
-                                    <FacilitySelect />
                                 </div>
                             </div>
                         </div>
@@ -59,8 +55,6 @@ export default function CreateListing() {
                 </div>
             </main>
             <Footer />
-            {/* Show the modal when showModal is true */}
-            {showModal && <PreviewListingModal onClose={toggleModal} />}
         </div>
     );
 }

@@ -4,6 +4,7 @@ const transaction = db.transaction;
 const property = db.property;
 const propertyImages = db.propertyImages;
 const room = db.room;
+const user = db.user;
 require('dotenv').config();
 
 module.exports = {
@@ -126,7 +127,6 @@ module.exports = {
             else if (type === 'Daily') {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
             }
-            console.log(filter);
 
             const result = await transaction.findAndCountAll({
                 where: filter,
@@ -182,7 +182,9 @@ module.exports = {
                             userId: id
                         },
                         required: true
-                    }
+                    },
+                    {model: user},
+                    {model: room}
                 ],
                 order: [
                     ['id', 'ASC']

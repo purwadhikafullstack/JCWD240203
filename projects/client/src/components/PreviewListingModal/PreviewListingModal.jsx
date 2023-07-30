@@ -2,8 +2,12 @@ import React, { useEffect, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "./PreviewListingModal.css";
 
-export default function PreviewListingModal({ onClose }) {
+export default function PreviewListingModal(props) {
   const modalRef = useRef();
+
+  const handleClose = () => {
+    if(props?.onClose) {props?.onClose()}
+  };
 
   useEffect(() => {
     // Add the modal-entering class to the modal container after a short delay to trigger the animation
@@ -15,28 +19,25 @@ export default function PreviewListingModal({ onClose }) {
   }, []);
 
   return (
-    <div className="flex justify-center items-center w-full h-full top-0 absolute z-30 bg-gray-300/80">
+    <div className={`${(props?.showModal)? '' : 'hidden'} flex justify-center items-center w-full h-full top-0 absolute z-30 bg-gray-300/80`}>
       <div
         ref={modalRef}
-        className="flex flex-col w-[900px] h-[950px] bg-white rounded-[10px] p-[10px] drop-shadow-xl"
+        className="w-[900px] h-full bg-white rounded-[10px] p-[10px] drop-shadow-xl overflow-y-auto mobileScroll removeScroll"
       >
         <div className="flex w-full justify-between border-b-[1px] border-black">
           <div className="previewListing font-extrabold text-[24px] text-start">
             🏡 Preview Listing:
           </div>
-          <div className="cursor-pointer" onClick={onClose}>
+          <div className="cursor-pointer" onClick={handleClose}>
             <CloseIcon />
           </div>
         </div>
-        <div className="w-full h-[200px] mb-4">
-          <div>
+        <div className="w-full h-[500px]">
             <img
               src="https://a0.muscache.com/im/pictures/miso/Hosting-696812630351792682/original/26dffe9b-d506-4229-ae3b-a2b6ddc0fee0.jpeg?im_w=1200"
               alt="foto property"
-              width="900"
-              height="200"
+              className="w-full h-full"
             />
-          </div>
         </div>
         <div className="detailPreview text-gray-800">
           <div className="flex flex-col items-start">
