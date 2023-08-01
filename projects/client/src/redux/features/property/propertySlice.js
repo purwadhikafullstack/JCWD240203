@@ -46,12 +46,35 @@ export const getProperty = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
 
 export const getDetailed = (data) => async(dispatch) => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}?start=${data.start}&&end=${data.end}&&userId=${data.userId}&&limit=${data.limit}&&page=${data.page}`);
         
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
+
+export const createProperty = (data) => async(dispatch) => {
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/properties`, {
+            propertyName: data.propertyName,
+            propertyDescription: data.propertyDescription,
+            city: data.city,
+            address: data.address,
+            userId: data.userId,
+            categoryId: data.categoryId,
+            propertyRooms: data.propertyRooms,
+            images: data.images
+        }, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        })
         return Promise.resolve(response);
     }
     catch(error) {

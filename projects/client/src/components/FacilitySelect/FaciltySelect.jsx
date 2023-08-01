@@ -14,9 +14,9 @@ const facilitiesData = [
   { label: 'Bathup', value: 'Bathup' },
 ];
 
-function Value({ value, label, onRemove, classNames, ...others }) {
+function Value({ label, onRemove }) {
   return (
-    <div {...others}>
+    <div>
       <Box
         sx={(theme) => ({
           display: 'flex',
@@ -65,7 +65,7 @@ Item.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-function FacilitySelect() {
+function FacilitySelect({form}) {
   return (
     <MultiSelect
       data={facilitiesData}
@@ -74,6 +74,7 @@ function FacilitySelect() {
       itemComponent={Item}
       searchable
       defaultValue={['Pool', 'Wifi']}
+      {...form.getInputProps("facilities")}
       placeholder="These are facilities that guests typically look for in a stay."
       label="What exciting facilities does your listing offer?"
     />

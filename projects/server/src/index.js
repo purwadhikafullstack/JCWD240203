@@ -2,7 +2,7 @@ require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
-const { users, properties, countries, transactions } = require("./router");
+const { users, properties, countries, transactions, categories, facilities } = require("./router");
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -69,6 +69,8 @@ app.use("/users", users);
 app.use("/properties", properties);
 app.use("/countries", countries);
 app.use("/transactions", transactions);
+app.use("/categories", categories);
+app.use("/facilities", facilities);
 
 //#endregion
 

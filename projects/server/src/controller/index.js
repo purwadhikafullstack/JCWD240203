@@ -8,6 +8,8 @@ const countries = require('./countryController');
 const transactionsGET = require('./transactionControllerGET');
 const transactionsPOST = require('./transactionControllerPOST');
 const transactionsPATCH = require('./transactionControllerPATCH');
+const categories = require('./categoryController');
+const facilities = require('./facilityController');
 
 module.exports = {
     usersPOST,
@@ -19,5 +21,7 @@ module.exports = {
     countries,
     transactionsGET,
     transactionsPOST,
-    transactionsPATCH
+    transactionsPATCH,
+    categories,
+    facilities
 }

@@ -5,7 +5,7 @@ import { getCountry } from "../../redux/features/country/countrySlice";
 import { Autocomplete } from "@mui/lab";
 import { setLocation } from "../../redux/features/property/propertySlice";
 
-export default function LocationBox() {
+export default function LocationBox(props) {
     const [locationOptions, setLocationOptions] = useState([]);
     const location = useSelector((state) => state.property.location);
     const call = useDispatch();

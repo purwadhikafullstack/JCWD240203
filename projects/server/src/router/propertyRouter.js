@@ -13,7 +13,7 @@ Router.get('/:id', properties.propertyDetailed);
 Router.get('/review/:propertyId', reviews.getPropertyReview);
 
 // POST //
-//Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, propertiesPOST.addProperty);
+Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, propertiesPOST.addProperty);
 
 Router.post('/review', reviews.createReview);
 
