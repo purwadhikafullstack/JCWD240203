@@ -1,18 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { MultiSelect, Box, CloseButton, SelectItemProps, MultiSelectValueProps, rem, Flex } from '@mantine/core';
-
-const facilitiesData = [
-  { label: 'Pool', value: 'Pool' },
-  { label: 'Wifi', value: 'Wifi' },
-  { label: 'TV', value: 'TV' },
-  { label: 'Air conditioning', value: 'AC' },
-  { label: 'CCTV', value: 'CCTV' },
-  { label: 'Free Parking', value: 'Free Parking' },
-  { label: 'Pets Allowed', value: 'Pets' },
-  { label: 'Breakfast', value: 'Breakfast' },
-  { label: 'Bathup', value: 'Bathup' },
-];
+import { useDispatch } from 'react-redux';
+import { getFacility } from '../../redux/features/facility/facilitySlice';
 
 function Value({ label, onRemove }) {
   return (
@@ -65,7 +55,23 @@ Item.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-function FacilitySelect({form}) {
+export default function FacilitySelect({form}) {
+  const [facilitiesData, setFacilitiesData] = useState([]);
+  const call = useDispatch();
+
+  useEffect(() => {
+    call(getFacility()).then(
+      (response) => {
+        let temp = [];
+        response?.data?.data?.forEach((value) => {
+          temp.push({value: value.id, label: value.name})
+        });
+        setFacilitiesData(temp);
+      },
+      (error) => {console.log(error)}
+    )
+  }, [call])
+  
   return (
     <MultiSelect
       data={facilitiesData}
@@ -80,5 +86,3 @@ function FacilitySelect({form}) {
     />
   );
 }
-
-export default FacilitySelect;

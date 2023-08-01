@@ -1,4 +1,4 @@
-import { TextInput, Textarea, NumberInput, List } from "@mantine/core";
+import { TextInput, Textarea, NumberInput, List, Select } from "@mantine/core";
 import { useForm } from '@mantine/form';
 import RoomPreview from "./RoomPreview";
 
@@ -6,37 +6,37 @@ export default function RoomForm(props) {
     const form = useForm({
         initialValues: {
           roomName : '',
-          roomsStock : '',
-          roomsDescription: '',
-          roomsCapacity : '',    
+          roomStock : 1,
+          roomDescription: '',
+          roomCapacity : '',    
           price: '',
         },
         validate: {
-          roomName: (value) => (value?.length <= 5)? "Minimum 5 characters" : null,
-          roomsStock : (value) => (value < 1 ? "Minimum of 1 room" : null),
-          roomsDescription: (value) => (value?.length <= 0)? "Minimum 10 characters" : null,
-          roomsCapacity : (value) => (value > 10 || value <= 0 ? "Minimum capacity is 1 to 10 person" : null),    
+          roomName: (value) => (value?.length < 1)? "Cannot be empty" : null,
+          roomStock : (value) => (value < 1 ? "Minimum of 1 room" : null),
+          roomDescription: (value) => (value?.length <= 0)? "Minimum 10 characters" : null,
+          roomCapacity : (value) => (value > 10 || value <= 0 ? "Minimum capacity is 1 to 10 person" : null),    
           price: (value) => ((isNaN(value) || Number(value)) < 1000 ? "Minimum price 1000" : null),
         },
         transformValues: (values) => ({
           roomName: values.roomName,
-          roomsStock: values.roomsStock,
-          roomsDescription: values.roomsDescription,
-          roomsCapacity: values.roomsCapacity,
+          roomStock: values.roomStock,
+          roomDescription: values.roomDescription,
+          roomCapacity: values.roomCapacity,
           price: values.price
-        }),
+        })
       })
 
     const addRoom = () => {
         if(props?.setRooms && props?.rooms) {
-            const {roomName, roomsStock, roomsDescription, roomsCapacity, price} = form.getTransformedValues();
+            const {roomName, roomStock, roomDescription, roomCapacity, price} = form.getTransformedValues();
             let temp = props?.rooms;
             temp.push({
                 name: roomName,
-                description: roomsDescription,
-                stock: roomsStock,
+                description: roomDescription,
+                stock: roomStock,
                 price: Number(price),
-                capacity: roomsCapacity
+                capacity: roomCapacity
             })
             props?.setRooms(temp);
             form.reset();
@@ -53,25 +53,29 @@ export default function RoomForm(props) {
             withAsterisk
             {...form.getInputProps("roomName")}
           />
-          <NumberInput
+          <TextInput
             withAsterisk
-            label="Number of rooms"
+            label="Total rooms"
             placeholder="1"
-            min={0}
-            {...form.getInputProps("roomsStock")}
+            error={form.getInputProps("roomStock").error}
+            value={form.getInputProps("roomStock").value}
+            onChange={(e) => {if(!isNaN(e.target.value)) {form.getInputProps("roomStock").onChange(e)}}}
+            onBlur={form.getInputProps("roomStock").onBlur}
+            onFocus={form.getInputProps("roomStock").onFocus}
           />
           <Textarea
             placeholder="Description"
             label="Room's description"
             withAsterisk
-            {...form.getInputProps("roomsDescription")}
+            {...form.getInputProps("roomDescription")}
           />
-          <NumberInput
-            withAsterisk
-            label="Number of guests"
-            placeholder="1"
-            min={0}
-            {...form.getInputProps("roomsCapacity")}
+          <Select
+            label="Room capacity"
+            placeholder="Pick one"
+            searchable
+            nothingFound="No options"
+            data={[{value: 1, label: '1'}, {value: 2, label: '2'}, {value: 3, label: '3'}, {value: 4, label: '4'}, {value: 5, label: '5'}]}
+            {...form.getInputProps("roomCapacity")}
           />
           <TextInput
             withAsterisk
@@ -92,7 +96,7 @@ export default function RoomForm(props) {
                 Room preview :
             </div>
           <div className="w-full h-[250px] mt-[10px] rounded-[5px] border-[1px] border-gray-600">
-            <List className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center w-full h-full gap-[15px] overflow-y-scroll md:overflow-y-auto mobileScroll">
+            <List className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center w-full h-full gap-[15px] overflow-y-scroll md:overflow-y-auto mobileScroll px-[10px] py-[5px]">
                 {
                     props?.rooms?.map((value, index) => {
                         return(

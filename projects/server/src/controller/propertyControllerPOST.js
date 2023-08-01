@@ -3,6 +3,7 @@ const { deleteFiles } = require('../helper/deleteFiles');
 const property = db.property;
 const category = db.category;
 const propertyImages = db.propertyImages;
+const propertyFacility = db.propertyFacility;
 const room = db.room;
 const price = db.price;
 require('dotenv').config();
@@ -10,9 +11,10 @@ require('dotenv').config();
 module.exports = {
     addProperty: async(req, res) => {
         const t = await db.sequelize.transaction();
-        const {propertyName, propertyDescription, city, address, userId, categoryId, propertyRooms } = req.body;
+        const {propertyName, propertyDescription, city, address, userId, categoryId, propertyRooms, facilities } = req.body;
         const images = req.files.images;
         try {
+            const parsedFacility = JSON.parse(facilities)
             let newRooms = JSON.parse(propertyRooms);
             const newProperty =  await property.create({
                 name: propertyName,
@@ -29,22 +31,29 @@ module.exports = {
                 room.propertyId = newProperty.id;
             }
 
-            const data = [];
+            const dataImage = [];
 
             if(images) {
                 for(let image of images) {
-                    data.push({
+                    dataImage.push({
                         url: `${process.env.LINK}/Property/${image.filename}`,
                         propertyId: newProperty.id
                     })
                 }
             }
             
-            await propertyImages.bulkCreate(data, {transaction: t});
+            const dataFacility = [];
+            parsedFacility?.forEach((value) => {
+                dataFacility.push({propertyId: newProperty.id, facilityId: value})
+            });
+            
+            await propertyFacility.bulkCreate(dataFacility, {transaction: t});
+            
+            await propertyImages.bulkCreate(dataImage, {transaction: t});
 
             await room.bulkCreate(newRooms, {transaction: t});
             
-            await t.rollback();
+            await t.commit();
             return res.status(201).send({
                 isError: false,
                 message: 'Property added !',
