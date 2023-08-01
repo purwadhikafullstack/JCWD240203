@@ -15,19 +15,21 @@ export default function CreateListing() {
     const call = useDispatch()
 
     const addProperty = (data) => {
-        // if(localStorage.getItem('user')) {
-        //     call(createProperty({
-        //         propertyName: data.property.propertyName,
-        //         propertyDescription: data.property.description,
-        //         city: data.property.city,
-        //         address: data.property.address,
-        //         categoryId: data.property.category,
-        //         userId: JSON.parse(localStorage.getItem('user')).id,
-        //         propertyRooms: data.propertyRooms,
-        //         images: image
-        //     }))
-        // }
-        console.log(data);
+        if(localStorage.getItem('user')) {
+            console.log(image);
+            call(createProperty({
+                propertyName: data.property.propertyName,
+                propertyDescription: data.property.description,
+                city: data.property.city,
+                address: data.property.address,
+                categoryId: data.property.category,
+                userId: JSON.parse(localStorage.getItem('user')).id,
+                propertyRooms: data.propertyRooms,
+                facilities: data.property.facilities,
+                images: image,
+                token: JSON.parse(localStorage.getItem('user')).token
+            }))
+        }
     }
 
     const toggleModal = () => {

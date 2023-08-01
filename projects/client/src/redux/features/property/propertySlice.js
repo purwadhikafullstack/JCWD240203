@@ -61,18 +61,38 @@ export const getDetailed = (data) => async(dispatch) => {
 
 export const createProperty = (data) => async(dispatch) => {
     try {
-        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/properties`, {
-            propertyName: data.propertyName,
-            propertyDescription: data.propertyDescription,
-            city: data.city,
-            address: data.address,
-            userId: data.userId,
-            categoryId: data.categoryId,
-            propertyRooms: data.propertyRooms,
-            images: data.images
-        }, {
+        console.log(data.images[0]);
+        let formData = new FormData();
+        // formData.append('propertyName', data.propertyName);
+        // formData.append('propertyDescription', data.propertyDescription);
+        // formData.append('city', data.city);
+        const keys = Object.keys(data);
+        for(let i of keys) {
+            if(i === 'propertyRooms' || i === 'facilities') {
+                formData.append(i, JSON.stringify(data[i]));
+            }
+            else {
+                formData.append(i, data[i]);
+            }
+        };
+
+        data?.images.forEach(img => {
+            formData.append("images", img)
+        })
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/properties`, 
+            // propertyName: data.propertyName,
+            // propertyDescription: data.propertyDescription,
+            // city: data.city,
+            // address: data.address,
+            // userId: data.userId,
+            // categoryId: data.categoryId,
+            // propertyRooms: JSON.stringify(data.propertyRooms),
+            // facilities: JSON.stringify(data.facilities),
+            formData
+        , {
             headers: {
-                authorization: `Bearer ${data.token}`
+                authorization: `Bearer ${data.token || null}`,
+                "Content-Type": "multipart/form-data",
             }
         })
         return Promise.resolve(response);

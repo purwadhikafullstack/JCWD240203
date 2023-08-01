@@ -32,7 +32,7 @@ const ListingPhotoUpload = ({image, setImage}) => {
           }}
           accept="image/png,image/jpeg"
           multiple
-          
+          name="images"
         >
           {(props) => <Button {...props} className="rounded-[20px] text-[18px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">Browse</Button>}
         </FileButton>
