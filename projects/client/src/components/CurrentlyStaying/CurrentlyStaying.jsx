@@ -24,8 +24,7 @@ export default function CurrentlyStaying() {
     }, [call])    
 
     return (
-        <div className="flex w-full bg-slate-200/25 h-[225px] p-[15px] rounded-[10px] gap-[15px] overflow-x-auto mobileScroll">
-            {console.log(current)}
+        <div className="flex w-full bg-slate-200/25 h-[225px] p-[15px] rounded-[10px] gap-[15px] overflow-x-scroll md:overflow-x-auto mobileScroll whitespace-nowrap">
             {
                 (current?.length <= 0)?
                 <div className="flex justify-center h-full w-full">
@@ -34,7 +33,7 @@ export default function CurrentlyStaying() {
                 :
                 current?.map((value, index) => {
                     return(
-                        <div key={index} className="currentlyStaying flex flex-col h-full w-[360px] bg-[#F0EFE9] drop-shadow-xl rounded-[10px] border-2 ">
+                        <div key={index} className="currentlyStaying flex-none inline-block flex flex-col h-full w-[360px] bg-[#F0EFE9] drop-shadow-xl rounded-[10px] border-2 ">
                             <div className="px-[10px] py-[10px] text-green-800 text-[20px] font-semibold">
                                 {/* input start date here */}
                                 Just check in on {formatDate(new Date(value.checkIn))}

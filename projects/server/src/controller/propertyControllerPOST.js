@@ -1,5 +1,5 @@
 const db = require('../../models');
-const deleteFiles = require('../helper/deleteFiles');
+const { deleteFiles } = require('../helper/deleteFiles');
 const property = db.property;
 const category = db.category;
 const propertyImages = db.propertyImages;
@@ -13,6 +13,7 @@ module.exports = {
         const {propertyName, propertyDescription, city, address, userId, categoryId, propertyRooms } = req.body;
         const images = req.files.images;
         try {
+            let newRooms = JSON.parse(propertyRooms);
             const newProperty =  await property.create({
                 name: propertyName,
                 description: propertyDescription,
@@ -23,28 +24,34 @@ module.exports = {
             }, {
                 transaction: t
             });
+            
+            for(let room of newRooms) {
+                room.propertyId = newProperty.id;
+            }
 
             const data = [];
 
-            for(let image of images) {
-                data.push({
-                    url: `${process.env.LINK}/Property/${image.filename}`,
-                    propertyId: newProperty.id
-                })
+            if(images) {
+                for(let image of images) {
+                    data.push({
+                        url: `${process.env.LINK}/Property/${image.filename}`,
+                        propertyId: newProperty.id
+                    })
+                }
             }
-
+            
             await propertyImages.bulkCreate(data, {transaction: t});
 
-            await room.bulkCreate(propertyRooms, {transaction: t});
-
-            await t.commit();
+            await room.bulkCreate(newRooms, {transaction: t});
+            
+            await t.rollback();
             return res.status(201).send({
                 isError: false,
                 message: 'Property added !',
                 data: null
             })
         }
-        catch {
+        catch(error) {
             for(let i in req?.files) {deleteFiles(req.files[i])};
             await t.rollback();
             return res.status(500).send({
