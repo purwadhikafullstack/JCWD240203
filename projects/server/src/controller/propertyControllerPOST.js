@@ -21,6 +21,7 @@ module.exports = {
                 description: propertyDescription,
                 city: city,
                 address: address,
+                status: 'Public',
                 userId: userId,
                 categoryId: categoryId
             }, {

@@ -15,6 +15,24 @@ module.exports = {
                     message: 'bad request',
                     data: req.body
                 })
+            };
+
+            let existingTransaction = await transaction.findAll({
+                where: {
+                    [Op.or]: [{status: 'pending'}, {status: 'completed'}],
+                    userId: userId,
+                    propertyId: propertyId,
+                    roomId: roomId,
+                    checkOut: {[Op.gte]: new Date()}
+                }
+            })
+            
+            if(existingTransaction?.length > 0) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'You already booked in this property',
+                    data: null
+                });
             }
 
             let transactionFilter = {

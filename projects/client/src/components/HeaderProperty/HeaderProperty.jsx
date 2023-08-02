@@ -4,7 +4,7 @@ import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { onLogout } from "../../redux/features/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from 'react-icons/io';
 
 export default function HeaderProperty(props) {
@@ -62,21 +62,6 @@ export default function HeaderProperty(props) {
         setMenuItemClicked(!menuItemClicked);
     };
 
-    const handleMenuListingsClick = () => {
-        navigate('/hostings/listing');
-        toggleMenu(false);
-    };
-
-    const handleMenuReservationClick = () => {
-        navigate('/hostings/reservation');
-        toggleMenu(false);
-    };
-
-    const handleMenuCreateClick = () => {
-        navigate('/hostings/addproperty');
-        toggleMenu(false);
-    };
-
     return (
         <div>
             <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-[1px] bg-white p-4 md:px-6 border-gray-500 z-10 items-center">
@@ -127,27 +112,21 @@ export default function HeaderProperty(props) {
                             {/* Menu Dropdown Content */}
                             {menuItemClicked && (
                                 <div className="dropdownMenu absolute top-full left-0 mt-2 w-[200px] bg-white border border-black rounded text-left">
-                                    <a
-                                        href="#"
+                                    <Link to={'/hostings/listing'}
                                         className="block py-2 px-4 text-black hover:bg-slate-300/50"
-                                        onClick={handleMenuListingsClick}
                                     >
                                         Listings
-                                    </a>
-                                    <a
-                                        href="#"
+                                    </Link>
+                                    <Link to={'/hostings/reservation'}
                                         className="block py-2 px-4 text-black hover:bg-slate-300/50"
-                                        onClick={handleMenuReservationClick}
                                     >
                                         Reservation
-                                    </a>
-                                    <a
-                                        href="#"
+                                    </Link>
+                                    <Link to={'/hostings/addproperty'}
                                         className="block py-2 px-4 text-black hover:bg-slate-300/50"
-                                        onClick={handleMenuCreateClick}
                                     >
                                         Create a new listing
-                                    </a>
+                                    </Link>
                                 </div>
                             )}
                         </div>

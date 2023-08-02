@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingPhotoUpload from "../../components/ListingPhotoUpload/ListingPhotoUpload";
 import BasicDetails from "../../components/ListingBasic/ListingBasic";
@@ -34,7 +34,7 @@ export default function CreateListing() {
                 })).then(
                     () => {
                         toast.success('Property added !', {id: loading});
-                        navigate('/hostings');
+                        //navigate('/hostings');
                         return true;
                     },
                     (error) => {
@@ -54,6 +54,12 @@ export default function CreateListing() {
     const toggleModal = () => {
         setShowModal(!showModal);
     };
+
+    useEffect(() => {
+        if(!localStorage.getItem('user')) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     return (
         <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">

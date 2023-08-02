@@ -6,11 +6,23 @@ module.exports = {
     await queryInterface.bulkInsert('facilities', [
       {
         name: 'Wifi',
-        icon: '<ReactIcon.FiWifi/>'
+        icon: 'FiWifi'
       },
       {
         name: 'Free Parking',
-        icon: '<ReactIcons.FiMonitor/>'
+        icon: 'FiAnchor'
+      },
+      {
+        name: 'TV',
+        icon: 'FiMonitor'
+      },
+      {
+        name: 'Great View',
+        icon: 'FiCamera'
+      },
+      {
+        name: 'Gymnasium',
+        icon: 'FiDribbble'
       }
     ], {});
   },

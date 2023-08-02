@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
 import OwnerProperty from "../OwnerProperty/OwnerProperty";
 import OwnerPropertyHeaderImage from "../../components/TopAddProperty/OwnerPropertyHeader.png";
 import ListingCard from "../ListingCard/ListingCard";
 import './TopAddProperty.css'
+import { Link } from "react-router-dom";
 
-export default function TopAddProperty(props) {
-  const showOwnerProperty = true; 
+export default function TopAddProperty(props) { 
 
   return (
     <div className="relative bg-white w-full">
@@ -19,9 +18,9 @@ export default function TopAddProperty(props) {
                 (props?.currentUser?.properties?.length > 0)?
                 props?.currentUser?.properties?.map((value, index) => {
                   return(
-                    <div key={index} className="w-[200px] md:w-[250px] h-[275px] lg:h-[300px]">
+                    <Link to={`/property/${value.id}`} key={index} className="w-[200px] md:w-[250px] h-[275px] lg:h-[300px]">
                       <ListingCard data={value}/>
-                    </div>
+                    </Link>
                   )
                 })
                 :
