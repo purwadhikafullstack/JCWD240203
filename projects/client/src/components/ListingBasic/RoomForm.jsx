@@ -1,4 +1,4 @@
-import { TextInput, Textarea, NumberInput, List, Select } from "@mantine/core";
+import { TextInput, Textarea, List, Select } from "@mantine/core";
 import { useForm } from '@mantine/form';
 import RoomPreview from "./RoomPreview";
 
@@ -43,7 +43,7 @@ export default function RoomForm(props) {
         }
     }
     return(
-        <form className="w-full mt-[10px] border-[1px] border-gray-600 rounded-[10px] p-[10px]">
+        <div className="w-full mt-[10px] border-[1px] border-gray-600 rounded-[10px] p-[10px]">
             Add rooms
           <div className="text-[20px]">
           </div>
@@ -108,6 +108,6 @@ export default function RoomForm(props) {
                 }
             </List>
           </div>
-        </form>
+        </div>
     )
 }

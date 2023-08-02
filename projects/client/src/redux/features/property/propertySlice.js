@@ -61,7 +61,6 @@ export const getDetailed = (data) => async(dispatch) => {
 
 export const createProperty = (data) => async(dispatch) => {
     try {
-        console.log(data.images[0]);
         let formData = new FormData();
         const keys = Object.keys(data);
         for(let i of keys) {
@@ -74,7 +73,7 @@ export const createProperty = (data) => async(dispatch) => {
         };
 
         data?.images.forEach(img => {
-            formData.append("images", img)
+            formData.append("images", img);
         })
         const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/properties`, 
             formData
@@ -83,7 +82,7 @@ export const createProperty = (data) => async(dispatch) => {
                 authorization: `Bearer ${data.token || null}`,
                 "Content-Type": "multipart/form-data",
             }
-        })
+        });
         return Promise.resolve(response);
     }
     catch(error) {

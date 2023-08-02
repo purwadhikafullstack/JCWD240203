@@ -35,6 +35,9 @@ module.exports = {
             }
 
             let result = await property.findAndCountAll({
+                where: {
+                    status: 'Public'
+                },
                 include: [
                     {
                         model: room,

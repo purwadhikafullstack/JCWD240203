@@ -15,6 +15,7 @@ export default function PaymentModal(props) {
     const handleClick = () => { if (props?.setShowPayment) { props?.setShowPayment(false) } };
 
     const handleBooking = () => {
+        setIsBooking(true)
         const loading = toast.loading('Checking avalability !')
         if (JSON.parse(localStorage.getItem('user'))) {
             call(createTransaction({
@@ -29,10 +30,24 @@ export default function PaymentModal(props) {
                     toast.success('Room booked !', { id: loading });
                 },
                 (error) => {
-                    toast.error('Room unavailable !', { id: loading });
+                    if (!error.response.data) {
+                        toast.error('network error !', { id: loading });
+                    }
+                    else if (!Array.isArray(error.response.data.message)) {
+                        toast.error(error.response.data.message, { id: loading });
+                    }
+                    else {
+                        toast.dismiss();
+                        error.response.data.message.map(value => {
+                            return toast.error(value.msg);
+                        });
+                    }
                     console.log(error);
                 }
             )
+            setTimeout(() => {
+                setIsBooking(false);
+            }, 1000);
         }
         else {
             toast.error('You need to login to book a room !', { id: loading });
@@ -114,7 +129,7 @@ export default function PaymentModal(props) {
                     </div>
                 </div>
                 <div className="payNow flex flex-col flex-grow items-center justify-center">
-                    <button onClick={handleBooking} className="payNow w-[200px] h-[45px] text-[28px] text-white justify-center font-sans rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70">
+                    <button disabled={isBooking} onClick={handleBooking} className="payNow w-[200px] h-[45px] text-[28px] text-white justify-center font-sans rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70">
                         Pay Now !
                     </button>
                 </div>

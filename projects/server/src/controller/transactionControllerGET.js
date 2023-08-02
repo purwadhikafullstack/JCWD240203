@@ -69,7 +69,8 @@ module.exports = {
             };
 
             if(month > 0 && month < 13) {
-                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month)
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), new Date().getFullYear());
             }
 
             const result = await transaction.findAndCountAll({

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextInput, Box, Textarea, Select } from "@mantine/core";
+import { TextInput, Box, Textarea } from "@mantine/core";
 import { useForm } from '@mantine/form';
 import CategoryListing from "../CategoryListing/CategoryListing";
 import FacilitySelect from "../../components/FacilitySelect/FaciltySelect";
@@ -58,7 +58,7 @@ const BasicDetails = (props) => {
                   Listing basics
               </div>
               <div className="listingName text-left text-[18px]">
-                <Box maxWidth="50%" mx="auto" my="md">
+                <Box>
                     <TextInput
                       withAsterisk
                       label="Listing Title"

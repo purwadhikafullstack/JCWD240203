@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
         cb(null, `${defaultPath}/${folder}`);
     },
     filename: (req, file, cb) => {
-        cb(null, 'PIMG-' + Date.now() + '.' + file.mimetype.split('/')[1])
+        cb(null, 'PIMG-' + Date.now() + Math.random() + '.' + file.mimetype.split('/')[1])
     }
 });
 

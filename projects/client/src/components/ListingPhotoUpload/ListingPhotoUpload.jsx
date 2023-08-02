@@ -6,19 +6,6 @@ import { toast } from "react-hot-toast";
 import './ListingPhotoUpload'
 
 const ListingPhotoUpload = ({image, setImage}) => {
-  // const { user } = useAuth0();
-
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onloadend = () => {
-  //       setImage(reader.result);
-  //     };
-  //   }
-  // };
-
   return (
     <div className="flex h-[225px]">
       <div className="flex flex-col justify-center items-center w-[150px]">
