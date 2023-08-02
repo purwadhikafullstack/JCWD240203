@@ -55,8 +55,6 @@ module.exports = {
         const multerResult = multerUpload.fields([{name: 'images', maxCount: 6}]);
         multerResult(req, res, function(err) {
             try {
-                console.log('body', req.body);
-                console.log('files', req.files);
                 if(err) throw err;
 
                 req.files?.images?.forEach(value => {

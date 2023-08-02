@@ -159,7 +159,29 @@ export const getCurrent = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
+
+export const getCheckingOut = (data) => async(dispatch) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/leaving/${data.userId}`)
+        
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
+
+export const getUpcoming = (data) => async(dispatch) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/upcoming/${data.userId}`)
+        
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
 
 export const { setTransaction, setTotalTransaction, setOrder, setTotalOrder } = transactionSlice.actions;
 export default transactionSlice.reducer;

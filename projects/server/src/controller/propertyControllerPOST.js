@@ -14,7 +14,7 @@ module.exports = {
         const {propertyName, propertyDescription, city, address, userId, categoryId, propertyRooms, facilities } = req.body;
         const images = req.files.images;
         try {
-            const parsedFacility = JSON.parse(facilities)
+            const parsedFacility = JSON.parse(facilities);
             let newRooms = JSON.parse(propertyRooms);
             const newProperty =  await property.create({
                 name: propertyName,

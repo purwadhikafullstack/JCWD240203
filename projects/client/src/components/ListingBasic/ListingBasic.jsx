@@ -7,6 +7,7 @@ import RoomForm from "./RoomForm";
 import LocationListing from "../LocationListing/LocationListing";
 
 const BasicDetails = (props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [rooms, setRooms] = useState([]);
 
   const form = useForm({
@@ -20,10 +21,10 @@ const BasicDetails = (props) => {
     },
     validate: {
       propertyName: (value) => (value?.length <= 0)? "Must not be empty" : null,
-      roomsStock : (value) => (value < 1 ? "Minimum of 1 room" : null),
-      roomsDescription: (value) => (value?.length <= 0)? "Must not be empty" : null,
-      roomsCapacity : (value) => (value > 10 ? "Maximum of 10 person" : null),    
-      price: (value) => (value < 150000 ? "Must be greater than Rp150000" : null),
+      description: (value) => (value?.length <= 0)? "Must not be empty" : null,
+      category: (value) => (!value)? "Must not be empty" : null,
+      city: (value) => (!value)? "Required !" : null,
+      address: (value) => (!value)? "Required !" : null
     },
     transformValues: (values) => ({
       propertyName: values.propertyName,
@@ -36,15 +37,22 @@ const BasicDetails = (props) => {
   });
 
   const handleSubmit = () => {
+    setIsSubmitting(true);
     const values = form.getTransformedValues();
     if(props?.addProperty) {
-      props?.addProperty({property: values, propertyRooms: rooms});
+      const res = props?.addProperty({property: values, propertyRooms: rooms});
+      if(res) {
+        form.reset();
+      }
     }
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 1000);
   };
 
   return (
     <div>
-        <form onSubmit={form.onSubmit(handleSubmit)}>
+        <form>
           <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8 photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
               <div className="text-left text-[30px] font-bold mb-10">
                   Listing basics
@@ -80,6 +88,8 @@ const BasicDetails = (props) => {
           </div>
           <div className="flex justify-end">
               <button
+                  disabled={isSubmitting}
+                  onClick={form.onSubmit(handleSubmit)}
                   className="submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl mb-6"
                   type="submit"
               >
