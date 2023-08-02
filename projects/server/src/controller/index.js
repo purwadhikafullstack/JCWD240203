@@ -6,6 +6,7 @@ const propertiesPOST = require('./propertyControllerPOST');
 const reviews = require('./reviewController');
 const countries = require('./countryController');
 const transactionsGET = require('./transactionControllerGET');
+const transactionsGET2 = require('./transactionControllerGET2');
 const transactionsPOST = require('./transactionControllerPOST');
 const transactionsPATCH = require('./transactionControllerPATCH');
 const categories = require('./categoryController');
@@ -20,6 +21,7 @@ module.exports = {
     reviews,
     countries,
     transactionsGET,
+    transactionsGET2,
     transactionsPOST,
     transactionsPATCH,
     categories,

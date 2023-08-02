@@ -25,7 +25,7 @@ export default function ProductPage() {
     const checkScroll = () => {
         if (listInnerRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-            if (scrollTop + clientHeight >= scrollHeight) {
+            if (scrollTop + clientHeight >= scrollHeight - 50) {
                 if (page + 1 <= totalProperties) {
                     setPage(page + 1);
                 }

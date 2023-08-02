@@ -7,28 +7,47 @@ import PreviewListingModal from "../../components/PreviewListingModal/PreviewLis
 import "./CreateListing.css";
 import { useDispatch } from "react-redux";
 import { createProperty } from "../../redux/features/property/propertySlice";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateListing() {
     const [showModal, setShowModal] = useState(false); // State to manage modal visibility
     const [image, setImage] = useState([]);
-    const call = useDispatch()
+    const navigate = useNavigate();
+    const call = useDispatch();
 
     const addProperty = (data) => {
+        const loading = toast.loading('Adding property ...');
         if(localStorage.getItem('user')) {
-            console.log(image);
-            call(createProperty({
-                propertyName: data.property.propertyName,
-                propertyDescription: data.property.description,
-                city: data.property.city,
-                address: data.property.address,
-                categoryId: data.property.category,
-                userId: JSON.parse(localStorage.getItem('user')).id,
-                propertyRooms: data.propertyRooms,
-                facilities: data.property.facilities,
-                images: image,
-                token: JSON.parse(localStorage.getItem('user')).token
-            }))
+            if(data?.propertyRooms?.length > 0) {
+                call(createProperty({
+                    propertyName: data.property.propertyName,
+                    propertyDescription: data.property.description,
+                    city: data.property.city,
+                    address: data.property.address,
+                    categoryId: data.property.category,
+                    userId: JSON.parse(localStorage.getItem('user')).id,
+                    propertyRooms: data.propertyRooms,
+                    facilities: data.property.facilities,
+                    images: image,
+                    token: JSON.parse(localStorage.getItem('user')).token
+                })).then(
+                    () => {
+                        toast.success('Property added !', {id: loading});
+                        navigate('/hostings');
+                        return true;
+                    },
+                    (error) => {
+                        toast.error('Network error, try again later !', {id: loading});
+                        console.log(error);
+                        return false;
+                    }
+                );
+            }
+            else {
+                toast.error('Property must have atleast 1 room !', {id: loading});
+                return false;
+            }
         }
     }
 
