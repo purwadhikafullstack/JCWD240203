@@ -17,19 +17,7 @@ export default function HeaderProperty(props) {
     const call = useDispatch();
     const navigate = useNavigate();
 
-    const onClickSignUp = () => {
-        if (props.setShowRegister) {
-            props.setShowRegister(!props.showRegister);
-        }
-    }
-    const onClickLogin = () => {
-        if (props.setShowLogin) {
-            props.setShowLogin(!props.showLogin);
-        }
-        toggleMenu(false)
-    }
     const onClickProfile = () => {
-        console.log(currentUser)
         navigate(`/profile/${currentUser?.id}`)
     }
 
@@ -38,24 +26,9 @@ export default function HeaderProperty(props) {
         toggleMenu(false);
     }
 
-    const handleMenuTodayClick = () => {
-        setMenuTodayClicked(true);
-        setMenuCalendarClicked(false);
-        setMenuInsightsClicked(false);
-        navigate('/hostings');
-    };
-
-    const handleMenuCalendarClick = () => {
-        setMenuTodayClicked(false);
-        setMenuCalendarClicked(true);
-        setMenuInsightsClicked(false);
-        navigate('/hostings/calendar')
-    };
-
-    const handleMenuInsightsClick = () => {
-        setMenuTodayClicked(false);
-        setMenuCalendarClicked(false);
-        setMenuInsightsClicked(true);
+    const handleChangePage = (value) => {
+        if(props?.setActivePage) {props?.setActivePage(value)}
+        else {navigate('/hostings', {state: {content: value}})}
     };
 
     const handleMenuDropdownClick = () => {
@@ -75,24 +48,24 @@ export default function HeaderProperty(props) {
                     <div className="relative">
                         {/* Menu Item: Today */}
                         <div
-                            className={`text-${menuTodayClicked ?"black" : "gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 ${menuTodayClicked ? "underline underline-offset-4" : ""}`}
-                            onClick={handleMenuTodayClick}
+                            className={`${props?.activePage === 'Today' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
+                            onClick={() => handleChangePage('Today')}
                         >
                             <p className="">Today</p>
                         </div>
 
                         {/* Menu Item: Calendar */}
                         <div
-                            className={`text-${menuCalendarClicked ? "black" : "gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 ${menuCalendarClicked ? "underline underline-offset-4" : ""}`}
-                            onClick={handleMenuCalendarClick}
+                            className={`${props?.activePage === 'Calendar' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
+                            onClick={() => handleChangePage('Calendar')}
                         >
                             <p>Calendar</p>
                         </div>
 
                         {/* Menu Item: Insights */}
                         <div
-                            className={`text-${menuInsightsClicked ? "black" : "gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 ${menuInsightsClicked ? "underline underline-offset-4" : ""}`}
-                            onClick={handleMenuInsightsClick}
+                            className={`${props?.activePage === 'Insights' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
+                            onClick={() => handleChangePage('Insights')}
                         >
                             <p>Insights</p>
                         </div>
@@ -101,34 +74,49 @@ export default function HeaderProperty(props) {
                             {/* Menu Dropdown Button */}
                             <button
                                 onClick={handleMenuDropdownClick}
-                                className={`text-${menuItemClicked ? "black" : "gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 ${menuItemClicked ? "underline underline-offset-4" : ""}`}
+                                className={`text-${menuItemClicked ? "black" : "gray-500"} inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 ${menuItemClicked ? "underline underline-offset-4" : ""}`}
                             >
-                                <div className="flex items-center gap-2">
+                                <div className="relative flex items-center gap-2">
                                     <p>Menu </p>
                                     <IoIosArrowDown />
+                                    
+                                    {menuItemClicked && (
+                                        <div className="dropdownMenu absolute top-full left-[-75px] mt-2 w-[200px] bg-white border border-black rounded text-left">
+                                            <Link to={'/hostings'} state={{content: 'Today'}}
+                                                className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
+                                            >
+                                                Today
+                                            </Link>
+                                            <Link to={'/hostings'} state={{content: 'Calendar'}}
+                                                className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
+                                            >
+                                                Calendar
+                                            </Link>
+                                            <Link to={'/hostings'} state={{content: 'Insights'}}
+                                                className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
+                                            >
+                                                Insights
+                                            </Link>
+                                            <Link to={'/hostings/listing'}
+                                                className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
+                                            >
+                                                Listings
+                                            </Link>
+                                            <Link to={'/hostings/addproperty'}
+                                                className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
+                                            >
+                                                Create a new listing
+                                            </Link>
+                                            <Link to={'/hostings/sales'}
+                                                className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
+                                            >
+                                                Sales report
+                                            </Link>
+                                        </div>
+                                    )}
                                 </div>
                             </button>
 
-                            {/* Menu Dropdown Content */}
-                            {menuItemClicked && (
-                                <div className="dropdownMenu absolute top-full left-0 mt-2 w-[200px] bg-white border border-black rounded text-left">
-                                    <Link to={'/hostings/listing'}
-                                        className="block py-2 px-4 text-black hover:bg-slate-300/50"
-                                    >
-                                        Listings
-                                    </Link>
-                                    <Link to={'/hostings/reservation'}
-                                        className="block py-2 px-4 text-black hover:bg-slate-300/50"
-                                    >
-                                        Reservation
-                                    </Link>
-                                    <Link to={'/hostings/addproperty'}
-                                        className="block py-2 px-4 text-black hover:bg-slate-300/50"
-                                    >
-                                        Create a new listing
-                                    </Link>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
@@ -162,9 +150,6 @@ export default function HeaderProperty(props) {
                             </div>
                             <div onClick={onClickLogout} className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                 Log Out
-                            </div>
-                            <div onClick={onClickLogin} className={`${(Object.keys(currentUser).length === 0) ? '' : 'hidden'} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
-                                Log In
                             </div>
                         </div>
                     </div>

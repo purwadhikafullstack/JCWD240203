@@ -106,7 +106,7 @@ module.exports = {
             let min = new Date();
             min.setDate(min.getDate() + 1);
             let max = new Date();
-            max.setDate(max.getDate() + 5);
+            max.setDate(max.getDate() + 100);
 
             let transactionFilter = {
                 status: 'completed',

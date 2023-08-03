@@ -13,11 +13,12 @@ import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
 import SalesReport from "./pages/SalesReport/SalesReport";
-import Hostings from "./pages/HostingPage/HostingPage";
+import Hostings from "./pages/HostingPage/TodayHosting";
 import CalendarHosting from "./pages/HostingPage/CalendarHosting";
 import ListingList from "./pages/HostingPage/ListingList";
 import ReservationHosting from "./pages/HostingPage/ReservationHosting";
 import CreateListing from "./pages/HostingPage/CreateListing";
+import HostingPage from "./pages/HostingPage/MainPage";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -52,8 +53,8 @@ function App() {
         <Route path={'/history'} element={<TransactionPage/>}/>
         <Route path={'/orders'} element={<OrderPage/>}/>
         <Route path={'/verify/:code'} element={<VerifyPage/>}/>
-        <Route path={'/sales'} element={<SalesReport/>}/>
-        <Route path={'/hostings'} element={<Hostings/>}/>
+        <Route path={'/hostings'} element={<HostingPage/>}/>
+        <Route path={'/hostings/sales'} element={<SalesReport/>}/>
         <Route path={'/hostings/calendar'} element={<CalendarHosting/>}/>
         <Route path={'/hostings/listing'} element={<ListingList/>}/>
         <Route path={'/hostings/reservation'} element={<ReservationHosting/>}/>

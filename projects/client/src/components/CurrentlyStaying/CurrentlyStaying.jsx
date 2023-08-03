@@ -50,10 +50,15 @@ export default function CurrentlyStaying() {
                                     </div>
                                     <div className="durationBooked text-[20px] font-bold">
                                         {/* total duration */}
-                                        {((new Date(value?.checkOut).getTime() - new Date(value?.checkIn).getTime()) / 86400000)} Nights
+                                        {((new Date(value?.checkOut).getTime() - new Date(value?.checkIn).getTime()) / 86400000)} Nights <span className="text-[16px] font-normal">({formatDate(new Date(value?.checkIn))} to {formatDate(new Date(value?.checkOut))})</span>
                                     </div>
-                                    <div className="chosenRoom text-[18px] py-[10px]">
-                                        {value?.stock} {value?.room?.name}
+                                    <div className="text-[18px] py-[10px]">
+                                        <div>
+                                            {value?.property?.name}
+                                        </div>
+                                        <div>
+                                            {value?.stock} {value?.room?.name}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +66,7 @@ export default function CurrentlyStaying() {
                     )
                 })
                 :
-                <div className="flex items-center justify-center h-full w-full">
+                <div className="flex items-center justify-center h-full w-full font-bold">
                     No one is currently staying
                 </div>
             }

@@ -69,7 +69,7 @@ export default function ProductPage() {
                     {
                         properties?.map((value, index) => {
                             return (
-                                <div key={index} className="h-[350px]">
+                                <div key={index} className="w-[175px] md:w-[250px]">
                                     <PropertyCard data={value} />
                                 </div>
                             )

@@ -18,7 +18,7 @@ export default function TopAddProperty(props) {
                 (props?.currentUser?.properties?.length > 0)?
                 props?.currentUser?.properties?.map((value, index) => {
                   return(
-                    <Link to={`/property/${value.id}`} key={index} className="w-[200px] md:w-[250px] h-[275px] lg:h-[300px]">
+                    <Link to={`/property/${value.id}`} key={index} className="flex items-center justify-center w-full md:w-[250px]">
                       <ListingCard data={value}/>
                     </Link>
                   )

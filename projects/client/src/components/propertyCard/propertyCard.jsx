@@ -15,10 +15,10 @@ export default function PropertyCard(props) {
       </div>
       <div className="flex flex-col gap-[10px] h-full px-[10px] py-[5px]">
         <div className="text-left">
-          <div className="stayTitle text-[20px] sm:text-[14px]">
+          <div className="stayTitle lg:text-[16px] text-[12px]">
             {props?.data?.name || 'name'}
           </div>
-          <div className="stayCity text-[14px] sm:text-[14px]">
+          <div className="stayCity lg:text-[14px] text-[14px]">
             {props?.data?.city || 'address'}
           </div>
           <div className="flex text-[16px]">

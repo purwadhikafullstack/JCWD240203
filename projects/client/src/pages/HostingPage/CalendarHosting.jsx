@@ -20,34 +20,30 @@ export default function CalendarHosting() {
     }, []);
 
     return (
-        <div className="h-full w-full">
-            <HeaderProperty/>
-            <div className="flex justify-between my-[30px]">
-                <div className="w-full">
-                    {isLoading ? (
-                        <div className="h-80 flex items-center justify-center">
-                            <ThreeDots />
-                        </div>
-                    ) : (
-                        <FullCalendar
-                            defaultView="dayGridMonth"
-                            header={{
-                                left: "prev,next",
-                                center: "title",
-                                right: "dayGridMonth,timeGridWeek,timeGridDay",
-                            }}
-                            themeSystem="simplex"
-                            plugins={[dayGridPlugin]}
-                            events={EventCalendar}
-                        />
-                    )}
-                </div>
-                <div>
-                    <SidebarCalendar />
-                </div>
+        <main className="flex justify-between my-[30px]">
+            <div className="w-full">
+                {isLoading ? (
+                    <div className="h-80 flex items-center justify-center">
+                        <ThreeDots />
+                    </div>
+                ) : (
+                    <FullCalendar
+                        defaultView="dayGridMonth"
+                        header={{
+                            left: "prev,next",
+                            center: "title",
+                            right: "dayGridMonth,timeGridWeek,timeGridDay",
+                        }}
+                        themeSystem="simplex"
+                        plugins={[dayGridPlugin]}
+                        events={EventCalendar}
+                    />
+                )}
             </div>
-        <Footer/>
-        </div>
+            <div>
+                <SidebarCalendar />
+            </div>
+        </main>
     );
 }
 
