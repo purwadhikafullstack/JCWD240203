@@ -1,7 +1,8 @@
 const usersPOST = require('./userControllerPOST');
 const usersGET = require('./userControllerGET');
 const usersPATCH = require('./userControllerPATCH');
-const properties = require('./propertyController');
+const propertiesGET = require('./propertyControllerGET');
+const propertiesGET2 = require('./propertyControllerGET2');
 const propertiesPOST = require('./propertyControllerPOST');
 const reviews = require('./reviewController');
 const countries = require('./countryController');
@@ -16,7 +17,8 @@ module.exports = {
     usersPOST,
     usersGET,
     usersPATCH,
-    properties,
+    propertiesGET,
+    propertiesGET2,
     propertiesPOST,
     reviews,
     countries,

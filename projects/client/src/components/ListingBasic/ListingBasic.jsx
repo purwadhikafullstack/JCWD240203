@@ -30,7 +30,7 @@ const BasicDetails = (props) => {
       propertyName: values.propertyName,
       description: values.description,
       category: values.category,
-      city: values.city.split('/')[1],
+      city: values.city,
       address: values.address,
       facilities: values.facilities
     }),
@@ -51,7 +51,6 @@ const BasicDetails = (props) => {
   };
 
   return (
-    <div>
         <form>
           <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8 photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
               <div className="text-left text-[30px] font-bold mb-10">
@@ -97,7 +96,6 @@ const BasicDetails = (props) => {
               </button>
           </div>
         </form>
-    </div>
   );
 };
 

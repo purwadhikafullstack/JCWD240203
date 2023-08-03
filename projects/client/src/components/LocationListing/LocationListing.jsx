@@ -13,7 +13,7 @@ export default function LocationListing({form}) {
                 let temp = [];
                 for(let countries of response.data.data) {
                     countries.cities.forEach((cities) => {
-                        temp.push({label: `${cities.countryCode}/${cities.name}`, value: `${cities.countryCode}/${cities.name}`})
+                        temp.push({label: `${cities.countryCode}/${cities.name}`, value: `${cities.name}`})
                     })
                 };
                 setLocationOptions(temp);

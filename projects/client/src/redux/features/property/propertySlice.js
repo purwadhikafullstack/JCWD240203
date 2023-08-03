@@ -59,6 +59,21 @@ export const getDetailed = (data) => async(dispatch) => {
     }
 };
 
+export const getPropertyDetail = (data) => async() => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.userId}/${data.propertyId}`, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+        
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
+
 export const createProperty = (data) => async(dispatch) => {
     try {
         let formData = new FormData();

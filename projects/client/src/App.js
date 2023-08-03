@@ -13,13 +13,11 @@ import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
 import SalesReport from "./pages/SalesReport/SalesReport";
-import Hostings from "./pages/HostingPage/TodayHosting";
-import CalendarHosting from "./pages/HostingPage/CalendarHosting";
 import ListingList from "./pages/HostingPage/ListingList";
-import ReservationHosting from "./pages/HostingPage/ReservationHosting";
 import CreateListing from "./pages/HostingPage/CreateListing";
 import HostingPage from "./pages/HostingPage/MainPage";
 import CalendarHostingTrial from "./pages/HostingPage/CalendarHostingTrial";
+import UpdateListing from "./components/UpdateProperty/MainPage";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -56,11 +54,10 @@ function App() {
         <Route path={'/verify/:code'} element={<VerifyPage/>}/>
         <Route path={'/hostings'} element={<HostingPage/>}/>
         <Route path={'/hostings/sales'} element={<SalesReport/>}/>
-        <Route path={'/hostings/calendar'} element={<CalendarHosting/>}/>
         <Route path={'/hostings/listing'} element={<ListingList/>}/>
-        <Route path={'/hostings/reservation'} element={<ReservationHosting/>}/>
         <Route path={'/hostings/addproperty'} element={<CreateListing/>}/>
         <Route path={'/hostings/calendartrial'} element={<CalendarHostingTrial/>}/>
+        <Route path={'/hostings/updateproperty/:id'} element={<UpdateListing/>}/>
       </Routes>
     </div>
   );
