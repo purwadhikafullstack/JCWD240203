@@ -1,5 +1,5 @@
 const express = require('express');
-const { propertiesGET, propertiesPOST, reviews, propertiesGET2 } = require('../controller');
+const { propertiesGET, propertiesPOST, reviews, propertiesGET2, propertiesPATCH } = require('../controller');
 const upload = require('../middleware/upload');
 const Authorization = require('../middleware/Authorization');
 
@@ -19,5 +19,8 @@ Router.get('/review/:propertyId', reviews.getPropertyReview);
 Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, propertiesPOST.addProperty);
 
 Router.post('/review', reviews.createReview);
+
+// PATCH //
+Router.patch('/:id', upload.uploadPropertyImages, propertiesPATCH.updateProperty);
 
 module.exports = Router;

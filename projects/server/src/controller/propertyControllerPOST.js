@@ -1,18 +1,16 @@
 const db = require('../../models');
 const { deleteFiles } = require('../helper/deleteFiles');
 const property = db.property;
-const category = db.category;
 const propertyImages = db.propertyImages;
 const propertyFacility = db.propertyFacility;
 const room = db.room;
-const price = db.price;
 require('dotenv').config();
 
 module.exports = {
     addProperty: async(req, res) => {
         const t = await db.sequelize.transaction();
         const {propertyName, propertyDescription, city, address, userId, categoryId, propertyRooms, facilities } = req.body;
-        const images = req.files.images;
+        const images = req?.files?.images;
         try {
             const parsedFacility = JSON.parse(facilities);
             let newRooms = JSON.parse(propertyRooms);

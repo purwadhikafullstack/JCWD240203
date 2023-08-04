@@ -14,7 +14,7 @@ export default function UpdateRoomPreview(props) {
             <div onClick={onDelete} className="absolute z-[2] right-[1px] top-[1px] cursor-pointer">
                 <AiOutlineClose/>
             </div>
-            <div onClick={() => console.log('clicked')} className="flex flex-col w-full h-full px-[10px] py-[5px]">
+            <div onClick={() => {if(props?.handleRoomClick) props?.handleRoomClick(props?.data, props?.index)}} className="flex flex-col w-full h-full px-[10px] py-[5px]">
                 <div className="text-[18px] text-center w-full font-bold">
                     {props?.data?.name}
                 </div>

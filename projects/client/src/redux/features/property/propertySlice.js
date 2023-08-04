@@ -103,6 +103,33 @@ export const createProperty = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
+};
+
+export const updateProperty = (data) => async() => {
+    try {
+        let formData = new FormData();
+        const keys = Object.keys(data);
+        for(let i of keys) {
+            if(i === 'propertyRooms' || i === 'facilities') {
+                formData.append(i, JSON.stringify(data[i]));
+            }
+            else {
+                formData.append(i, data[i]);
+            }
+        };
+
+        const response = axios.patch(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}`, 
+            formData
+        , {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        })
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
 }
 
 export const { setProperty, setTotalProperty, setLocation, setGuest, setStart, setEnd } = propertySlice.actions;
