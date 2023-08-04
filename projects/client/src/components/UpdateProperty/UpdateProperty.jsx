@@ -38,11 +38,11 @@ export default function UpdateForm(props) {
   const handleSubmit = () => {
     setIsSubmitting(true);
     const values = form.getTransformedValues();
-    if(props?.addProperty) {
-      // const res = props?.addProperty({property: values, propertyRooms: rooms});
-      // if(res) {
-      //   form.reset();
-      // }
+    if(props?.onSaveChanges) {
+      const res = props?.onSaveChanges({property: values, propertyRooms: rooms});
+      if(res) {
+        form.reset();
+      }
     }
     setTimeout(() => {
       setIsSubmitting(false);
@@ -70,8 +70,8 @@ export default function UpdateForm(props) {
   return (
         <form>
               <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8 photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
-                  <div className="text-left text-[30px] font-bold mb-10">
-                      Listing basics
+                  <div className="text-left text-[30px] font-bold mb-[10px]">
+                      Property details
                   </div>
                   <div className="listingName text-left text-[18px]">
                     <Box>
@@ -98,18 +98,23 @@ export default function UpdateForm(props) {
                           {...form.getInputProps("address")}
                         />
                         <FacilitySelect form={form}/>
-                        <UpdateRoomForm property={props?.property} rooms={rooms} setRooms={setRooms}/>
                     </Box>
+                      <div>
+                        <div className="text-left text-[30px] font-bold my-[10px]">
+                          Room Details
+                        </div>
+                        <UpdateRoomForm property={props?.property} rooms={rooms} setRooms={setRooms}/>
+                      </div>
                   </div>
               </div>
               <div className="flex justify-end">
                   <button
                       disabled={isSubmitting}
                       onClick={form.onSubmit(handleSubmit)}
-                      className="submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-700 hover:bg-green-800 active:bg-green-900 cursor-pointer select-none active:scale-95 active:border-b-[0px] transition-all duration-150 mb-6"
+                      className="submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-700 hover:bg-green-800 active:bg-green-900 cursor-pointer select-none active:scale-95 active:border-b-[0px] transition-all duration-150 mb-[20px]"
                       type="submit"
                   >
-                      Submit
+                      Save Changes
                   </button>
               </div>
         </form>
