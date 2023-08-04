@@ -1,6 +1,7 @@
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { BiSolidDownload } from "react-icons/bi";
 import { TextField, FormControl } from "@mui/material";
+import './OwnerProfileCard.css'
 
 export default function OwnerProfileCard(props) {
     const handleUploadPFP = (event) => {
@@ -13,7 +14,7 @@ export default function OwnerProfileCard(props) {
 
     return(
         <div className="flex flex-col gap-[20px] w-full md:w-auto justify-center items-center">
-            <div className="flex flex-col gap-[15px] justify-center items-center w-[300px] h-[250px] bg-white border-[1px] border-gray-500 rounded-[10px]">
+            <div className="flex flex-col gap-[15px] justify-center items-center w-[300px] h-[265px] bg-white border-[1px] border-gray-500 rounded-[10px] drop-shadow-lg">
                 <div className="w-[125px] h-[125px] rounded-full overflow-hidden">
                     {
                         (typeof props?.newPFP === 'string' || props?.newId === null) ?
@@ -24,7 +25,7 @@ export default function OwnerProfileCard(props) {
                 </div>
                 <div className="">
                     <input id="ProfilePicture" type="file" className="hidden" onChange={handleUploadPFP}/>
-                    <label htmlFor="ProfilePicture" className="flex justify-center items-center gap-[10px] bg-white border-[1px] border-black w-[150px] py-[5px] cursor-pointer transition-all duration-400 hover:bg-black/50">
+                    <label htmlFor="ProfilePicture" className="flex justify-center items-center gap-[10px] border-black rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-[165px] py-[5px]  hover:bg-green-900/70 mb-4">
                         <BiSolidDownload size={20}/> Change Picture
                     </label>
                 </div>
@@ -32,7 +33,7 @@ export default function OwnerProfileCard(props) {
                     <TextField size="small" label="Username" value={props.newUsername} onChange={(e) => handleChange(e)}/>
                 </div>
             </div>
-            <div className="flex flex-col gap-[20px] justify-center items-start w-[300px] h-[250px] p-[10px] bg-white border-[1px] border-gray-500 rounded-[10px]">
+            <div className="yourConfirm flex flex-col gap-[20px] justify-center items-start w-[300px] h-[250px] p-[10px] bg-white border-[1px] border-gray-500 rounded-[10px] drop-shadow-lg">
                 <div className="text-[22px] font-bold">
                     your confirmed info
                 </div>
