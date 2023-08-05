@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TextInput, Box, Textarea } from "@mantine/core";
+import { TextInput, Box, Textarea, Select } from "@mantine/core";
 import { useForm } from '@mantine/form';
 import CategoryListing from "../CategoryListing/CategoryListing";
 import FacilitySelect from "../FacilitySelect/FaciltySelect";
@@ -9,6 +9,7 @@ import UpdateRoomForm from "./UpdateRoom";
 export default function UpdateForm(props) {
   const [rooms, setRooms] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const statuses = [{value: 'Public', label: 'Public'}, {value: 'Private', label: 'Private'}];
   const form = useForm({
     initialValues: {
       propertyName: '',
@@ -16,14 +17,16 @@ export default function UpdateForm(props) {
       category: '',
       city: '',
       address: '',
-      facilities: []
+      facilities: [],
+      status: ''
     },
     validate: {
       propertyName: (value) => (value?.length <= 0)? "Must not be empty" : null,
       description: (value) => (value?.length <= 0)? "Must not be empty" : null,
       category: (value) => (!value)? "Must not be empty" : null,
       city: (value) => (!value)? "Required !" : null,
-      address: (value) => (!value)? "Required !" : null
+      address: (value) => (!value)? "Required !" : null,
+      status: (value) => (!value)? "Required !" : null
     },
     transformValues: (values) => ({
       propertyName: values.propertyName,
@@ -31,7 +34,8 @@ export default function UpdateForm(props) {
       category: values.category,
       city: values.city,
       address: values.address,
-      facilities: values.facilities
+      facilities: values.facilities,
+      status: values.status
     }),
   });
 
@@ -61,6 +65,7 @@ export default function UpdateForm(props) {
             category: props?.property?.category?.id,
             city: props?.property?.city,
             address: props?.property?.address,
+            status: props?.property?.status,
             facilities: temp
           })
           setRooms(props?.property?.rooms);
@@ -98,6 +103,13 @@ export default function UpdateForm(props) {
                           {...form.getInputProps("address")}
                         />
                         <FacilitySelect form={form}/>
+                        <Select
+                          placeholder="Pick one"
+                          label="Status"
+                          data={statuses}
+                          withAsterisk
+                          {...form.getInputProps("status")}
+                        />
                     </Box>
                       <div>
                         <div className="text-left text-[30px] font-bold my-[10px]">
