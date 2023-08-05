@@ -89,7 +89,7 @@ export default function UpdateRoomForm(props) {
                 All rooms :
             </div>
             <div className="w-full h-[250px] mt-[10px] rounded-[5px] border-[1px] border-gray-600">
-              <List className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center w-full h-full gap-[15px] md:overflow-y-auto mobileScroll removeScroll px-[10px] py-[5px]">
+              <List className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center w-full h-full gap-[15px] overflow-y-auto mobileScroll removeScroll px-[10px] py-[5px]">
                   {
                       props?.rooms?.map((value, index) => {
                           return(

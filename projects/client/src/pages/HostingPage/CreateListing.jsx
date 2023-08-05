@@ -34,7 +34,7 @@ export default function CreateListing() {
                 })).then(
                     () => {
                         toast.success('Property added !', {id: loading});
-                        //navigate('/hostings');
+                        navigate('/hostings');
                         return true;
                     },
                     (error) => {

@@ -40,7 +40,12 @@ export default function TransactionCard(props) {
     return(
         <div className="flex flex-col w-full h-auto lg:h-[250px] lg:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px]">
             <div className="w-full md:w-[250px] h-[250px] md:h-full">
-                <img src={props?.data?.property?.propertyImages[0]?.url || ''} alt="" className="w-full h-full rounded-[5px]"/>
+                {
+                    (props?.data?.property?.propertyImages?.length > 0)?
+                    <img src={props?.data?.property?.propertyImages[0]?.url} alt="" className="w-full h-full rounded-[5px]" />
+                    :
+                    <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full rounded-[5px]" />
+                }
             </div>
             <div className="flex flex-col justify-center text-start flex-[1.3] gap-[15px]">
                 <div className="text-[20px] font-bold">
@@ -64,7 +69,7 @@ export default function TransactionCard(props) {
                     Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
                 </div>
                 <div className="mt-auto text-[20px] font-bold">
-                    Grand total: {((((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) * (props?.data?.room?.price * props?.data?.stock)).toLocaleString('ID-id')) || 0}
+                    Grand total: {props?.data?.price?.toLocaleString('ID-id')}
                 </div>
             </div>
             <div className="flex flex-col items-center justify-center flex-[1.1] gap-[15px] p-[10px]">

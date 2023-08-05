@@ -9,6 +9,7 @@ module.exports = {
         propertyId: 1,
         roomId: 1,
         stock: 2,
+        price: 10800000,
         status: "completed",
         checkIn: "2023-07-18",
         checkOut: "2023-07-30"
@@ -18,6 +19,7 @@ module.exports = {
         propertyId: 2,
         roomId: 3,
         stock: 2,
+        price: 40800000,
         status: "completed",
         checkIn: "2023-07-4",
         checkOut: "2023-08-30"
@@ -27,6 +29,7 @@ module.exports = {
         propertyId: 1,
         roomId: 1,
         stock: 2,
+        price: 80800000,
         status: "completed",
         checkIn: "2023-07-18",
         checkOut: "2023-09-30"

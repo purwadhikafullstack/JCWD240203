@@ -17,6 +17,7 @@ import ListingList from "./pages/HostingPage/ListingList";
 import CreateListing from "./pages/HostingPage/CreateListing";
 import HostingPage from "./pages/HostingPage/MainPage";
 import UpdateListing from "./components/UpdateProperty/MainPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -43,6 +44,7 @@ function App() {
  
   return (
     <div className="App h-[100vh]">
+      <Toaster/>
       <Routes>
         <Route path={'/'} element={<LandingPage/>} />
         <Route path={'/browse'} element={<ProductPage/>}/>

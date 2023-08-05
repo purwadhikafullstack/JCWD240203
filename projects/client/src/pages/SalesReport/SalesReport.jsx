@@ -38,8 +38,7 @@ export default function SalesReport() {
                 rawData.forEach((transaction) => {
                     let transactionMonth = new Date(transaction.updatedAt).getMonth();
                     if(months[transactionMonth] === month) {
-                        let total = ((new Date(transaction?.checkOut).getTime() - new Date(transaction?.checkIn).getTime())/ 86400000) * (transaction?.room?.price * transaction?.stock);
-                        totalSales += total;
+                        totalSales += transaction.price;
                     }
                 })
                 temp.push(totalSales);
@@ -61,8 +60,7 @@ export default function SalesReport() {
                 if (transaction) {
                     let transactionDay = new Date(transaction.updatedAt).getDate();
                     if (transactionDay === i) {
-                        let total = ((new Date(transaction?.checkOut).getTime() - new Date(transaction?.checkIn).getTime())/ 86400000) * (transaction?.room?.price * transaction?.stock);
-                        tempProfit += total;
+                        tempProfit += transaction.price;
                     }
                 }
             })
