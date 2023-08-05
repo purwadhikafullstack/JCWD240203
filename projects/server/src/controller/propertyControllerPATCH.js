@@ -15,19 +15,19 @@ module.exports = {
         try {
             const parsedFacility = JSON.parse(facilities);
             const parsedRooms = JSON.parse(propertyRooms);
-            // await property.update({
-            //     name: propertyName,
-            //     description: propertyDescription,
-            //     city: city,
-            //     address: address,
-            //     status: status,
-            //     categoryId: categoryId
-            // }, {
-            //     where: {
-            //         id: propertyId
-            //     },
-            //     transaction: t
-            // });
+            await property.update({
+                name: propertyName,
+                description: propertyDescription,
+                city: city,
+                address: address,
+                status: status,
+                categoryId: categoryId
+            }, {
+                where: {
+                    id: propertyId
+                },
+                transaction: t
+            });
             
             const dataRoom = []
             for(let room of parsedRooms) {
@@ -63,10 +63,10 @@ module.exports = {
                     }
                 }
     
-                //await propertyImages.bulkCreate(dataImage, {transaction: t});
-                // if(oldRows?.length > 0) {
-                //     await propertyImages.bulkDestroy({where: {id: oldRows}}, {transaction: t})
-                // }
+                await propertyImages.bulkCreate(dataImage, {transaction: t});
+                if(oldRows?.length > 0) {
+                    await propertyImages.destroy({where: {id: oldRows}}, {transaction: t})
+                }
             }
 
 
@@ -104,25 +104,25 @@ module.exports = {
                 }
             };
             
-            //  await propertyFacility.bulkCreate(dataFacility, {transaction: t});
-            // if(deletedFacility?.length > 0) {
-            //     await propertyFacility.bulkDestroy({where: {id: deletedFacility}}, {transaction: t})
-            // }
-
-            // await room.bulkCreate(allRooms, {
-            //     updateOnDuplicate: ['name', 'description', 'stock', 'capacity', 'price'],
-            //     transaction: t
-            // });
-            
-            // await t.commit();
-
-            if(old.length > 0) {
-                deleteFiles(old)
+            await propertyFacility.bulkCreate(dataFacility, {transaction: t});
+            if(deletedFacility?.length > 0) {
+                await propertyFacility.destroy({where: {id: deletedFacility}}, {transaction: t})
             }
+            
+            await room.bulkCreate(dataRoom, {
+                updateOnDuplicate: ['name', 'description', 'stock', 'capacity', 'price'],
+                transaction: t
+            });
+            
+            await t.commit();
+
+            // if(old.length > 0) {
+            //     deleteFiles(old)
+            // }
 
             return res.status(201).send({
                 isError: false,
-                message: 'Property added !',
+                message: 'Changes saved !',
                 data: null
             })
         }

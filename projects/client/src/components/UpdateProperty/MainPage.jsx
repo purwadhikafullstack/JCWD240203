@@ -32,7 +32,9 @@ export default function UpdateListing() {
           images: image,
           token: JSON.parse(localStorage.getItem('user')).token
         })).then(
-          () => {return false},
+          () => {
+            navigate(`/property/${params.id}`)
+          },
           (error) => {
             console.log(error);
             return false;

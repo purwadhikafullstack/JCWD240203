@@ -87,7 +87,7 @@ export const createProperty = (data) => async(dispatch) => {
             }
         };
 
-        data?.images.forEach(img => {
+        data?.images?.forEach(img => {
             formData.append("images", img);
         })
         const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/properties`, 
@@ -117,6 +117,10 @@ export const updateProperty = (data) => async() => {
                 formData.append(i, data[i]);
             }
         };
+
+        data?.images?.forEach(img => {
+            formData.append("images", img);
+        });
 
         const response = axios.patch(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}`, 
             formData

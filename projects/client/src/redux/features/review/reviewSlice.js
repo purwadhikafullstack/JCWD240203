@@ -41,7 +41,6 @@ export const postReview = (data) => async(dispatch) => {
 
 export const getPropertyReview = (data) => async(dispatch) => {
     try {
-        console.log(data);
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/review/${data.id}?limit=${data.limit}&&page=${data.page}`)
         
         dispatch(setReview(response.data.data.rows));

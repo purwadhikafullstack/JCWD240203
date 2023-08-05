@@ -29,7 +29,7 @@ export default function UpdateForm(props) {
       propertyName: values.propertyName,
       description: values.description,
       category: values.category,
-      city: values.city.split('/')[1],
+      city: values.city,
       address: values.address,
       facilities: values.facilities
     }),

@@ -11,9 +11,9 @@ Router.get('/', propertiesGET.getProperty);
 Router.get('/:id', propertiesGET.propertyDetailed);
 
 // treat id as userId
-Router.get('/:id/:propertyId', Authorization.isOwner, propertiesGET2.getPropertyDetail);
-
 Router.get('/review/:propertyId', reviews.getPropertyReview);
+
+Router.get('/:id/:propertyId', Authorization.isOwner, propertiesGET2.getPropertyDetail);
 
 // POST //
 Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, propertiesPOST.addProperty);

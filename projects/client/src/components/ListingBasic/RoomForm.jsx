@@ -43,7 +43,7 @@ export default function RoomForm(props) {
         }
     }
     return(
-        <div className="w-full mt-[10px] border-[1px] border-gray-600 rounded-[10px] p-[10px]">
+        <div className="w-full mt-[10px] rounded-[10px]">
             Add rooms
           <div className="text-[20px]">
           </div>

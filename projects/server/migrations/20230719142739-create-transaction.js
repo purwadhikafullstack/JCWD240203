@@ -21,6 +21,9 @@ module.exports = {
       stock: {
         type: Sequelize.INTEGER
       },
+      price: {
+        type: Sequelize.INTEGER
+      },
       paymentProof: {
         type: Sequelize.STRING
       },

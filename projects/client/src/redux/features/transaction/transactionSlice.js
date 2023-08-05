@@ -64,7 +64,7 @@ export const getHistory = (data) => async(dispatch) => {
 export const getOrder = (data) => async(dispatch) => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}&&month=${data.month}`);
-
+console.log(response.data.data)
         dispatch(setOrder(response.data.data.rows));
         dispatch(setTotalOrder(response.data.data.count));
         return Promise.resolve(response);

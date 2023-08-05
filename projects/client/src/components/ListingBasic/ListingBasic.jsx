@@ -53,7 +53,7 @@ const BasicDetails = (props) => {
   return (
         <form>
           <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8 photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
-              <div className="text-left text-[30px] font-bold mb-10">
+              <div className="text-left text-[30px] font-bold mb-[20px]">
                   Listing basics
               </div>
               <div className="listingName text-left text-[18px]">
@@ -73,7 +73,6 @@ const BasicDetails = (props) => {
                     <CategoryListing
                       form={form}
                     />
-                    <RoomForm rooms={rooms} setRooms={setRooms}/>
                     <LocationListing form={form}/>
                     <Textarea
                       placeholder="Address"
@@ -83,6 +82,7 @@ const BasicDetails = (props) => {
                     />
                     <FacilitySelect form={form}/>
                 </Box>
+                <RoomForm rooms={rooms} setRooms={setRooms}/>
               </div>
           </div>
           <div className="flex justify-end">
