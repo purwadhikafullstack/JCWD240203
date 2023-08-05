@@ -18,6 +18,7 @@ import PaymentModal from "../../components/PaymentModal/PaymentModal";
 import LoginModal from "../../components/LoginModal/LoginModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
 import RoomCard from "../../components/RoomCard/RoomCard";
+import GalleryModal from "../../components/GalleryProperties/GalleryModal";
 
 export default function ProductDetail() {
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -32,6 +33,7 @@ export default function ProductDetail() {
     const [page, setPage] = useState(1);
     const limit = 8;
     const totalReview = Math.ceil(useSelector((state) => state.review.totalReview)/limit);
+    const [showAllPhotos, setShowAllPhotos] = useState(false);
     const params = useParams();
     const call = useDispatch();
 
@@ -88,11 +90,13 @@ export default function ProductDetail() {
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
+            {console.log(showAllPhotos)}
             <Toaster/>
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
             <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
             <PaymentModal showPayment={showPayment} selectedProperty={property} selectedRoom={selectedRoom} start={start} end={end} guest={guest} setShowPayment={setShowPayment} setShowLogin={setShowLogin}/>
+            <GalleryModal showAllPhotos={showAllPhotos} setShowAllPhotos={setShowAllPhotos} images={property?.propertyImages}/>
             <main className="w-full px-5 lg:px-20 py-[20px]">
                 <div className="propertiesHeading text-left">
                     <div className="propertiesName text-[30px] font-black">
@@ -113,7 +117,7 @@ export default function ProductDetail() {
                     </div>
                 </div>
                 <div className="imageList rounded-xl">
-                    <GalleryProperties images={property?.propertyImages}/>
+                    <GalleryProperties showAllPhotos={showAllPhotos} setShowAllPhotos={setShowAllPhotos} images={property?.propertyImages}/>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between gap-4">
                     <div className="leftSide">
