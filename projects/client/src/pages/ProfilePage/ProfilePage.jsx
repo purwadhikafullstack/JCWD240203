@@ -3,12 +3,13 @@ import Header from "../../components/header/headerPage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUser } from "../../redux/features/user/userSlice";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import UserCard from "./UserCard";
 import OwnerCard from "./OwnerCard";
 import { updateUser } from "../../redux/features/user/userSlice";
 import LoginModal from "../../components/LoginModal/LoginModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
+import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import './ProfilePage.css'
 
 
@@ -17,7 +18,7 @@ export default function ProfilePage() {
 
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true);
     const [desc, setDesc] = useState('');
     const [newUsername, setNewUsername]= useState('');
     const [newPhoneNumber, setNewPhoneNumber]= useState('');
@@ -35,7 +36,8 @@ export default function ProfilePage() {
     const call = useDispatch();
 
     const setValue = () => {
-        const loading = toast.loading('fetching your data !');
+        const loading = 'fetchingData';
+        toast.loading('fetching your data !', {id: loading});
         call(getUser({
             id: params.id
         })).then(
@@ -54,6 +56,7 @@ export default function ProfilePage() {
                 setCurrentId(response.data.data?.idCard);
                 setListings(response.data.data?.properties);
                 setIsOwner(Number(params?.id) === JSON.parse(localStorage.getItem('user'))?.id);
+                setIsLoading(false);
             },
             (error) => {
                 toast.error('network error', {id: loading});
@@ -98,12 +101,18 @@ export default function ProfilePage() {
 
     return(
         <div className="flex flex-col w-full h-full overflow-hidden">
-            <Toaster/>
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
             <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
             {
+                isLoading ?
+                <div className="flex w-full h-full items-center justify-center">
+                    <ThreeDots/>
+                </div>
+                :
+                
                 isOwner ?
+
                 <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} listings={listings} phoneNumber={phoneNumber} currentId={currentId}
                 setNewUsername={setNewUsername} setNewPFP={setNewPFP} setNewEmail={setNewEmail} setNewPhoneNumber={setNewPhoneNumber} setNewId={setNewId} setDesc={setDesc} setGender={setGender} setBirthDate={setBirthDate}
                 onSaveChange={onSaveChange}/>

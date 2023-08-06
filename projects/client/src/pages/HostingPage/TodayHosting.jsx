@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import TopAddProperty from "../../components/TopAddProperty/TopAddProperty";
 import CheckingOutCard from "../../components/CheckingOutCard/CheckingOutCard";
 import CurrentlyStaying from "../../components/CurrentlyStaying/CurrentlyStaying";
 import UpcomingBooked from "../../components/UpcomingBooked/UpcomingBooked";
 import QnaCard from "../../components/QnACard/qnaCard";
-import Footer from "../../components/footerRentify/footerPage";
 import './TodayHosting.css'
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -43,7 +41,7 @@ export default function TodayHosting() {
         else {
             navigate('/');
         }
-    }, [navigate])
+    }, [call, navigate])
 
     return (
         <main className="w-full px-[10px] sm:px-10 lg:px-20 py-[20px]">
@@ -52,7 +50,7 @@ export default function TodayHosting() {
                 <div className="yourListings text-[40px] font-bold">
                     Your reservation
                 </div>
-                <div className="reservationFilter flex items-center my-[40px] gap-[20px] cursor-pointer">
+                <div className="reservationFilter flex items-center justify-center md:justify-start w-full my-[40px] gap-[20px] cursor-pointer">
                     <div className="flex flex-col md:flex-row gap-[20px]">
                         <div
                             className={`rounded-full py-2 px-8 text-center text-[16px] border-2 ${activeFilter === "CheckingOut"

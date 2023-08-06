@@ -5,13 +5,13 @@ import Footer from "../../components/footerRentify/footerPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/features/user/userSlice";
+import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import CalendarHosting from "./CalendarHosting";
 
 export default function HostingPage() {
     // State to keep track of the active filter
     const location = useLocation();
-    
-    const [currentUser, setCurrentUser] = useState({});
+    const [loading, setLoading] = useState(true);
     const [activePage, setActivePage] = useState('');
     const navigate = useNavigate();
     const call = useDispatch();
@@ -33,7 +33,7 @@ export default function HostingPage() {
     useEffect(() => {
         if(localStorage.getItem('user')) {
             call(getUser({id: JSON.parse(localStorage.getItem('user')).id})).then(
-                (response) => {setCurrentUser(response.data.data)},
+                () => {setLoading(false)},
                 () => {}
             )
             if(location?.state?.content) {
@@ -53,9 +53,16 @@ export default function HostingPage() {
     }, [navigate])
 
     return (
-        <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
+        <div className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
             <HeaderProperty activePage={activePage} setActivePage={setActivePage}/>
-            {contentToShow}
+            {
+                (loading)?
+                <div className="flex h-full w-full items-center justify-center">
+                    <ThreeDots/>
+                </div>
+                :
+                contentToShow
+            }
             <Footer />
         </div>
     );
