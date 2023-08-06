@@ -4,6 +4,7 @@ const transaction = db.transaction;
 const property = db.property;
 const propertyImages = db.propertyImages;
 const room = db.room;
+const user = db.user;
 require('dotenv').config();
 
 module.exports = {
@@ -68,7 +69,8 @@ module.exports = {
             };
 
             if(month > 0 && month < 13) {
-                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month)
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), new Date().getFullYear());
             }
 
             const result = await transaction.findAndCountAll({
@@ -126,7 +128,6 @@ module.exports = {
             else if (type === 'Daily') {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
             }
-            console.log(filter);
 
             const result = await transaction.findAndCountAll({
                 where: filter,
@@ -139,50 +140,6 @@ module.exports = {
                         required: true
                     },
                     {model: room}
-                ],
-                order: [
-                    ['id', 'ASC']
-                ],
-                distinct: true
-            });
-
-            return res.status(200).send({
-                isError: false,
-                message: 'GET Success',
-                data: result
-            })
-        }
-        catch(error) {
-            return res.status(500).send({
-                isError: true,
-                message: error.message,
-                data: null
-            })
-        }
-    },
-
-    getCurrent: async(req, res) => {
-        try {
-            const { id } = req.params;
-
-            let transactionFilter = {
-                status: 'completed',
-                [Op.and]: [{
-                    checkIn: {[Op.lte]: new Date()},
-                    checkOut: {[Op.gte]: new Date()}
-                }]
-            };
-
-            const result = await transaction.findAndCountAll({
-                where: transactionFilter,
-                include: [
-                    {
-                        model: property,
-                        where: {
-                            userId: id
-                        },
-                        required: true
-                    }
                 ],
                 order: [
                     ['id', 'ASC']

@@ -1,66 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingPhotoUpload from "../../components/ListingPhotoUpload/ListingPhotoUpload";
 import BasicDetails from "../../components/ListingBasic/ListingBasic";
-import LocationBox from "../../components/LocationBox/locationBox";
-import AddressBox from "../../components/AddressBox/AddressBox";
-import FacilitySelect from "../../components/FacilitySelect/FaciltySelect";
 import Footer from "../../components/footerRentify/footerPage";
 import PreviewListingModal from "../../components/PreviewListingModal/PreviewListingModal";
 import "./CreateListing.css";
+import { useDispatch } from "react-redux";
+import { createProperty } from "../../redux/features/property/propertySlice";
+import { Toaster, toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateListing() {
     const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+    const [image, setImage] = useState([]);
+    const navigate = useNavigate();
+    const call = useDispatch();
 
-    // Function to toggle modal visibility
+    const addProperty = (data) => {
+        const loading = toast.loading('Adding property ...');
+        if(localStorage.getItem('user')) {
+            if(data?.propertyRooms?.length > 0) {
+                call(createProperty({
+                    propertyName: data.property.propertyName,
+                    propertyDescription: data.property.description,
+                    city: data.property.city,
+                    address: data.property.address,
+                    categoryId: data.property.category,
+                    userId: JSON.parse(localStorage.getItem('user')).id,
+                    propertyRooms: data.propertyRooms,
+                    facilities: data.property.facilities,
+                    images: image,
+                    token: JSON.parse(localStorage.getItem('user')).token
+                })).then(
+                    () => {
+                        toast.success('Property added !', {id: loading});
+                        navigate('/hostings');
+                        return true;
+                    },
+                    (error) => {
+                        toast.error('Network error, try again later !', {id: loading});
+                        console.log(error);
+                        return false;
+                    }
+                );
+            }
+            else {
+                toast.error('Property must have atleast 1 room !', {id: loading});
+                return false;
+            }
+        }
+    }
+
     const toggleModal = () => {
-        setShowModal((prev) => !prev);
+        setShowModal(!showModal);
     };
+
+    useEffect(() => {
+        if(!localStorage.getItem('user')) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     return (
         <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
+            <Toaster/>
             <HeaderProperty />
-            <main className="w-full px-20">
-                <div className="topCreate text-left py-[50px] my-[40px]">
+            <PreviewListingModal showModal={showModal} onClose={toggleModal} image={image}/>
+            <main className="w-full px-[10px] md:px-10 lg:px-20">
+                <div className="topCreate text-left my-[25px]">
                     <div className="createTitle text-left text-[35px] font-bold">
                         Create new listing
                     </div>
                 </div>
-                <div className="form card bg-white py-4 px-6 md:w-full rounded-lg">
+                <div className="form card bg-white py-4 md:w-full rounded-lg">
                     <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8">
                         <div className="photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
                             <div className="text-left text-[30px] font-bold">Photos</div>
-                            <ListingPhotoUpload />
+                            <ListingPhotoUpload image={image} setImage={setImage}/>
                         </div>
                     </div>
-                    <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8">
-                        <div className="photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
-                            <div className="text-left text-[30px] font-bold mb-10">
-                                Listing basics
-                            </div>
-                            <div className="listingName">
-                                <div className="listTitle text-left text-[18px]">
-                                    <BasicDetails />
-                                    <LocationBox />
-                                    <AddressBox />
-                                    <FacilitySelect />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-end">
-                        <div
-                            className="submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl mb-6"
-                            onClick={toggleModal}
-                        >
-                            Submit
-                        </div>
-                    </div>
+                    <BasicDetails addProperty={addProperty} image={image} toggleModal={toggleModal}/>
                 </div>
             </main>
             <Footer />
-            {/* Show the modal when showModal is true */}
-            {showModal && <PreviewListingModal onClose={toggleModal} />}
         </div>
     );
 }

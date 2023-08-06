@@ -1,12 +1,13 @@
 import { Line } from "react-chartjs-2";
 import Chart, { CategoryScale } from 'chart.js/auto';
-import Header from "../../components/header/headerPage";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCompleted } from "../../redux/features/transaction/transactionSlice";
 import { Toaster } from "react-hot-toast";
 import SalesFilterBar from "./SalesFilterBar";
 import { useNavigate } from "react-router-dom";
+import "./SalesReport.css";
+import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 
 export default function SalesReport() {
     Chart.register(
@@ -24,6 +25,7 @@ export default function SalesReport() {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [startingMonth, setStartingMonth] = useState(0);
     const [endingMonth, setEndingMonth] = useState(11);
+    const [grossProfit, setGrossProfit] = useState(0);
     const navigate = useNavigate();
 
     const formatChartYearly = (rawData) => {
@@ -36,8 +38,7 @@ export default function SalesReport() {
                 rawData.forEach((transaction) => {
                     let transactionMonth = new Date(transaction.updatedAt).getMonth();
                     if(months[transactionMonth] === month) {
-                        let total = ((new Date(transaction?.checkOut).getTime() - new Date(transaction?.checkIn).getTime())/ 86400000) * (transaction?.room?.price * transaction?.stock);
-                        totalSales += total;
+                        totalSales += transaction.price;
                     }
                 })
                 temp.push(totalSales);
@@ -45,6 +46,7 @@ export default function SalesReport() {
         })
         setChartLabel(tempLabel);
         setChartData(temp);
+        setGrossProfit(temp.reduce((a, b) => a + b, 0));
     };
 
     const formatChartDaily = (rawData) => {
@@ -58,8 +60,7 @@ export default function SalesReport() {
                 if (transaction) {
                     let transactionDay = new Date(transaction.updatedAt).getDate();
                     if (transactionDay === i) {
-                        let total = ((new Date(transaction?.checkOut).getTime() - new Date(transaction?.checkIn).getTime())/ 86400000) * (transaction?.room?.price * transaction?.stock);
-                        tempProfit += total;
+                        tempProfit += transaction.price;
                     }
                 }
             })
@@ -67,6 +68,7 @@ export default function SalesReport() {
         }
         setChartLabel(tempLabel);
         setChartData(tempData);
+        setGrossProfit(tempData.reduce((a, b) => a + b, 0));
     };
 
     useEffect(() => {
@@ -99,8 +101,8 @@ export default function SalesReport() {
     return (
         <div className="flex flex-col w-full h-full overflow-y-auto removeScroll">
             <Toaster/>
-            <Header/>
-            <div className="flex flex-col h-full px-[20px] py-[10px]">
+            <HeaderProperty/>
+            <div className="flex flex-col h-full px-[5px] md:px-[20px] py-[10px]">
                 <SalesFilterBar months={months} year={year} setYear={setYear} 
                 startingMonth={startingMonth} setStartingMonth={setStartingMonth}
                 endingMonth={endingMonth} setEndingMonth={setEndingMonth}
@@ -124,6 +126,25 @@ export default function SalesReport() {
                         ]
                     }}
                     />
+                </div>
+                <div className='w-full py-[10px] px-[10px] gap-4 flex flex-col md:flex-row justify-center'>
+                    <div className='cardGross bg-green-600 rounded-xl py-4 px-4'>
+                        {year || new Date().getFullYear()} Gross Profit: Rp. {grossProfit.toLocaleString('id-ID')}
+                    </div>
+                    <div className={`${(type === 'Yearly')? 'block' : 'hidden'} cardProfitMonth bg-green-600 rounded-xl py-4 px-4`}>
+                        Average Profit per Month: Rp. {((grossProfit)/((endingMonth+1) - (startingMonth))).toLocaleString('id-ID')}
+                    </div>
+                    <div className={`${(type === 'Daily')? 'block' : 'hidden'} cardProfitMonth bg-green-600 rounded-xl py-4 px-4`}>
+                        Total Sales for {months[startingMonth]} {year || new Date().getFullYear()}: Rp. {grossProfit.toLocaleString('id-ID')}
+                    </div>
+                    <div className={`${(type === 'Daily')? 'block' : 'hidden'} cardProfitMonth bg-green-600 rounded-xl py-4 px-4`}>
+                        Average Profit per Day: Rp. {
+                        (grossProfit
+                        /
+                        ((new Date().getFullYear() % 4 === 0) ? totalDaysLeap[startingMonth] : totalDays[startingMonth]))
+                        .toLocaleString('id-ID')
+                        }
+                    </div>
                 </div>
             </div>
         </div>

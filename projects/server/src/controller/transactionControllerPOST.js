@@ -2,6 +2,7 @@ const db = require('../../models');
 const { Op } = require('sequelize');
 const transaction = db.transaction;
 const property = db.property;
+const price = db.price;
 const room = db.room;
 require('dotenv').config();
 
@@ -15,8 +16,41 @@ module.exports = {
                     message: 'bad request',
                     data: req.body
                 })
+            };
+
+            let existingTransaction = await transaction.findAll({
+                where: {
+                    [Op.or]: [{status: 'pending'}, {status: 'completed'}],
+                    userId: userId,
+                    propertyId: propertyId,
+                    roomId: roomId,
+                    checkOut: {[Op.gte]: new Date()}
+                }
+            })
+            
+            if(existingTransaction?.length > 0) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'You already booked in this property',
+                    data: null
+                });
             }
 
+            const selectedRoom = await room.findOne({
+                where: {
+                    id: roomId
+                }
+            });
+
+            if(selectedRoom?.length > 0) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'Bad request !',
+                    data: null
+                });
+            }
+
+            
             let transactionFilter = {
                 status: 'completed',
                 roomId: roomId,
@@ -25,7 +59,7 @@ module.exports = {
                     checkOut: {[Op.gte]: new Date(checkIn)}
                 }]
             };
-
+            
             let result = await property.findOne({
                 where: {
                     id: propertyId
@@ -46,25 +80,28 @@ module.exports = {
                 ]
             })
             result = JSON.parse(JSON.stringify(result, null, 2));
-
+            
             let temp = 0;
             result.transactions.forEach((value) => {
                 temp += value.stock
             });
-
+            
             if(temp >= result.rooms[0].stock) {
                 return res.status(400).send({
                     isError: false,
                     message: 'Room unavailable !',
                     data: null
                 })
-            }
+            };
+
+            const price = (selectedRoom.price * ((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000) * stock );
             
             await transaction.create({
                 userId: userId,
                 propertyId: propertyId,
                 roomId: roomId,
                 stock: stock,
+                price: price,
                 paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
                 status: 'pending',
                 checkIn: checkIn,

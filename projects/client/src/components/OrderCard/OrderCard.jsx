@@ -7,11 +7,11 @@ export default function OrderCard(props) {
     const [isSendingResponse, setIsSendingResponse] = useState(false);
     const call = useDispatch();
 
-    const handleAccept = () => {
+    const handleAccept = async() => {
         setIsSendingResponse(true);
         const loading = toast.loading('Accepting order ...');
         if(localStorage.getItem('user')) {
-            call(updateStatus({
+            await call(updateStatus({
                 id: props?.data?.id,
                 userId: JSON.parse(localStorage.getItem('user')).id,
                 response: 'completed',
@@ -31,11 +31,11 @@ export default function OrderCard(props) {
         }, 400);
     }
 
-    const handleReject = () => {
+    const handleReject = async() => {
         setIsSendingResponse(true);
         const loading = toast.loading('Rejecting order ...');
         if(localStorage.getItem('user')) {
-            call(updateStatus({
+            await call(updateStatus({
                 id: props?.data?.id,
                 userId: JSON.parse(localStorage.getItem('user')).id,
                 response: 'cancelled',
@@ -58,7 +58,12 @@ export default function OrderCard(props) {
     return(
         <div className="flex flex-col w-full h-auto md:h-[250px] md:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px]">
             <div className="w-full md:w-[250px] h-[250px] md:h-full">
-                <img src={props?.data?.property?.propertyImages[0]?.url || ''} alt="" className="w-full h-full bg-black rounded-[5px]"/>
+                {
+                    (props?.data?.property?.propertyImages?.length > 0)?
+                    <img src={props?.data?.property?.propertyImages[0]?.url} alt="" className="w-full h-full rounded-[5px]" />
+                    :
+                    <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full rounded-[5px]" />
+                }
             </div>
             <div className="flex flex-col justify-center text-start flex-[1.3] gap-[15px]">
                 <div className="text-[20px] font-bold">
@@ -82,7 +87,7 @@ export default function OrderCard(props) {
                     Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
                 </div>
                 <div className="mt-auto text-[20px] font-bold">
-                    Grand total: {((((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) * (props?.data?.room?.price * props?.data?.stock)).toLocaleString('ID-id')) || 0}
+                    Grand total: {props?.data?.price?.toLocaleString('ID-id')}
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-1 gap-[15px] p-[10px]">
@@ -97,10 +102,10 @@ export default function OrderCard(props) {
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-1 p-[10px] gap-[20px]">
-                <button onClick={handleAccept} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer`}>
+                <button onClick={handleAccept} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer' }`}>
                     Accept Order
                 </button>
-                <button onClick={handleReject} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer`}>
+                <button onClick={handleReject} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer' }`}>
                     Reject Order
                 </button>
             </div>

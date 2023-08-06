@@ -4,7 +4,7 @@ import { setGuest } from "../../redux/features/property/propertySlice";
 import './guestBox.css'
 
 export default function GuestBox({ label }) {
-    const data = ['1', '2', '3', '4', '5 +'];
+    const data = ['1', '2', '3', '4', '5'];
     const guest = useSelector((state) => state.property.guest);
     const call = useDispatch();
 

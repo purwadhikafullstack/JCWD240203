@@ -3,12 +3,16 @@ import user from '../features/user/userSlice';
 import property from '../features/property/propertySlice';
 import country from '../features/country/countrySlice';
 import transaction from '../features/transaction/transactionSlice';
+import review from '../features/review/reviewSlice';
+import category from '../features/category/categorySlice';
 
 export const store = configureStore({
     reducer: {
         user,
         property,
         country,
-        transaction
+        transaction,
+        review,
+        category
     }
 })

@@ -28,5 +28,5 @@ code {
 
 /* mobile scrolling */
 .mobileScroll {
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
 }

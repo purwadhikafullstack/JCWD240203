@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getDetailed } from "../property/propertySlice";
 import axios from "axios";
 
 const initialState = {
-    review: []
+    review: [],
+    totalReview: 0
 };
 
 const reviewSlice = createSlice({
@@ -12,6 +12,9 @@ const reviewSlice = createSlice({
     reducers: {
         setReview: (initialState, action) => {
             initialState.review = action.payload;
+        },
+        setTotalReview: (initialState, action) => {
+            initialState.totalReview = action.payload;
         }
     }
 });
@@ -36,5 +39,18 @@ export const postReview = (data) => async(dispatch) => {
     }
 }
 
-export const { setReview } = reviewSlice.actions;
+export const getPropertyReview = (data) => async(dispatch) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/review/${data.id}?limit=${data.limit}&&page=${data.page}`)
+        
+        dispatch(setReview(response.data.data.rows));
+        dispatch(setTotalReview(response.data.data.count));
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
+export const { setReview, setTotalReview } = reviewSlice.actions;
 export default reviewSlice.reducer;

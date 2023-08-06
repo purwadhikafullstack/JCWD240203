@@ -15,7 +15,8 @@ const propertySlice = createSlice({
     initialState,
     reducers: {
         setProperty: (initialState, action) => {
-            initialState.property = action.payload;
+            initialState.property.push(action.payload);
+            initialState.property = initialState.property.flat();
         },
         setTotalProperty: (initialState, action) => {
             initialState.totalProperty = action.payload;
@@ -46,12 +47,89 @@ export const getProperty = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
 
 export const getDetailed = (data) => async(dispatch) => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}?start=${data.start}&&end=${data.end}&&userId=${data.userId}&&limit=${data.limit}&&page=${data.page}`);
         
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
+
+export const getPropertyDetail = (data) => async() => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.userId}/${data.propertyId}`, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+        
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
+
+export const createProperty = (data) => async(dispatch) => {
+    try {
+        let formData = new FormData();
+        const keys = Object.keys(data);
+        for(let i of keys) {
+            if(i === 'propertyRooms' || i === 'facilities') {
+                formData.append(i, JSON.stringify(data[i]));
+            }
+            else {
+                formData.append(i, data[i]);
+            }
+        };
+
+        data?.images?.forEach(img => {
+            formData.append("images", img);
+        })
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/properties`, 
+            formData
+        , {
+            headers: {
+                authorization: `Bearer ${data.token || null}`,
+                "Content-Type": "multipart/form-data",
+            }
+        });
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
+
+export const updateProperty = (data) => async() => {
+    try {
+        let formData = new FormData();
+        const keys = Object.keys(data);
+        for(let i of keys) {
+            if(i === 'propertyRooms' || i === 'facilities') {
+                formData.append(i, JSON.stringify(data[i]));
+            }
+            else {
+                formData.append(i, data[i]);
+            }
+        };
+
+        data?.images?.forEach(img => {
+            formData.append("images", img);
+        });
+
+        const response = axios.patch(`${process.env.REACT_APP_API_BASE_URL}/properties/${data.id}`, 
+            formData
+        , {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        })
         return Promise.resolve(response);
     }
     catch(error) {

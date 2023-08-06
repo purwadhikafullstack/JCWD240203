@@ -6,9 +6,11 @@ import { getProperty } from "../../redux/features/property/propertySlice";
 import { Toaster, toast } from "react-hot-toast";
 import FilterBar from "../../components/FilterBar/FilterBar";
 import Footer from "../../components/footerRentify/footerPage";
+import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import "./ProductPage.css"
 
 export default function ProductPage() {
+    const [loading, setLoading] = useState(true);
     const limit = 8;
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
@@ -25,7 +27,7 @@ export default function ProductPage() {
     const checkScroll = () => {
         if (listInnerRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-            if (scrollTop + clientHeight >= scrollHeight) {
+            if (scrollTop + clientHeight >= scrollHeight - 50) {
                 if (page + 1 <= totalProperties) {
                     setPage(page + 1);
                 }
@@ -42,7 +44,7 @@ export default function ProductPage() {
             location: location
         })).then(
             () => {
-
+                setLoading(false);
             },
             (error) => {
                 toast.error('unable to get list !');
@@ -57,25 +59,29 @@ export default function ProductPage() {
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto removeScroll">
-            <Toaster />
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister} />
-            <div className="flex flex-col flex-grow w-full">
-                <div>
-                    <FilterBar applyFilter={applyFilter} setApplyFilter={setApplyFilter}/>
-                </div>
-                <div className="ml-10 mb-8 mt-4">
-                </div>
-                <div className="propsCard text-base text-gray grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[10px] w-full h-full my-[10px] px-[5px] sm:px-[20px] md:px-[30px] lg:px-[50px]">
-                    {
-                        properties?.map((value, index) => {
-                            return (
-                                <div key={index} className="h-[350px]">
-                                    <PropertyCard data={value} />
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+            <div className="flex flex-col w-full">
+                <FilterBar applyFilter={applyFilter} setApplyFilter={setApplyFilter}/>
+            </div>
+            <div className="flex flex-col w-full flex-grow mt-[10px] sm:mt-[20px] md:mt-[40px]">
+                {
+                    (loading)?
+                    <div className="flex justify-center items-center w-full h-full">
+                        <ThreeDots/>
+                    </div>
+                    :
+                    <div className="propsCard text-base text-gray grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[20px] w-full my-[10px] px-[5px] sm:px-[20px] md:px-[30px] lg:px-[50px]">
+                        {
+                            properties?.map((value, index) => {
+                                return (
+                                    <div key={index} className="w-full">
+                                        <PropertyCard data={value} />
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                }
             </div>
             <Footer />
         </div>

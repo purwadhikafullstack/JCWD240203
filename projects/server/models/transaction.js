@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       transaction.belongsTo(models.user, {
         foreignKey: 'userId'
       });
-
+      
       transaction.belongsTo(models.property, {
         foreignKey: 'propertyId'
       });
@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     propertyId: DataTypes.INTEGER,
     roomId: DataTypes.INTEGER,
     stock: DataTypes.INTEGER,
+    price: DataTypes.INTEGER,
     paymentProof: DataTypes.STRING,
     status: DataTypes.STRING,
     checkIn: DataTypes.DATE,

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { updatePaymentProof } from "../../redux/features/transaction/transactionSlice";
 
 export default function TransactionCard(props) {
+    const [isSendingResponse, setIsSendingResponse] = useState(false);
     const [paymentProof, setPaymentProof] = useState(null);
     const call = useDispatch();
     
@@ -12,11 +13,12 @@ export default function TransactionCard(props) {
         setPaymentProof(event?.target?.files[0]);
     }
 
-    const onSave = () => {
+    const onSave = async() => {
+        setIsSendingResponse(true);
         const loading = toast.loading('Saving ...');
         if(localStorage.getItem('user')) {
             if(paymentProof) {
-                call(updatePaymentProof({
+                await call(updatePaymentProof({
                     id: props?.data?.id,
                     userId: JSON.parse(localStorage.getItem('user')).id,
                     paymentProof: paymentProof,
@@ -24,7 +26,10 @@ export default function TransactionCard(props) {
                     page: props?.page,
                     limit: props?.limit
                 })).then(
-                    () => {toast.success('Changes saved !', {id: loading})},
+                    () => {
+                        toast.success('Changes saved !', {id: loading});
+                        setPaymentProof(null);
+                    },
                     (error) => {
                         toast.error('Network error, please try again later !', {id: loading});
                         console.log(error);
@@ -35,12 +40,20 @@ export default function TransactionCard(props) {
                 toast.error('No changes made !', {id: loading});
             }
         }
+        setTimeout(() => {
+            setIsSendingResponse(false);
+        }, 400);
     }
 
     return(
         <div className="flex flex-col w-full h-auto lg:h-[250px] lg:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px]">
             <div className="w-full md:w-[250px] h-[250px] md:h-full">
-                <img src={props?.data?.property?.propertyImages[0]?.url || ''} alt="" className="w-full h-full rounded-[5px]"/>
+                {
+                    (props?.data?.property?.propertyImages?.length > 0)?
+                    <img src={props?.data?.property?.propertyImages[0]?.url} alt="" className="w-full h-full rounded-[5px]" />
+                    :
+                    <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full rounded-[5px]" />
+                }
             </div>
             <div className="flex flex-col justify-center text-start flex-[1.3] gap-[15px]">
                 <div className="text-[20px] font-bold">
@@ -64,7 +77,7 @@ export default function TransactionCard(props) {
                     Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
                 </div>
                 <div className="mt-auto text-[20px] font-bold">
-                    Grand total: {((((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) * (props?.data?.room?.price * props?.data?.stock)).toLocaleString('ID-id')) || 0}
+                    Grand total: {props?.data?.price?.toLocaleString('ID-id')}
                 </div>
             </div>
             <div className="flex flex-col items-center justify-center flex-[1.1] gap-[15px] p-[10px]">
@@ -90,10 +103,10 @@ export default function TransactionCard(props) {
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-[0.7] p-[10px] gap-[20px]">
-                <div onClick={onSave} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer`}>
+                <div onClick={onSave} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer' }`}>
                     Save Changes
                 </div>
-                <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer`}>
+                <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer' }`}>
                     Cancel Order
                 </div>
             </div>
