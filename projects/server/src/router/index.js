@@ -3,7 +3,8 @@ const properties = require('./propertyRouter');
 const countries = require('./countryRouter');
 const transactions = require('./transactionRouter');
 const categories = require('./categoryRouter');
-const facilities = require('./facilityController');
+const facilities = require('./facilityRouter');
+const prices = require('./priceRouter');
 
 module.exports = {
     users,
@@ -11,5 +12,6 @@ module.exports = {
     countries,
     transactions,
     categories,
-    facilities
+    facilities,
+    prices
 }

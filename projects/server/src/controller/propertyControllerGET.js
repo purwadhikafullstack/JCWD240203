@@ -6,9 +6,10 @@ const propertyFacility = db.propertyFacility;
 const facility = db.facility;
 const category = db.category;
 const room = db.room;
+const price = db.price;
 const review = db.review;
 const transaction = db.transaction;
-const user = db.user
+const user = db.user;
 
 module.exports = {
     getProperty: async(req, res) => {
@@ -21,17 +22,20 @@ module.exports = {
             const locationFilter = {
                     city: (location)? location : {[Op.like]: '%%'}
             };
+
             let transactionFilter = {
                 status: 'completed',
                 [Op.and]: [{
                     checkIn: {[Op.lte]: startDate},
-                    checkOut: {[Op.gt]: endDate}
+                    checkOut: {[Op.gte]: startDate}
                 }]
             };
-            
-            if(startDate > endDate) {
-                delete transactionFilter[Op.and][0].checkIn;
-                transactionFilter[Op.and][0].checkOut[Op.gt] = startDate;
+
+            let priceFilter = {
+                [Op.and]: [{
+                    start: {[Op.lte]: startDate},
+                    end: {[Op.gte]: startDate}
+                }]
             }
 
             let result = await property.findAndCountAll({
@@ -46,6 +50,11 @@ module.exports = {
                                 model: transaction,
                                 where: transactionFilter,
                                 required: false
+                            },
+                            {
+                                model: price,
+                                where: priceFilter,
+                                required: false,
                             }
                         ],
                         where: {
@@ -63,7 +72,8 @@ module.exports = {
                     ['propertyImages','id', 'ASC'],
                     ['reviews', 'rating', 'ASC']
                 ],
-                limit: limit*page || 5,
+                offset: limit*(page - 1) || 0,
+                limit: Number(limit) || 5,
                 where: locationFilter,
                 distinct: true
             });
@@ -91,6 +101,22 @@ module.exports = {
                     })
                     temp /= property.reviews.length;
                 }
+                property.rooms.forEach((room) => {
+                    if(room.prices.length > 0) {
+                        let originalPrice = room.price;
+                        let specialPrice = 0;
+                        room.prices.forEach((value) => {
+                            if(value.type === 'Mark up') {
+                                specialPrice = originalPrice + (originalPrice * (value.percentage/100));
+                            }
+                            else if (value.type === 'Discount') {
+                                specialPrice = originalPrice - (originalPrice * (value.percentage/100));
+                            }
+                        })
+                        room.price = specialPrice;
+                    }
+                })
+                temp /= property.reviews.length;
                 property.average = temp;
                 return property;
             })

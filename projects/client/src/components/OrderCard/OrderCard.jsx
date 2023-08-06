@@ -8,11 +8,11 @@ export default function OrderCard(props) {
     const [isSendingResponse, setIsSendingResponse] = useState(false);
     const call = useDispatch();
 
-    const handleAccept = () => {
+    const handleAccept = async() => {
         setIsSendingResponse(true);
         const loading = toast.loading('Accepting order ...');
         if(localStorage.getItem('user')) {
-            call(updateStatus({
+            await call(updateStatus({
                 id: props?.data?.id,
                 userId: JSON.parse(localStorage.getItem('user')).id,
                 response: 'completed',
@@ -32,11 +32,11 @@ export default function OrderCard(props) {
         }, 400);
     }
 
-    const handleReject = () => {
+    const handleReject = async() => {
         setIsSendingResponse(true);
         const loading = toast.loading('Rejecting order ...');
         if(localStorage.getItem('user')) {
-            call(updateStatus({
+            await call(updateStatus({
                 id: props?.data?.id,
                 userId: JSON.parse(localStorage.getItem('user')).id,
                 response: 'cancelled',

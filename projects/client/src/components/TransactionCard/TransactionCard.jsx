@@ -14,12 +14,12 @@ export default function TransactionCard(props) {
         setPaymentProof(event?.target?.files[0]);
     }
 
-    const onSave = () => {
+    const onSave = async() => {
         setIsSendingResponse(true);
         const loading = toast.loading('Saving ...');
         if(localStorage.getItem('user')) {
             if(paymentProof) {
-                call(updatePaymentProof({
+                await call(updatePaymentProof({
                     id: props?.data?.id,
                     userId: JSON.parse(localStorage.getItem('user')).id,
                     paymentProof: paymentProof,
