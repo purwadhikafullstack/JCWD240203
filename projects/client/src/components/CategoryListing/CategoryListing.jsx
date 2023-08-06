@@ -3,9 +3,18 @@ import { Select } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../redux/features/category/categorySlice';
 
-function CategoryListing({form}) {
+function CategoryListing({form, showModal, setShowModal}) {
   const [categories, setCategories] = useState([])
   const call = useDispatch();
+
+  const handleChange = (value) => {
+    if(value === 'Add new') {
+      if(setShowModal) {setShowModal(!showModal)};
+    } 
+    else {
+      form.getInputProps("category").onChange(value);
+    }
+  }
 
   useEffect(() => {
     call(getCategories()).then(
@@ -25,10 +34,13 @@ function CategoryListing({form}) {
       <Select
         label="Listing type"
         placeholder="Pick one"
-        searchable
         nothingFound="No options"
         data={categories}
-        {...form.getInputProps("category")}
+        error={form.getInputProps("category").error}
+        value={form.getInputProps("category").value}
+        onChange={(e) => {handleChange(e)}}
+        onBlur={form.getInputProps("category").onBlur}
+        onFocus={form.getInputProps("category").onFocus}
       />
     </div>
   );
