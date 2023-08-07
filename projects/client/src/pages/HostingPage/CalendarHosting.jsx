@@ -5,7 +5,6 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import SidebarCalendar from "../../components/SidebarCalendar/SidebarCalendar";
-import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import Footer from "../../components/footerRentify/footerPage";
 import { isSameDay } from "date-fns"; // Import the isSameDay function
 
