@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { TextInput, Box, Textarea, Select } from "@mantine/core";
 import { useForm } from '@mantine/form';
-import CategoryListing from "../CategoryListing/CategoryListing";
-import FacilitySelect from "../FacilitySelect/FaciltySelect";
-import LocationListing from "../LocationListing/LocationListing";
+import CategoryListing from "../../components/CategoryListing/CategoryListing";
+import FacilitySelect from "../../components/FacilitySelect/FaciltySelect";
+import LocationListing from "../../components/LocationListing/LocationListing";
 import UpdateRoomForm from "./UpdateRoom";
 
 export default function UpdateForm(props) {

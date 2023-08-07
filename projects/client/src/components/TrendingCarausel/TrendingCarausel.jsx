@@ -37,9 +37,9 @@ export default function TrendingCarausel() {
         </div>
         <div className="flex w-full overflow-x-auto mobileScroll gap-[25px] px-[20px] py-[15px]">
           {properties.map((property, index) => (
-            <Link to={`/property/${property?.id}`} key={index} className='min-w-[250px] h-[350px]'>
+            <div key={index} className='min-w-[250px] h-[350px]'>
               <PropertyCard data={property}/>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

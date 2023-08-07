@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingPhotoUpload from "../../components/ListingPhotoUpload/ListingPhotoUpload";
-import BasicDetails from "../../components/ListingBasic/ListingBasic";
+import PropertyForm from "./PropertyForm";
 import Footer from "../../components/footerRentify/footerPage";
-import PreviewListingModal from "../../components/PreviewListingModal/PreviewListingModal";
-import "./CreateListing.css";
-import { useDispatch } from "react-redux";
+import "./MainPage.css";
+import { useDispatch, useSelector } from "react-redux";
 import { createProperty } from "../../redux/features/property/propertySlice";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateListing() {
-    const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+export default function CreateProperty() {
+    const currentUser = useSelector((state) => state.user.currentUser);
     const [image, setImage] = useState([]);
     const navigate = useNavigate();
     const call = useDispatch();
@@ -26,11 +25,13 @@ export default function CreateListing() {
                     city: data.property.city,
                     address: data.property.address,
                     categoryId: data.property.category,
-                    userId: JSON.parse(localStorage.getItem('user')).id,
                     propertyRooms: data.propertyRooms,
                     facilities: data.property.facilities,
                     images: image,
-                    token: JSON.parse(localStorage.getItem('user')).token
+                    userId: JSON.parse(localStorage.getItem('user')).id,
+                    token: JSON.parse(localStorage.getItem('user')).token,
+                    idCard: JSON.parse(localStorage.getItem('user')).idCard,
+                    status: JSON.parse(localStorage.getItem('user')).status
                 })).then(
                     () => {
                         toast.success('Property added !', {id: loading});
@@ -51,21 +52,15 @@ export default function CreateListing() {
         }
     }
 
-    const toggleModal = () => {
-        setShowModal(!showModal);
-    };
-
     useEffect(() => {
         if(!localStorage.getItem('user')) {
             navigate('/');
         }
-    }, [navigate]);
+    }, [navigate, currentUser]);
 
     return (
         <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
-            <Toaster/>
             <HeaderProperty />
-            <PreviewListingModal showModal={showModal} onClose={toggleModal} image={image}/>
             <main className="w-full px-[10px] md:px-10 lg:px-20">
                 <div className="topCreate text-left my-[25px]">
                     <div className="createTitle text-left text-[35px] font-bold">
@@ -79,7 +74,7 @@ export default function CreateListing() {
                             <ListingPhotoUpload image={image} setImage={setImage}/>
                         </div>
                     </div>
-                    <BasicDetails addProperty={addProperty} image={image} toggleModal={toggleModal}/>
+                    <PropertyForm addProperty={addProperty} image={image}/>
                 </div>
             </main>
             <Footer />

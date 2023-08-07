@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingPhotoUpload from "../../components/ListingPhotoUpload/ListingPhotoUpload";
 import Footer from "../../components/footerRentify/footerPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getPropertyDetail, updateProperty } from "../../redux/features/property/propertySlice";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import UpdateForm from "./UpdateProperty";
-import ThreeDots from "../ThreeDotsLoading/ThreeDotsLoading"
+import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 
-export default function UpdateListing() {
+export default function UpdateProperty() {
+    const currentUser = useSelector((state) => state.user.currentUser);
     const [property, setProperty] = useState({});
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState([]);
@@ -26,11 +27,13 @@ export default function UpdateListing() {
           city: data.property.city,
           address: data.property.address,
           categoryId: data.property.category,
-          userId: JSON.parse(localStorage.getItem('user')).id,
           propertyRooms: data.propertyRooms,
           facilities: data.property.facilities,
           images: image,
-          token: JSON.parse(localStorage.getItem('user')).token
+          userId: JSON.parse(localStorage.getItem('user')).id,
+          token: JSON.parse(localStorage.getItem('user')).token,
+          idCard: JSON.parse(localStorage.getItem('user')).idCard,
+          status: JSON.parse(localStorage.getItem('user')).status
         })).then(
           () => {
             navigate(`/property/${params.id}`)
@@ -55,15 +58,15 @@ export default function UpdateListing() {
             setLoading(false);
           },
           (error) => {
-            toast.error('Network error !, please try again later')
-            console.log(error)
+            toast.error('Network error !, please try again later');
+            console.log(error);
           }
         )
       }
       else {
         navigate('/');
       }
-    }, [call])
+    }, [call, currentUser])
 
     return (
         <div className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
