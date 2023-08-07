@@ -1,6 +1,6 @@
-import React from "react";
 import './propertyCard.css'
 import { Link } from "react-router-dom";
+import { AiFillStar } from "react-icons/ai";
 
 export default function PropertyCard(props) {
   return (
@@ -26,8 +26,13 @@ export default function PropertyCard(props) {
           </div>
         </div>
         <div className="flex mt-auto justify-between">
-          <div className="stayInfoItem text-[14px]">{props?.data?.category?.type || 'type'}</div>
-          <div className="stayInfoItem text-[14px]">{(props?.data?.rooms?.length > 0) ? 'Available' : 'Unavailable'}</div>
+          <div className="flex justify-center items-center gap-[10px] underline underline-offset-4">
+              <AiFillStar /> {props?.data?.average || 0.00}
+          </div>
+          <div className='flex gap-[15px]'>
+            <div className="stayInfoItem text-[14px]">{props?.data?.category?.type || 'type'}</div>
+            <div className="stayInfoItem text-[14px]">{(props?.data?.rooms?.length > 0) ? 'Available' : 'Unavailable'}</div>
+          </div>
         </div>
       </div>
     </Link>

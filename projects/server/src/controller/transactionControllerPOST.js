@@ -14,9 +14,36 @@ module.exports = {
                 return res.status(400).send({
                     isError: true,
                     message: 'bad request',
-                    data: req.body
+                    data: null
                 })
             };
+
+            if(new Date(checkIn) >= new Date(checkOut)) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request',
+                    data: null
+                })
+            };
+
+            const propertyWithRoomExist = await property.findOne({
+                where: {id: propertyId},
+                include: [
+                    {
+                        model: room,
+                        where: {id: roomId},
+                        required: true
+                    }
+                ]
+            });
+            
+            if(!propertyWithRoomExist) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request',
+                    data: null
+                })
+            }
 
             let existingTransaction = await transaction.findAll({
                 where: {
@@ -28,7 +55,7 @@ module.exports = {
                 }
             })
             
-            if(existingTransaction?.length > 0) {
+            if(existingTransaction?.length > 0 && existingTransaction?.roomId === roomId) {
                 return res.status(400).send({
                     isError: true,
                     message: 'You already booked in this property',
@@ -36,10 +63,36 @@ module.exports = {
                 });
             }
 
-            const selectedRoom = await room.findOne({
+            let transactionFilter = {
+                status: 'completed',
+                roomId: roomId,
+                [Op.and]: [{
+                    checkIn: {[Op.lte]: new Date(checkIn)},
+                    checkOut: {[Op.gte]: new Date(checkIn)}
+                }]
+            };
+
+            let priceFilter = {
+                start: {[Op.lte]: new Date(checkIn)},
+                end: {[Op.gte]: new Date(checkIn)}
+            }
+
+            let selectedRoom = await room.findOne({
                 where: {
                     id: roomId
-                }
+                },
+                include: [
+                    {
+                        model: transaction,
+                        where: transactionFilter,
+                        required: false
+                    },
+                    {
+                        model: price,
+                        where: priceFilter,
+                        required: false
+                    }
+                ]
             });
 
             if(selectedRoom?.length > 0) {
@@ -49,44 +102,29 @@ module.exports = {
                     data: null
                 });
             }
+            
+            selectedRoom = JSON.parse(JSON.stringify(selectedRoom, null, 2));
 
-            
-            let transactionFilter = {
-                status: 'completed',
-                roomId: roomId,
-                [Op.and]: [{
-                    checkIn: {[Op.lte]: new Date(checkIn)},
-                    checkOut: {[Op.gte]: new Date(checkIn)}
-                }]
-            };
-            
-            let result = await property.findOne({
-                where: {
-                    id: propertyId
-                },
-                include: [
-                    {
-                        model: room,
-                        where: {
-                            id: roomId
-                        },
-                        required: false
-                    },
-                    {
-                        model: transaction,
-                        where: transactionFilter,
-                        required: false
+            if(selectedRoom?.prices?.length > 0) {
+                const originalPrice = selectedRoom.price;
+                let specialPrice = 0;
+                selectedRoom.prices.forEach((value) => {
+                    if(value.type === 'Mark up') {
+                        specialPrice = originalPrice + (originalPrice * (value.percentage/100));
                     }
-                ]
-            })
-            result = JSON.parse(JSON.stringify(result, null, 2));
-            
-            let temp = 0;
-            result.transactions.forEach((value) => {
-                temp += value.stock
+                    else if (value.type === 'Discount') {
+                        specialPrice = originalPrice - (originalPrice * (value.percentage/100));
+                    }
+                })
+                selectedRoom.price = specialPrice;
+            }
+
+            let occupied = 0;
+            selectedRoom.transactions.forEach((value) => {
+                occupied += value.stock
             });
             
-            if(temp >= result.rooms[0].stock) {
+            if(occupied >= selectedRoom.stock) {
                 return res.status(400).send({
                     isError: false,
                     message: 'Room unavailable !',
@@ -94,19 +132,19 @@ module.exports = {
                 })
             };
 
-            const price = (selectedRoom.price * ((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000) * stock );
+            const grandTotal = (selectedRoom.price * ((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000) * stock );
             
-            await transaction.create({
-                userId: userId,
-                propertyId: propertyId,
-                roomId: roomId,
-                stock: stock,
-                price: price,
-                paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
-                status: 'pending',
-                checkIn: checkIn,
-                checkOut: checkOut
-            })
+            // await transaction.create({
+            //     userId: userId,
+            //     propertyId: propertyId,
+            //     roomId: roomId,
+            //     stock: stock,
+            //     price: grandTotal,
+            //     paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
+            //     status: 'pending',
+            //     checkIn: checkIn,
+            //     checkOut: checkOut
+            // })
 
             return res.status(200).send({
                 isError: false,
