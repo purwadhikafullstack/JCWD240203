@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setStart, setEnd } from "../../redux/features/property/propertySlice";
 import { getDetailed } from "../../redux/features/property/propertySlice";
 import { useParams } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import PaymentModal from "../../components/PaymentModal/PaymentModal";
@@ -90,8 +90,6 @@ export default function ProductDetail() {
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
-            {console.log(showAllPhotos)}
-            <Toaster/>
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister}/>
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
             <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>

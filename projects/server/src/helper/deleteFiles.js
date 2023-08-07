@@ -13,5 +13,13 @@ module.exports = {
                 }
             })
         })
+    },
+
+    formatReqFiles: (rawData) => {
+        const formatted = []
+        for(let i in rawData) {
+            formatted.push(rawData[i]);
+        }
+        return formatted.flat(1);
     }
 }

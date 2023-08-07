@@ -16,11 +16,11 @@ Router.get('/review/:propertyId', reviews.getPropertyReview);
 Router.get('/:id/:propertyId', Authorization.isOwner, propertiesGET2.getPropertyDetail);
 
 // POST //
-Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, propertiesPOST.addProperty);
+Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, Authorization.isHost, propertiesPOST.addProperty);
 
 Router.post('/review', reviews.createReview);
 
 // PATCH //
-Router.patch('/:id', upload.uploadPropertyImages, propertiesPATCH.updateProperty);
+Router.patch('/:id', upload.uploadPropertyImages, Authorization.isCurrentUser, Authorization.isHost, propertiesPATCH.updateProperty);
 
 module.exports = Router;
