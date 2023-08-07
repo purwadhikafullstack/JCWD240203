@@ -1,5 +1,5 @@
 const express = require('express');
-const { propertiesGET, propertiesPOST, reviews, propertiesGET2, propertiesPATCH } = require('../controller');
+const { propertiesGET, propertiesPOST, reviews, propertiesGET2, propertiesPATCH, propertiesGET3 } = require('../controller');
 const upload = require('../middleware/upload');
 const Authorization = require('../middleware/Authorization');
 
@@ -8,12 +8,12 @@ const Router = express.Router();
 // GET //
 Router.get('/', propertiesGET.getProperty);
 // treat id as propertyId
-Router.get('/:id', propertiesGET.propertyDetailed);
+Router.get('/:id', propertiesGET2.propertyDetailed);
 
 // treat id as userId
 Router.get('/review/:propertyId', reviews.getPropertyReview);
 
-Router.get('/:id/:propertyId', Authorization.isOwner, propertiesGET2.getPropertyDetail);
+Router.get('/:id/:propertyId', Authorization.isOwner, propertiesGET3.getPropertyDetail);
 
 // POST //
 Router.post('/', upload.uploadPropertyImages, Authorization.isCurrentUser, Authorization.isHost, propertiesPOST.addProperty);

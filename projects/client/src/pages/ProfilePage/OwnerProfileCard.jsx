@@ -17,7 +17,7 @@ export default function OwnerProfileCard(props) {
             <div className="flex flex-col gap-[15px] justify-center items-center w-[300px] h-[265px] bg-white border-[1px] border-gray-500 rounded-[10px] drop-shadow-lg">
                 <div className="w-[125px] h-[125px] rounded-full overflow-hidden">
                     {
-                        (typeof props?.newPFP === 'string' || props?.newId === null) ?
+                        (typeof props?.newPFP === 'string' || props?.newPFP === null) ?
                         <img src={props?.newPFP} alt="" className="w-full h-full"/>
                         :
                         <img src={URL.createObjectURL(props?.newPFP)} alt="" className="w-full h-full"/>

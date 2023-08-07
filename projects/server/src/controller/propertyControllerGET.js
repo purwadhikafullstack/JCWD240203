@@ -2,8 +2,6 @@ const db = require('../../models');
 const { Op } = require('sequelize');
 const property = db.property;
 const propertyImages = db.propertyImages;
-const propertyFacility = db.propertyFacility;
-const facility = db.facility;
 const category = db.category;
 const room = db.room;
 const price = db.price;
@@ -36,7 +34,7 @@ module.exports = {
                     start: {[Op.lte]: startDate},
                     end: {[Op.gte]: startDate}
                 }]
-            }
+            };
 
             let result = await property.findAndCountAll({
                 where: {
@@ -72,8 +70,8 @@ module.exports = {
                     ['propertyImages','id', 'ASC'],
                     ['reviews', 'rating', 'ASC']
                 ],
-                offset: limit*(page - 1) || 0,
-                limit: Number(limit) || 5,
+                //offset: limit*(page - 1) || 0,
+                limit: limit*page || 5,
                 where: locationFilter,
                 distinct: true
             });
@@ -101,9 +99,11 @@ module.exports = {
                     })
                     temp /= property.reviews.length;
                 }
+                property.average = temp.toFixed(2);
+
                 property.rooms.forEach((room) => {
                     if(room.prices.length > 0) {
-                        let originalPrice = room.price;
+                        const originalPrice = room.price;
                         let specialPrice = 0;
                         room.prices.forEach((value) => {
                             if(value.type === 'Mark up') {
@@ -112,16 +112,15 @@ module.exports = {
                             else if (value.type === 'Discount') {
                                 specialPrice = originalPrice - (originalPrice * (value.percentage/100));
                             }
-                        })
+                        });
                         room.price = specialPrice;
                     }
                 })
-                temp /= property.reviews.length;
-                property.average = temp;
                 return property;
             })
 
-            result.rows = result.rows.sort((p1, p2) => (p1.average < p2.average) ? 1 : (p1.average > p2.average) ? -1 : 0);
+            result.rows = result.rows.sort((p1, p2) => (p1.rooms[0].price > p2.rooms[0].price) ? 1 : (p1.rooms[0].price < p2.rooms[0].price) ? -1 : 0);
+            //result.rows = result.rows.sort((p1, p2) => (p1.average < p2.average) ? 1 : (p1.average > p2.average) ? -1 : 0);
             
             return res.status(200).send({
                 isError: true,
@@ -135,95 +134,6 @@ module.exports = {
                 message: error.message,
                 data: null
             });
-        }
-    },
-    propertyDetailed: async(req, res) => {
-        try {
-            const id = req.params.id;
-            const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
-            const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
-            const { limit, page } = req.query;
-            const userId = req.query.userId;
-            
-            let transactionFilter = {
-                status: 'completed',
-                [Op.and]: [{
-                    checkIn: {[Op.lte]: startDate},
-                    checkOut: {[Op.gte]: startDate}
-                }]
-            };
-            
-            let result = await property.findOne({
-                include: [
-                    {
-                        model: transaction,
-                        where: transactionFilter,
-                        required: false
-                    },
-                    {
-                        model: review,
-                        include: [
-                            {
-                                model: user,
-                                attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
-                            }
-                        ],
-                        limit: limit*page || 5
-                    },
-                    {
-                        model: user,
-                        attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
-                    },
-                    { 
-                        model: propertyFacility,
-                        include: [{model: facility}]
-                    },
-                    { model: room },
-                    { model: propertyImages },
-                ],
-                where: {
-                    id: id
-                },
-                order: [
-                    [{model: propertyImages} ,'id', 'ASC']
-                ],
-            })
-            const count = await review.count({where: {propertyId: result.id}});
-            result = JSON.parse(JSON.stringify(result, null, 2));
-            result.hasReviewed = false;
-            result.totalReview = count
-
-            result.rooms = result.rooms.filter((room) => {
-                let temp = 0;
-                for(let transaction of result.transactions) {
-                    if(room.id === transaction.roomId) {temp += transaction.stock};
-                    if(temp >= room.stock) {break};
-                }
-                if(room.stock > temp) {return room}; 
-            });
-
-            let temp = 0;
-            if(result.reviews.length > 0) {
-                result.reviews.forEach((review) => {
-                    temp += review.rating;
-                    if(review.userId === Number(userId)) {result.hasReviewed = true}
-                });
-                temp /= result.reviews.length;
-            }
-            result.average = temp.toFixed(2);
-
-            return res.status(200).send({
-                isError: true,
-                message: 'GET Success !',
-                data: result
-            })
-        }
-        catch(error) {
-            return res.status(500).send({
-                isError: true,
-                message: error.message,
-                data: null
-            })
         }
     }
 }

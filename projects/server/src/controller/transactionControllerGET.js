@@ -102,7 +102,7 @@ module.exports = {
                 isError: false,
                 message: 'GET Success',
                 data: result
-            })
+            });
         }
         catch(error) {
             return res.status(500).send({
