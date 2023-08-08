@@ -15,8 +15,9 @@ const propertySlice = createSlice({
     initialState,
     reducers: {
         setProperty: (initialState, action) => {
-            initialState.property.push(action.payload);
-            initialState.property = initialState.property.flat();
+            initialState.property = action.payload;
+            // initialState.property.push(action.payload);
+            // initialState.property = initialState.property.flat();
         },
         setTotalProperty: (initialState, action) => {
             initialState.totalProperty = action.payload;
