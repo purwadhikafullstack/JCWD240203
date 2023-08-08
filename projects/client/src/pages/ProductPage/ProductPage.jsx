@@ -2,12 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import Header from "../../components/header/headerPage";
 import PropertyCard from "../../components/PropertyCard/propertyCard";
 import { useDispatch, useSelector } from "react-redux";
-import { getProperty } from "../../redux/features/property/propertySlice";
-import { Toaster, toast } from "react-hot-toast";
+import { getProperty} from "../../redux/features/property/propertySlice";
+import { toast } from "react-hot-toast";
 import FilterBar from "../../components/FilterBar/FilterBar";
 import Footer from "../../components/footerRentify/footerPage";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import "./ProductPage.css"
+import SortingBar from "./SortingBar";
 
 export default function ProductPage() {
     const [loading, setLoading] = useState(true);
@@ -16,12 +17,14 @@ export default function ProductPage() {
     const [showLogin, setShowLogin] = useState(false);
     const [applyFilter, setApplyFilter] = useState(false);
     const properties = useSelector((state) => state.property.property);
-    const start = useSelector((state) => state.property.start);
-    const end = useSelector((state) => state.property.end);
     const location = useSelector((state) => state.property.location);
+    const start = useSelector((state) => state.property.start);
+    const sort = useSelector((state) => state.property.sort);
+    const type = useSelector((state) => state.property.type);
+    const end = useSelector((state) => state.property.end);
     const totalProperties = Math.ceil(useSelector((state) => state.property.totalProperty) / limit);
     const [page, setPage] = useState(1);
-    const call = useDispatch()
+    const call = useDispatch();
 
     const listInnerRef = useRef();
     const checkScroll = () => {
@@ -41,29 +44,32 @@ export default function ProductPage() {
             limit: limit,
             start: start,
             end: end,
+            sort: sort,
+            type: type,
             location: location
         })).then(
             () => {
                 setLoading(false);
+                setApplyFilter(false);
             },
             (error) => {
                 toast.error('unable to get list !');
+                setApplyFilter(false);
                 console.log(error);
             }
         )
-
-        setTimeout(() => {
-            setApplyFilter(false)
-        }, 200)
-    }, [call, page, applyFilter])
+    }, [call, page, applyFilter, sort, type])
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto removeScroll">
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister} />
             <div className="flex flex-col w-full">
-                <FilterBar applyFilter={applyFilter} setApplyFilter={setApplyFilter}/>
+                <FilterBar applyFilter={applyFilter} setApplyFilter={setApplyFilter} setLoading={setLoading}/>
             </div>
-            <div className="flex flex-col w-full flex-grow mt-[10px] sm:mt-[20px] md:mt-[40px]">
+            <div className="flex w-full px-[5px] sm:px-[20px] md:px-[30px] lg:px-[50px] mt-[10px]">
+                <SortingBar setLoading={setLoading}/>
+            </div>
+            <div className="flex flex-col w-full flex-grow mt-[10px]">
                 {
                     (loading)?
                     <div className="flex justify-center items-center w-full h-full">

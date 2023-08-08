@@ -4,13 +4,16 @@ import ListingPhotoUpload from "../../components/ListingPhotoUpload/ListingPhoto
 import Footer from "../../components/footerRentify/footerPage";
 import { useDispatch, useSelector } from "react-redux";
 import { getPropertyDetail, updateProperty } from "../../redux/features/property/propertySlice";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import UpdateForm from "./UpdateProperty";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
+import AddCategoryModal from "../../components/AddCategoryModal/AddCategoryModal";
 
 export default function UpdateProperty() {
     const currentUser = useSelector((state) => state.user.currentUser);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [property, setProperty] = useState({});
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState([]);
@@ -18,32 +21,41 @@ export default function UpdateProperty() {
     const call = useDispatch();
     const params = useParams();
 
-    const onSaveChanges = (data) => {
+    const onSaveChanges = async(data) => {
+      setIsSubmitting(true);
+      const loading = toast.loading('Updating property ...', {id: 'updatingProperty'});
       if(localStorage.getItem('user')) {
-        call(updateProperty({
-          id: params.id,
-          propertyName: data.property.propertyName,
-          propertyDescription: data.property.description,
-          city: data.property.city,
-          address: data.property.address,
-          categoryId: data.property.category,
-          propertyRooms: data.propertyRooms,
-          facilities: data.property.facilities,
-          images: image,
-          userId: JSON.parse(localStorage.getItem('user')).id,
-          token: JSON.parse(localStorage.getItem('user')).token,
-          idCard: JSON.parse(localStorage.getItem('user')).idCard,
-          status: JSON.parse(localStorage.getItem('user')).status
-        })).then(
-          () => {
-            navigate(`/property/${params.id}`)
-          },
-          (error) => {
-            console.log(error);
-            return false;
-          }
-        )
+        if(data?.propertyRooms?.length > 0) {
+          await call(updateProperty({
+            id: params.id,
+            propertyName: data.property.propertyName,
+            propertyDescription: data.property.description,
+            city: data.property.city,
+            address: data.property.address,
+            categoryId: data.property.category,
+            propertyRooms: data.propertyRooms,
+            facilities: data.property.facilities,
+            images: image,
+            userId: JSON.parse(localStorage.getItem('user')).id,
+            token: JSON.parse(localStorage.getItem('user')).token,
+            idCard: JSON.parse(localStorage.getItem('user')).idCard
+          })).then(
+            () => {
+              toast.success('Changes saved !', {id: loading});
+              navigate(`/property/${params.id}`);
+            },
+            (error) => {
+              toast.error('Unable to save changed, try again later !', {id: loading});
+              console.log(error);
+            }
+          );
+        }
+        else {
+          toast.error('Property must have atleast 1 room !', {id: loading});
+          return false;
+        }
       }
+      setIsSubmitting(false);
     }
   
     useEffect(() => {
@@ -70,8 +82,8 @@ export default function UpdateProperty() {
 
     return (
         <div className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
-            <Toaster/>
             <HeaderProperty />
+            <AddCategoryModal showModal={showModal} setShowModal={setShowModal}/>
             {
               (loading) ?
               <div className="flex w-full h-full justify-center items-center">
@@ -110,7 +122,7 @@ export default function UpdateProperty() {
                           <div className="text-left text-[30px] font-bold">Add New Photos</div>
                           <ListingPhotoUpload image={image} setImage={setImage}/>
                       </div>
-                      <UpdateForm onSaveChanges={onSaveChanges} property={property}/>
+                      <UpdateForm onSaveChanges={onSaveChanges} property={property} showModal={showModal} setShowModal={setShowModal} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting}/>
                   </div>
               </main>
             }

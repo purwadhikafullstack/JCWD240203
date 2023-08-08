@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../redux/features/category/categorySlice';
 
 function CategoryListing({form, showModal, setShowModal}) {
-  const [categories, setCategories] = useState([])
+  const rawData = useSelector((state) => state.category.category);
+  const [categories, setCategories] = useState([]);
   const call = useDispatch();
 
   const handleChange = (value) => {
@@ -18,16 +19,20 @@ function CategoryListing({form, showModal, setShowModal}) {
 
   useEffect(() => {
     call(getCategories()).then(
-      (response) => {
-        let temp = [];
-        response?.data?.data?.forEach((value) => {
-          temp.push({value: value.id, label: value.type});
-        })
-        setCategories(temp);
-      },
+      () => {},
       (error) => {console.log(error)}
     );
-  }, []);
+  }, [call]);
+
+  useEffect(() => {
+    console.log(rawData);
+    let temp = [];
+    rawData?.forEach((value) => {
+      temp.push({value: value.id, label: value.type});
+    })
+    temp.push({value: 'Add new', label: 'Add new'});
+    setCategories(temp);
+  }, [rawData]);
 
   return (
     <div>

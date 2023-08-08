@@ -7,7 +7,6 @@ const room = db.room;
 const price = db.price;
 const review = db.review;
 const transaction = db.transaction;
-const user = db.user;
 
 module.exports = {
     getProperty: async(req, res) => {
@@ -15,11 +14,17 @@ module.exports = {
             const location = req.query.location || ''
             const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
             const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
-            const { limit, page } = req.query;
+            const { limit, page, sort, type } = req.query;
 
-            const locationFilter = {
-                    city: (location)? location : {[Op.like]: '%%'}
+            let propertyFilter = {
+                status: 'Public'
             };
+
+            if(location) {propertyFilter.city = location};
+
+            let categoryFilter = {};
+
+            if(type !== 'All') {categoryFilter.type = type};
 
             let transactionFilter = {
                 status: 'completed',
@@ -37,9 +42,7 @@ module.exports = {
             };
 
             let result = await property.findAndCountAll({
-                where: {
-                    status: 'Public'
-                },
+                where: propertyFilter,
                 include: [
                     {
                         model: room,
@@ -61,8 +64,12 @@ module.exports = {
                             }
                         }
                     },
+                    { 
+                        model: category,
+                        where: categoryFilter,
+                        required: true
+                    },
                     { model: propertyImages },
-                    { model: category },
                     { model: review }
                 ],
                 order: [
@@ -71,8 +78,7 @@ module.exports = {
                     ['reviews', 'rating', 'ASC']
                 ],
                 //offset: limit*(page - 1) || 0,
-                limit: limit*page || 5,
-                where: locationFilter,
+                //limit: limit*page || 5,
                 distinct: true
             });
 
@@ -117,10 +123,15 @@ module.exports = {
                     }
                 })
                 return property;
-            })
+            });
 
-            result.rows = result.rows.sort((p1, p2) => (p1.rooms[0].price > p2.rooms[0].price) ? 1 : (p1.rooms[0].price < p2.rooms[0].price) ? -1 : 0);
-            //result.rows = result.rows.sort((p1, p2) => (p1.average < p2.average) ? 1 : (p1.average > p2.average) ? -1 : 0);
+            if(sort === 'Price') {
+                result.rows = result.rows.sort((p1, p2) => (p1.rooms[0].price > p2.rooms[0].price) ? 1 : (p1.rooms[0].price < p2.rooms[0].price) ? -1 : 0);
+            }
+            else if (sort === 'Review') {
+                result.rows = result.rows.sort((p1, p2) => (p1.average < p2.average) ? 1 : (p1.average > p2.average) ? -1 : 0);
+            }
+            result.rows.splice(limit*page - 1, result.count - limit*page);
             
             return res.status(200).send({
                 isError: true,

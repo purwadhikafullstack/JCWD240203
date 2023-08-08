@@ -8,7 +8,6 @@ import UpdateRoomForm from "./UpdateRoom";
 
 export default function UpdateForm(props) {
   const [rooms, setRooms] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const statuses = [{value: 'Public', label: 'Public'}, {value: 'Private', label: 'Private'}];
   const form = useForm({
     initialValues: {
@@ -40,17 +39,10 @@ export default function UpdateForm(props) {
   });
 
   const handleSubmit = () => {
-    setIsSubmitting(true);
     const values = form.getTransformedValues();
     if(props?.onSaveChanges) {
-      const res = props?.onSaveChanges({property: values, propertyRooms: rooms});
-      if(res) {
-        form.reset();
-      }
+      props?.onSaveChanges({property: values, propertyRooms: rooms});
     }
-    setTimeout(() => {
-      setIsSubmitting(false);
-    }, 1000);
   };
 
   useEffect(() => {
@@ -74,6 +66,7 @@ export default function UpdateForm(props) {
 
   return (
         <form>
+          {console.log(props?.isSubmitting)}
               <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8 photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
                   <div className="text-left text-[30px] font-bold mb-[10px]">
                       Property details
@@ -94,6 +87,8 @@ export default function UpdateForm(props) {
                         />
                         <CategoryListing
                           form={form}
+                          showModal={props?.showModal}
+                          setShowModal={props?.setShowModal}
                         />
                         <LocationListing form={form}/>
                         <Textarea
@@ -121,9 +116,9 @@ export default function UpdateForm(props) {
               </div>
               <div className="flex justify-end">
                   <button
-                      disabled={isSubmitting}
+                      disabled={props?.isSubmitting}
                       onClick={form.onSubmit(handleSubmit)}
-                      className="submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-700 hover:bg-green-800 active:bg-green-900 cursor-pointer select-none active:scale-95 active:border-b-[0px] transition-all duration-150 mb-[20px]"
+                      className={`submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-700 transition-all duration-150 mb-[20px] ${(props?.isSubmitting)? 'cursor-not-allowed' : 'hover:bg-green-800 active:bg-green-900 cursor-pointer select-none active:scale-95 active:border-b-[0px]'}`}
                       type="submit"
                   >
                       Save Changes

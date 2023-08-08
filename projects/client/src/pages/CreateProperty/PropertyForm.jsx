@@ -7,7 +7,6 @@ import RoomForm from "./RoomForm";
 import LocationListing from "../../components/LocationListing/LocationListing";
 
 export default function PropertyForm(props) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [rooms, setRooms] = useState([]);
 
   const form = useForm({
@@ -37,17 +36,10 @@ export default function PropertyForm(props) {
   });
 
   const handleSubmit = () => {
-    setIsSubmitting(true);
     const values = form.getTransformedValues();
     if(props?.addProperty) {
-      const res = props?.addProperty({property: values, propertyRooms: rooms});
-      if(res) {
-        form.reset();
-      }
+      props?.addProperty({property: values, propertyRooms: rooms});
     }
-    setTimeout(() => {
-      setIsSubmitting(false);
-    }, 1000);
   };
 
   return (
@@ -72,6 +64,8 @@ export default function PropertyForm(props) {
                     />
                     <CategoryListing
                       form={form}
+                      showModal={props?.showModal}
+                      setShowModal={props?.setShowModal}
                     />
                     <LocationListing form={form}/>
                     <Textarea
@@ -87,9 +81,9 @@ export default function PropertyForm(props) {
           </div>
           <div className="flex justify-end">
               <button
-                  disabled={isSubmitting}
+                  disabled={props?.isSubmitting}
                   onClick={form.onSubmit(handleSubmit)}
-                  className="submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-700 hover:bg-green-800 active:bg-green-900 cursor-pointer select-none active:scale-95 active:border-b-[0px] transition-all duration-150 mb-6"
+                  className={`submitButton text-[25px] text-white font-bold flex items-center justify-center font-sans h-[45px] w-[200px] rounded-[35px] bg-green-700 transition-all duration-150 mb-[20px] ${(props?.isSubmitting)? 'cursor-not-allowed' : 'hover:bg-green-800 active:bg-green-900 cursor-pointer select-none active:scale-95 active:border-b-[0px]'}`}
                   type="submit"
               >
                   Submit

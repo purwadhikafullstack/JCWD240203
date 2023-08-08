@@ -7,6 +7,8 @@ const initialState = {
     location: '',
     guest: '1',
     start: '',
+    sort: 'Price',
+    type: 'All',
     end: ''
 }
 
@@ -16,8 +18,6 @@ const propertySlice = createSlice({
     reducers: {
         setProperty: (initialState, action) => {
             initialState.property = action.payload;
-            // initialState.property.push(action.payload);
-            // initialState.property = initialState.property.flat();
         },
         setTotalProperty: (initialState, action) => {
             initialState.totalProperty = action.payload;
@@ -31,6 +31,12 @@ const propertySlice = createSlice({
         setStart: (initialState, action) => {
             initialState.start = action.payload;
         },
+        setSort: (initialState, action) => {
+            initialState.sort = action.payload;
+        },
+        setType: (initialState, action) => {
+            initialState.type = action.payload;
+        },
         setEnd: (initialState, action) => {
             initialState.end = action.payload;
         }
@@ -39,7 +45,7 @@ const propertySlice = createSlice({
 
 export const getProperty = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties?location=${data.location?.split('/')[1] || ''}&&start=${data.start || ''}&&end=${data.end || ''}&&page=${data.page || null}&&limit=${data.limit || null}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties?location=${data.location?.split('/')[1] || ''}&&start=${data.start || ''}&&end=${data.end || ''}&&page=${data.page || null}&&limit=${data.limit || null}&&sort=${data.sort || 'Price'}&&type=${data.type || 'All'}`);
 
         dispatch(setProperty(response.data.data.rows));
         dispatch(setTotalProperty(response.data.data.count));
@@ -138,5 +144,5 @@ export const updateProperty = (data) => async() => {
     }
 }
 
-export const { setProperty, setTotalProperty, setLocation, setGuest, setStart, setEnd } = propertySlice.actions;
+export const { setProperty, setTotalProperty, setLocation, setGuest, setStart, setSort, setType, setEnd } = propertySlice.actions;
 export default propertySlice.reducer;

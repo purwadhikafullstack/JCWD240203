@@ -30,6 +30,7 @@ export default function HostingPage() {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user')) || {};
+        console.log(user);
         if(user.status === 'verified' && user.idCard) {
             if(location?.state?.content) {
                 setActivePage(location?.state?.content);
