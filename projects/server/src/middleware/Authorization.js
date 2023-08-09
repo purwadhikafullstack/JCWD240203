@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { deleteFiles, formatReqFiles } = require('../helper/deleteFiles');
 require('dotenv').config();
 
 module.exports = {
@@ -43,6 +44,9 @@ module.exports = {
             let token = req.headers.authorization;
             
             if(!token) {
+                if(req.files) {
+                    deleteFiles(formatReqFiles(req.files))
+                };
                 return res.status(400).send({
                     isError: true,
                     message: 'unauthorized access !',
@@ -54,6 +58,9 @@ module.exports = {
             const verify = jwt.verify(token, process.env.KEY);
             
             if(!verify || verify.id !== Number(id)) {
+                if(req.files) {
+                    deleteFiles(formatReqFiles(req.files))
+                };
                 return res.status(400).send({
                     isError: true,
                     message: 'unauthorized access !',
@@ -64,11 +71,43 @@ module.exports = {
             next()
         }
         catch(error) {
+            if(req.files) {
+                deleteFiles(formatReqFiles(req.files));
+            };
             return res.status(500).send({
                 isError: true,
                 message: error.message,
                 data: null
             })
+        }
+    },
+
+    isHost: (req, res, next) => {
+        try {
+            const {status, idCard} = req.body;
+
+            if(status !== 'verified' || !idCard) {
+                if(req.files) {
+                    deleteFiles(formatReqFiles(req.files));
+                }
+                return res.status(404).send({
+                    isError: true,
+                    message: 'unauthorized access !',
+                    data: null
+                })
+            }
+
+            next();
+        }
+        catch(error) {
+            if(req.files) {
+                deleteFiles(formatReqFiles(req.files));
+            }
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            });
         }
     }
 }

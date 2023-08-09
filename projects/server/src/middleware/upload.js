@@ -1,6 +1,6 @@
 const { multerUpload } = require('./multer');
 const { multerUploadPayment } = require('./multerPayment');
-const { deleteFiles } = require('../helper/deleteFiles');
+const { deleteFiles, formatReqFiles } = require('../helper/deleteFiles');
 
 module.exports = {
     uploadUserImage: (req, res, next) => {
@@ -10,7 +10,7 @@ module.exports = {
                 if(err) throw err;
 
                 req.files?.images?.forEach(value => {
-                    if(value.size > 1048576) throw {message: `${value.originalname} is too large`, fileToDelete: req.files}
+                    if(value.size > 1048576) throw {message: `${value.originalname} is too large`, fileToDelete: formatReqFiles(req.files)}
                 })
                 next()
             }
@@ -34,7 +34,7 @@ module.exports = {
                 if(err) throw err;
 
                 req.files?.images?.forEach(value => {
-                    if(value.size > 1048576) throw {message: `${value.originalname} is too large`, fileToDelete: req.files}
+                    if(value.size > 1048576) throw {message: `${value.originalname} is too large`, fileToDelete: formatReqFiles(req.files)}
                 })
                 next()
             }
@@ -55,11 +55,10 @@ module.exports = {
         const multerResult = multerUpload.fields([{name: 'images', maxCount: 6}]);
         multerResult(req, res, function(err) {
             try {
-                console.log(req.files);
                 if(err) throw err;
 
                 req.files?.images?.forEach(value => {
-                    if(value.size > 1048576) throw {message: `${value.originalname} is too large`, fileToDelete: req.files}
+                    if(value.size > 1048576) throw {message: `${value.originalname} is too large`, fileToDelete: formatReqFiles(req.files)}
                 })
                 next()
             }
@@ -67,7 +66,6 @@ module.exports = {
                 if(error.fileToDelete) {
                     deleteFiles(fileToDelete);
                 }
-                console.log(error);
                 return res.status(404).send({
                     isError: true,
                     message: error.message,

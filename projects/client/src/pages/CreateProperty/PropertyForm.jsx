@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { TextInput, Box, Textarea } from "@mantine/core";
 import { useForm } from '@mantine/form';
-import CategoryListing from "../CategoryListing/CategoryListing";
+import CategoryListing from "../../components/CategoryListing/CategoryListing";
 import FacilitySelect from "../../components/FacilitySelect/FaciltySelect";
 import RoomForm from "./RoomForm";
-import LocationListing from "../LocationListing/LocationListing";
+import LocationListing from "../../components/LocationListing/LocationListing";
 
-const BasicDetails = (props) => {
+export default function PropertyForm(props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rooms, setRooms] = useState([]);
 
@@ -99,4 +99,3 @@ const BasicDetails = (props) => {
   );
 };
 
-export default BasicDetails;

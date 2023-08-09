@@ -3,18 +3,16 @@ import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import TodayHosting from "./TodayHosting";
 import Footer from "../../components/footerRentify/footerPage";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getUser } from "../../redux/features/user/userSlice";
+import { useSelector } from "react-redux";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import CalendarHosting from "./CalendarHosting";
 
 export default function HostingPage() {
     // State to keep track of the active filter
+    const currentUser = useSelector((state) => state.user.currentUser);
     const location = useLocation();
-    const [loading, setLoading] = useState(true);
     const [activePage, setActivePage] = useState('');
     const navigate = useNavigate();
-    const call = useDispatch();
     let contentToShow;
 
     switch (activePage) {
@@ -31,11 +29,8 @@ export default function HostingPage() {
     }
 
     useEffect(() => {
-        if(localStorage.getItem('user')) {
-            call(getUser({id: JSON.parse(localStorage.getItem('user')).id})).then(
-                () => {setLoading(false)},
-                () => {}
-            )
+        const user = JSON.parse(localStorage.getItem('user')) || {};
+        if(user.status === 'verified' && user.idCard) {
             if(location?.state?.content) {
                 setActivePage(location?.state?.content);
                 window.history.replaceState({
@@ -50,19 +45,12 @@ export default function HostingPage() {
         else {
             navigate('/');
         }
-    }, [navigate])
+    }, [navigate, currentUser])
 
     return (
         <div className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
             <HeaderProperty activePage={activePage} setActivePage={setActivePage}/>
-            {
-                (loading)?
-                <div className="flex h-full w-full items-center justify-center">
-                    <ThreeDots/>
-                </div>
-                :
-                contentToShow
-            }
+            {contentToShow}
             <Footer />
         </div>
     );

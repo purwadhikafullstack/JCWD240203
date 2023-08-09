@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { sendEmail } from "../../redux/features/user/userSlice";
 import { toast } from "react-hot-toast";
 import './OwnerCard.css'
+import { Link } from "react-router-dom";
 
 export default function OwnerCard(props) {
     const [showPopup, setShowPopup] = useState((props?.status === 'verified') ? false : true);
@@ -156,9 +157,9 @@ export default function OwnerCard(props) {
                         <div className="font-bold text-[18px]">
                             Your listings
                         </div>
-                        <button className={`${(props?.status === 'unverified' || !props?.currentId) ? 'hidden' : ''} flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer`}>
+                        <Link to={'/hostings'} className={`${(props?.status === 'unverified' || !props?.currentId)? 'hidden' : ''} flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer`}>
                             Add property
-                        </button>
+                        </Link>
                     </div>
                     <div className="w-full flex flex-nowrap gap-[25px] overflow-x-auto mobileScroll p-[10px] whitespace-nowrap">
                         {
