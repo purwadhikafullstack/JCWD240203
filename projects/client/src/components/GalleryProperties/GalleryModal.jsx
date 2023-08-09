@@ -16,8 +16,8 @@ export default function GalleryModal(props) {
             <div className="w-full flex justify-center">
                 <div className='columns-1 md:columns-2 break-inside-avoid gap-[30px]'>
                 {props?.images?.map((obj, index) => (
-                    <div key={index} className='w-[500px] h-[400px] border-[1px] border-black mb-[20px]'>
-                    <img src={obj.url} alt='' className='w-full h-full rounded-[10px]'/>
+                    <div key={index} className='w-[500px] h-[400px] border-[1px] border-black mb-[20px] rounded-[10px] overflow-hidden'>
+                        <img src={obj.url} alt='' className='w-full h-full'/>
                     </div>
                 ))}
                 </div>

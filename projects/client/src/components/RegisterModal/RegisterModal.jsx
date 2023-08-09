@@ -77,6 +77,7 @@ export default function RegisterModal(props) {
             })).then(
                 (response) => {
                     toast.success(response.message, {id: loading});
+                    register.setSubmitting(false);
                     handleClose();
                 },
                 (error) => {
@@ -92,16 +93,16 @@ export default function RegisterModal(props) {
                             return toast.error(value.msg);
                         });
                     }
+                    register.setSubmitting(false);
                 }
             )
-            register.setSubmitting(false);
         }
     })
     
     return(
         <div className={`${props.showRegister? '' : 'hidden'} top-0 absolute flex justify-center items-center bg-gray-400/80 w-full h-[100vh] z-50`}>
             <div className="flex flex-col relative justify-between items-center rounded-[10px] gap-[10px] w-full h-[500px] md:w-[450px] md:h-[450px] bg-gray-200 py-[10px] removeScroll overflow-y-auto">
-                <div onClick={handleClose} className="absolute flex justify-center items-center p-[5px] top-[20px] left-[20px] cursor-pointer bg-transparent transition-all duration-400 hover:bg-gray-300 active:animate-ping rounded-full">
+                <div onClick={handleClose} className="absolute flex justify-center items-center p-[5px] top-[20px] left-[20px] cursor-pointer bg-transparent transition-all duration-400 hover:bg-gray-300 rounded-full">
                     <CloseIcon sx={{scale: '1.4'}}/>
                 </div>
                 <div className="w-full py-[10px] border-b-[1px] border-gray-400 text-[20px]">
@@ -179,7 +180,7 @@ export default function RegisterModal(props) {
                         {/* <Button disabled={register.isSubmitting} onClick={register.handleSubmit} variant="contained" color="success" sx={{height: '40px'}} className=''>
                             Sign Up
                         </Button> */}
-                        <button disabled={register.isSubmitting} onClick={register.handleSubmit} className="py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10">
+                        <button disabled={register.isSubmitting} onClick={register.handleSubmit} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(register.isSubmitting)? 'cursor-not-allowed' : 'active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]' }`}>
                             Sign Up
                         </button>
                     </div>

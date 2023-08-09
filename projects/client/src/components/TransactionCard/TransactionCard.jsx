@@ -6,6 +6,7 @@ import { updatePaymentProof } from "../../redux/features/transaction/transaction
 import './TransactionCard.css'
 
 export default function TransactionCard(props) {
+    const [isSendingResponse, setIsSendingResponse] = useState(false);
     const [paymentProof, setPaymentProof] = useState(null);
     const call = useDispatch();
     
@@ -14,6 +15,7 @@ export default function TransactionCard(props) {
     }
 
     const onSave = () => {
+        setIsSendingResponse(true);
         const loading = toast.loading('Saving ...');
         if(localStorage.getItem('user')) {
             if(paymentProof) {
@@ -25,7 +27,10 @@ export default function TransactionCard(props) {
                     page: props?.page,
                     limit: props?.limit
                 })).then(
-                    () => {toast.success('Changes saved !', {id: loading})},
+                    () => {
+                        toast.success('Changes saved !', {id: loading});
+                        setPaymentProof(null);
+                    },
                     (error) => {
                         toast.error('Network error, please try again later !', {id: loading});
                         console.log(error);
@@ -36,6 +41,9 @@ export default function TransactionCard(props) {
                 toast.error('No changes made !', {id: loading});
             }
         }
+        setTimeout(() => {
+            setIsSendingResponse(false);
+        }, 400);
     }
 
     return(
@@ -96,10 +104,10 @@ export default function TransactionCard(props) {
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-[0.7] p-[10px] gap-[20px]">
-                <div onClick={onSave} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center  w-[128px] h-[40px] border-[1px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white py-[5px]  hover:bg-green-900/70`}>
+                <div onClick={onSave} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer' }`}>
                     Save Changes
                 </div>
-                <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[128px] h-[40px] border-[1px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#8B0000,0_0px_0_0_#8B0000] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#8B0000,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white py-[5px]  hover:bg-red-800/70`}>
+                <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer' }`}>
                     Cancel Order
                 </div>
             </div>

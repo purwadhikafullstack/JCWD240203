@@ -116,9 +116,9 @@ module.exports = {
             
             await t.commit();
 
-            // if(old.length > 0) {
-            //     deleteFiles(old)
-            // }
+            if(old.length > 0) {
+                deleteFiles(old)
+            }
 
             return res.status(201).send({
                 isError: false,
