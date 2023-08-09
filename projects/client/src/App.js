@@ -15,7 +15,6 @@ import OrderPage from "./pages/OrderPage/OrderPage";
 import SalesReport from "./pages/SalesReport/SalesReport";
 import ListingList from "./pages/HostingPage/ListingList";
 import HostingPage from "./pages/HostingPage/MainPage";
-// import UpdateListing from "./components/UpdateProperty/MainPage";
 import UpdateProperty from "./pages/UpdateProperty/MainPage";
 import { Toaster } from "react-hot-toast";
 import CreateProperty from "./pages/CreateProperty/MainPage";
@@ -59,13 +58,8 @@ function App() {
         <Route path={'/hostings'} element={<HostingPage/>}/>
         <Route path={'/hostings/sales'} element={<SalesReport/>}/>
         <Route path={'/hostings/listing'} element={<ListingList/>}/>
-        <Route path={'/hostings/calendar'} element={<CalendarHosting/>}/>
-        <Route path={'/hostings/calendartrial'} element={<CalendarHostingTrial/>}/>
-        {/* <Route path={'/hostings/updateproperty/:id'} element={<UpdateListing/>}/> */}
         <Route path={'/hostings/addproperty'} element={<CreateProperty/>}/>
-        <Route path={'/hostings/calendar'} element={<CalendarHosting/>}/>
         <Route path={'/hostings/updateproperty/:id'} element={<UpdateProperty/>}/>
-        <Route path={'/hostings/calendartrial'} element={<CalendarHostingTrial/>}/>
       </Routes>
     </div>
   );

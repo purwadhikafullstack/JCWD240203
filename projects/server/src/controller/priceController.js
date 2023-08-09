@@ -2,7 +2,7 @@ const db = require('../../models');
 const price = db.price;
 
 module.exports = {
-    createPrice: async (req, res) => {
+    createPrice: async(req, res) => {
         try {
             const { roomId, percentage, start, end, type } = req.body
 
@@ -20,7 +20,7 @@ module.exports = {
                 data: null
             });
         }
-        catch (error) {
+        catch(error) {
             return res.status(500).send({
                 isError: true,
                 message: error.message,
