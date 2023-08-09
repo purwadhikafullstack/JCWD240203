@@ -51,7 +51,7 @@ export default function Header(props) {
                             Object.keys(currentUser).length !== 0?
                             null
                             :
-                            <p onClick={onClickSignUp} className="hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 underline underline-offset-4 ">
+                            <p onClick={onClickSignUp} className="inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 underline underline-offset-4 ">
                                 Sign Up
                             </p>
                         }

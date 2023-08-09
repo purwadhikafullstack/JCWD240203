@@ -99,7 +99,6 @@ module.exports = {
                 }
             }
 
-            console.log(process.env)
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status

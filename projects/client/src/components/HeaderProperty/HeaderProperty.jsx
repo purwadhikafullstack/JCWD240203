@@ -10,9 +10,9 @@ import { IoIosArrowDown } from 'react-icons/io';
 export default function HeaderProperty(props) {
     const [menu, toggleMenu] = useState(false);
     const [menuItemClicked, setMenuItemClicked] = useState(false);
-    const [menuTodayClicked, setMenuTodayClicked] = useState(false);
-    const [menuCalendarClicked, setMenuCalendarClicked] = useState(false);
-    const [menuInsightsClicked, setMenuInsightsClicked] = useState(false);
+    // const [menuTodayClicked, setMenuTodayClicked] = useState(false);
+    // const [menuCalendarClicked, setMenuCalendarClicked] = useState(false);
+    // const [menuInsightsClicked, setMenuInsightsClicked] = useState(false);
     const currentUser = useSelector((state) => state.user.currentUser);
     const call = useDispatch();
     const navigate = useNavigate();
@@ -82,21 +82,21 @@ export default function HeaderProperty(props) {
                                     
                                     {menuItemClicked && (
                                         <div className="dropdownMenu absolute top-full left-[-75px] mt-2 w-[200px] bg-white border border-black rounded text-left">
-                                            <Link to={'/hostings'} state={{content: 'Today'}}
+                                            <div onClick={() => handleChangePage('Today')}
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
                                                 Today
-                                            </Link>
-                                            <Link to={'/hostings'} state={{content: 'Calendar'}}
+                                            </div>
+                                            <div onClick={() => handleChangePage('Calendar')}
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
                                                 Calendar
-                                            </Link>
-                                            <Link to={'/hostings'} state={{content: 'Insights'}}
+                                            </div>
+                                            <div onClick={() => handleChangePage('Insights')}
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
                                                 Insights
-                                            </Link>
+                                            </div>
                                             <Link to={'/hostings/listing'}
                                                 className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >

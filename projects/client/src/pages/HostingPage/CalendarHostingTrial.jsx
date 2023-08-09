@@ -9,9 +9,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 // // import "@fullcalendar/daygrid/main.css";
 // // import "@fullcalendar/timegrid/main.css";
 
-
 export default function CalendarHostingTrial(props) {
-    // console.log(props??rates?..details?.details?.[0]?.price)
     const params = useParams();
     const { id } = params;
 
@@ -19,7 +17,7 @@ export default function CalendarHostingTrial(props) {
 
     const location = useLocation()
 
-    const roomDetails = location.pathname === `/property/${id}`
+    const roomDetails = location.pathname === `/hostings`
     const editPrice = location.pathname === '/dashboard-edit-price'
 
     // const price = [
@@ -72,9 +70,10 @@ export default function CalendarHostingTrial(props) {
     */
     let onCreateCalendar = async (btn, year1 = new Date().getUTCFullYear(), month1 = new Date().getMonth() + 1) => {
         try {
-            const userId = localStorage.getItem('userId');
-            const propertyId = localStorage.getItem('propertyId');
-            const rates = await axios.get(`${process.env.REACT_APP_API_BASE_URL}property/${userId}/${propertyId}`)
+            const userId = JSON.parse(localStorage.getItem("user")).id;
+            const token = JSON.parse(localStorage.getItem("user")).token;
+            const propertyId = 1;
+            const rates = await axios.get(`${process.env.REACT_APP_API_BASE_URL}properties/${userId}/${propertyId}`)
             console.log(rates)
 
             if (btn === '+') { // Apabila user meng-klik button "next"
@@ -248,22 +247,24 @@ export default function CalendarHostingTrial(props) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const userId = localStorage.getItem("userId");
-                const propertyId = localStorage.getItem("propertyId");
-
-                console.log("userId:", userId);
-                console.log("propertyId:", propertyId);
+                const userId = JSON.parse(localStorage.getItem("user")).id;
+                const token = JSON.parse(localStorage.getItem("user")).token;
+                const propertyId = 1;
 
                 const propertyResponse = await axios.get(
-                    `${process.env.REACT_APP_API_BASE_URL}${userId}/${propertyId}`
-                );
+                    `${process.env.REACT_APP_API_BASE_URL}/properties/${userId}/${propertyId}`
+                , {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                });
 
-                const priceResponse = await axios.get(
-                    `${process.env.REACT_APP_API_BASE_URL}price?room_id=${propertyId}`
-                );
+                // const priceResponse = await axios.get(
+                //     `${process.env.REACT_APP_API_BASE_URL}price?room_id=${propertyId}`
+                // );
 
                 setPropertyDetails(propertyResponse.data.data);
-                setPriceData(priceResponse.data.data);
+                setPriceData({});
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -275,12 +276,9 @@ export default function CalendarHostingTrial(props) {
 
     return (
         <div>
-            <HeaderProperty />
             {/* Room Details */}
-            <h1 className="text-3xl font-bold mb-3">test</h1>
             {roomDetails &&
-                <div className="bg-red-300 w-[300px] h-[402px] absolute top-[240px]  left-[-10px] md:left-[-35px] border border-gray-300 rounded-lg shadow-md p-[24px] z-[1045]">
-                    {console.log(props?.details, 'props masuk')}
+                <div className="bg-red-300 w-[300px] h-[402px] absolute top-[240px] left-[-10px] md:left-[-35px] border border-gray-300 rounded-lg shadow-md p-[24px] z-[1045]">
                     <h1 className="text-3xl font-bold mb-3">Calendar</h1>
                     <h5 className="text-lg font-medium mb-3">
                         {year} - {listMonth[month]}

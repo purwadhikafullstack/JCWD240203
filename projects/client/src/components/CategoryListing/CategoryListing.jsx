@@ -25,7 +25,6 @@ function CategoryListing({form, showModal, setShowModal}) {
   }, [call]);
 
   useEffect(() => {
-    console.log(rawData);
     let temp = [];
     rawData?.forEach((value) => {
       temp.push({value: value.id, label: value.type});

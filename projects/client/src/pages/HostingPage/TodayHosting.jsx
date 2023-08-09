@@ -6,11 +6,12 @@ import UpcomingBooked from "../../components/UpcomingBooked/UpcomingBooked";
 import QnaCard from "../../components/QnACard/qnaCard";
 import './TodayHosting.css'
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/features/user/userSlice";
 
 export default function TodayHosting() {
     // State to keep track of the active filter
+    const [loading, setLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
     const [activeFilter, setActiveFilter] = useState("CheckingOut");
     const navigate = useNavigate();
@@ -34,7 +35,10 @@ export default function TodayHosting() {
     useEffect(() => {
         if(localStorage.getItem('user')) {
             call(getUser({id: JSON.parse(localStorage.getItem('user')).id})).then(
-                (response) => {setCurrentUser(response.data.data)},
+                (response) => {
+                    setCurrentUser(response.data.data);
+                    setLoading(false);
+                },
                 () => {}
             )
         }
@@ -45,7 +49,7 @@ export default function TodayHosting() {
 
     return (
         <main className="w-full px-[10px] sm:px-10 lg:px-20 py-[20px]">
-            <TopAddProperty currentUser={currentUser}/>
+            <TopAddProperty loading={loading} currentUser={currentUser}/>
             <div className="middle text-left">
                 <div className="yourListings text-[40px] font-bold">
                     Your reservation

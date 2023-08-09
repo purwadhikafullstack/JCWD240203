@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import SidebarCalendar from "../../components/SidebarCalendar/SidebarCalendar";
-import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
-import Footer from "../../components/footerRentify/footerPage";
 import { isSameDay } from "date-fns"; // Import the isSameDay function
 
 export default function CalendarHosting() {
@@ -32,60 +32,60 @@ export default function CalendarHosting() {
     return event ? event.specialPrice : null;
   };
 
-  const renderEventContent = (eventInfo) => {
-    const specialPrice = getSpecialPrice(eventInfo.event.start);
-    return (
-      <div>
-        <div>{eventInfo.timeText}</div>
-        <div>{eventInfo.event.title}</div>
-        {specialPrice && <div>Rp{specialPrice.toLocaleString()}</div>}
-      </div>
-    );
-  };
+  const selectedDates = (e) => {
+    console.log(e);
+  }
+
+  // {
+  //   id: 'a',
+  //   title: 'my event',
+  //   start: '2023-08-08'
+  // }
+  // dayRender={(info) => {
+  //   if (isSameDay(info.date, new Date())) {
+  //     info.el.style.backgroundColor = "red"; // Example: change color of today's date to red
+  //   }
+  //   if (blockedDates.some((date) => isSameDay(date, info.date))) {
+  //     info.el.style.backgroundColor = "black"; // Change color of blocked dates to black
+  //     info.el.style.color = "white";
+  //   }
+  // }}
+  // header={{
+  //   left: "prev,next",
+  //   center: "title",
+  //   right: "dayGridMonth,timeGridWeek,timeGridDay",
+  // }}
 
   return (
-    <div className="h-full w-full">
-      <HeaderProperty />
-      <div className="flex justify-between my-[30px]">
-        <div className="w-full">
-          {isLoading ? (
-            <div className="h-80 flex items-center justify-center">
-              <ThreeDots />
-            </div>
-          ) : (
+    <div className="flex flex-col md:flex-row md:h-full w-full px-[5px] py-[10px] gap-[10px]">
+        {isLoading ?
+          <div className="w-full h-[500px] md:h-full flex items-center justify-center">
+            <ThreeDots />
+          </div>
+         :
+          <div className="w-full h-[500px] md:h-full ">
             <FullCalendar
-              defaultView="dayGridMonth"
-              header={{
+              headerToolbar={{
                 left: "prev,next",
                 center: "title",
-                right: "dayGridMonth,timeGridWeek,timeGridDay",
+                right: "dayGridMonth",
               }}
-              themeSystem="simplex"
-              plugins={[dayGridPlugin]}
+              height="100%"
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               events={events}
-              eventContent={renderEventContent}
-              dayRender={(info) => {
-                if (isSameDay(info.date, new Date())) {
-                  info.el.style.backgroundColor = "red"; // Example: change color of today's date to red
-                }
-                if (blockedDates.some((date) => isSameDay(date, info.date))) {
-                  info.el.style.backgroundColor = "black"; // Change color of blocked dates to black
-                  info.el.style.color = "white";
-                }
-              }}
+              selectable={true}
+              longPressDelay={100}
+              selectLongPressDelay={100}
+              select={selectedDates}
             />
-          )}
-        </div>
-        <div>
+          </div>
+        }
+        <div className="flex w-full md:w-auto md:h-full items-center justify-center">
           <SidebarCalendar
             onEventCreate={handleEventCreate}
             events={events}
-            blockedDates={blockedDates}
-            setBlockedDates={setBlockedDates}
           />
         </div>
-      </div>
-      <Footer />
     </div>
   );
 }

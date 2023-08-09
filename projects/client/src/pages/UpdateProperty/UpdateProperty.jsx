@@ -66,7 +66,6 @@ export default function UpdateForm(props) {
 
   return (
         <form>
-          {console.log(props?.isSubmitting)}
               <div className="drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8 photosTitle text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
                   <div className="text-left text-[30px] font-bold mb-[10px]">
                       Property details

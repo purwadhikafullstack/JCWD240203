@@ -4,7 +4,7 @@ import TodayHosting from "./TodayHosting";
 import Footer from "../../components/footerRentify/footerPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
+import CalendarHostingTrial from "./CalendarHostingTrial";
 import CalendarHosting from "./CalendarHosting";
 
 export default function HostingPage() {
@@ -22,7 +22,8 @@ export default function HostingPage() {
         case "Calendar":
             contentToShow = <CalendarHosting/>;
             break;
-        case "insights":
+        case "Insights":
+            contentToShow = <TodayHosting/>;
             break;
         default:
             contentToShow = <TodayHosting/>;
@@ -30,7 +31,7 @@ export default function HostingPage() {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user')) || {};
-        console.log(user);
+        
         if(user.status === 'verified' && user.idCard) {
             if(location?.state?.content) {
                 setActivePage(location?.state?.content);
