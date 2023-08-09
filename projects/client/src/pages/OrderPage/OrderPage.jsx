@@ -6,6 +6,7 @@ import { Toaster, toast } from "react-hot-toast";
 import OrderCard from "../../components/OrderCard/OrderCard";
 import { useNavigate } from "react-router-dom";
 import OrderFilterBar from "./OrderFilterBar";
+import './OrderPage.css'
 
 export default function OrderPage() {
     const limit = 8;
@@ -58,7 +59,7 @@ export default function OrderPage() {
             <Toaster/>
             <Header/>
             <div className="flex flex-col justify-start px-[15px] py-[10px]">
-                <div className="text-[24px] font-bold text-start border-b-[1px] border-gray-600">
+                <div className="yourBookingss text-[24px] font-bold text-start border-b-[1px] border-gray-600">
                     Your bookings
                 </div>
                 <div className="flex flex-col py-[10px]">

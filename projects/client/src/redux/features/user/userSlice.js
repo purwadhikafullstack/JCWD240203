@@ -43,6 +43,7 @@ export const onLogin = (loginCredentials) => async(dispatch) => {
     }
     catch(error) {
         return Promise.reject(error);
+        
     }
 };
 

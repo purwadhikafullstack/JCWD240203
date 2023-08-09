@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { BiSolidDownload } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { updatePaymentProof } from "../../redux/features/transaction/transactionSlice";
+import './TransactionCard.css'
 
 export default function TransactionCard(props) {
     const [isSendingResponse, setIsSendingResponse] = useState(false);
@@ -46,7 +47,7 @@ export default function TransactionCard(props) {
     }
 
     return(
-        <div className="flex flex-col w-full h-auto lg:h-[250px] lg:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px]">
+        <div className="flex flex-col w-full h-auto lg:h-[250px] lg:flex-row gap-[15px] justify-between border-[2px] border-green-700  p-[5px] rounded-[10px] bg-neutral-200/50">
             <div className="w-full md:w-[250px] h-[250px] md:h-full">
                 {
                     (props?.data?.property?.propertyImages?.length > 0)?
@@ -56,17 +57,17 @@ export default function TransactionCard(props) {
                 }
             </div>
             <div className="flex flex-col justify-center text-start flex-[1.3] gap-[15px]">
-                <div className="text-[20px] font-bold">
+                <div className="propsNameCard text-[20px] font-bold">
                     {props?.data?.property?.name}
                 </div>
-                <div>
+                <div className="roomNamee">
                     Room: {props?.data?.room?.name}
                 </div>
-                <div className="text-[14px]">
+                <div className="addressCard text-[14px]">
                     Address: {props?.data?.property?.address}
                 </div>
             </div>
-            <div className="flex flex-col text-start flex-1 gap-[15px] p-[10px]">
+            <div className="detailsOrderr flex flex-col text-start flex-1 gap-[15px] p-[10px]">
                 <div>
                     Rp.{props?.data?.room?.price.toLocaleString('ID-id')}/night
                 </div>
@@ -80,7 +81,7 @@ export default function TransactionCard(props) {
                     Grand total: {props?.data?.price?.toLocaleString('ID-id')}
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-center flex-[1.1] gap-[15px] p-[10px]">
+            <div className="paymentProoff font-bold flex flex-col items-center justify-center flex-[1.1] gap-[15px] p-[10px] text-[16px]">
                 Payment proof:
                 <div className="w-full h-[325px] md:h-[175px] border-[1px] border-gray-600 rounded-[5px] overflow-hidden">
                     {
@@ -92,13 +93,13 @@ export default function TransactionCard(props) {
                 </div>
                 <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'}  mt-auto`}>
                     <input onChange={handleChange} id={`paymentProof${props?.index}`} type="file" className="hidden"/>
-                    <label htmlFor={`paymentProof${props?.index}`} className="flex items-center justify-center gap-[5px] border-[1px] border-black cursor-pointer w-[175px] h-[35px]">
+                    <label htmlFor={`paymentProof${props?.index}`} className="flex items-center justify-center gap-[5px] border-[1px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white w-[165px] py-[5px]  hover:bg-green-900/70">
                         <BiSolidDownload size={25}/> Upload Payment
                     </label>
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-1 p-[10px]">
-                <div className="font-bold">
+                <div className="statusdets font-bold">
                     Status: {props?.data?.status}
                 </div>
             </div>

@@ -18,6 +18,8 @@ import HostingPage from "./pages/HostingPage/MainPage";
 import UpdateProperty from "./pages/UpdateProperty/MainPage";
 import { Toaster } from "react-hot-toast";
 import CreateProperty from "./pages/CreateProperty/MainPage";
+import CalendarHosting from "./pages/HostingPage/CalendarHosting";
+import CalendarHostingTrial from "./pages/HostingPage/CalendarHostingTrial";
 
 function App() {
   //const [message, setMessage] = useState("");

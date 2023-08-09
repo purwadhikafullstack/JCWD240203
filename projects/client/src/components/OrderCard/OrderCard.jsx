@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { updateStatus } from "../../redux/features/transaction/transactionSlice";
+import './OrderCard.css'
 
 export default function OrderCard(props) {
     const [isSendingResponse, setIsSendingResponse] = useState(false);
@@ -56,7 +57,7 @@ export default function OrderCard(props) {
     }
 
     return(
-        <div className="flex flex-col w-full h-auto md:h-[250px] md:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px]">
+        <div className="flex flex-col w-full h-auto md:h-[250px] md:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px] bg-neutral-200/50">
             <div className="w-full md:w-[250px] h-[250px] md:h-full">
                 {
                     (props?.data?.property?.propertyImages?.length > 0)?
@@ -66,17 +67,17 @@ export default function OrderCard(props) {
                 }
             </div>
             <div className="flex flex-col justify-center text-start flex-[1.3] gap-[15px]">
-                <div className="text-[20px] font-bold">
+                <div className="propsNameCard text-[20px] font-bold">
                     {props?.data?.property?.name}
                 </div>
-                <div>
+                <div className="roomNamee">
                     Room: {props?.data?.room?.name}
                 </div>
-                <div className="text-[14px]">
+                <div className=" addressCard text-[14px]">
                     Address: {props?.data?.property?.address}
                 </div>
             </div>
-            <div className="flex flex-col text-start flex-1 gap-[15px] p-[10px]">
+            <div className=" detailsOrderr flex flex-col text-start flex-1 gap-[15px] p-[10px]">
                 <div>
                     Rp.{props?.data?.room?.price.toLocaleString('ID-id')}/night
                 </div>
@@ -90,13 +91,13 @@ export default function OrderCard(props) {
                     Grand total: {props?.data?.price?.toLocaleString('ID-id')}
                 </div>
             </div>
-            <div className="flex flex-col justify-center items-center flex-1 gap-[15px] p-[10px]">
+            <div className="paymentProoff flex flex-col justify-center items-center flex-1 gap-[15px] p-[10px]">
                 Payment proof:
                 <div className="flex w-full h-[325px] md:h-[175px]">
                     <img src={props?.data?.paymentProof} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
                 </div>
             </div>
-            <div className="flex flex-col justify-center items-center flex-1 p-[10px]">
+            <div className=" statusdets flex flex-col justify-center items-center flex-1 p-[10px]">
                 <div className="font-bold">
                     Status: {props?.data?.status}
                 </div>
