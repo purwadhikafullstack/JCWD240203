@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import axios from "axios";
 import FullCalendar from "@fullcalendar/react";
-import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import SidebarCalendar from "../../components/SidebarCalendar/SidebarCalendar";
+import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import Footer from "../../components/footerRentify/footerPage";
 import { isSameDay } from "date-fns"; // Import the isSameDay function
 
 export default function CalendarHosting() {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
+  const [blockedDates, setBlockedDates] = useState([]);
 
   // Simulate some loading time (replace this with actual data fetching if needed)
   useEffect(() => {
@@ -65,15 +64,28 @@ export default function CalendarHosting() {
               plugins={[dayGridPlugin]}
               events={events}
               eventContent={renderEventContent}
+              dayRender={(info) => {
+                if (isSameDay(info.date, new Date())) {
+                  info.el.style.backgroundColor = "red"; // Example: change color of today's date to red
+                }
+                if (blockedDates.some((date) => isSameDay(date, info.date))) {
+                  info.el.style.backgroundColor = "black"; // Change color of blocked dates to black
+                  info.el.style.color = "white";
+                }
+              }}
             />
           )}
         </div>
         <div>
-          <SidebarCalendar onEventCreate={handleEventCreate} events={events} />
+          <SidebarCalendar
+            onEventCreate={handleEventCreate}
+            events={events}
+            blockedDates={blockedDates}
+            setBlockedDates={setBlockedDates}
+          />
         </div>
       </div>
       <Footer />
     </div>
   );
 }
-

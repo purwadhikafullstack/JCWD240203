@@ -28,7 +28,8 @@ module.exports = {
             });
         }
     },
-    getPrice: async (req, res) => {
+
+    getPrice : async (req, res) => {
         const { room_id } = req.query;
 
         try {
