@@ -10,7 +10,6 @@ import { isSameDay } from "date-fns"; // Import the isSameDay function
 export default function CalendarHosting() {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
-  const [blockedDates, setBlockedDates] = useState([]);
 
   // Simulate some loading time (replace this with actual data fetching if needed)
   useEffect(() => {
@@ -64,28 +63,15 @@ export default function CalendarHosting() {
               plugins={[dayGridPlugin]}
               events={events}
               eventContent={renderEventContent}
-              dayRender={(info) => {
-                if (isSameDay(info.date, new Date())) {
-                  info.el.style.backgroundColor = "red"; // Example: change color of today's date to red
-                }
-                if (blockedDates.some((date) => isSameDay(date, info.date))) {
-                  info.el.style.backgroundColor = "black"; // Change color of blocked dates to black
-                  info.el.style.color = "white";
-                }
-              }}
             />
           )}
         </div>
         <div>
-          <SidebarCalendar
-            onEventCreate={handleEventCreate}
-            events={events}
-            blockedDates={blockedDates}
-            setBlockedDates={setBlockedDates}
-          />
+          <SidebarCalendar onEventCreate={handleEventCreate} events={events} />
         </div>
       </div>
       <Footer />
     </div>
   );
 }
+
