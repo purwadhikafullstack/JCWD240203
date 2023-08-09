@@ -1,71 +1,89 @@
-import React, { useState } from "react";
+import React from "react";
 import { FcPlus } from "react-icons/fc";
+import { addDays, isSameDay } from "date-fns";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import DayPickerComponent from "../../components/DayPickerComponent/DayPickerComponent"
+import EventCalendarModal from "../../components/EventModalCalendar/EventModalCalendar";
+import useCalendarFunctions from "../../components/UseCalendarFunctions/UseCalendarFunctions";
+// import "react-day-picker/lib/style.css";
 
-export default function SidebarCalendar({ onEventCreate }) {
-    const [showModal, setShowModal] = useState(false);
-    const [newEvent, setNewEvent] = useState({
-        title: "",
-        start: null,
-        end: null,
-    });
-
-    const [blockedDates, setBlockedDates] = useState([]);
-    const [selectedBlockedDate, setSelectedBlockedDate] = useState(null);
-
-    const handleCreateEvent = () => {
-        setShowModal(true);
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewEvent({
-            ...newEvent,
-            [name]: value,
-        });
-    };
-
-    const handleSaveEvent = () => {
-        onEventCreate(newEvent);
-        setShowModal(false);
-        setNewEvent({
-            title: "",
-            start: null,
-            end: null,
-        });
-    };
-
-    const handleBlockDate = (date) => {
-        setBlockedDates((prevDates) => [...prevDates, date]);
-    };
-
-    const isDateBlocked = (date) => {
-        return blockedDates.some((blockedDate) => blockedDate === date);
-    };
+export default function SidebarCalendar({ onEventCreate, events }) {
+    const {
+        showModal,
+        setShowModal,
+        newEvent,
+        setNewEvent,
+        blockedDates,
+        setBlockedDates,
+        selectedBlockedDate,
+        setSelectedBlockedDate,
+        discountPercentage,
+        setDiscountPercentage,
+        selectedDate,
+        setSelectedDate,
+        eventCalendar,
+        handleCreateEvent,
+        handleDateSelect,
+        handleDateUnselect,
+        handleInputChange,
+        handleSaveEvent,
+        handleBlockDate,
+        handleUnblockDate,
+        isDateBlocked,
+        getSpecialPrice,
+        renderEventContent,
+        handleSetBlockedDate,
+        Is_Date_Blocked,
+        Set_Availability,
+    } = useCalendarFunctions(events);
 
     return (
-        <aside className="border p-5 w-64 relative"> {/* Add relative positioning */}
+        <aside className="border p-5 w-64 relative">
             <div>
-                <div className="rounded-[10px] py-2 px-4 text-left border-gray-200 hover:border-black text-[18px] border-2 mb-4">
-                    Pricing
-                </div>
-            </div>
-            <div>
-                {/* Price per night */}
+                {/* Pricing */}
                 <div className="rounded-[13px] py-10 px-2 mb-6 border-2 border-gray-200">
                     <div className="px-2 my-2">
                         <h2 className="text-lg font-semibold text-left">Price per night</h2>
                     </div>
-                    <div className="text-left px-2">
-                        <span className="text-black text-2xl font-bold">Rp1,895,000</span>
-                    </div>
-
-                    <div>
-                        <button className="exploreButton w-full mt-2 py-[4px] text-2xl font-sans rounded-[10px] border-solid border-2 border-black bg-white text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
-                            edit
-                        </button>
-                    </div>
+                    <DatePicker
+                        selected={newEvent.start}
+                        onChange={(date) => setNewEvent({ ...newEvent, start: date })}
+                        selectsStart
+                        startDate={newEvent.start}
+                        endDate={newEvent.end}
+                        placeholderText="Start Date"
+                        className="w-full border p-2 rounded mb-2"
+                    />
+                    <DatePicker
+                        selected={newEvent.end}
+                        onChange={(date) => setNewEvent({ ...newEvent, end: date })}
+                        selectsEnd
+                        startDate={newEvent.start}
+                        endDate={newEvent.end}
+                        minDate={newEvent.start}
+                        placeholderText="End Date"
+                        className="w-full border p-2 rounded mb-4"
+                    />
+                    <input
+                        type="number"
+                        name="specialPrice"
+                        placeholder="Enter Price"
+                        className="w-full border p-2 rounded mb-4"
+                        value={newEvent.specialPrice || ""}
+                        onChange={handleInputChange}
+                    />
+                    <button
+                        className="exploreButton w-full mt-2 py-[4px] text-2xl font-sans rounded-[10px] border-solid border-2 border-black bg-white text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl"
+                        onClick={handleSaveEvent}
+                    >
+                        Save
+                    </button>
                 </div>
-
+            </div>
+            <div>
                 {/* Create Event */}
                 <div className="rounded-[13px] py-10 px-2 mb-6 border-2 border-gray-200">
                     <div>
@@ -81,86 +99,68 @@ export default function SidebarCalendar({ onEventCreate }) {
                         </button>
                     </div>
                 </div>
-
+            </div>
+            <div>
                 {/* Discounts */}
                 <div className="rounded-[13px] py-10 px-2 mb-6 border-2 border-gray-200">
-                    <div className="px-2 my-2 ">
+                    <div className="px-2 my-2">
                         <h1 className="text-xl font-semibold text-left">Discounts</h1>
-                        <h2 className="text-base text-left"> Adjust your pricing to attract more guests.</h2>
+                        <h2 className="text-base text-left">
+                            Adjust your pricing to attract more guests.
+                        </h2>
                     </div>
                     <div className="text-left px-2">
                         <div>
-                            <span className="text-black text-xl underline underline-offset-4 ">Weekend</span>
+                            <span className="text-black text-xl underline underline-offset-4">
+                                Weekend
+                            </span>
                         </div>
                         <div>
-                            <span className="text-black text-4xl font-bold ">10%</span>
+                            <span className="text-black text-4xl font-bold">
+                                {discountPercentage}% off
+                            </span>
                         </div>
-                    </div>
-                </div>
-            </div>
-      {/* Block Dates */}
-      <div className="rounded-[13px] py-10 px-2 mb-6 border-2 border-gray-200">
-        <div>
-          <h2 className="text-lg font-semibold">Block Dates</h2>
-        </div>
-        <div>
-          {blockedDates.map((date) => (
-            <button
-              key={date}
-              className={`${
-                isDateBlocked(date) ? "bg-black text-white" : "bg-white text-black"
-              } w-full mt-2 py-[4px] text-2xl font-sans rounded-[10px] border-solid border-2 border-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl`}
-              onClick={() => setSelectedBlockedDate(date)}
-            >
-              {date}
-            </button>
-          ))}
-        </div>
-        {/* Show selected blocked date */}
-        {selectedBlockedDate && (
-          <div className="mt-4 p-2 bg-gray-100 rounded-lg">
-            <div className="text-center font-semibold">Selected Blocked Date</div>
-            <div className="text-center mt-2">{selectedBlockedDate}</div>
-            <div className="text-center mt-2">
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-                onClick={() => setSelectedBlockedDate(null)}
-              >
-                Clear Selection
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-            {/* Modal content and form */}
-            {showModal && (
-                <div className="fixed inset-0 bg-opacity-50 bg-black flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-lg">
-                        <h2 className="text-lg font-semibold mb-4">Create New Event</h2>
+                        {/* Calculate total price after discount */}
+                        <input
+                            type="number"
+                            placeholder="Enter Discount (%)"
+                            className="w-full border p-2 rounded my-2"
+                            value={discountPercentage}
+                            onChange={(e) => setDiscountPercentage(e.target.value)}
+                        />
                         <input
                             type="text"
-                            name="title"
-                            placeholder="Event Title"
+                            value={`Rp${(newEvent.specialPrice * (1 - discountPercentage / 100))
+                                .toLocaleString()}`}
+                            readOnly
                             className="w-full border p-2 rounded mb-4"
-                            value={newEvent.title}
-                            onChange={handleInputChange}
                         />
-                        {/* Add other input fields for event start and end dates */}
-                        <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                            onClick={handleSaveEvent}
-                        >
-                            Save
-                        </button>
-                        <button
-                            className="bg-red-500 text-white px-4 py-2 rounded"
-                            onClick={() => setShowModal(false)}
-                        >
-                            Cancel
-                        </button>
                     </div>
                 </div>
-            )}
+            </div>
+            {/* Block Dates */}
+            <div className="rounded-[13px] py-8 px-2 border-2 border-gray-200">
+                <div>
+                    <h2 className="text-lg font-semibold">Block Dates</h2>
+                </div>
+                <DayPickerComponent
+                    selectedDate={selectedDate}
+                    onDayClick={handleDateSelect}
+                    blockedDates={blockedDates}
+                    setSelectedDate={setSelectedDate}
+                />
+            </div>
+
+            {/* Modal content and form */}
+            <EventCalendarModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                newEvent={newEvent}
+                setNewEvent={setNewEvent}
+                handleInputChange={handleInputChange}
+                handleSaveEvent={handleSaveEvent}
+            />
         </aside>
     );
 }
+

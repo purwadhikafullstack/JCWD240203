@@ -25,7 +25,7 @@ export default function TopAddProperty(props) {
                 })
                 :
                 <div>
-                  you have no properties listed
+                  <img src={OwnerPropertyHeaderImage} className="rounded-[10px] drop-shadow-lg w-full"/>
                 </div>
               }            
           </div>

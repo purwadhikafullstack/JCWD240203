@@ -7,6 +7,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import TransactionFilterBar from "./TransactionFilterBar";
+import './TransactionPage.css'
 
 export default function TransactionPage() {
     const limit = 8;
@@ -58,7 +59,7 @@ export default function TransactionPage() {
             <Toaster/>
             <Header/>
             <div className="flex flex-col justify-start px-[15px] py-[10px]">
-                <div className="text-[24px] font-bold text-start border-b-[1px] border-gray-600">
+                <div className="yourHistory text-[26px] font-bold text-start border-b-[1px] border-gray-600">
                     Your history
                 </div>
                 <div className="flex flex-col py-[10px]">
