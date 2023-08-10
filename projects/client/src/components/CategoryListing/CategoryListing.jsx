@@ -45,6 +45,8 @@ function CategoryListing({form, showModal, setShowModal}) {
         onChange={(e) => {handleChange(e)}}
         onBlur={form.getInputProps("category").onBlur}
         onFocus={form.getInputProps("category").onFocus}
+        dropdownPosition="bottom"
+        transitionProps={{ transition: 'scale-y', duration: 200, timingFunction: 'ease' }}
       />
     </div>
   );

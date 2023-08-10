@@ -56,10 +56,10 @@ export default function HeaderProperty(props) {
 
                         {/* Menu Item: Calendar */}
                         <div
-                            className={`${props?.activePage === 'Calendar' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
-                            onClick={() => handleChangePage('Calendar')}
+                            className={`${props?.activePage === 'Listings' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
+                            onClick={() => handleChangePage('Listings')}
                         >
-                            <p>Calendar</p>
+                            <p>Listings</p>
                         </div>
 
                         {/* Menu Item: Insights */}
@@ -87,21 +87,16 @@ export default function HeaderProperty(props) {
                                             >
                                                 Today
                                             </div>
-                                            <div onClick={() => handleChangePage('Calendar')}
+                                            <div onClick={() => handleChangePage('Listings')}
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
-                                                Calendar
+                                                Listings
                                             </div>
                                             <div onClick={() => handleChangePage('Insights')}
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
                                                 Insights
                                             </div>
-                                            <Link to={'/hostings/listing'}
-                                                className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
-                                            >
-                                                Listings
-                                            </Link>
                                             <Link to={'/hostings/addproperty'}
                                                 className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >

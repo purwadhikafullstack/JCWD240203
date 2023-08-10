@@ -80,6 +80,8 @@ export default function FacilitySelect({form}) {
       {...form.getInputProps("facilities")}
       placeholder="These are facilities that guests typically look for in a stay."
       label="What exciting facilities does your listing offer?"
+      dropdownPosition="bottom"
+      transitionProps={{ transition: 'scale-y', duration: 200, timingFunction: 'ease' }}
     />
   );
 }

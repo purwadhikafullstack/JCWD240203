@@ -5,7 +5,7 @@ import Footer from "../../components/footerRentify/footerPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CalendarHostingTrial from "./CalendarHostingTrial";
-import CalendarHosting from "./CalendarHosting";
+import ListingList from "./ListingList";
 
 export default function HostingPage() {
     // State to keep track of the active filter
@@ -19,8 +19,8 @@ export default function HostingPage() {
         case "Today":
             contentToShow = <TodayHosting/>;
             break;
-        case "Calendar":
-            contentToShow = <CalendarHosting/>;
+        case "Listings":
+            contentToShow = <ListingList/>;
             break;
         case "Insights":
             contentToShow = <TodayHosting/>;
@@ -53,7 +53,7 @@ export default function HostingPage() {
         <div className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
             <HeaderProperty activePage={activePage} setActivePage={setActivePage}/>
             {contentToShow}
-            <Footer />
+            <Footer/>
         </div>
     );
 }

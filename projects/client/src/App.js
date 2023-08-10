@@ -13,13 +13,11 @@ import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
 import SalesReport from "./pages/SalesReport/SalesReport";
-import ListingList from "./pages/HostingPage/ListingList";
 import HostingPage from "./pages/HostingPage/MainPage";
 import UpdateProperty from "./pages/UpdateProperty/MainPage";
 import { Toaster } from "react-hot-toast";
 import CreateProperty from "./pages/CreateProperty/MainPage";
-import CalendarHosting from "./pages/HostingPage/CalendarHosting";
-import CalendarHostingTrial from "./pages/HostingPage/CalendarHostingTrial";
+import CreateEvent from "./pages/CreateEvent/CreateEvent";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -57,9 +55,9 @@ function App() {
         <Route path={'/verify/:code'} element={<VerifyPage/>}/>
         <Route path={'/hostings'} element={<HostingPage/>}/>
         <Route path={'/hostings/sales'} element={<SalesReport/>}/>
-        <Route path={'/hostings/listing'} element={<ListingList/>}/>
         <Route path={'/hostings/addproperty'} element={<CreateProperty/>}/>
         <Route path={'/hostings/updateproperty/:id'} element={<UpdateProperty/>}/>
+        <Route path={'/hostings/events/:id'} element={<CreateEvent/>}/>
       </Routes>
     </div>
   );

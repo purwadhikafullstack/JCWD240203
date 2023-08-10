@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingListCard from "../../components/ListingListCard/ListingListCard";
 import Footer from "../../components/footerRentify/footerPage";
@@ -25,8 +25,7 @@ export default function ListingList() {
     }, [call, navigate])
 
     return (
-        <div className="w-full h-[100vh] bg-white overflow-y-auto removeScroll">
-            <HeaderProperty />
+        <div className="flex flex-col flex-grow w-full">
             <main className="w-full px-6">
                 <div className="flex flex-col gap-[20px] sm:flex-row justify-between topListing text-left my-[50px]">
                     <div className="totalList text-[33px]">
@@ -38,7 +37,7 @@ export default function ListingList() {
                         </Link>
                     </div>
                 </div>
-                <div className="card bg-white py-4 md:w-full rounded-lg">
+                <div className="card py-4 md:w-full rounded-lg">
                     <div className="hidden md:flex md:flex-row flex-grow content-between">
                         <div className="listDetail flex justify-between w-full">
                             <div className="flex justify-center items-center text-left w-[380px] px-[10px] py-[10px]">
@@ -67,11 +66,7 @@ export default function ListingList() {
                         })
                     }
                 </div>
-
             </main>
-            <div className=" sticky bottom-0">
-                <Footer />
-            </div>
         </div >
     )
 }

@@ -27,6 +27,8 @@ export default function LocationListing({form}) {
         <Select label="Location" placeholder="Pick one"
           data={locationOptions}
           {...form.getInputProps("city")}
+          dropdownPosition="bottom"
+          transitionProps={{ transition: 'scale-y', duration: 200, timingFunction: 'ease' }}
         />
     )
 }

@@ -1,0 +1,133 @@
+import { useState, useEffect } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
+import SidebarCalendar from "./Sidebar";
+import { format } from "date-fns"; // Import the isSameDay function
+import { useNavigate, useParams } from "react-router-dom";
+import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
+import Footer from "../../components/footerRentify/footerPage";
+import { useDispatch, useSelector } from "react-redux";
+import { getPropertyDetail } from "../../redux/features/property/propertySlice";
+import { toast } from "react-hot-toast";
+
+export default function CreateEvent() {
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const [property, setProperty] = useState({});
+  const [selectedRoom, setSelectedRoom] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState([]);
+  const [eventStart, setEventStart] = useState(null);
+  const [eventEnd, setEventEnd] = useState(null);
+  const [percentage, setPercentage] = useState(0);
+  const [type, setType] = useState('Discount');
+  const navigate = useNavigate();
+  const call = useDispatch();
+  const params = useParams();
+  
+  const formatDate = (date) => {
+    return format(date, "MM-dd-yyyy");
+  };
+  
+  const onSelectedDates = (e) => {
+    setEventStart(formatDate(e.start));
+    setEventEnd(formatDate(e.end));
+  };
+
+  const onUnselectDates = () => {
+    setEventStart(null);
+    setEventEnd(null);
+  };
+
+  const onDateClick = () => {
+    if(Object.keys(selectedRoom)?.length <= 0) {
+      toast.error('Room must be selected !', {id: 'disableFullCalendar'});
+    }
+  };
+  
+  useEffect(() => {
+    if(localStorage.getItem('user')) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      call(getPropertyDetail({userId: user.id, propertyId: params.id, token: user.token})).then(
+        (response) => {
+          setProperty(response.data.data);
+          setLoading(false);
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
+    else {
+      navigate('/');
+    }
+  }, [call, currentUser]);
+  // {
+  //   id: 'a',
+  //   title: 'my event',
+  //   start: '2023-08-08'
+  // }
+  // header={{
+  //   left: "prev,next",
+  //   center: "title",
+  //   right: "dayGridMonth,timeGridWeek,timeGridDay",
+  // }}
+
+  return (
+    <div className="flex flex-col w-full h-[100vh] overflow-y-auto removeScroll">
+      <HeaderProperty/>
+      <div className="flex flex-col md:flex-row w-full flex-grow gap-[10px] p-[10px]">
+        {loading ?
+          <div className="w-full min-h-[500px] md:min-h-full h-full flex items-center justify-center">
+            <ThreeDots />
+          </div>
+         :
+          <div className="flex flex-grow min-h-[500px] md:min-h-full h-full">
+            <div className="w-full h-full">
+              <FullCalendar
+                headerToolbar={{
+                  left: "prev",
+                  center: "title",
+                  right: "next"
+                }}
+                height="100%"
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                events={events}
+                selectable={(Object.keys(selectedRoom)?.length > 0)? true : false}
+                longPressDelay={100}
+                selectLongPressDelay={100}
+                dateClick={onDateClick}
+                select={onSelectedDates}
+                unselect={onUnselectDates}
+                unselectAuto={false}
+                validRange={
+                  {
+                    start: new Date(),
+                    end: new Date(new Date().getFullYear(), 12, 0)
+                  }
+                }
+              />
+            </div>
+          </div>
+        }
+        <div className="inline-block w-full md:w-[275px] h-full">
+            <SidebarCalendar
+              eventStart={eventStart}
+              eventEnd={eventEnd}
+              percentage={percentage}
+              setPercentage={setPercentage}
+              type={type}
+              setType={setType}
+              property={property}
+              setLoading={setLoading}
+              selectedRoom={selectedRoom}
+              setSelectedRoom={setSelectedRoom}
+            />
+        </div>
+      </div>
+      <Footer/>
+    </div>
+  );
+}

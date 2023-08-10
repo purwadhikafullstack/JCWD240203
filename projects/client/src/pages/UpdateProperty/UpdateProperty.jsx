@@ -103,6 +103,8 @@ export default function UpdateForm(props) {
                           data={statuses}
                           withAsterisk
                           {...form.getInputProps("status")}
+                          dropdownPosition="bottom"
+                          transitionProps={{ transition: 'scale-y', duration: 200, timingFunction: 'ease' }}
                         />
                     </Box>
                       <div>
