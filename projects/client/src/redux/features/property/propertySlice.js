@@ -142,6 +142,29 @@ export const updateProperty = (data) => async() => {
     catch(error) {
         return Promise.reject(error);
     }
+};
+
+export const createPrice = (data) => async() => {
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/prices`, {
+            userId: data.userId,
+            idCard: data.idCard,
+            type: data.type,
+            percentage: data.percentage,
+            roomId: data.roomId,
+            start: data.start,
+            end: data.end
+        }, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
 }
 
 export const { setProperty, setTotalProperty, setLocation, setGuest, setStart, setSort, setType, setEnd } = propertySlice.actions;

@@ -11,6 +11,15 @@ module.exports = {
         const t = await db.sequelize.transaction();
         const {propertyName, propertyDescription, city, address, userId, categoryId, propertyRooms, facilities } = req.body;
         const images = req?.files?.images;
+
+        if(!propertyName || !propertyDescription || !city || !address || !userId || !categoryId || !propertyRooms) {
+            return res.status(400).send({
+                isError: true,
+                message: 'bad request !',
+                data: null
+            })
+        };
+
         try {
             const parsedFacility = JSON.parse(facilities);
             let newRooms = JSON.parse(propertyRooms);

@@ -6,6 +6,14 @@ module.exports = {
         try {
             const { roomId, percentage, start, end, type } = req.body
 
+            if(!roomId || !percentage || !start || !end || !type) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request !',
+                    data: null
+                })
+            };
+
             await price.create({
                 roomId: roomId,
                 percentage: percentage,

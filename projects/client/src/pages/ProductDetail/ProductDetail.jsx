@@ -70,7 +70,6 @@ export default function ProductDetail() {
     };
 
     useEffect(() => {
-        const loading = toast.loading('fetching property', {id: 'fecthingProperty'});
         call(getDetailed({
             id: params.id,
             start: start,
@@ -78,11 +77,10 @@ export default function ProductDetail() {
             userId: JSON.parse(localStorage.getItem('user'))?.id || null,
         })).then(
             (response) => {
-                toast.dismiss(loading);
                 setProperty(response.data.data);
             },
             (error) => {
-                toast.error('network error !', {id: loading});
+                toast.error('network error !');
                 console.log(error);
             }
         )

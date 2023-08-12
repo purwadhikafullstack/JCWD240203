@@ -21,15 +21,25 @@ module.exports = {
             
             let transactionFilter = {
                 status: 'completed',
-                [Op.and]: [{
-                    checkIn: {[Op.lte]: startDate},
-                    checkOut: {[Op.gte]: startDate}
-                }]
+                [Op.or]: [
+                    {
+                        checkIn: {[Op.between]: [startDate, endDate]},
+                    },
+                    {
+                        checkOut: {[Op.between]: [startDate, endDate]}
+                    }
+                ]
             };
 
             let priceFilter = {
-                start: {[Op.lte]: startDate},
-                end: {[Op.gte]: startDate}
+                [Op.or]: [
+                    {
+                        start: {[Op.between]: [startDate, endDate]},
+                    },
+                    {
+                        end: {[Op.between]: [startDate, endDate]}
+                    }
+                ]
             };
             
             let result = await property.findOne({

@@ -67,8 +67,8 @@ module.exports = {
                     data: null
                 })
             }
-
-            next()
+            console.log('yes');
+            next();
         }
         catch(error) {
             if(req.files) {
