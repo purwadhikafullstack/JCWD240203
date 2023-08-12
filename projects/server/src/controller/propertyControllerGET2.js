@@ -23,10 +23,16 @@ module.exports = {
                 status: 'completed',
                 [Op.or]: [
                     {
-                        checkIn: {[Op.between]: [startDate, endDate]},
+                        checkIn: {[Op.lt]: startDate},
+                        checkOut: {[Op.gt]: startDate}
                     },
                     {
-                        checkOut: {[Op.between]: [startDate, endDate]}
+                        checkIn: {[Op.lt]: endDate},
+                        checkOut: {[Op.gt]: endDate}
+                    },
+                    {
+                        checkIn: {[Op.gt]: startDate},
+                        checkOut: {[Op.lt]: endDate}
                     }
                 ]
             };
@@ -34,21 +40,14 @@ module.exports = {
             let priceFilter = {
                 [Op.or]: [
                     {
-                        start: {[Op.between]: [startDate, endDate]},
-                    },
-                    {
-                        end: {[Op.between]: [startDate, endDate]}
+                        start: {[Op.lte]: startDate},
+                        end: {[Op.gt]: startDate}
                     }
                 ]
             };
             
             let result = await property.findOne({
                 include: [
-                    {
-                        model: transaction,
-                        where: transactionFilter,
-                        required: false
-                    },
                     {
                         model: review,
                         include: [
@@ -74,7 +73,12 @@ module.exports = {
                                 model: price,
                                 where: priceFilter,
                                 required: false
-                            }
+                            },
+                            {
+                                model: transaction,
+                                where: transactionFilter,
+                                required: false
+                            },
                         ]
                     },
                     { model: propertyImages },
@@ -88,28 +92,25 @@ module.exports = {
             })
             const count = await review.count({where: {propertyId: result.id}});
             result = JSON.parse(JSON.stringify(result, null, 2));
-            result.hasReviewed = false;
-            result.totalReview = count
+            result.totalReview = count;
 
-            result.rooms = result.rooms.filter((room) => {
+            result.rooms.forEach((room, index) => {
                 let temp = 0;
-                for(let transaction of result.transactions) {
-                    if(room.id === transaction.roomId) {temp += transaction.stock};
-                    if(temp >= room.stock) {break};
+                for(let transaction of room.transactions) {
+                    {temp += transaction.stock};
+                    if(temp >= room.stock) {break;}
                 }
-                if(room.stock > temp) {return room}; 
-            });
+                if(room.stock <= temp) {result.rooms.splice(index, 1)}; 
 
-            result.rooms.forEach((room) => {
                 if(room.prices.length > 0) {
                     const originalPrice = room.price;
-                    let specialPrice = 0;
+                    let specialPrice = room.price;
                     room.prices.forEach((value) => {
                         if(value.type === 'Mark up') {
-                            specialPrice = originalPrice + (originalPrice * (value.percentage/100));
+                            specialPrice += (originalPrice * (value.percentage/100));
                         }
                         else if (value.type === 'Discount') {
-                            specialPrice = originalPrice - (originalPrice * (value.percentage/100));
+                            specialPrice -= (originalPrice * (value.percentage/100));
                         }
                     });
                     room.price = specialPrice;
@@ -120,7 +121,6 @@ module.exports = {
             if(result.reviews.length > 0) {
                 result.reviews.forEach((review) => {
                     temp += review.rating;
-                    if(review.userId === Number(userId)) {result.hasReviewed = true}
                 });
                 temp /= result.reviews.length;
             }

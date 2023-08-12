@@ -22,9 +22,6 @@ export default function HostingPage() {
         case "Listings":
             contentToShow = <ListingList/>;
             break;
-        case "Insights":
-            contentToShow = <TodayHosting/>;
-            break;
         default:
             contentToShow = <TodayHosting/>;
     }

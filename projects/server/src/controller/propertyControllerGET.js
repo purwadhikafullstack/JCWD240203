@@ -30,10 +30,16 @@ module.exports = {
                 status: 'completed',
                 [Op.or]: [
                     {
-                        checkIn: {[Op.between]: [startDate, endDate]},
+                        checkIn: {[Op.lt]: startDate},
+                        checkOut: {[Op.gt]: startDate}
                     },
                     {
-                        checkOut: {[Op.between]: [startDate, endDate]}
+                        checkIn: {[Op.lt]: endDate},
+                        checkOut: {[Op.gt]: endDate}
+                    },
+                    {
+                        checkIn: {[Op.gt]: startDate},
+                        checkOut: {[Op.lt]: endDate}
                     }
                 ]
             };
@@ -41,10 +47,8 @@ module.exports = {
             let priceFilter = {
                 [Op.or]: [
                     {
-                        start: {[Op.between]: [startDate, endDate]},
-                    },
-                    {
-                        end: {[Op.between]: [startDate, endDate]}
+                        start: {[Op.lte]: startDate},
+                        end: {[Op.gt]: startDate}
                     }
                 ]
             };
@@ -129,7 +133,7 @@ module.exports = {
                         });
                         room.price = specialPrice;
                     }
-                })
+                });
                 return property;
             });
 

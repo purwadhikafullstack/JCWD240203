@@ -66,15 +66,25 @@ module.exports = {
             let transactionFilter = {
                 status: 'completed',
                 roomId: roomId,
-                [Op.and]: [{
-                    checkIn: {[Op.lte]: new Date(checkIn)},
-                    checkOut: {[Op.gte]: new Date(checkIn)}
-                }]
+                [Op.or]: [
+                    {
+                        checkIn: {[Op.lt]: checkIn},
+                        checkOut: {[Op.gt]: checkIn}
+                    },
+                    {
+                        checkIn: {[Op.lt]: checkOut},
+                        checkOut: {[Op.gt]: checkOut}
+                    },
+                    {
+                        checkIn: {[Op.gt]: checkIn},
+                        checkOut: {[Op.lt]: checkOut}
+                    }
+                ]
             };
 
             let priceFilter = {
                 start: {[Op.lte]: new Date(checkIn)},
-                end: {[Op.gte]: new Date(checkIn)}
+                end: {[Op.gt]: new Date(checkIn)}
             }
 
             let selectedRoom = await room.findOne({
@@ -134,17 +144,17 @@ module.exports = {
 
             const grandTotal = (selectedRoom.price * ((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000) * stock );
             
-            // await transaction.create({
-            //     userId: userId,
-            //     propertyId: propertyId,
-            //     roomId: roomId,
-            //     stock: stock,
-            //     price: grandTotal,
-            //     paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
-            //     status: 'pending',
-            //     checkIn: checkIn,
-            //     checkOut: checkOut
-            // })
+            await transaction.create({
+                userId: userId,
+                propertyId: propertyId,
+                roomId: roomId,
+                stock: stock,
+                price: grandTotal,
+                paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
+                status: 'pending',
+                checkIn: checkIn,
+                checkOut: checkOut
+            });
 
             return res.status(200).send({
                 isError: false,

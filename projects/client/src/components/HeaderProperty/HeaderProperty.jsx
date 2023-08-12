@@ -39,9 +39,9 @@ export default function HeaderProperty(props) {
         <div>
             <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-[1px] bg-white p-4 md:px-6 border-gray-500 z-10 items-center">
                 {/* Left Header */}
-                <div className="relative h-[50px] w-[100px]">
+                <Link to={'/hostings'} state={{content: 'Today'}} className="relative h-[50px] w-[100px]">
                     <img alt="" src={rentifyLogo} className="absolute top-[-10px]" />
-                </div>
+                </Link>
 
                 {/* Middle Header */}
                 <div className="flex items-center justify-between space-x-1">
@@ -60,14 +60,6 @@ export default function HeaderProperty(props) {
                             onClick={() => handleChangePage('Listings')}
                         >
                             <p>Listings</p>
-                        </div>
-
-                        {/* Menu Item: Insights */}
-                        <div
-                            className={`${props?.activePage === 'Insights' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
-                            onClick={() => handleChangePage('Insights')}
-                        >
-                            <p>Insights</p>
                         </div>
 
                         <div className="MenuDropdown relative inline-flex">
@@ -91,11 +83,6 @@ export default function HeaderProperty(props) {
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
                                                 Listings
-                                            </div>
-                                            <div onClick={() => handleChangePage('Insights')}
-                                                className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
-                                            >
-                                                Insights
                                             </div>
                                             <Link to={'/hostings/addproperty'}
                                                 className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"

@@ -12,6 +12,7 @@ import Footer from "../../components/footerRentify/footerPage";
 import { useDispatch, useSelector } from "react-redux";
 import { createPrice, getPropertyDetail } from "../../redux/features/property/propertySlice";
 import { toast } from "react-hot-toast";
+import { Calendar } from "@fullcalendar/core";
 
 export default function CreateEvent() {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -45,9 +46,13 @@ export default function CreateEvent() {
     setEventEnd(null);
   };
 
-  const onDateClick = () => {
+  const onDateSelect = () => {
     if(Object.keys(selectedRoom)?.length <= 0) {
       toast.error('Room must be selected !', {id: 'disableFullCalendar'});
+      return false;
+    }
+    else {
+      return true;
     }
   };
 
@@ -133,10 +138,10 @@ export default function CreateEvent() {
                 height="100%"
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 events={events}
-                selectable={(Object.keys(selectedRoom)?.length > 0)? true : false}
+                selectable={true}
+                selectAllow={onDateSelect}
                 longPressDelay={100}
                 selectLongPressDelay={100}
-                dateClick={onDateClick}
                 select={onSelectedDates}
                 unselect={onUnselectDates}
                 unselectAuto={false}
