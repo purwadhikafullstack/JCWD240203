@@ -17,7 +17,6 @@ module.exports = {
             const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
             const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
             const { limit, page } = req.query;
-            const userId = req.query.userId;
             
             let transactionFilter = {
                 status: 'completed',
@@ -113,9 +112,12 @@ module.exports = {
                             specialPrice -= (originalPrice * (value.percentage/100));
                         }
                     });
-                    room.price = specialPrice;
+                    if(result.rooms[index]) {
+                        result.rooms[index].price = specialPrice
+                    };
                 }
             });
+            //room.price = specialPrice;
 
             let temp = 0;
             if(result.reviews.length > 0) {
@@ -123,7 +125,7 @@ module.exports = {
                     temp += review.rating;
                 });
                 temp /= result.reviews.length;
-            }
+            };
             result.average = temp.toFixed(2);
 
             return res.status(200).send({
