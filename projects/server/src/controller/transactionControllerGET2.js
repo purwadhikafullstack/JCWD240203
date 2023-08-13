@@ -15,7 +15,7 @@ module.exports = {
                 status: 'completed',
                 [Op.and]: [{
                     checkIn: {[Op.lte]: new Date()},
-                    checkOut: {[Op.gte]: new Date()}
+                    checkOut: {[Op.gt]: new Date()}
                 }]
             };
 
@@ -58,7 +58,7 @@ module.exports = {
             const { id } = req.params;
 
             let day = new Date();
-            day.setDate(day.getDate() - 2);
+            day.setDate(day.getDate() - 1);
 
             let transactionFilter = {
                 status: 'completed',

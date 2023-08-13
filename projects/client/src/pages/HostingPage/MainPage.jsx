@@ -4,8 +4,7 @@ import TodayHosting from "./TodayHosting";
 import Footer from "../../components/footerRentify/footerPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
-import CalendarHosting from "./CalendarHosting";
+import ListingList from "./ListingList";
 
 export default function HostingPage() {
     // State to keep track of the active filter
@@ -19,10 +18,8 @@ export default function HostingPage() {
         case "Today":
             contentToShow = <TodayHosting/>;
             break;
-        case "Calendar":
-            contentToShow = <CalendarHosting/>;
-            break;
-        case "insights":
+        case "Listings":
+            contentToShow = <ListingList/>;
             break;
         default:
             contentToShow = <TodayHosting/>;
@@ -30,6 +27,7 @@ export default function HostingPage() {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user')) || {};
+        
         if(user.status === 'verified' && user.idCard) {
             if(location?.state?.content) {
                 setActivePage(location?.state?.content);
@@ -51,7 +49,7 @@ export default function HostingPage() {
         <div className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
             <HeaderProperty activePage={activePage} setActivePage={setActivePage}/>
             {contentToShow}
-            <Footer />
+            <Footer/>
         </div>
     );
 }

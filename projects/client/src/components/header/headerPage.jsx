@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { onLogout } from "../../redux/features/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header(props) {
     const [menu, toggleMenu] = useState(false);
@@ -38,20 +38,25 @@ export default function Header(props) {
             <div>
                 <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-[1px] bg-white p-4 md:px-6 border-gray-500 z-10">
                     {/* Left Header */}
-                    <div className="relative h-[50px] w-[100px]">
+                    <Link to={'/'} className="relative h-[50px] w-[100px] cursor-pointer">
                         <img alt="" src={rentifyLogo} className="absolute top-[-10px]" />
-                    </div>
+                    </Link>
 
                     {/* Right Header */}
                     <div className="flex items-center justify-between space-x-1 text-gray-500 ">
-                        <p className="hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 underline underline-offset-4">
-                            Become A host
-                        </p>
+                        {
+                            (Object.keys(currentUser).length === 0 || (currentUser.id === null && currentUser.status === 'verified'))?
+                            null
+                            :
+                            <p onClick={onClickProfile} className="hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 underline underline-offset-4">
+                                Become A host
+                            </p>
+                        }
                         {
                             Object.keys(currentUser).length !== 0?
                             null
                             :
-                            <p onClick={onClickSignUp} className="hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 underline underline-offset-4 ">
+                            <p onClick={onClickSignUp} className="inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 underline underline-offset-4 ">
                                 Sign Up
                             </p>
                         }
@@ -80,7 +85,7 @@ export default function Header(props) {
                                 <div onClick={onClickHistory} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     History
                                 </div>
-                                <div onClick={onClickHostings} className={`${(Object.keys(currentUser).length === 0 || (currentUser.status === 'unverified' && !currentUser.idCard) )? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                                <div onClick={onClickHostings} className={`${(Object.keys(currentUser).length === 0 || currentUser.status === 'unverified' || currentUser.idCard === null)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                     Hostings
                                 </div>
                                 <div onClick={onClickLogout} className={`${(Object.keys(currentUser).length === 0)? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>

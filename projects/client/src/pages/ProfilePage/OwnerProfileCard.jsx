@@ -21,7 +21,10 @@ export default function OwnerProfileCard(props) {
             <div className="flex flex-col gap-[15px] justify-center items-center w-[300px] h-[265px] bg-white border-[1px] border-gray-500 rounded-[10px] drop-shadow-lg">
                 <div className="w-[125px] h-[125px] rounded-full overflow-hidden">
                     {
-                        (typeof props?.newPFP === 'string' || props?.newPFP === null) ?
+                        (props?.newPFP === '' || props?.newPFP === null) ?
+                        <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt="" className="w-full h-[175px] md:h-[200px] rounded-[10px]" />
+                        :
+                        (typeof props?.newPFP === 'string') ?
                         <img src={props?.newPFP} alt="" className="w-full h-full"/>
                         :
                         <img src={URL.createObjectURL(props?.newPFP)} alt="" className="w-full h-full" />

@@ -67,8 +67,8 @@ module.exports = {
                     data: null
                 })
             }
-
-            next()
+            console.log('yes');
+            next();
         }
         catch(error) {
             if(req.files) {
@@ -84,18 +84,33 @@ module.exports = {
 
     isHost: (req, res, next) => {
         try {
-            const {status, idCard} = req.body;
-
-            if(status !== 'verified' || !idCard) {
+            const {idCard} = req.body;
+            let token = req.headers.authorization;
+            
+            if(!token) {
                 if(req.files) {
-                    deleteFiles(formatReqFiles(req.files));
-                }
-                return res.status(404).send({
+                    deleteFiles(formatReqFiles(req.files))
+                };
+                return res.status(400).send({
                     isError: true,
                     message: 'unauthorized access !',
                     data: null
                 })
             }
+
+            token = token.split(' ')[1];
+            const verify = jwt.verify(token, process.env.KEY);
+            
+            if(!verify || verify.status !== 'verified' || !idCard) {
+                if(req.files) {
+                    deleteFiles(formatReqFiles(req.files))
+                };
+                return res.status(400).send({
+                    isError: true,
+                    message: 'unauthorized access !',
+                    data: null
+                })
+            };
 
             next();
         }

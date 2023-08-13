@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import DateSelection from "./DateSelection";
 import LocationSelection from "./LocationSelection";
 import GuestSelection from "./GuestSelection";
@@ -15,7 +15,6 @@ export default function FilterBar(props) {
     const selectedStart = useSelector((state) => state.property.start);
     const selectedEnd = useSelector((state) => state.property.end);
     const selectedGuest = useSelector((state) => state.property.guest);
-    const call = useDispatch();
 
     const handleTimeClick = () => {
         toggleDate(!date);
@@ -31,10 +30,11 @@ export default function FilterBar(props) {
     
     const handleSearch = () => {
         if(props?.setApplyFilter) {props?.setApplyFilter(true)};
+        if(props?.setLoading) {props?.setLoading(true)};
     }
     return (
         <div className="filterBar relative flex flex-col items-center py-[5px] px-[10px]">
-            <div className={`w-[400px] h-[50px] flex justify-center items-center rounded-full bg-white shadow-gray-500 border-[1px] border-gray-300 overflow-hidden`}>
+            <div className={`w-[375px] md:w-[400px] h-[50px] flex justify-center items-center rounded-full bg-white shadow-gray-500 border-[1px] border-gray-300 overflow-hidden`}>
                 <div onClick={handleLocationClick} className="flex flex-grow h-full font-bold justify-center items-center transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 cursor-pointer">
                     {selectedLocation || 'Anywhere'}
                 </div>

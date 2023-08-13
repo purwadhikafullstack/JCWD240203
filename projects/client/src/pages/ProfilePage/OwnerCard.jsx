@@ -163,6 +163,7 @@ export default function OwnerCard(props) {
                     </div>
                     <div className="w-full flex flex-nowrap gap-[25px] overflow-x-auto mobileScroll p-[10px] whitespace-nowrap">
                         {
+                            (props?.listings?.length > 0) ?
                             props?.listings?.map((value, index) => {
                                 return (
                                     <div key={index} className="min-w-[250px] h-[300px] inline-block">
@@ -170,6 +171,10 @@ export default function OwnerCard(props) {
                                     </div>
                                 )
                             })
+                            :
+                            <div className="font-bold w-full flex justify-center">
+                                You have no listings
+                            </div>
                         }
                     </div>
                 </div>

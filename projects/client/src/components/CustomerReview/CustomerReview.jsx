@@ -11,6 +11,8 @@ export default function CustomerReview(props) {
     const [description, setDescription] = useState('');
     const [isPosting, setIsPosting] = useState(false);
     const reviews = useSelector((state) => state.review.review);
+    const hasVisited = useSelector((state) => state.review.hasVisited);
+    const hasReviewed = useSelector((state) => state.review.hasReviewed);
     const call = useDispatch();
 
     const handleChangeDesc = (e) => {
@@ -50,7 +52,8 @@ export default function CustomerReview(props) {
 
     useEffect(() => {
         if(props?.propertyId) {
-            call(getPropertyReview({id: props?.propertyId, limit: props?.limit, page: props?.page})).then(
+            const userId = JSON.parse(localStorage.getItem('user'))?.id || null;
+            call(getPropertyReview({id: props?.propertyId, limit: props?.limit, page: props?.page, userId: userId})).then(
                 () => {},
                 (error) => {console.log(error)}
             )
@@ -74,7 +77,7 @@ export default function CustomerReview(props) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-[10px]">
-                    <div className={`${(Object.keys(props?.currentUser).length > 0 && !props?.hasReviewed)? '' : 'hidden'} flex flex-col bg-gray-200 rounded-[10px] p-[10px] gap-[10px]`}>
+                    <div className={`${(Object.keys(props?.currentUser).length > 0 && !hasReviewed && hasVisited)? '' : 'hidden'} flex flex-col bg-gray-200 rounded-[10px] p-[10px] gap-[10px]`}>
                         <div className="flex gap-[5px]">
                             {
                                 [...Array(5)].map((value, index) => {

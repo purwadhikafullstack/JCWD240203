@@ -3,7 +3,9 @@ import axios from "axios";
 
 const initialState = {
     review: [],
-    totalReview: 0
+    totalReview: 0,
+    hasReviewed: true,
+    hasVisited: false
 };
 
 const reviewSlice = createSlice({
@@ -15,6 +17,12 @@ const reviewSlice = createSlice({
         },
         setTotalReview: (initialState, action) => {
             initialState.totalReview = action.payload;
+        },
+        setHasReviewed: (initialState, action) => {
+            initialState.hasReviewed = action.payload;
+        },
+        setHasVisited: (initialState, action) => {
+            initialState.hasVisited = action.payload;
         }
     }
 });
@@ -41,10 +49,13 @@ export const postReview = (data) => async(dispatch) => {
 
 export const getPropertyReview = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/review/${data.id}?limit=${data.limit}&&page=${data.page}`)
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/properties/review/${data.id}?limit=${data.limit}&&page=${data.page}&&userId=${data.userId}`)
         
         dispatch(setReview(response.data.data.rows));
         dispatch(setTotalReview(response.data.data.count));
+        dispatch(setHasVisited(response.data.data.hasVisited));
+        dispatch(setHasReviewed(response.data.data.hasReviewed));
+        
         return Promise.resolve(response);
     }
     catch(error) {
@@ -52,5 +63,5 @@ export const getPropertyReview = (data) => async(dispatch) => {
     }
 }
 
-export const { setReview, setTotalReview } = reviewSlice.actions;
+export const { setReview, setTotalReview, setHasReviewed, setHasVisited } = reviewSlice.actions;
 export default reviewSlice.reducer;

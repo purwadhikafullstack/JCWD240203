@@ -10,15 +10,19 @@ import { IoIosArrowDown } from 'react-icons/io';
 export default function HeaderProperty(props) {
     const [menu, toggleMenu] = useState(false);
     const [menuItemClicked, setMenuItemClicked] = useState(false);
-    const [menuTodayClicked, setMenuTodayClicked] = useState(false);
-    const [menuCalendarClicked, setMenuCalendarClicked] = useState(false);
-    const [menuInsightsClicked, setMenuInsightsClicked] = useState(false);
+    // const [menuTodayClicked, setMenuTodayClicked] = useState(false);
+    // const [menuCalendarClicked, setMenuCalendarClicked] = useState(false);
+    // const [menuInsightsClicked, setMenuInsightsClicked] = useState(false);
     const currentUser = useSelector((state) => state.user.currentUser);
     const call = useDispatch();
     const navigate = useNavigate();
 
     const onClickProfile = () => {
         navigate(`/profile/${currentUser?.id}`)
+    }
+
+    const onClickHistory = () => {
+        navigate(`/history`)
     }
 
     const onClickLogout = () => {
@@ -39,9 +43,9 @@ export default function HeaderProperty(props) {
         <div>
             <header className="sticky top-0 w-full flex grid-cols-3 justify-between space-x-1 border-[1px] bg-white p-4 md:px-6 border-gray-500 z-10 items-center">
                 {/* Left Header */}
-                <div className="relative h-[50px] w-[100px]">
+                <Link to={'/hostings'} state={{content: 'Today'}} className="relative h-[50px] w-[100px]">
                     <img alt="" src={rentifyLogo} className="absolute top-[-10px]" />
-                </div>
+                </Link>
 
                 {/* Middle Header */}
                 <div className="flex items-center justify-between space-x-1">
@@ -56,18 +60,10 @@ export default function HeaderProperty(props) {
 
                         {/* Menu Item: Calendar */}
                         <div
-                            className={`${props?.activePage === 'Calendar' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
-                            onClick={() => handleChangePage('Calendar')}
+                            className={`${props?.activePage === 'Listings' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
+                            onClick={() => handleChangePage('Listings')}
                         >
-                            <p>Calendar</p>
-                        </div>
-
-                        {/* Menu Item: Insights */}
-                        <div
-                            className={`${props?.activePage === 'Insights' ? "underline underline-offset-4 text-black" : "text-gray-500"} hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40`}
-                            onClick={() => handleChangePage('Insights')}
-                        >
-                            <p>Insights</p>
+                            <p>Listings</p>
                         </div>
 
                         <div className="MenuDropdown relative inline-flex">
@@ -82,26 +78,16 @@ export default function HeaderProperty(props) {
                                     
                                     {menuItemClicked && (
                                         <div className="dropdownMenu absolute top-full left-[-75px] mt-2 w-[200px] bg-white border border-black rounded text-left">
-                                            <Link to={'/hostings'} state={{content: 'Today'}}
+                                            <div onClick={() => handleChangePage('Today')}
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
                                                 Today
-                                            </Link>
-                                            <Link to={'/hostings'} state={{content: 'Calendar'}}
+                                            </div>
+                                            <div onClick={() => handleChangePage('Listings')}
                                                 className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
-                                            >
-                                                Calendar
-                                            </Link>
-                                            <Link to={'/hostings'} state={{content: 'Insights'}}
-                                                className="lg:hidden block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
-                                            >
-                                                Insights
-                                            </Link>
-                                            <Link to={'/hostings/listing'}
-                                                className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
                                                 Listings
-                                            </Link>
+                                            </div>
                                             <Link to={'/hostings/addproperty'}
                                                 className="block py-2 px-4 text-black hover:bg-slate-300/50 transition-all duration-200 cursor-pointer"
                                             >
@@ -145,7 +131,7 @@ export default function HeaderProperty(props) {
                             <div onClick={onClickProfile} className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                 Profile
                             </div>
-                            <div className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                            <div onClick={onClickHistory} className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                 History
                             </div>
                             <div onClick={onClickLogout} className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>

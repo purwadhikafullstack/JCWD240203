@@ -1,9 +1,11 @@
+const { Op } = require('sequelize');
 const db = require('../../models');
 const property = db.property;
 const propertyImages = db.propertyImages;
 const propertyFacility = db.propertyFacility;
 const facility = db.facility;
 const category = db.category;
+const price = db.price;
 const room = db.room;
 
 module.exports = {
@@ -11,15 +13,36 @@ module.exports = {
         try {
             const id = req.params.propertyId;
             
+            const priceFilter = {
+                [Op.and]: db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('rooms.prices.start')), new Date().getFullYear()),      
+                [Op.or]: [
+                    {
+                        start: {[Op.gte]: new Date()}
+                    },
+                    {
+                        end: {[Op.gte]: new Date()}
+                    }
+                ]
+            };
+
             let result = await property.findOne({
                 include: [
                     { 
                         model: propertyFacility,
                         include: [{model: facility}]
                     },
+                    { 
+                        model: room,
+                        include: [
+                            {
+                                model: price,
+                                where: priceFilter,
+                                required: false
+                            }
+                        ],
+                    },
                     { model: category },
-                    { model: room },
-                    { model: propertyImages },
+                    { model: propertyImages }
                 ],
                 where: {
                     id: id

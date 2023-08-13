@@ -1,6 +1,7 @@
 const db = require('../../models');
-const review = db.review;
+const transaction = db.transaction;
 const property = db.property;
+const review = db.review;
 const user = db.user;
 
 module.exports = {
@@ -60,9 +61,9 @@ module.exports = {
     getPropertyReview: async(req, res) => {
         try {
             const { propertyId } = req.params;
-            const { limit, page } = req.query;
+            const { limit, page, userId } = req.query;
 
-            const result = await review.findAndCountAll({
+            let result = await review.findAndCountAll({
                 where: {
                     propertyId: propertyId
                 },
@@ -72,7 +73,25 @@ module.exports = {
                     }
                 ],
                 limit: limit*page || 5
-            })
+            });
+            result = JSON.parse(JSON.stringify(result, null, 2));
+            result.hasReviewed = false;
+            result.hasVisited = false;
+
+            if(userId) {
+                const transactions = await transaction.findOne({
+                    where: {
+                        propertyId: propertyId,
+                        userId: userId
+                    }
+                });
+
+                if(transactions) {result.hasVisited = true}
+
+                result.rows.forEach((value) => {
+                    if(value.userId === Number(userId)) {result.hasReviewed = true};
+                })
+            };
 
             return res.status(200).send({
                 isError: false,
