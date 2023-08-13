@@ -9,11 +9,20 @@ const user = db.user;
 module.exports = {
     sendPasswordResetEmail: async(req, res) => {
         try {
-            const { email } = req.body;
+            const { username } = req.body;
             const code = Math.floor(Math.random()*90000) + 10000;
 
+            const userFilter = {};
+
+            if(username.includes('@') && username.includes('.com')) {
+                userFilter.email = username;
+            }
+            else {
+                userFilter.username = username;
+            }
+
             const recipient = await user.findOne({
-                where: {email: email}
+                where: userFilter
             });
 
             if(!recipient) {
@@ -24,7 +33,7 @@ module.exports = {
                 });
             }
 
-            const token = jwt.sign({code: code}, process.env.KEY, {expiresIn: '1h'});
+            const token = jwt.sign({code: code}, process.env.KEY, {expiresIn: '10m'});
 
             await user.update({
                 code: token
@@ -38,13 +47,9 @@ module.exports = {
                 fs.readFileSync('./Public/templates/resetPassword.html', {encoding: 'utf-8'})
             );
 
-            const domain = process.env.DOMAIN;
-            const path = `resetpassword`;
             const data = {
                 "username": recipient.username,
-                "domain": domain,
-                "path": path,
-                "code": token
+                "code": code
             }
 
             const emailTemplate = template(data);

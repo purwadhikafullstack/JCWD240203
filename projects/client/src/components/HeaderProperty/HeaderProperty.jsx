@@ -10,9 +10,6 @@ import { IoIosArrowDown } from 'react-icons/io';
 export default function HeaderProperty(props) {
     const [menu, toggleMenu] = useState(false);
     const [menuItemClicked, setMenuItemClicked] = useState(false);
-    // const [menuTodayClicked, setMenuTodayClicked] = useState(false);
-    // const [menuCalendarClicked, setMenuCalendarClicked] = useState(false);
-    // const [menuInsightsClicked, setMenuInsightsClicked] = useState(false);
     const currentUser = useSelector((state) => state.user.currentUser);
     const call = useDispatch();
     const navigate = useNavigate();

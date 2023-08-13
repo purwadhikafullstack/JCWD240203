@@ -11,10 +11,10 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-hot-toast';
-// import { Button } from "@mui/material";
 import { onLogin } from "../../redux/features/user/userSlice";
 import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import './LoginModal.css';
+import { Link } from "react-router-dom";
 
 export default function LoginModal(props) {
     const call = useDispatch();
@@ -84,7 +84,7 @@ export default function LoginModal(props) {
     
     return(
         <div className={`${(props.showLogin)? '' : 'hidden'} flex justify-center items-center absolute top-0 w-full h-[100vh] bg-gray-400/80 z-50`}>
-            <div className="relative flex flex-col items-center bg-gray-200 w-[300px] md:w-[450px] h-[400px] rounded-[10px] ">
+            <div className="relative flex flex-col items-center bg-gray-200 w-[300px] md:w-[450px] h-[425px] rounded-[10px] ">
                 <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300">
                     <CloseIcon sx={{ scale: '1.4' }} />
                 </div>
@@ -141,6 +141,11 @@ export default function LoginModal(props) {
                                     </>
                             }
                         </div>
+                    </div>
+                    <div className="flex justify-left w-full">
+                        <Link className="text-[13px] underline cursor-select">
+                            Forgot Password ?
+                        </Link>
                     </div>
                     <div className="w-full">
                         <button disabled={login.isSubmitting} onClick={login.handleSubmit}  color="success" sx={{ height: '40px' }} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(login.isSubmitting)? 'cursor-not-allowed' : 'active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]' }`}>
