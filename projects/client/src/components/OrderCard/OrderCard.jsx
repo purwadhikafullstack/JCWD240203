@@ -54,7 +54,7 @@ export default function OrderCard(props) {
         setTimeout(() => {
             setIsSendingResponse(false);
         }, 400);
-    }
+    };
 
     return(
         <div className="flex flex-col w-full h-auto md:h-[250px] md:flex-row gap-[15px] justify-between border-[1px] border-gray-500 p-[5px] rounded-[10px] bg-neutral-200/50">

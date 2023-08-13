@@ -13,6 +13,7 @@ export default function OrderPage() {
     const orders = useSelector((state) => state.transaction.order);
     const totalOrder = Math.ceil(useSelector((state) => state.transaction.totalOrder) / limit);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentUser = useSelector((state) => state.user.currentUser);
     const [month, setMonth] = useState(new Date().getMonth());
     const [status, setStatus] = useState('all');
     const [page, setPage] = useState(1);
@@ -32,9 +33,11 @@ export default function OrderPage() {
     };
 
     useEffect(() => {
-        if(localStorage.getItem('user')) {
+        const user = JSON.parse(localStorage.getItem('user')) || {};
+        if(user.status === 'verified' && user.idCard) {
+            // if(user.status === 'unverified' || user.idCard === null) {navigate('/')};
             call(getOrder({
-                id: JSON.parse(localStorage.getItem('user')).id,
+                id: user.id,
                 page: page,
                 limit: limit,
                 status: status,
@@ -52,7 +55,7 @@ export default function OrderPage() {
         else {
             navigate('/')
         }
-    }, [call, page, status, month, navigate]);
+    }, [call, page, status, month, currentUser, navigate]);
 
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-full overflow-y-auto removeScroll">

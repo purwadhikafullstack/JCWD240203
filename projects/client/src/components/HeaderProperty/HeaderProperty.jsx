@@ -21,6 +21,10 @@ export default function HeaderProperty(props) {
         navigate(`/profile/${currentUser?.id}`)
     }
 
+    const onClickHistory = () => {
+        navigate(`/history`)
+    }
+
     const onClickLogout = () => {
         call(onLogout());
         toggleMenu(false);
@@ -127,7 +131,7 @@ export default function HeaderProperty(props) {
                             <div onClick={onClickProfile} className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                 Profile
                             </div>
-                            <div className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
+                            <div onClick={onClickHistory} className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>
                                 History
                             </div>
                             <div onClick={onClickLogout} className={`${(Object.keys(currentUser).length === 0) ? 'hidden' : ''} cursor-pointer w-full py-[5px] whitespace-nowrap bg-transparent transition-all duration-400 hover:bg-gray-300 active:bg-gray-400 active:scale-95`}>

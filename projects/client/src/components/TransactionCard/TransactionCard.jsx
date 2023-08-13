@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { BiSolidDownload } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import { updatePaymentProof } from "../../redux/features/transaction/transactionSlice";
+import { updatePaymentProof, updateStatus } from "../../redux/features/transaction/transactionSlice";
 import './TransactionCard.css'
 
 export default function TransactionCard(props) {
@@ -45,6 +45,30 @@ export default function TransactionCard(props) {
             setIsSendingResponse(false);
         }, 400);
     }
+
+    const onCancel = async() => {
+        setIsSendingResponse(true);
+        const loading = toast.loading('Rejecting order ...');
+        if(localStorage.getItem('user')) {
+            await call(updateStatus({
+                id: props?.data?.id,
+                userId: JSON.parse(localStorage.getItem('user')).id,
+                response: 'cancelled',
+                token: JSON.parse(localStorage.getItem('user')).token,
+                page: props?.page,
+                limit: props?.limit
+            })).then(
+                () => {toast.success('Order cancelled !', {id: loading})},
+                (error) => {toast.error('Network error, please try again later !', {id: loading}); console.log(error)}
+            )
+        }
+        else {
+            toast.error('Unauthorized access !', {id: loading})
+        }
+        setTimeout(() => {
+            setIsSendingResponse(false);
+        }, 400);
+    };
 
     return(
         <div className="flex flex-col w-full h-auto lg:h-[250px] lg:flex-row gap-[15px] justify-between border-[2px] border-green-700  p-[5px] rounded-[10px] bg-neutral-200/50">
@@ -107,7 +131,7 @@ export default function TransactionCard(props) {
                 <div onClick={onSave} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer' }`}>
                     Save Changes
                 </div>
-                <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer' }`}>
+                <div onClick={onCancel} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer' }`}>
                     Cancel Order
                 </div>
             </div>

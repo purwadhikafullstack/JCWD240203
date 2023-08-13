@@ -4,7 +4,6 @@ import TodayHosting from "./TodayHosting";
 import Footer from "../../components/footerRentify/footerPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import CalendarHostingTrial from "./CalendarHostingTrial";
 import ListingList from "./ListingList";
 
 export default function HostingPage() {

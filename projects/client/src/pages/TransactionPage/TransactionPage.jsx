@@ -14,6 +14,7 @@ export default function TransactionPage() {
     const totalTransaction = Math.ceil(useSelector((state) => state.transaction.totalTransaction) / limit);
     const history = useSelector((state) => state.transaction.transaction);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentUser = useSelector((state) => state.user.currentUser);
     const [month, setMonth] = useState(new Date().getMonth());
     const [status, setStatus] = useState('all');
     const [page, setPage] = useState(1);
@@ -53,7 +54,7 @@ export default function TransactionPage() {
         else {
             navigate('/');
         }
-    }, [call, page, status, month, navigate])
+    }, [call, page, status, month, currentUser, navigate])
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-full overflow-y-auto removeScroll">
             <Toaster/>
