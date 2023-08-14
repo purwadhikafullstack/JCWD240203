@@ -5,14 +5,54 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import rentifyLogo from '../../components/assets/icons/rentifyLogo.png'
 import { useFormik } from "formik";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { resetPassword, sendPasswordResetEmail } from "../../redux/features/user/userSlice";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function ResetPassword() {
     const [userExist, setUserExist] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const navigate = useNavigate();
+    const call = useDispatch();
 
-    const checkUser = () => {
-        
+    const sendingEmail = async(username) => {
+        resetForm.setSubmitting(true);
+        const loading = toast.loading('Sending code ...', {id: 'SendEmailPasswordToast'});
+        await call(sendPasswordResetEmail({username: username})).then(
+            (response) => {
+                setUserExist(response.data.data.userExist);
+                if(response.data.data.userExist) {
+                    toast.success('Email sent !, check your inbox', {id: loading});
+                }
+                else {
+                    toast.error('User does not exist !', {id: loading});
+                }
+            },
+            (error) => {
+                if(!error.response.data) {
+                    toast.error('Network error !, please try again later', {id: loading});
+                }
+                else if(!Array.isArray(error.response.data.message)) {
+                    toast.error(error.response.data.message, {id: loading});
+                }
+                else {
+                    toast.dismiss();
+                    error.response.data.message.map(value => {return toast.error(value.msg)});
+                }
+            }
+        )
+        resetForm.setSubmitting(false);
+    }
+
+    const handleSubmit = (values) => {
+        if(!userExist) {
+            sendingEmail(values.username);
+        }
+        else {
+            resetForm.handleSubmit()
+        }
     }
 
     const validate = (value) => {
@@ -71,14 +111,20 @@ export default function ResetPassword() {
             code: ''
         },
         validate,
-        onSubmit: (values) => {
-
+        onSubmit: async(values) => {
+            resetForm.setSubmitting(true);
+            const loading = toast.loading('Sending code ...', {id: 'ResetPasswordToast'});
+            await call(resetPassword({...values})).then(
+                (response) => {toast.success('Password has been reset', {id: loading}); navigate('/')},
+                (error) => {console.log(error); toast.error('Network error !, please try again later', {id: loading});}
+            )
+            resetForm.setSubmitting(false);
         }
     })
 
     return(
         <div className="flex flex-col items-center justify-center w-full h-full overflow-y-auto removeScroll">
-            <div className="flex flex-col items-center w-[400px] h-[500px] bg-white border-[1px] border-black rounded-[10px] px-[10px] py-[15px]">
+            <div className="flex flex-col items-center w-[400px] h-[450px] bg-white border-[1px] border-black rounded-[10px] px-[10px] py-[15px]">
                 <div className="w-full text-center text-[20px] font-bold pb-[10px] border-b-[1px] border-gray-400">
                     Reset Password
                 </div>
@@ -143,7 +189,7 @@ export default function ResetPassword() {
                         })
                     }
                     <div className="w-[250px] flex justify-center mt-[15px]">
-                        <Button size="medium" variant="contained" sx={{width: '175px'}}>
+                        <Button onClick={() => handleSubmit(resetForm.values)} disabled={resetForm.isSubmitting} size="medium" variant="contained" sx={{width: '175px'}}>
                             {(userExist)? 'Reset Password' : 'Send Code'}
                         </Button>
                     </div>

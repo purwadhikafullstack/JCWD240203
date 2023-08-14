@@ -1,6 +1,7 @@
 const usersPOST = require('./userControllerPOST');
 const usersGET = require('./userControllerGET');
 const usersPATCH = require('./userControllerPATCH');
+const usersPATCH2 = require('./userControllerPATCH2');
 const propertiesGET = require('./propertyControllerGET');
 const propertiesGET2 = require('./propertyControllerGET2');
 const propertiesGET3 = require('./propertyControllerGET3');
@@ -20,6 +21,7 @@ module.exports = {
     usersPOST,
     usersGET,
     usersPATCH,
+    usersPATCH2,
     propertiesGET,
     propertiesGET2,
     propertiesGET3,

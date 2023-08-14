@@ -49,7 +49,7 @@ export const onLogin = (loginCredentials) => async(dispatch) => {
 
 export const getUser = (data) => async() => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${data.id}`)
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/checkuser/${data.id}`)
 
         return Promise.resolve(response);
     }
@@ -135,6 +135,34 @@ export const verifyAccount = (data) => async(dispatch) => {
                 }
             )
         }, 200);
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+};
+
+export const sendPasswordResetEmail = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/forgotpassword`, {
+            username: data.username
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
+export const resetPassword = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/resetpassword`, {
+            code: data.code,
+            username: data.username,
+            newPassword: data.newPassword
+        });
 
         return Promise.resolve(response);
     }

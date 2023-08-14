@@ -2,6 +2,7 @@ const db = require('../../models');
 const fs = require('fs');
 const handlebars = require('handlebars');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const transporter = require('../transport/transport');
 require('dotenv').config();
 const user = db.user;
@@ -11,6 +12,14 @@ module.exports = {
         try {
             const { username } = req.body;
             const code = Math.floor(Math.random()*90000) + 10000;
+
+            if(!username) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request !',
+                    data: null
+                });
+            }
 
             const userFilter = {};
 
@@ -26,10 +35,10 @@ module.exports = {
             });
 
             if(!recipient) {
-                return res.status(404).send({
-                    isError: true,
+                return res.status(200).send({
+                    isError: false,
                     message: 'User does not exist !',
-                    data: null
+                    data: {userExist: false}
                 });
             }
 
@@ -64,7 +73,7 @@ module.exports = {
             return res.status(200).send({
                 isError: false,
                 message: 'Email has been sent !',
-                data: null
+                data: {userExist: true}
             });
         }
         catch(error) {
@@ -73,6 +82,85 @@ module.exports = {
                 message: error.message,
                 data: null
             });
+        }
+    },
+
+    resetPassword: async(req, res) => {
+        try {
+            const {username, code, newPassword} = req.body;
+
+            if(!username || !code || !newPassword) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request !',
+                    data: null
+                });
+            }
+
+            const userFilter = {};
+
+            if(username.includes('@') && username.includes('.com')) {
+                userFilter.email = username;
+            }
+            else {
+                userFilter.username = username;
+            }
+
+            const existingUser = await user.findOne({
+                where: userFilter
+            });
+
+            if(!existingUser) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'not found !',
+                    data: null
+                });
+            };
+
+            let storedCode = null;
+
+            try {
+                storedCode = jwt.verify(existingUser.code, process.env.KEY);
+            }
+            catch(error) {
+                return res.status(500).send({
+                    isError: true,
+                    message: 'Code expired !',
+                    data: null
+                });
+            }
+            console.log(storedCode);
+
+            if(storedCode.code !== Number(code)) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'Incorrect Code !',
+                    data: null
+                });
+            };
+
+            const hash = await bcrypt.hash(newPassword, 10);
+
+            await user.update({
+                password: hash,
+                code: null
+            }, {
+                where: {id: existingUser.id}
+            })
+
+            return res.status(201).send({
+                isError: false,
+                message: 'Password has been reset !',
+                data: null
+            });
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            })
         }
     }
 }
