@@ -18,7 +18,7 @@ module.exports = {
                 })
             };
 
-            if(new Date(checkIn) >= new Date(checkOut)) {
+            if((new Date(checkIn) >= new Date(checkOut)) || (new Date(checkIn) <= new Date().setHours(0, 0, 0, 0) ) || (new Date(checkOut) < new Date().setHours(0, 0, 0, 0))) {
                 return res.status(400).send({
                     isError: true,
                     message: 'bad request',
@@ -41,6 +41,13 @@ module.exports = {
                 return res.status(400).send({
                     isError: true,
                     message: 'bad request',
+                    data: null
+                })
+            }
+            else if (propertyWithRoomExist.status === 'Private') {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'Property is privated !',
                     data: null
                 })
             }

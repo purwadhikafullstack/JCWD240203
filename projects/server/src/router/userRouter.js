@@ -9,6 +9,8 @@ const Router = express.Router();
 // GET //
 Router.get('/:id', usersGET.getUser);
 
+Router.get('/checkuser/:id', usersGET.userExist);
+
 // POST //
 Router.post('/', async(req, res, next) => {
     await checkSchema({

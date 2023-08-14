@@ -122,13 +122,21 @@ module.exports = {
                 status: 'completed'
             }
 
+            if((type === 'Yearly' && !year) || (type === 'Daily' && !month)) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request!',
+                    data: null
+                })
+            }
+
             if(type === 'Yearly') {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), year);
             }
             else if (type === 'Daily') {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
             }
-
+            
             const result = await transaction.findAndCountAll({
                 where: filter,
                 include: [

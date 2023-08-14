@@ -52,7 +52,6 @@ export default function UpdateProperty() {
         }
         else {
           toast.error('Property must have atleast 1 room !', {id: loading});
-          return false;
         }
       }
       setIsSubmitting(false);

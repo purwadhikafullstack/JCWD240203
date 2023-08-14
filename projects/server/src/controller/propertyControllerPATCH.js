@@ -12,6 +12,15 @@ module.exports = {
         const propertyId = Number(req.params.id);
         const {propertyName, propertyDescription, city, address, status, categoryId, propertyRooms, facilities } = req.body;
         const images = req?.files?.images;
+
+        if(!propertyName || !propertyDescription || !city || !address || !categoryId || !propertyRooms) {
+            return res.status(400).send({
+                isError: true,
+                message: 'bad request !',
+                data: null
+            })
+        };
+
         try {
             const parsedFacility = JSON.parse(facilities);
             const parsedRooms = JSON.parse(propertyRooms);
@@ -34,7 +43,7 @@ module.exports = {
                 let temp = {...room};
                 temp.propertyId = propertyId;
                 dataRoom.push(temp);
-            }
+            };
 
             // Update Images
             const dataImage = [];
@@ -57,7 +66,7 @@ module.exports = {
 
                 for(let image of prevImages) {
                     oldRows.push(image.id);
-                    //unnecessary if statement for production delete it if you want
+                    //unnecessary if statement for production. Delete it if you want
                     if(image.url.split(`${process.env.LINK}/`)[1]) {
                         old.push({path: 'Public/' + image.url.split(`${process.env.LINK}/`)[1]})
                     }

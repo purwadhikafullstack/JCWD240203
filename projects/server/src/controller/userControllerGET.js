@@ -36,6 +36,15 @@ module.exports = {
                 ],
                 attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
             });
+
+            if(!existingUser) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'not found !',
+                    data: null
+                })
+            }
+
             existingUser = JSON.parse(JSON.stringify(existingUser, null, 2));
             existingUser.properties = existingUser.properties.map((property) => {
                 let parsed = JSON.parse(JSON.stringify(property, null, 2))
@@ -54,6 +63,39 @@ module.exports = {
                 isError: false,
                 message: `Welcome ${existingUser.username}`,
                 data: existingUser
+            })
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            })
+        }
+    },
+
+    userExist: async(req, res) => {
+        try {
+            const id = req.params.id;
+            let result = await user.findOne({
+                where: {
+                    id: id
+                },
+                attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
+            });
+
+            if(!result) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'not found !',
+                    data: null
+                })
+            }
+
+            return res.status(200).send({
+                isError: false,
+                message: 'GET Success',
+                data: result
             })
         }
         catch(error) {
