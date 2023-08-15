@@ -68,7 +68,7 @@ module.exports = {
                     oldRows.push(image.id);
                     //unnecessary if statement for production. Delete it if you want
                     if(image.url.split(`${process.env.LINK}/`)[1]) {
-                        old.push({path: 'Public/' + image.url.split(`${process.env.LINK}/`)[1]})
+                        old.push({path: 'src/Public/' + image.url.split(`${process.env.LINK}/`)[1]})
                     }
                 }
     

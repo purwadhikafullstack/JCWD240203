@@ -67,7 +67,7 @@ module.exports = {
                     data: null
                 })
             }
-            console.log('yes');
+
             next();
         }
         catch(error) {

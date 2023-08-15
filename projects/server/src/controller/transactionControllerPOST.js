@@ -52,7 +52,7 @@ module.exports = {
                 })
             }
 
-            let existingTransaction = await transaction.findAll({
+            let existingTransaction = await transaction.findOne({
                 where: {
                     [Op.or]: [{status: 'pending'}, {status: 'completed'}],
                     userId: userId,
@@ -62,7 +62,7 @@ module.exports = {
                 }
             })
             
-            if(existingTransaction?.length > 0 && existingTransaction?.roomId === roomId) {
+            if(existingTransaction) {
                 return res.status(400).send({
                     isError: true,
                     message: 'You already booked in this property',

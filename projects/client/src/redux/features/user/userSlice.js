@@ -49,7 +49,7 @@ export const onLogin = (loginCredentials) => async(dispatch) => {
 
 export const getUser = (data) => async() => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/checkuser/${data.id}`)
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${data.id}`)
 
         return Promise.resolve(response);
     }

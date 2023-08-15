@@ -18,7 +18,8 @@ export default function OrderCard(props) {
                 response: 'completed',
                 token: JSON.parse(localStorage.getItem('user')).token,
                 page: props?.page,
-                limit: props?.limit
+                limit: props?.limit,
+                type: 'Order'
             })).then(
                 () => {toast.success('Order Accepted', {id: loading})},
                 (error) => {toast.error('Network error, please try again later !', {id: loading}); console.log(error)}
@@ -42,7 +43,8 @@ export default function OrderCard(props) {
                 response: 'cancelled',
                 token: JSON.parse(localStorage.getItem('user')).token,
                 page: props?.page,
-                limit: props?.limit
+                limit: props?.limit,
+                type: 'Order'
             })).then(
                 () => {toast.success('Order Rejected', {id: loading})},
                 (error) => {toast.error('Network error, please try again later !', {id: loading}); console.log(error)}

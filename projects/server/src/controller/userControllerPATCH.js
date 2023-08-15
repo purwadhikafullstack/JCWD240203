@@ -4,7 +4,6 @@ const handlebars = require('handlebars');
 const jwt = require('jsonwebtoken');
 const transporter = require('../transport/transport')
 const { deleteFiles } = require('../helper/deleteFiles');
-require('dotenv').config();
 const user = db.user;
 
 module.exports = {
@@ -53,10 +52,10 @@ module.exports = {
             let old = [];
             for(let i in req?.files) {
                 if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.LINK + '/Default/DefaultProfile.png') {
-                    old.push({path: 'Public/' + dataExist.profilePicture.split(`${process.env.LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.profilePicture.split(`${process.env.LINK}/`)[1]})
                 }
                 else if(i === 'newId' && dataExist.idCard) {
-                    old.push({path: 'Public/' + dataExist.idCard.split(`${process.env.LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.idCard.split(`${process.env.LINK}/`)[1]})
                 }
             }
 
@@ -111,7 +110,7 @@ module.exports = {
             });
             
             const template = handlebars.compile(
-                fs.readFileSync('./Public/templates/verifyEmail.html', {encoding: 'utf-8'})
+                fs.readFileSync('./src/Public/templates/verifyEmail.html', {encoding: 'utf-8'})
             );
 
             const domain = process.env.DOMAIN;

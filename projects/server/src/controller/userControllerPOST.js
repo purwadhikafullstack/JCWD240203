@@ -1,8 +1,6 @@
 const db = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { deleteFiles } = require('../helper/deleteFiles');
-require('dotenv').config();
 const user = db.user;
 
 module.exports = {
@@ -98,7 +96,7 @@ module.exports = {
                     }) 
                 }
             }
-
+            console.log(process.env.PATH);
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status

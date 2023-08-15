@@ -48,7 +48,8 @@ export default function ResetPassword() {
 
     const handleSubmit = (values) => {
         if(!userExist) {
-            sendingEmail(values.username);
+            if(values.username) sendingEmail(values.username);
+            else {toast.error('Username must not be empty !')};
         }
         else {
             resetForm.handleSubmit()
@@ -58,13 +59,8 @@ export default function ResetPassword() {
     const validate = (value) => {
         const errors = {};
 
-        if(!value.username) {
-            errors.username = 'Required !';
-        }
-
-        if(!value.code) {
-            errors.code = 'Required !';
-        }
+        if(!value.username) {errors.username = 'Required !'};
+        if(!value.code) {errors.code = 'Required !'};
 
         if(!value.newPassword) {
             errors.newPassword = 'Required !';
@@ -73,9 +69,7 @@ export default function ResetPassword() {
             errors.newPassword = 'Password must have 1 lowercase, uppercase, numeric and 8 characters long';
         }
 
-        if(value.confirmPassword !== value.newPassword && value.newPassword) {
-            errors.confirmPassword = 'Password do not match !';
-        }
+        if(value.confirmPassword !== value.newPassword && value.newPassword) {errors.confirmPassword = 'Password do not match !'};
 
         return errors;
     }
