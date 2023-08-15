@@ -6,7 +6,7 @@ import UpcomingBooked from "../../components/UpcomingBooked/UpcomingBooked";
 import QnaCard from "../../components/QnACard/qnaCard";
 import './TodayHosting.css'
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/features/user/userSlice";
 
 export default function TodayHosting() {
@@ -96,7 +96,7 @@ export default function TodayHosting() {
                 <div className="w-full">
                     {contentToShow}
                 </div>
-                <div className="qnaCard justify-between flex flex-col lg:flex-row py-[120px]">
+                <div className="qnaCard justify-between flex flex-col lg:flex-row pt-[80px]">
                     <div>
                         <div className="text-[49px] md:text-6xl font-semibold mb-10 text-left">
                             Resources and tips

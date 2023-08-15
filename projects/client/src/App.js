@@ -19,6 +19,7 @@ import { Toaster } from "react-hot-toast";
 import CreateProperty from "./pages/CreateProperty/MainPage";
 import CreateEvent from "./pages/CreateEvent/CreateEvent";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -59,6 +60,7 @@ function App() {
         <Route path={'/hostings/addproperty'} element={<CreateProperty/>}/>
         <Route path={'/hostings/updateproperty/:id'} element={<UpdateProperty/>}/>
         <Route path={'/hostings/events/:id'} element={<CreateEvent/>}/>
+        <Route path={'/changepassword'} element={<ChangePassword/>}/>
         <Route path={'/forgotpassword'} element={<ResetPassword/>}/>
       </Routes>
     </div>

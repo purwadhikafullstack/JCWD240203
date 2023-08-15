@@ -3,9 +3,12 @@ import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { updateStatus } from "../../redux/features/transaction/transactionSlice";
 import './OrderCard.css'
+import HoverProfileCard from "./HoverProfileCard";
 
 export default function OrderCard(props) {
     const [isSendingResponse, setIsSendingResponse] = useState(false);
+    const [hoverUser, setHoverUser] = useState(false);
+    const dayMiliseconds = 86400000;
     const call = useDispatch();
 
     const handleAccept = async() => {
@@ -87,7 +90,13 @@ export default function OrderCard(props) {
                     Rooms rented: {props?.data?.stock}
                 </div>
                 <div>
-                    Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
+                    Duration: {((new Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ dayMiliseconds) || 0} nights
+                </div>
+                <div className="relative">
+                    Tenant: <span onMouseEnter={() => setHoverUser(true)} onMouseLeave={() => setHoverUser(false)} className="hover:underline">{props?.data?.user?.username || 'N/A'}</span>
+                    <div className={`${(hoverUser)? 'opacity-100 w-[150px] h-[125px]' : 'opacity-0 w-[150px] h-[125px] z-[-1]'} transition-all duration-400 absolute`}>
+                        <HoverProfileCard data={props?.data?.user}/>
+                    </div>
                 </div>
                 <div className="mt-auto text-[20px] font-bold">
                     Grand total: {props?.data?.price?.toLocaleString('ID-id')}

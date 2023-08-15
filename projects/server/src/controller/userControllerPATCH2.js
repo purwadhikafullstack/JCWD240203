@@ -53,7 +53,7 @@ module.exports = {
             });
             
             const template = handlebars.compile(
-                fs.readFileSync('./Public/templates/resetPassword.html', {encoding: 'utf-8'})
+                fs.readFileSync('./src/Public/templates/resetPassword.html', {encoding: 'utf-8'})
             );
 
             const data = {

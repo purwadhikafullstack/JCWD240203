@@ -8,6 +8,7 @@ import './TransactionCard.css'
 export default function TransactionCard(props) {
     const [isSendingResponse, setIsSendingResponse] = useState(false);
     const [paymentProof, setPaymentProof] = useState(null);
+    const dayMilisecond = 86400000;
     const call = useDispatch();
     
     const handleChange = (event) => {
@@ -116,7 +117,7 @@ export default function TransactionCard(props) {
                         <img src={URL.createObjectURL(paymentProof)} alt="" className="w-full h-full"/>
                     }
                 </div>
-                <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'}  mt-auto`}>
+                <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / dayMilisecond >= 2 && props?.data?.status === 'pending')? '' : 'hidden'}  mt-auto`}>
                     <input onChange={handleChange} id={`paymentProof${props?.index}`} type="file" className="hidden"/>
                     <label htmlFor={`paymentProof${props?.index}`} className="flex items-center justify-center gap-[5px] border-[1px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white w-[165px] py-[5px]  hover:bg-green-900/70">
                         <BiSolidDownload size={25}/> Upload Payment
@@ -129,10 +130,10 @@ export default function TransactionCard(props) {
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-[0.7] p-[10px] gap-[20px]">
-                <div onClick={onSave} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer' }`}>
+                <div onClick={onSave} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / dayMilisecond >= 2 && props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-green-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-600 active:bg-green-700 active:scale-95 cursor-pointer' }`}>
                     Save Changes
                 </div>
-                <div onClick={onCancel} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / 86400000 >= 2)? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer' }`}>
+                <div onClick={onCancel} className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / dayMilisecond >= 2 && props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-red-500 w-[125px] h-[40px] rounded-[5px] transition-all duration-400 ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-red-600 active:bg-red-700 active:scale-95 cursor-pointer' }`}>
                     Cancel Order
                 </div>
             </div>

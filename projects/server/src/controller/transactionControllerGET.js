@@ -11,7 +11,7 @@ module.exports = {
     getTransaction: async(req, res) => {
         try {
             const { id }= req.params;
-            const { limit, page, status, month } = req.query;
+            const { limit, page, status, month, year } = req.query;
 
             const filter = {userId: id};
             if(status !== 'all' && (status === 'pending' || status === 'completed' || status === 'cancelled')) {
@@ -20,6 +20,7 @@ module.exports = {
 
             if(month > 0 && month < 13) {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month)
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), year || new Date().getFullYear());
             }
             
             const result = await transaction.findAndCountAll({
@@ -61,7 +62,7 @@ module.exports = {
     getOrder: async(req, res) => {
         try {
             const { id }= req.params;
-            const { limit, page, status, month } = req.query;
+            const { limit, page, status, month, year } = req.query;
 
             const filter = {};
             if(status !== 'all' && (status === 'pending' || status === 'completed' || status === 'cancelled')) {
@@ -70,7 +71,7 @@ module.exports = {
 
             if(month > 0 && month < 13) {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
-                filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), new Date().getFullYear());
+                filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), year || new Date().getFullYear());
             }
 
             const result = await transaction.findAndCountAll({
@@ -88,7 +89,8 @@ module.exports = {
                         },
                         required: true
                     },
-                    {model: room}
+                    {model: room},
+                    {model: user}
                 ],
                 order: [
                     [{model: property}, {model: propertyImages} ,'id', 'ASC'],
