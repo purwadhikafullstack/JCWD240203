@@ -157,7 +157,7 @@ export default function OwnerCard(props) {
                         <div className="font-bold text-[18px]">
                             Your listings
                         </div>
-                        <Link to={'/hostings'} className={`${(props?.status === 'unverified' || !props?.currentId)? 'hidden' : ''} flex justify-center items-center bg-green-500 rounded-[5px] w-[125px] h-[35px] transition-all duration-400 hover:bg-green-600 active:scale-95 active:bg-green-500 cursor-pointer`}>
+                        <Link to={'/hostings'} className={`${(props?.status === 'unverified' || !props?.currentId)? 'hidden' : ''} flex justify-center items-center w-[125px] h-[35px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white  py-[5px]  hover:bg-green-900/70`}>
                             Add property
                         </Link>
                     </div>

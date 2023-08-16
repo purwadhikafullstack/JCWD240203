@@ -73,7 +73,7 @@ export default function LoginModal(props) {
                 }
             }
         } else {
-            toast.error('Please complete the reCAPTCHA.');
+            toast.error('Please complete the CAPTCHA.');
         }
     };
 
@@ -88,7 +88,7 @@ const login = useFormik({
 
 return (
     <div className={`${(props.showLogin) ? '' : 'hidden'} flex justify-center items-center absolute top-0 w-full h-[100vh] bg-gray-400/80 z-50`}>
-        <div className="relative flex flex-col items-center bg-gray-200 w-[300px] md:w-[450px] h-[460px] rounded-[10px] ">
+        <div className="relative flex flex-col items-center bg-white w-[300px] md:w-[450px] h-[460px] rounded-[10px] ">
             <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300">
                 <CloseIcon sx={{ scale: '1.4' }} />
             </div>
