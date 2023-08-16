@@ -69,6 +69,8 @@ Router.post('/login', async(req, res, next) => {
 // PATCH //
 Router.patch('/accountVerify', usersPATCH.verifyEmail);
 
+Router.patch('/changepassword', usersPATCH2.changePassword);
+
 Router.patch('/forgotpassword', usersPATCH2.sendPasswordResetEmail);
 
 Router.patch('/resetpassword', usersPATCH2.resetPassword);

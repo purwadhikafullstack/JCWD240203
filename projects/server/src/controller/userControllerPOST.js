@@ -20,7 +20,7 @@ module.exports = {
                 }
             }
             
-            const hash = await bcrypt.hash(password, 10);
+            const hash = await bcrypt.hash(password, Number(process.env.ROUNDS));
 
             await user.create({
                 username: username,
@@ -96,7 +96,7 @@ module.exports = {
                     }) 
                 }
             }
-            console.log(process.env.PATH);
+            
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status

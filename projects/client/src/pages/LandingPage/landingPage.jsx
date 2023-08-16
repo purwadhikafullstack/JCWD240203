@@ -11,12 +11,12 @@ import TrendingCarausel from '../../components/TrendingCarausel/TrendingCarausel
 import LoginModal from '../../components/LoginModal/LoginModal';
 import RegisterModal from '../../components/RegisterModal/RegisterModal';
 import { Toaster } from "react-hot-toast";
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div className={`overflow-y-auto removeScroll w-full h-full bg-white`}>
@@ -63,7 +63,7 @@ export default function LandingPage() {
                 </div>
                 <TrendingCarausel/>
                 <div>
-                    <button className="exploreButton px-[50px] py-[8px] mt-8 mb-20 text-2xl font-sans rounded-[10px] border-solid border-2 border-black bg-white text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                    <button onClick={() => navigate('/browse')} className="exploreButton px-[50px] py-[8px] mt-8 mb-20 text-2xl font-sans rounded-[10px] border-solid border-2 border-black bg-white text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
                         Explore more
                     </button>
                 </div>

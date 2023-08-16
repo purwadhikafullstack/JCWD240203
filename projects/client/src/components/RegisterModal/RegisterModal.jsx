@@ -112,13 +112,13 @@ export default function RegisterModal(props) {
                         Welcome to Rentify !
                     </div>
                     <div>
-                        <TextField id="username" onBlur={register.handleBlur} onChange={register.handleChange} value={register.values.username} label="Username" size="small" className="w-full" autoComplete="off"/>
+                        <TextField name="username" onBlur={register.handleBlur} onChange={register.handleChange} value={register.values.username} label="Username" size="small" className="w-full" autoComplete="off"/>
                         <div className='text-[12px] text-start'>
                             {(register.touched.username && register.errors.username)? <div className="text-red-600 h-[15px]">{register.errors.username}</div> : <div className="h-[15px]">&nbsp;</div>}
                         </div>
                     </div>
                     <div>
-                        <TextField id="email" onBlur={register.handleBlur} onChange={register.handleChange} value={register.values.email} label="Email" size="small" className="w-full" autoComplete="off"/>
+                        <TextField name="email" onBlur={register.handleBlur} onChange={register.handleChange} value={register.values.email} label="Email" size="small" className="w-full" autoComplete="off"/>
                         <div className='text-[12px] text-start'>
                             {(register.touched.email && register.errors.email)? <div className="text-red-600 h-[15px]">{register.errors.email}</div> : <div className="h-[15px]">&nbsp;</div>}
                         </div>
@@ -127,7 +127,7 @@ export default function RegisterModal(props) {
                         <FormControl sx={{ width: '100%' }} variant="outlined" size="small">
                             <InputLabel>Password</InputLabel>
                             <OutlinedInput
-                            id="password"
+                            name="password"
                             onBlur={register.handleBlur}
                             onChange={register.handleChange}
                             value={register.values.password}
@@ -153,7 +153,7 @@ export default function RegisterModal(props) {
                         <FormControl sx={{ width: '100%' }} variant="outlined" size="small">
                             <InputLabel>Repeat Password</InputLabel>
                             <OutlinedInput
-                            id="repeatPassword"
+                            name="repeatPassword"
                             onBlur={register.handleBlur}
                             onChange={register.handleChange}
                             value={register.values.repeatPassword}
@@ -176,10 +176,7 @@ export default function RegisterModal(props) {
                         </div>
                     </div>
                     <div>
-                        {/* <Button disabled={register.isSubmitting} onClick={register.handleSubmit} variant="contained" color="success" sx={{height: '40px'}} className=''>
-                            Sign Up
-                        </Button> */}
-                        <button disabled={register.isSubmitting} onClick={register.handleSubmit} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(register.isSubmitting)? 'cursor-not-allowed' : 'active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]' }`}>
+                        <button type='submit' disabled={register.isSubmitting} onClick={register.handleSubmit} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(register.isSubmitting)? 'cursor-not-allowed' : 'active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]' }`}>
                             Sign Up
                         </button>
                     </div>

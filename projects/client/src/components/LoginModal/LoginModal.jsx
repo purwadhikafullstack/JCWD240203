@@ -99,7 +99,7 @@ export default function LoginModal(props) {
                 </div>
                 <div className="w-[250px] md:w-[300px] flex flex-col gap-[20px] mb-auto mt-[10px]">
                     <div className="w-full">
-                        <TextField id="username" onChange={login.handleChange} onBlur={login.handleBlur} value={login.values.username} label='Username' size="small" fullWidth autoComplete="off" />
+                        <TextField name="username" onChange={login.handleChange} onBlur={login.handleBlur} value={login.values.username} label='Username' size="small" fullWidth autoComplete="off" />
                         <div className="h-[5px] w-full text-[12px] text-start text-red-600">
                             {
                                 (login.touched.username && login.errors.username) ?
@@ -116,7 +116,7 @@ export default function LoginModal(props) {
                             <OutlinedInput
                                 label='Password'
                                 type={showPassword ? 'text' : 'password'}
-                                id="password"
+                                name="password"
                                 onChange={login.handleChange}
                                 onBlur={login.handleBlur}
                                 value={login.values.password}
@@ -148,7 +148,7 @@ export default function LoginModal(props) {
                         </Link>
                     </div>
                     <div className="w-full">
-                        <button disabled={login.isSubmitting} onClick={login.handleSubmit}  color="success" sx={{ height: '40px' }} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(login.isSubmitting)? 'cursor-not-allowed' : 'active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]' }`}>
+                        <button type="submit" disabled={login.isSubmitting} onClick={login.handleSubmit}  color="success" sx={{ height: '40px' }} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold cursor-pointer select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(login.isSubmitting)? 'cursor-not-allowed' : 'active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]' }`}>
                             Log In
                         </button>
                     </div>

@@ -70,11 +70,8 @@ module.exports = {
                                 required: false,
                             }
                         ],
-                        where: {
-                            stock: {
-                                [Op.gt]: 0
-                            }
-                        }
+                        where: {deleted: 'false'},
+                        required: false
                     },
                     { 
                         model: category,

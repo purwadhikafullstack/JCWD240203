@@ -67,6 +67,7 @@ module.exports = {
                     },
                     { 
                         model: room,
+                        where: {deleted: 'false'},
                         include: [
                             {
                                 model: price,
@@ -78,7 +79,8 @@ module.exports = {
                                 where: transactionFilter,
                                 required: false
                             },
-                        ]
+                        ],
+                        required: false
                     },
                     { model: propertyImages },
                 ],
@@ -88,7 +90,16 @@ module.exports = {
                 order: [
                     [{model: propertyImages} ,'id', 'ASC']
                 ],
-            })
+            });
+
+            if(!result) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'not found !',
+                    data: null
+                })
+            };
+
             const count = await review.count({where: {propertyId: result.id}});
             result = JSON.parse(JSON.stringify(result, null, 2));
             result.totalReview = count;

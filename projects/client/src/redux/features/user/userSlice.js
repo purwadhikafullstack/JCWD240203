@@ -171,6 +171,25 @@ export const resetPassword = (data) => async() => {
     }
 }
 
+export const changePassword = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/changepassword`, {
+            userId: data.userId,
+            password: data.password,
+            newPassword: data.newPassword
+        }, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
 export const onLogout = () => (dispatch) => {
     localStorage.removeItem('user');
     dispatch(setUser({}));;

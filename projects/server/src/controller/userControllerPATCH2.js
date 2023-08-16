@@ -23,12 +23,8 @@ module.exports = {
 
             const userFilter = {};
 
-            if(username.includes('@') && username.includes('.com')) {
-                userFilter.email = username;
-            }
-            else {
-                userFilter.username = username;
-            }
+            if(username.includes('@') && username.includes('.com')) {userFilter.email = username;}
+            else {userFilter.username = username;}
 
             const recipient = await user.findOne({
                 where: userFilter
@@ -44,22 +40,15 @@ module.exports = {
 
             const token = jwt.sign({code: code}, process.env.KEY, {expiresIn: '10m'});
 
-            await user.update({
-                code: token
-            }, {
-                where: {
-                    id: recipient.id
-                }
+            await user.update({code: token}, {
+                where: {id: recipient.id}
             });
             
             const template = handlebars.compile(
                 fs.readFileSync('./src/Public/templates/resetPassword.html', {encoding: 'utf-8'})
             );
 
-            const data = {
-                "username": recipient.username,
-                "code": code
-            }
+            const data = {"username": recipient.username,"code": code}
 
             const emailTemplate = template(data);
             
@@ -99,12 +88,8 @@ module.exports = {
 
             const userFilter = {};
 
-            if(username.includes('@') && username.includes('.com')) {
-                userFilter.email = username;
-            }
-            else {
-                userFilter.username = username;
-            }
+            if(username.includes('@') && username.includes('.com')) {userFilter.email = username;}
+            else {userFilter.username = username;}
 
             const existingUser = await user.findOne({
                 where: userFilter
@@ -120,9 +105,7 @@ module.exports = {
 
             let storedCode = null;
 
-            try {
-                storedCode = jwt.verify(existingUser.code, process.env.KEY);
-            }
+            try {storedCode = jwt.verify(existingUser.code, process.env.KEY);}
             catch(error) {
                 return res.status(500).send({
                     isError: true,
@@ -130,7 +113,6 @@ module.exports = {
                     data: null
                 });
             }
-            console.log(storedCode);
 
             if(storedCode.code !== Number(code)) {
                 return res.status(404).send({
@@ -140,7 +122,7 @@ module.exports = {
                 });
             };
 
-            const hash = await bcrypt.hash(newPassword, 10);
+            const hash = await bcrypt.hash(newPassword, Number(process.env.ROUNDS));
 
             await user.update({
                 password: hash,
@@ -152,6 +134,61 @@ module.exports = {
             return res.status(201).send({
                 isError: false,
                 message: 'Password has been reset !',
+                data: null
+            });
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            })
+        }
+    },
+
+    changePassword: async(req, res) => {
+        try {
+            const {userId, password, newPassword} = req.body;
+
+            if(!userId || !password || !newPassword) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request !',
+                    data: null
+                });
+            }
+
+            const existingUser = await user.findOne({
+                where: {id: userId}
+            });
+
+            if(!existingUser) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'Bad request !',
+                    data: null
+                });
+            };
+
+            const compare = await bcrypt.compare(password, existingUser.password);
+
+            if(!compare) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'Incorrect Password !',
+                    data: null
+                });
+            };
+
+            const hash = await bcrypt.hash(newPassword, Number(process.env.ROUNDS));
+
+            await user.update({password: hash}, {
+                where: {id: existingUser.id}
+            });
+
+            return res.status(201).send({
+                isError: false,
+                message: 'Password has been changed !',
                 data: null
             });
         }

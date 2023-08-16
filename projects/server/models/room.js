@@ -29,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.STRING,
     description: DataTypes.STRING,
     capacity: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER
+    stock: DataTypes.INTEGER,
+    deleted: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'room',
