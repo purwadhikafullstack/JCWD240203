@@ -1,6 +1,4 @@
-import axios from "axios";
 import "./App.css";
-import logo from "./logo.svg"
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
@@ -20,6 +18,7 @@ import CreateProperty from "./pages/CreateProperty/MainPage";
 import CreateEvent from "./pages/CreateEvent/CreateEvent";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
+import Error404 from "./pages/404Error/404Error";
 
 function App() {
   //const [message, setMessage] = useState("");
@@ -62,6 +61,7 @@ function App() {
         <Route path={'/hostings/events/:id'} element={<CreateEvent/>}/>
         <Route path={'/changepassword'} element={<ChangePassword/>}/>
         <Route path={'/forgotpassword'} element={<ResetPassword/>}/>
+        <Route path={'/notfound'} element={<Error404/>}/>
       </Routes>
     </div>
   );

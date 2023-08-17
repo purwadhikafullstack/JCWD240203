@@ -108,7 +108,7 @@ module.exports = {
                     id: id
                 }
             });
-            
+            console.log('Current Working Directory:', process.cwd())
             const template = handlebars.compile(
                 fs.readFileSync('./src/Public/templates/verifyEmail.html', {encoding: 'utf-8'})
             );

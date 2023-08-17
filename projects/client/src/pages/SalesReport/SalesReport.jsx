@@ -128,14 +128,14 @@ export default function SalesReport() {
                     }}
                     />
                 </div>
-                <div className='w-full py-[10px] px-[10px] gap-4 flex flex-col md:flex-row justify-center'>
-                    <div className='cardGross bg-green-600 rounded-xl py-4 px-4'>
+                <div className='w-full py-[10px] px-[10px] gap-4 flex flex-col md:flex-row justify-center '>
+                    <div className='cardGross bg-green-600 rounded-xl py-4 px-4 '>
                         {year || new Date().getFullYear()} Gross Profit: Rp. {grossProfit.toLocaleString('id-ID')}
                     </div>
                     <div className={`${(type === 'Yearly')? 'block' : 'hidden'} cardProfitMonth bg-green-600 rounded-xl py-4 px-4`}>
                         Average Profit per Month: Rp. {((grossProfit)/((endingMonth+1) - (startingMonth))).toLocaleString('id-ID')}
                     </div>
-                    <div className={`${(type === 'Daily')? 'block' : 'hidden'} cardProfitMonth bg-green-600 rounded-xl py-4 px-4`}>
+                    <div className={`${(type === 'Daily')? 'block' : 'hidden'} cardProfitMonth bg-green-600 rounded-xl py-4 px-4 `}>
                         Total Sales for {months[startingMonth]} {year || new Date().getFullYear()}: Rp. {grossProfit.toLocaleString('id-ID')}
                     </div>
                     <div className={`${(type === 'Daily')? 'block' : 'hidden'} cardProfitMonth bg-green-600 rounded-xl py-4 px-4`}>
