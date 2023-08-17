@@ -37,7 +37,6 @@ export default function OrderPage() {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user')) || {};
         if(user.status === 'verified' && user.idCard) {
-            // if(user.status === 'unverified' || user.idCard === null) {navigate('/')};
             call(getOrder({
                 id: user.id,
                 page: page,
@@ -49,7 +48,7 @@ export default function OrderPage() {
                     setLoading(false);
                 },
                 (error) => {
-                    toast.error('err');
+                    toast.error('Unable to get orders, please try again later !');
                     console.log(error);
                 }
             )
@@ -71,7 +70,7 @@ export default function OrderPage() {
                     <OrderFilterBar months={months} month={month} setMonth={setMonth} status={status} setStatus={setStatus}/>
                     {
                         (loading)?
-                        <div className="flex flex-col flex-grow justify-center w-full">
+                        <div className="flex flex-col flex-grow justify-center items-center w-full">
                             <ThreeDots/>
                         </div>
                         :
