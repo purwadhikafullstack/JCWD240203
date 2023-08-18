@@ -38,6 +38,12 @@ module.exports = {
                 transaction: t
             });
             
+            const prevRoom = await room.findAll({
+                where: {
+                    propertyId: propertyId
+                }
+            });
+
             const dataRoom = []
             for(let room of parsedRooms) {
                 let temp = {...room};
@@ -45,6 +51,20 @@ module.exports = {
                 dataRoom.push(temp);
             };
 
+            const deletedRoom = [];
+            for(let room of prevRoom) {
+                let deleted = true;
+                for(let i of parsedRooms) {
+                    if(room?.id === i?.id) {
+                        deleted = false;
+                        break;
+                    }
+                };
+                if(deleted) {
+                    deletedRoom.push(room.id);
+                }
+            };
+            
             // Update Images
             const dataImage = [];
             const oldRows = [];
@@ -122,6 +142,9 @@ module.exports = {
                 updateOnDuplicate: ['name', 'description', 'stock', 'capacity', 'price'],
                 transaction: t
             });
+            if(deletedRoom?.length > 0) {
+                await room.update({deleted: 'true'}, {where: {id: deletedRoom}});
+            }
             
             await t.commit();
 

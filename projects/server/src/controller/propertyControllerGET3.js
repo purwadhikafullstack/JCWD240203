@@ -40,6 +40,7 @@ module.exports = {
                                 required: false
                             }
                         ],
+                        where: {deleted: 'false'}
                     },
                     { model: category },
                     { model: propertyImages }

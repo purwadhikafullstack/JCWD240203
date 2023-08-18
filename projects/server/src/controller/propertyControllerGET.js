@@ -24,7 +24,7 @@ module.exports = {
 
             let categoryFilter = {};
 
-            if(type !== 'All') {categoryFilter.type = type};
+            if(type && type !== 'All') {categoryFilter.type = type};
 
             let transactionFilter = {
                 status: 'completed',
@@ -104,6 +104,7 @@ module.exports = {
                 })
                 property.rooms = filteredRoom;
                 if(filteredRoom.length > 0) {return property}
+                else {result.count -= 1};
             });
 
             result.rows = result.rows.map((property) => {

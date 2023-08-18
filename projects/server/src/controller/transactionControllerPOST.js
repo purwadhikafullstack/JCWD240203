@@ -31,7 +31,7 @@ module.exports = {
                 include: [
                     {
                         model: room,
-                        where: {id: roomId},
+                        where: {id: roomId, deleted: 'false'},
                         required: true
                     }
                 ]
