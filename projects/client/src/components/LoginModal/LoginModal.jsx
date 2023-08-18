@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
-import ReCAPTCHA from "react-google-recaptcha";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -18,8 +17,6 @@ import './LoginModal.css';
 
 export default function LoginModal(props) {
     const call = useDispatch();
-
-    const recaptchaRef = useRef();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -48,34 +45,28 @@ export default function LoginModal(props) {
 
     const handleSubmit = async (values) => {
         login.setSubmitting(true);
-        const recaptchaValue = recaptchaRef.current.getValue();
         
-        if (recaptchaValue) {
-            try {
-                const response = await call(onLogin({
-                    username: values.username,
-                    password: values.password
-                }));
-
-                recaptchaRef.current.reset();
-                toast.success(response.message);
-                handleClose();
-            } catch (error) {
-                console.log(error);
-                if (!error.response.data) {
-                    toast.error('Network error!');
-                } else if (!Array.isArray(error.response.data.message)) {
-                    toast.error(error.response.data.message);
-                } else {
-                    toast.dismiss();
-                    error.response.data.message.forEach(value => {
-                        toast.error(value.msg);
-                    });
-                }
+        try {
+            const response = await call(onLogin({
+                username: values.username,
+                password: values.password
+            }));
+            
+            toast.success(response.message);
+            handleClose();
+        } catch (error) {
+            if (!error.response.data) {
+                toast.error('Network error!');
+            } else if (!Array.isArray(error.response.data.message)) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.dismiss();
+                error.response.data.message.forEach(value => {
+                    toast.error(value.msg);
+                });
             }
-        } else {
-            toast.error('Please complete the CAPTCHA.');
         }
+        
         login.setSubmitting(false);
     };
 
@@ -90,7 +81,7 @@ const login = useFormik({
 
 return (
     <div className={`${(props.showLogin) ? '' : 'hidden'} flex justify-center items-center absolute top-0 w-full h-[100vh] bg-gray-400/80 z-50`}>
-        <div className="relative bg-white w-[300px] md:w-[450px] h-[460px] rounded-[10px] ">
+        <div className="relative bg-white w-[300px] md:w-[450px] h-[400px] rounded-[10px] ">
             <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300">
                 <CloseIcon sx={{ scale: '1.4' }} />
             </div>
@@ -147,9 +138,6 @@ return (
                                 </>
                         }
                     </div>
-                </div>
-                <div className="w-full flex justify-center items-center">
-                    <ReCAPTCHA className="scale-[0.8] md:scale-100" ref={recaptchaRef} sitekey={process.env.REACT_APP_RECAPTCHA_KEY}/>
                 </div>
                 <div className="w-full">
                     <button type="submit" disabled={login.isSubmitting} onClick={login.handleSubmit} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(login.isSubmitting) ? 'cursor-not-allowed' : 'cursor-pointer active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]'}`}>

@@ -1,5 +1,5 @@
 import './RegisterModal.css'
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -10,7 +10,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
-import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { onRegister } from '../../redux/features/user/userSlice'
@@ -18,7 +17,6 @@ import rentifyLogo from "../assets/icons/rentifyLogo.png";
 
 export default function RegisterModal(props) {
     const call = useDispatch();
-    const recaptchaRef = useRef();
     const [showPassword, setShowPassword] = useState(false);
     const [showRepeat, setShowRepeat] = useState(false);
 
@@ -62,34 +60,29 @@ export default function RegisterModal(props) {
 
     const handleSubmit = async (values) => {
         register.setSubmitting(true);
-        const recaptchaValue = recaptchaRef.current.getValue();
 
-        if (recaptchaValue) {
-            try {
-                const response = await call(onRegister({
-                    username: values.username,
-                    password: values.password,
-                    email: values.email
-                }));
-                
-                recaptchaRef.current.reset();
-                toast.success(response.message);
-                handleClose();
-            } catch (error) {
-                if (!error.response.data) {
-                    toast.error('Network error!');
-                } else if (!Array.isArray(error.response.data.message)) {
-                    toast.error(error.response.data.message);
-                } else {
-                    toast.dismiss();
-                    error.response.data.message.forEach(value => {
-                        toast.error(value.msg);
-                    });
-                }
+        try {
+            const response = await call(onRegister({
+                username: values.username,
+                password: values.password,
+                email: values.email
+            }));
+            
+            toast.success(response.message);
+            handleClose();
+        } catch (error) {
+            if (!error.response.data) {
+                toast.error('Network error!');
+            } else if (!Array.isArray(error.response.data.message)) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.dismiss();
+                error.response.data.message.forEach(value => {
+                    toast.error(value.msg);
+                });
             }
-        } else {
-            toast.error('Please complete the CAPTCHA.');
         }
+        
         register.setSubmitting(false);
     };
 
@@ -185,9 +178,6 @@ export default function RegisterModal(props) {
                         <div className='text-[12px] text-start'>
                             {(register.touched.repeatPassword && register.errors.repeatPassword) ? <div className="text-red-600 h-[15px]">{register.errors.repeatPassword}</div> : <div className="h-[15px]">&nbsp;</div>}
                         </div>
-                    </div>
-                    <div className='w-full flex items-center justify-center'>
-                        <ReCAPTCHA type='image' className="scale-[0.9] md:scale-100" ref={recaptchaRef} sitekey={process.env.REACT_APP_RECAPTCHA_KEY}/>
                     </div>
                     <div>
                         <button type='submit' disabled={register.isSubmitting} onClick={register.handleSubmit} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(register.isSubmitting)? 'cursor-not-allowed' : 'cursor-pointer active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]' }`}>

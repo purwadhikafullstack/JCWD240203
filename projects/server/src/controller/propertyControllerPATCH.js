@@ -48,6 +48,7 @@ module.exports = {
             for(let room of parsedRooms) {
                 let temp = {...room};
                 temp.propertyId = propertyId;
+                temp.deleted = 'false';
                 dataRoom.push(temp);
             };
 

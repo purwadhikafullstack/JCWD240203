@@ -37,7 +37,8 @@ module.exports = {
             
             for(let room of newRooms) {
                 room.propertyId = newProperty.id;
-            }
+                room.deleted = 'false';
+            };
 
             const dataImage = [];
 

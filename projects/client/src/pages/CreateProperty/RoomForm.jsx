@@ -36,8 +36,7 @@ export default function RoomForm(props) {
                 description: roomDescription,
                 stock: roomStock,
                 price: Number(price),
-                capacity: roomCapacity,
-                deleted: 'false'
+                capacity: roomCapacity
             })
             props?.setRooms(temp);
             form.reset();

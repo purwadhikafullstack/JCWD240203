@@ -10,7 +10,7 @@ import CustomerReview from "../../components/CustomerReview/CustomerReview";
 import { useDispatch, useSelector } from "react-redux";
 import { setStart, setEnd } from "../../redux/features/property/propertySlice";
 import { getDetailed } from "../../redux/features/property/propertySlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
@@ -36,6 +36,7 @@ export default function ProductDetail() {
     const totalReview = Math.ceil(useSelector((state) => state.review.totalReview)/limit);
     const [showAllPhotos, setShowAllPhotos] = useState(false);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     const params = useParams();
     const call = useDispatch();
 
@@ -83,11 +84,11 @@ export default function ProductDetail() {
                 setLoading(false);
             },
             (error) => {
-                toast.error('network error !', {id: 'FecthingPropertyDetail'});
-                console.log(error);
+                if(error.response.status === 404) {navigate('/notfound')}
+                else {toast.error('Network error !', {id: 'FecthingPropertyDetail'})};
             }
         )
-    }, [call, params.id, start, end, currentUser]);
+    }, [call, params.id, start, end, currentUser, navigate]);
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
