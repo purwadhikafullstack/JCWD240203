@@ -1,14 +1,15 @@
-import OwnerProperty from "../OwnerProperty/OwnerProperty";
-import OwnerPropertyHeaderImage from "../../components/TopAddProperty/OwnerPropertyHeader.png";
+import { useState } from "react";
 import ListingCard from "../ListingCard/ListingCard";
 import './TopAddProperty.css'
-import { Link } from "react-router-dom";
 import ThreeDots from "../ThreeDotsLoading/ThreeDotsLoading";
+import DeletePropertyModal from "../DeletePropertyModal/DeletePropertyModal";
 
 export default function TopAddProperty(props) { 
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="relative bg-white w-full flex flex-col gap-[20px]">
+    <div className="bg-white w-full flex flex-col gap-[20px]">
+          <DeletePropertyModal showModal={showModal} setShowModal={setShowModal}/>
           <div className=" welcomeBack text-left text-[45px] font-bold">
             Welcome Back, {props?.currentUser?.username}
           </div>
@@ -22,9 +23,9 @@ export default function TopAddProperty(props) {
                 (props?.currentUser?.properties?.length > 0)?
                 props?.currentUser?.properties?.map((value, index) => {
                   return(
-                    <Link to={`/property/${value.id}`} key={index} className="flex items-center justify-center w-full md:w-[250px]">
-                      <ListingCard data={value}/>
-                    </Link>
+                    <div key={index} className="flex items-center justify-center w-full md:w-[250px]">
+                      <ListingCard data={value} setShowModal={setShowModal}/>
+                    </div>
                   )
                 })
                 :
