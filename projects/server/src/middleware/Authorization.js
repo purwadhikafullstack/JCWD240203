@@ -67,7 +67,7 @@ module.exports = {
                     data: null
                 })
             }
-
+            
             next();
         }
         catch(error) {

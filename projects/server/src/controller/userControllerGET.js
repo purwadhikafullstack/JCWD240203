@@ -1,4 +1,5 @@
 const db = require('../../models');
+const { Op } = require('sequelize');
 require('dotenv').config();
 const user = db.user;
 const property = db.property;
@@ -14,6 +15,7 @@ module.exports = {
                 include: [
                     {
                         model: property,
+                        where: {[Op.or]: [{status: 'Public'}, {status: 'Private'}]},
                         include: [
                             {
                                 model: propertyImages

@@ -8,9 +8,7 @@ import ThreeDots from "../ThreeDotsLoading/ThreeDotsLoading";
 export default function TopAddProperty(props) { 
 
   return (
-    <div className="relative bg-white w-full">
-      <div className="bg-white">
-        <div className="bg-white flex flex-col gap-[20px]">
+    <div className="relative bg-white w-full flex flex-col gap-[20px]">
           <div className=" welcomeBack text-left text-[45px] font-bold">
             Welcome Back, {props?.currentUser?.username}
           </div>
@@ -35,8 +33,6 @@ export default function TopAddProperty(props) {
                 </div>
               }
           </div>
-        </div>
-      </div>
     </div>
   );
 }

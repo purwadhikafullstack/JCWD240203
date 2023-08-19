@@ -11,7 +11,7 @@ const room = db.room;
 module.exports = {
     getPropertyDetail: async(req, res) => {
         try {
-            const id = req.params.propertyId;
+            const propertyId = req.params.propertyId;
             const userId = req.params.id;
 
             const priceFilter = {
@@ -47,8 +47,9 @@ module.exports = {
                     { model: propertyImages }
                 ],
                 where: {
-                    id: id,
-                    userId: userId
+                    id: propertyId,
+                    userId: userId,
+                    [Op.or]: [{status: 'Public'}, {status: 'Private'}]
                 },
                 order: [
                     [{model: propertyImages} ,'id', 'ASC']

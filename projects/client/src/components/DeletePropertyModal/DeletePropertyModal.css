@@ -2,12 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist&display=swap');
 
 
-.previewListing {
+.headerText {
     font-family: 'Prompt', sans-serif;
 }
 
 
-.detailPreview {
+.descriptionText {
     font-family: 'Urbanist', sans-serif;
 }
 
