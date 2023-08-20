@@ -11,7 +11,6 @@ import { getUser } from "../../redux/features/user/userSlice";
 
 export default function TodayHosting() {
     // State to keep track of the active filter
-    const [reload, setReload] = useState(0);
     const [loading, setLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
     const [activeFilter, setActiveFilter] = useState("CheckingOut");
@@ -46,11 +45,11 @@ export default function TodayHosting() {
         else {
             navigate('/');
         }
-    }, [call, navigate, reload])
+    }, [call, navigate, loading])
 
     return (
         <main className="w-full px-[10px] sm:px-10 lg:px-20 py-[20px]">
-            <TopAddProperty loading={loading} currentUser={currentUser} reload={reload} setReload={setReload}/>
+            <TopAddProperty loading={loading} currentUser={currentUser} setLoading={setLoading}/>
             <div className="middle text-left">
                 <div className="yourListings text-[40px] font-bold">
                     Your reservation

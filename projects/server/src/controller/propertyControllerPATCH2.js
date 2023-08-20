@@ -4,7 +4,8 @@ const property = db.property;
 module.exports = {
     deleteProperty: async(req, res) => {
         try {
-            const { userId, propertyId } = req.params;
+            const userId = req.params.id;
+            const { propertyId } = req.params;
 
             const result = await property.findOne({where: {id: propertyId, userId: userId}});
 

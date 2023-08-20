@@ -115,7 +115,7 @@ export const createProperty = (data) => async(dispatch) => {
 
 export const deleteProperty = (data) => async() => {
     try {
-        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/delete/${data.userId}/${data.propertyId}`, {}, {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/properties/delete/${data.userId}/${data.propertyId}`, {idCard: data.idCard}, {
             headers: {
                 authorization: `Bearer ${data.token}`
             }
