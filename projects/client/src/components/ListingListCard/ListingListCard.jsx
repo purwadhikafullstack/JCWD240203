@@ -30,9 +30,6 @@ export default function ListingListCard(props) {
                 {props?.data?.address || ''}
             </div>
             <div className="flex md:flex-col gap-[30px] w-full md:w-auto justify-center">
-                <Link to={`/hostings/updateproperty/${props?.data?.id}`} className="text-[18px] flex text-white justify-center items-center font-sans h-[45px] w-[125px] rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70 py-">
-                    ✏️ edit
-                </Link>
                 <Link to={`/hostings/events/${props?.data?.id}`} className="text-[18px] flex text-white justify-center items-center font-sans h-[45px] w-[125px] rounded-[20px] font-bold bg-green-800/50 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl hover:bg-green-800/70 py-">
                     ✏️ pricing
                 </Link>

@@ -23,6 +23,7 @@ Router.post('/review', reviews.createReview);
 // PATCH //
 Router.patch('/:id', upload.uploadPropertyImages, Authorization.isCurrentUser, Authorization.isHost, propertiesPATCH.updateProperty);
 
+// treat id as userId
 Router.patch('/delete/:id/:propertyId', Authorization.isOwner, Authorization.isHost, propertiesPATCH2.deleteProperty);
 
 module.exports = Router;

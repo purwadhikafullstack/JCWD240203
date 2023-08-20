@@ -113,6 +113,21 @@ export const createProperty = (data) => async(dispatch) => {
     }
 };
 
+export const deleteProperty = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/delete/${data.userId}/${data.propertyId}`, {}, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
 export const updateProperty = (data) => async() => {
     try {
         let formData = new FormData();
@@ -165,7 +180,7 @@ export const createPrice = (data) => async() => {
     catch(error) {
         return Promise.reject(error);
     }
-}
+};
 
 export const { setProperty, setTotalProperty, setLocation, setGuest, setStart, setSort, setType, setEnd } = propertySlice.actions;
 export default propertySlice.reducer;

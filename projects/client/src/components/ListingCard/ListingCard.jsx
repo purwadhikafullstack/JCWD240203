@@ -7,7 +7,11 @@ export default function ListingCard(props) {
     const [showMenu, setShowMenu] = useState(false);
     const onMenuClick = () => {setShowMenu(!showMenu)};
 
-    const showDeleteModal = () => {if(props?.setShowModal) {props?.setShowModal(true)}};
+    const showDeleteModal = (value) => {
+        setShowMenu(false);
+        if(props?.setShowModal) {props?.setShowModal(true)};
+        if(props?.setSelectedProperty) {props?.setSelectedProperty(value)}
+    };
 
     return (
       <div className="flex flex-col h-full w-full bg-gray-200 rounded-[10px] cursor-pointer">
@@ -22,7 +26,7 @@ export default function ListingCard(props) {
                 <Link to={`/hostings/updateproperty/${props?.data?.id}`} className="flex-1 bg-white transition-all duration-300 hover:bg-gray-400">
                     Edit
                 </Link>
-                <div onClick={showDeleteModal} className="flex-1 bg-white transition-all duration-300 hover:bg-gray-300">
+                <div onClick={() => showDeleteModal(props?.data)} className="flex-1 bg-white transition-all duration-300 hover:bg-gray-300">
                     Delete
                 </div>
             </div>

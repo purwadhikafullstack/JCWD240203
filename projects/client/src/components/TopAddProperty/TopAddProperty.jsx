@@ -6,10 +6,11 @@ import DeletePropertyModal from "../DeletePropertyModal/DeletePropertyModal";
 
 export default function TopAddProperty(props) { 
   const [showModal, setShowModal] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState({});
 
   return (
     <div className="bg-white w-full flex flex-col gap-[20px]">
-          <DeletePropertyModal showModal={showModal} setShowModal={setShowModal}/>
+          <DeletePropertyModal showModal={showModal} setShowModal={setShowModal} property={selectedProperty} reload={props?.reload} setReload={props?.setReload}/>
           <div className=" welcomeBack text-left text-[45px] font-bold">
             Welcome Back, {props?.currentUser?.username}
           </div>
@@ -24,7 +25,7 @@ export default function TopAddProperty(props) {
                 props?.currentUser?.properties?.map((value, index) => {
                   return(
                     <div key={index} className="flex items-center justify-center w-full md:w-[250px]">
-                      <ListingCard data={value} setShowModal={setShowModal}/>
+                      <ListingCard data={value} setShowModal={setShowModal} setSelectedProperty={setSelectedProperty}/>
                     </div>
                   )
                 })
