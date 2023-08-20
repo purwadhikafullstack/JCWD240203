@@ -6,11 +6,12 @@ import UpcomingBooked from "../../components/UpcomingBooked/UpcomingBooked";
 import QnaCard from "../../components/QnACard/qnaCard";
 import './TodayHosting.css'
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/features/user/userSlice";
 
 export default function TodayHosting() {
     // State to keep track of the active filter
+    const [reload, setReload] = useState(0);
     const [loading, setLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
     const [activeFilter, setActiveFilter] = useState("CheckingOut");
@@ -45,11 +46,11 @@ export default function TodayHosting() {
         else {
             navigate('/');
         }
-    }, [call, navigate])
+    }, [call, navigate, reload])
 
     return (
         <main className="w-full px-[10px] sm:px-10 lg:px-20 py-[20px]">
-            <TopAddProperty loading={loading} currentUser={currentUser}/>
+            <TopAddProperty loading={loading} currentUser={currentUser} reload={reload} setReload={setReload}/>
             <div className="middle text-left">
                 <div className="yourListings text-[40px] font-bold">
                     Your reservation
@@ -96,7 +97,7 @@ export default function TodayHosting() {
                 <div className="w-full">
                     {contentToShow}
                 </div>
-                <div className="qnaCard justify-between flex flex-col lg:flex-row py-[120px]">
+                <div className="qnaCard justify-between flex flex-col lg:flex-row pt-[80px]">
                     <div>
                         <div className="text-[49px] md:text-6xl font-semibold mb-10 text-left">
                             Resources and tips

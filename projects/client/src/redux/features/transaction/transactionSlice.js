@@ -132,16 +132,30 @@ export const updateStatus = (data) => async(dispatch) => {
             }
         });
 
-        setTimeout(() => {
-            dispatch(getOrder({
-                id: data.userId,
-                page: data.page,
-                limit: data.limit
-            })).then(
-                () => {},
-                (error) => {return Promise.reject(error)}
-            )
-        }, 200);
+        if(data.type === 'Order') {
+            setTimeout(() => {
+                dispatch(getOrder({
+                    id: data.userId,
+                    page: data.page,
+                    limit: data.limit
+                })).then(
+                    () => {},
+                    (error) => {return Promise.reject(error)}
+                )
+            }, 200);
+        }
+        else if (data.type === 'History') {
+            setTimeout(() => {
+                dispatch(getHistory({
+                    id: data.userId,
+                    page: data.page,
+                    limit: data.limit
+                })).then(
+                    () => {},
+                    (error) => {return Promise.reject(error)}
+                )
+            }, 200);
+        }
 
         return Promise.resolve(response);
     }

@@ -7,6 +7,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import TransactionFilterBar from "./TransactionFilterBar";
+import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import './TransactionPage.css'
 
 export default function TransactionPage() {
@@ -16,6 +17,7 @@ export default function TransactionPage() {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const currentUser = useSelector((state) => state.user.currentUser);
     const [month, setMonth] = useState(new Date().getMonth());
+    const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState('all');
     const [page, setPage] = useState(1);
     const call = useDispatch();
@@ -40,13 +42,13 @@ export default function TransactionPage() {
                 page: page,
                 limit: limit,
                 status: status,
-                month: month + 1
+                month: month
             })).then(
                 () => {
-
+                    setLoading(false);
                 },
                 (error) => {
-                    toast.error('err');
+                    toast.error('Network error !, unable to get transaction history', {id: 'TransactionHistoryToast'});
                     console.log(error);
                 }
             )
@@ -56,16 +58,21 @@ export default function TransactionPage() {
         }
     }, [call, page, status, month, currentUser, navigate])
     return(
-        <div onScroll={checkScroll} ref={listInnerRef} className="w-full h-full overflow-y-auto removeScroll">
+        <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-full overflow-y-auto removeScroll">
             <Toaster/>
             <Header/>
-            <div className="flex flex-col justify-start px-[15px] py-[10px]">
+            <div className="flex flex-col flex-grow justify-start px-[15px] py-[10px]">
                 <div className="yourHistory text-[26px] font-bold text-start border-b-[1px] border-gray-600">
                     Your history
                 </div>
-                <div className="flex flex-col py-[10px]">
+                <div className="flex flex-col flex-grow py-[10px]">
                     <TransactionFilterBar status={status} setStatus={setStatus} months={months} month={month} setMonth={setMonth}/>
                     {
+                        (loading)?
+                        <div className="w-full flex flex-col h-full items-center justify-center">
+                            <ThreeDots/>
+                        </div>
+                        :
                         (history?.length > 0)?
                         history?.map((value, index) => {
                             return(
@@ -79,6 +86,14 @@ export default function TransactionPage() {
                         <div className="text-[30px] font-bold">
                             You have not made any bookings !
                         </div>
+                    }
+                    {
+                        (page + 1 <= totalTransaction)?
+                        <div className="flex justify-center w-full">
+                            <ThreeDots/>
+                        </div>
+                        :
+                        null
                     }
                 </div>
             </div>

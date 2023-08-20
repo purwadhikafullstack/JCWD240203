@@ -1,7 +1,7 @@
 import { Line } from "react-chartjs-2";
 import Chart, { CategoryScale } from 'chart.js/auto';
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCompleted } from "../../redux/features/transaction/transactionSlice";
 import { Toaster } from "react-hot-toast";
 import SalesFilterBar from "./SalesFilterBar";
@@ -14,6 +14,7 @@ export default function SalesReport() {
         CategoryScale
     );
     const call = useDispatch();
+    const currentUser = useSelector((state) => state.user.currentUser);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const totalDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     const totalDaysLeap = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -87,7 +88,7 @@ export default function SalesReport() {
         else {
             navigate('/')
         }
-    }, [call, year, navigate, type, selectedMonth]);
+    }, [call, year, navigate, type, selectedMonth, currentUser]);
 
     useEffect(() => {
         if(type === 'Yearly') {

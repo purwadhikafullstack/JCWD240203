@@ -1,4 +1,5 @@
 const db = require('../../models');
+const { Op } = require('sequelize');
 require('dotenv').config();
 const user = db.user;
 const property = db.property;
@@ -14,6 +15,7 @@ module.exports = {
                 include: [
                     {
                         model: property,
+                        where: {[Op.or]: [{status: 'Public'}, {status: 'Private'}]},
                         include: [
                             {
                                 model: propertyImages
@@ -36,6 +38,15 @@ module.exports = {
                 ],
                 attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
             });
+
+            if(!existingUser) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'not found !',
+                    data: null
+                })
+            }
+
             existingUser = JSON.parse(JSON.stringify(existingUser, null, 2));
             existingUser.properties = existingUser.properties.map((property) => {
                 let parsed = JSON.parse(JSON.stringify(property, null, 2))

@@ -52,14 +52,14 @@ export default function UpdateProperty() {
         }
         else {
           toast.error('Property must have atleast 1 room !', {id: loading});
-          return false;
         }
       }
       setIsSubmitting(false);
     }
   
     useEffect(() => {
-      if(localStorage.getItem('user')) {
+      const user = JSON.parse(localStorage.getItem('user')) || {};
+      if(user.idCard !== null && user.status === 'verified') {
         call(getPropertyDetail({
           userId: JSON.parse(localStorage.getItem('user')).id,
           propertyId: Number(params.id),
@@ -70,15 +70,15 @@ export default function UpdateProperty() {
             setLoading(false);
           },
           (error) => {
-            toast.error('Network error !, please try again later');
-            console.log(error);
+            if(error.response.status === 404) {navigate('/notfound')}
+            else {toast.error('Network error !, please try again later', {id: 'GetPropertyErrorToast'});}
           }
         )
       }
       else {
         navigate('/');
       }
-    }, [call, currentUser])
+    }, [call, currentUser, navigate, params?.id])
 
     return (
         <div className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">

@@ -141,6 +141,53 @@ export const verifyAccount = (data) => async(dispatch) => {
     catch(error) {
         return Promise.reject(error);
     }
+};
+
+export const sendPasswordResetEmail = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/forgotpassword`, {
+            username: data.username
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
+export const resetPassword = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/resetpassword`, {
+            code: data.code,
+            username: data.username,
+            newPassword: data.newPassword
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
+}
+
+export const changePassword = (data) => async() => {
+    try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/changepassword`, {
+            userId: data.userId,
+            password: data.password,
+            newPassword: data.newPassword
+        }, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
 }
 
 export const onLogout = () => (dispatch) => {

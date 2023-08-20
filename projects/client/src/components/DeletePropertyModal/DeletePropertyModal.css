@@ -2,12 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist&display=swap');
 
 
-.previewListing {
+.headerText {
     font-family: 'Prompt', sans-serif;
 }
 
 
-.detailPreview {
+.descriptionText {
     font-family: 'Urbanist', sans-serif;
 }
 
@@ -21,6 +21,26 @@
     }
 }
 
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(100%);
+    }
+}
+
 .modal-entering {
     animation: slideUp 0.3s ease-in-out;
+}
+
+.modal-exiting {
+    animation: slideDown 0.3s ease-in-out;
+}
+
+.hideContainer {
+    transition-delay: 0.3s;
+    transform-origin: bottom;
+    transform: scale(0);
 }

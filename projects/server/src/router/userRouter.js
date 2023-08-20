@@ -1,6 +1,6 @@
 const express = require('express');
 const { checkSchema, validationResult } = require('express-validator');
-const { usersPOST, usersGET, usersPATCH } = require('../controller');
+const { usersPOST, usersGET, usersPATCH, usersPATCH2 } = require('../controller');
 const { uploadUserImage } = require('../middleware/upload');
 const Authorization = require('../middleware/Authorization');
 
@@ -68,6 +68,12 @@ Router.post('/login', async(req, res, next) => {
 
 // PATCH //
 Router.patch('/accountVerify', usersPATCH.verifyEmail);
+
+Router.patch('/changepassword', usersPATCH2.changePassword);
+
+Router.patch('/forgotpassword', usersPATCH2.sendPasswordResetEmail);
+
+Router.patch('/resetpassword', usersPATCH2.resetPassword);
 
 Router.patch('/:id', Authorization.isOwner, uploadUserImage, usersPATCH.updateUser);
 

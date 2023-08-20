@@ -18,7 +18,7 @@ module.exports = {
                 })
             };
 
-            if(new Date(checkIn) >= new Date(checkOut)) {
+            if((new Date(checkIn) >= new Date(checkOut)) || (new Date(checkIn) <= new Date().setHours(0, 0, 0, 0) ) || (new Date(checkOut) < new Date().setHours(0, 0, 0, 0))) {
                 return res.status(400).send({
                     isError: true,
                     message: 'bad request',
@@ -31,7 +31,7 @@ module.exports = {
                 include: [
                     {
                         model: room,
-                        where: {id: roomId},
+                        where: {id: roomId, deleted: 'false'},
                         required: true
                     }
                 ]
@@ -44,8 +44,15 @@ module.exports = {
                     data: null
                 })
             }
+            else if (propertyWithRoomExist.status === 'Private') {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'Property is privated !',
+                    data: null
+                })
+            }
 
-            let existingTransaction = await transaction.findAll({
+            let existingTransaction = await transaction.findOne({
                 where: {
                     [Op.or]: [{status: 'pending'}, {status: 'completed'}],
                     userId: userId,
@@ -55,7 +62,7 @@ module.exports = {
                 }
             })
             
-            if(existingTransaction?.length > 0 && existingTransaction?.roomId === roomId) {
+            if(existingTransaction) {
                 return res.status(400).send({
                     isError: true,
                     message: 'You already booked in this property',

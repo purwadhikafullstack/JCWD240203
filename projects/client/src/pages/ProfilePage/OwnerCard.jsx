@@ -118,7 +118,7 @@ export default function OwnerCard(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-[40px] justify-center items-center md:items-start w-full md:w-[auto]">
+                    <div className="flex flex-col gap-[25px] justify-center items-center md:items-start w-full md:w-[auto]">
                         <div className="flex flex-col gap-[10px] justify-center md:justify-start md:w-[200px] text-start">
                             <div className="h-[55px]">
                                 <TextField onChange={(e) => handleChange(e, 'email')} size="small" label='Email' value={props?.newEmail || ''} sx={{ width: '200px' }} />
@@ -126,7 +126,7 @@ export default function OwnerCard(props) {
                                     Must be valid email !
                                 </div>
                             </div>
-                            <button disabled={isSending} onClick={onVerifyEmail} className={`${(props?.status === 'verified') ? 'hidden' : ''} flex justify-center items-center h-[40px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-[165px] py-[5px]  hover:bg-green-900/70`}>
+                            <button disabled={isSending} onClick={onVerifyEmail} className={`${(props?.status === 'verified') ? 'hidden' : ''} flex justify-center items-center h-[40px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-full py-[5px]  hover:bg-green-900/70`}>
                                 Verify Email !
                             </button>
                         </div>
@@ -139,6 +139,9 @@ export default function OwnerCard(props) {
                                     <MenuItem value='Female'>Female</MenuItem>
                                 </Select>
                             </FormControl>
+                            <button className="flex md:hidden justify-center items-center text-white font-bold font-sans h-[35px] w-full text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                                Change Password
+                            </button>
                         </div>
                     </div>
                     <div className="flex flex-col justify-start items-center md:items-start w-[400px] h-full">
@@ -178,7 +181,10 @@ export default function OwnerCard(props) {
                         }
                     </div>
                 </div>
-                <div className={`flex justify-center md:justify-end w-full py-[10px]`}>
+                <div className={`flex justify-center md:justify-between w-full py-[10px]`}>
+                    <button className="hidden md:flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                        Change Password
+                    </button>
                     <button onClick={handleClick} className="flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
                         Save Changes
                     </button>

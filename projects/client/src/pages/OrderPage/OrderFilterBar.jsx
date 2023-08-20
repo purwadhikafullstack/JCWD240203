@@ -8,8 +8,8 @@ export default function OrderFilterBar(props) {
     return(
         <div className="flex items-center justify-center w-full h-[65px] gap-[20px] rounded-[10px] border-gray-600 border-[1px] mb-[10px]">
             <FormControl className="w-[125px]">
-                <InputLabel size="small" >Status:</InputLabel>
-                <Select size="small" label={'Status:'} value={props?.months[props?.month]} fullWidth>
+                <InputLabel size="small" >Month:</InputLabel>
+                <Select size="small" label={'Month:'} value={props?.months[props?.month]} fullWidth>
                     {
                         props?.months?.map((value, index) => {
                             return(

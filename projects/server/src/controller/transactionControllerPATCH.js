@@ -41,7 +41,7 @@ module.exports = {
             let old = [];
             for(let i in req?.files) {
                 if(dataExist.paymentProof && dataExist.paymentProof !== process.env.LINK + '/Default/DefaultTransaction.png') {
-                    old.push({path: 'Public/' + dataExist.paymentProof.split(`${process.env.LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.paymentProof.split(`${process.env.LINK}/`)[1]})
                 }
             }
 

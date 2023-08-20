@@ -11,17 +11,23 @@ module.exports = {
     getTransaction: async(req, res) => {
         try {
             const { id }= req.params;
-            const { limit, page, status, month } = req.query;
+            const { limit, page, status, month, year } = req.query;
 
             const filter = {userId: id};
             if(status !== 'all' && (status === 'pending' || status === 'completed' || status === 'cancelled')) {
                 filter.status = status
             };
 
-            if(month > 0 && month < 13) {
-                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month)
-            }
+            if(month < 0 || month > 11) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request !',
+                    data: null
+                });
+            };
             
+            filter.createdAt = {[Op.between]: [new Date(year || new Date().getFullYear(), month, 1), new Date(year || new Date().getFullYear(), month + 1, 0)]}
+                        
             const result = await transaction.findAndCountAll({
                 where: filter,
                 include: [
@@ -61,18 +67,24 @@ module.exports = {
     getOrder: async(req, res) => {
         try {
             const { id }= req.params;
-            const { limit, page, status, month } = req.query;
-
-            const filter = {};
+            const { limit, page, status, month, year } = req.query;
+            //[Op.and]: db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), year || new Date().getFullYear())
+            //[Op.and]: db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month)
+            let filter = {};
             if(status !== 'all' && (status === 'pending' || status === 'completed' || status === 'cancelled')) {
                 filter.status = status
             };
 
-            if(month > 0 && month < 13) {
-                filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
-                filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), new Date().getFullYear());
-            }
-
+            if(month < 0 || month > 11) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request !',
+                    data: null
+                });
+            };
+            console.log(month);
+            filter.createdAt = {[Op.between]: [new Date(year || new Date().getFullYear(), month, 1), new Date(year || new Date().getFullYear(), month + 1, 0)]}
+            
             const result = await transaction.findAndCountAll({
                 where: filter,
                 include: [
@@ -88,7 +100,8 @@ module.exports = {
                         },
                         required: true
                     },
-                    {model: room}
+                    {model: room},
+                    {model: user}
                 ],
                 order: [
                     [{model: property}, {model: propertyImages} ,'id', 'ASC'],
@@ -122,13 +135,21 @@ module.exports = {
                 status: 'completed'
             }
 
+            if((type === 'Yearly' && !year) || (type === 'Daily' && !month)) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'bad request!',
+                    data: null
+                })
+            }
+
             if(type === 'Yearly') {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('transaction.updatedAt')), year);
             }
             else if (type === 'Daily') {
                 filter[Op.and] = db.sequelize.where(db.sequelize.fn('month',db.sequelize.col('transaction.updatedAt')), month);
             }
-
+            
             const result = await transaction.findAndCountAll({
                 where: filter,
                 include: [

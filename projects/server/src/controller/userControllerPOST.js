@@ -1,8 +1,6 @@
 const db = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { deleteFiles } = require('../helper/deleteFiles');
-require('dotenv').config();
 const user = db.user;
 
 module.exports = {
@@ -22,7 +20,7 @@ module.exports = {
                 }
             }
             
-            const hash = await bcrypt.hash(password, 10);
+            const hash = await bcrypt.hash(password, Number(process.env.ROUNDS));
 
             await user.create({
                 username: username,
@@ -98,7 +96,7 @@ module.exports = {
                     }) 
                 }
             }
-
+            
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status

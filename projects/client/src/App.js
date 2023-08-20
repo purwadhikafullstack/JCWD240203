@@ -1,6 +1,4 @@
-import axios from "axios";
 import "./App.css";
-import logo from "./logo.svg"
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
@@ -18,6 +16,8 @@ import UpdateProperty from "./pages/UpdateProperty/MainPage";
 import { Toaster } from "react-hot-toast";
 import CreateProperty from "./pages/CreateProperty/MainPage";
 import CreateEvent from "./pages/CreateEvent/CreateEvent";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import Error404 from "./pages/404Error/404Error";
 
 function App() {
@@ -59,7 +59,9 @@ function App() {
         <Route path={'/hostings/addproperty'} element={<CreateProperty/>}/>
         <Route path={'/hostings/updateproperty/:id'} element={<UpdateProperty/>}/>
         <Route path={'/hostings/events/:id'} element={<CreateEvent/>}/>
-        <Route path={'/badpage'} element={<Error404/>}/>
+        <Route path={'/changepassword'} element={<ChangePassword/>}/>
+        <Route path={'/forgotpassword'} element={<ResetPassword/>}/>
+        <Route path={'/notfound'} element={<Error404/>}/>
       </Routes>
     </div>
   );

@@ -11,8 +11,9 @@ const room = db.room;
 module.exports = {
     getPropertyDetail: async(req, res) => {
         try {
-            const id = req.params.propertyId;
-            
+            const propertyId = req.params.propertyId;
+            const userId = req.params.id;
+
             const priceFilter = {
                 [Op.and]: db.sequelize.where(db.sequelize.fn('year',db.sequelize.col('rooms.prices.start')), new Date().getFullYear()),      
                 [Op.or]: [
@@ -40,17 +41,28 @@ module.exports = {
                                 required: false
                             }
                         ],
+                        where: {deleted: 'false'}
                     },
                     { model: category },
                     { model: propertyImages }
                 ],
                 where: {
-                    id: id
+                    id: propertyId,
+                    userId: userId,
+                    [Op.or]: [{status: 'Public'}, {status: 'Private'}]
                 },
                 order: [
                     [{model: propertyImages} ,'id', 'ASC']
                 ],
             });
+
+            if(!result) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'not found !',
+                    data: null
+                })
+            }
 
             return res.status(200).send({
                 isError: true,

@@ -17,7 +17,7 @@ app.use(
 // }
 
 app.use(express.json());
-app.use(express.static('Public'));
+app.use(express.static(join(__dirname, 'Public')));
 //#region API ROUTES
 
 // ===========================

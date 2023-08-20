@@ -12,6 +12,15 @@ module.exports = {
         const propertyId = Number(req.params.id);
         const {propertyName, propertyDescription, city, address, status, categoryId, propertyRooms, facilities } = req.body;
         const images = req?.files?.images;
+
+        if(!propertyName || !propertyDescription || !city || !address || !categoryId || !propertyRooms) {
+            return res.status(400).send({
+                isError: true,
+                message: 'bad request !',
+                data: null
+            })
+        };
+
         try {
             const parsedFacility = JSON.parse(facilities);
             const parsedRooms = JSON.parse(propertyRooms);
@@ -29,13 +38,34 @@ module.exports = {
                 transaction: t
             });
             
+            const prevRoom = await room.findAll({
+                where: {
+                    propertyId: propertyId
+                }
+            });
+
             const dataRoom = []
             for(let room of parsedRooms) {
                 let temp = {...room};
                 temp.propertyId = propertyId;
+                temp.deleted = 'false';
                 dataRoom.push(temp);
-            }
+            };
 
+            const deletedRoom = [];
+            for(let room of prevRoom) {
+                let deleted = true;
+                for(let i of parsedRooms) {
+                    if(room?.id === i?.id) {
+                        deleted = false;
+                        break;
+                    }
+                };
+                if(deleted) {
+                    deletedRoom.push(room.id);
+                }
+            };
+            
             // Update Images
             const dataImage = [];
             const oldRows = [];
@@ -57,9 +87,9 @@ module.exports = {
 
                 for(let image of prevImages) {
                     oldRows.push(image.id);
-                    //unnecessary if statement for production delete it if you want
+                    //unnecessary if statement for production. Delete it if you want
                     if(image.url.split(`${process.env.LINK}/`)[1]) {
-                        old.push({path: 'Public/' + image.url.split(`${process.env.LINK}/`)[1]})
+                        old.push({path: 'src/Public/' + image.url.split(`${process.env.LINK}/`)[1]})
                     }
                 }
     
@@ -113,6 +143,9 @@ module.exports = {
                 updateOnDuplicate: ['name', 'description', 'stock', 'capacity', 'price'],
                 transaction: t
             });
+            if(deletedRoom?.length > 0) {
+                await room.update({deleted: 'true'}, {where: {id: deletedRoom}});
+            }
             
             await t.commit();
 

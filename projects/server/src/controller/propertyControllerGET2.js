@@ -13,7 +13,7 @@ const user = db.user;
 module.exports = {
     propertyDetailed: async(req, res) => {
         try {
-            const id = req.params.id;
+            const propertyId = req.params.propertyId;
             const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
             const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
             const { limit, page } = req.query;
@@ -67,6 +67,7 @@ module.exports = {
                     },
                     { 
                         model: room,
+                        where: {deleted: 'false'},
                         include: [
                             {
                                 model: price,
@@ -78,17 +79,28 @@ module.exports = {
                                 where: transactionFilter,
                                 required: false
                             },
-                        ]
+                        ],
+                        required: false
                     },
                     { model: propertyImages },
                 ],
                 where: {
-                    id: id
+                    id: propertyId,
+                    status: 'Public'
                 },
                 order: [
                     [{model: propertyImages} ,'id', 'ASC']
                 ],
-            })
+            });
+
+            if(!result) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'not found !',
+                    data: null
+                })
+            };
+
             const count = await review.count({where: {propertyId: result.id}});
             result = JSON.parse(JSON.stringify(result, null, 2));
             result.totalReview = count;
