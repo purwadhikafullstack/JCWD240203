@@ -1,9 +1,15 @@
-import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 import CloseIcon from "@mui/icons-material/Close";
 import "./DeletePropertyModal.css";
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { deleteProperty } from "../../redux/features/property/propertySlice";
+import { useState } from "react";
 
 export default function DeletePropertyModal(props) {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const call = useDispatch();
+
   const handleClose = () => {
     if(props?.setShowModal) {props?.setShowModal(false)};
   };
@@ -17,9 +23,35 @@ export default function DeletePropertyModal(props) {
     return value;
   };
 
-  const deleteProperty = () => {
-    if(props?.setReload) {props?.setReload(props?.reload + 1)};
-    handleClose();
+  const onDelete = async() => {
+    setIsDeleting(true);
+    const loading = toast.loading('Deleting property...', {id: 'DeleteingPropertyToast'});
+    const user = JSON.parse(localStorage.getItem('user'));
+    try {
+        await call(deleteProperty({
+          userId: user.id,
+          propertyId: props?.property?.id,
+          token: user.token,
+          idCard: user.idCard
+        }));
+
+        toast.success('Property deleted !', {id: loading});
+        if(props?.setLoading) {props?.setLoading(true)};
+        handleClose();
+    }
+    catch(error) {
+      if (!error.response.data) {
+          toast.error('Network error!', {id: loading});
+      } else if (!Array.isArray(error.response.data.message)) {
+          toast.error(error.response.data.message, {id: loading});
+      } else {
+          toast.dismiss();
+          error.response.data.message.forEach(value => {
+              toast.error(value.msg);
+          });
+      }
+    }
+    setIsDeleting(false);
   };
 
   return (
@@ -39,8 +71,8 @@ export default function DeletePropertyModal(props) {
               <div className="flex w-full justify-center gap-[20px]">
                   <Button size="small" variant="contained"  color="success">
                       Cancel
-                </Button>
-                  <Button onClick={deleteProperty} size="small" variant="contained"  color="error">
+                  </Button>
+                  <Button disabled={isDeleting} onClick={onDelete} size="small" variant="contained"  color="error">
                       Delete
                   </Button>
               </div>

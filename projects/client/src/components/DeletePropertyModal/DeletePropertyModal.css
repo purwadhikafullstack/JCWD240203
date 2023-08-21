@@ -10,37 +10,3 @@
 .descriptionText {
     font-family: 'Urbanist', sans-serif;
 }
-
-@keyframes slideUp {
-    from {
-        transform: translateY(100%);
-    }
-
-    to {
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(100%);
-    }
-}
-
-.modal-entering {
-    animation: slideUp 0.3s ease-in-out;
-}
-
-.modal-exiting {
-    animation: slideDown 0.3s ease-in-out;
-}
-
-.hideContainer {
-    transition-delay: 0.3s;
-    transform-origin: bottom;
-    transform: scale(0);
-}

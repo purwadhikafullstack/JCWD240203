@@ -10,7 +10,7 @@ export default function TopAddProperty(props) {
 
   return (
     <div className="bg-white w-full flex flex-col gap-[20px]">
-          <DeletePropertyModal showModal={showModal} setShowModal={setShowModal} property={selectedProperty} reload={props?.reload} setReload={props?.setReload}/>
+          <DeletePropertyModal showModal={showModal} setShowModal={setShowModal} property={selectedProperty} setLoading={props?.setLoading}/>
           <div className=" welcomeBack text-left text-[45px] font-bold">
             Welcome Back, {props?.currentUser?.username}
           </div>

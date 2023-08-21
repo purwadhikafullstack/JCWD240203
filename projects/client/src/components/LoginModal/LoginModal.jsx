@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
@@ -45,20 +45,20 @@ export default function LoginModal(props) {
 
     const handleSubmit = async (values) => {
         login.setSubmitting(true);
-        
+        const loading = toast.loading('Logging in...', {id: 'LoginLoadingToast'});
         try {
             const response = await call(onLogin({
                 username: values.username,
                 password: values.password
             }));
             
-            toast.success(response.message);
+            toast.success(response.message, {id: loading});
             handleClose();
         } catch (error) {
             if (!error.response.data) {
-                toast.error('Network error!');
+                toast.error('Network error!', {id: loading});
             } else if (!Array.isArray(error.response.data.message)) {
-                toast.error(error.response.data.message);
+                toast.error(error.response.data.message, {id: loading});
             } else {
                 toast.dismiss();
                 error.response.data.message.forEach(value => {
@@ -66,7 +66,6 @@ export default function LoginModal(props) {
                 });
             }
         }
-        
         login.setSubmitting(false);
     };
 
@@ -80,69 +79,71 @@ const login = useFormik({
 });
 
 return (
-    <div className={`${(props.showLogin) ? '' : 'hidden'} flex justify-center items-center absolute top-0 w-full h-[100vh] bg-gray-400/80 z-50`}>
-        <div className="relative bg-white w-[300px] md:w-[450px] h-[400px] rounded-[10px] ">
-            <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300">
-                <CloseIcon sx={{ scale: '1.4' }} />
-            </div>
-            <div className="loginTitle w-full py-[10px] text-center text-[20px] font-display font-semibold text-zinc-700/90 border-b-[1px] border-gray-400">
-                Login
-            </div>
-            <div className="h-[65px] w-[110px] mx-auto">
-                <img alt="" src={rentifyLogo} />
-            </div>
-            <div className="welcomeBack mt-2 text-[20px] font-display font-medium">
-                Hello, Welcome Back!
-            </div>
-            <div className="w-[250px] md:w-[300px] flex flex-col gap-[20px] mb-auto mt-[10px] mx-auto">
-                <div className="w-full">
-                    <TextField name="username" onChange={login.handleChange} onBlur={login.handleBlur} value={login.values.username} label='Username' size="small" fullWidth autoComplete="off" />
-                    <div className="h-[5px] w-full text-[12px] text-start text-red-600">
-                        {
-                            (login.touched.username && login.errors.username) ?
-                                login.errors.username
-                                :
-                                <>
-                                </>
-                        }
-                    </div>
+    <div className={`${(props?.showLogin) ? '' : 'hideContainer'} absolute z-50 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>
+        <div className={`${(props.showLogin) ? 'modal-entering' : 'modal-exiting'} flex justify-center items-center bg-gray-400/80 w-full h-full`}>
+            <div className="relative bg-white w-[300px] md:w-[450px] h-[400px] rounded-[10px] ">
+                <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300 cursor-pointer">
+                    <CloseIcon sx={{ scale: '1.4' }} />
                 </div>
-                <div className="w-full">
-                    <FormControl sx={{ width: '100%' }} variant="outlined" size="small">
-                        <InputLabel>Password</InputLabel>
-                        <OutlinedInput
-                            label='Password'
-                            type={showPassword ? 'text' : 'password'}
-                            name="password"
-                            onChange={login.handleChange}
-                            onBlur={login.handleBlur}
-                            value={login.values.password}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
+                <div className="loginTitle w-full py-[10px] text-center text-[20px] font-display font-semibold text-zinc-700/90 border-b-[1px] border-gray-400">
+                    Login
+                </div>
+                <div className="h-[65px] w-[110px] mx-auto">
+                    <img alt="" src={rentifyLogo} />
+                </div>
+                <div className="welcomeBack mt-2 text-[20px] font-display font-medium">
+                    Hello, Welcome Back!
+                </div>
+                <div className="w-[250px] md:w-[300px] flex flex-col gap-[20px] mb-auto mt-[10px] mx-auto">
+                    <div className="w-full">
+                        <TextField name="username" onChange={login.handleChange} onBlur={login.handleBlur} value={login.values.username} label='Username' size="small" fullWidth autoComplete="off" />
+                        <div className="h-[5px] w-full text-[12px] text-start text-red-600">
+                            {
+                                (login.touched.username && login.errors.username) ?
+                                    login.errors.username
+                                    :
+                                    <>
+                                    </>
                             }
-                        />
-                    </FormControl>
-                    <div className="h-[5px] w-full text-[12px] text-start text-red-600">
-                        {
-                            (login.touched.password && login.errors.password) ?
-                                login.errors.password
-                                :
-                                <>
-                                </>
-                        }
+                        </div>
                     </div>
-                </div>
-                <div className="w-full">
-                    <button type="submit" disabled={login.isSubmitting} onClick={login.handleSubmit} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(login.isSubmitting) ? 'cursor-not-allowed' : 'cursor-pointer active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]'}`}>
-                        Log In
-                    </button>
+                    <div className="w-full">
+                        <FormControl sx={{ width: '100%' }} variant="outlined" size="small">
+                            <InputLabel>Password</InputLabel>
+                            <OutlinedInput
+                                label='Password'
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                onChange={login.handleChange}
+                                onBlur={login.handleBlur}
+                                value={login.values.password}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                        <div className="h-[5px] w-full text-[12px] text-start text-red-600">
+                            {
+                                (login.touched.password && login.errors.password) ?
+                                    login.errors.password
+                                    :
+                                    <>
+                                    </>
+                            }
+                        </div>
+                    </div>
+                    <div className="w-full">
+                        <button type="submit" disabled={login.isSubmitting} onClick={login.handleSubmit} className={`py-[8px] text-2xl font-sans rounded-[10px] bg-green-700 text-white font-extrabold select-none transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl px-10 ${(login.isSubmitting) ? 'cursor-not-allowed' : 'cursor-pointer active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]'}`}>
+                            Log In
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,6 +9,8 @@ import Footer from "../../components/footerRentify/footerPage";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
 import "./ProductPage.css"
 import SortingBar from "./SortingBar";
+import LoginModal from "../../components/LoginModal/LoginModal";
+import RegisterModal from "../../components/RegisterModal/RegisterModal";
 
 export default function ProductPage() {
     const [loading, setLoading] = useState(true);
@@ -63,6 +65,8 @@ export default function ProductPage() {
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] overflow-y-auto removeScroll">
             <Header showLogin={showLogin} setShowLogin={setShowLogin} showRegister={showRegister} setShowRegister={setShowRegister} />
+            <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
+            <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
             <div className="flex flex-col w-full">
                 <FilterBar applyFilter={applyFilter} setApplyFilter={setApplyFilter} setLoading={setLoading}/>
             </div>
