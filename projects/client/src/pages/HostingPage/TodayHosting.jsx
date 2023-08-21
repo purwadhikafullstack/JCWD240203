@@ -34,13 +34,15 @@ export default function TodayHosting() {
 
     useEffect(() => {
         if(localStorage.getItem('user')) {
-            call(getUser({id: JSON.parse(localStorage.getItem('user')).id})).then(
-                (response) => {
-                    setCurrentUser(response.data.data);
-                    setLoading(false);
-                },
-                () => {}
-            )
+            if(loading) {
+                call(getUser({id: JSON.parse(localStorage.getItem('user')).id})).then(
+                    (response) => {
+                        setCurrentUser(response.data.data);
+                        setLoading(false);
+                    },
+                    () => {}
+                )
+            }
         }
         else {
             navigate('/');
