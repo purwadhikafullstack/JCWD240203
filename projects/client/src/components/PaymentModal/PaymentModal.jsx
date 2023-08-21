@@ -63,7 +63,7 @@ export default function PaymentModal(props) {
     }, [props?.start, props?.end, props?.guest, props?.selectedRoom])
 
     return (
-        <div className={`${(props?.showPayment) ? '' : 'hideContainer'} absolute z-50 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>
+        <div className={`${(props?.showPayment) ? '' : 'hideContainer'} absolute z-40 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>
             <div className={`${(props.showPayment) ? 'modal-entering' : 'modal-exiting'} flex justify-center items-center bg-gray-400/80 w-full h-full`}>
                 <div className="flex flex-col w-[500px] h-[400px] bg-white rounded-[10px] p-[10px] drop-shadow-xl">
                     <div className="flex w-full justify-between border-b-[1px] border-black">

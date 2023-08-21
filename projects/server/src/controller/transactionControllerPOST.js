@@ -17,11 +17,11 @@ module.exports = {
                     data: null
                 })
             };
-
-            if((new Date(checkIn) >= new Date(checkOut)) || (new Date(checkIn) <= new Date().setHours(0, 0, 0, 0) ) || (new Date(checkOut) < new Date().setHours(0, 0, 0, 0))) {
+            
+            if((new Date(checkIn) >= new Date(checkOut)) || (new Date(checkIn) < new Date().setHours(0, 0, 0, 0)) || (new Date(checkOut) < new Date().setHours(0, 0, 0, 0))) {
                 return res.status(400).send({
                     isError: true,
-                    message: 'bad request',
+                    message: 'Bad request !',
                     data: null
                 })
             };
@@ -40,7 +40,7 @@ module.exports = {
             if(!propertyWithRoomExist) {
                 return res.status(400).send({
                     isError: true,
-                    message: 'bad request',
+                    message: 'Bad request !',
                     data: null
                 })
             }
@@ -75,16 +75,16 @@ module.exports = {
                 roomId: roomId,
                 [Op.or]: [
                     {
-                        checkIn: {[Op.lt]: checkIn},
-                        checkOut: {[Op.gt]: checkIn}
+                        checkIn: {[Op.lte]: new Date(checkIn)},
+                        checkOut: {[Op.gte]: new Date(checkIn)}
                     },
                     {
-                        checkIn: {[Op.lt]: checkOut},
-                        checkOut: {[Op.gt]: checkOut}
+                        checkIn: {[Op.lte]: new Date(checkOut)},
+                        checkOut: {[Op.gte]: new Date(checkOut)}
                     },
                     {
-                        checkIn: {[Op.gt]: checkIn},
-                        checkOut: {[Op.lt]: checkOut}
+                        checkIn: {[Op.gte]: new Date(checkIn)},
+                        checkOut: {[Op.lte]: new Date(checkOut)}
                     }
                 ]
             };
@@ -119,7 +119,6 @@ module.exports = {
                     data: null
                 });
             }
-            
             selectedRoom = JSON.parse(JSON.stringify(selectedRoom, null, 2));
 
             if(selectedRoom?.prices?.length > 0) {
@@ -136,7 +135,7 @@ module.exports = {
                 selectedRoom.price = specialPrice;
             }
 
-            let occupied = 0;
+            let occupied = stock;
             selectedRoom.transactions.forEach((value) => {
                 occupied += value.stock
             });
@@ -151,17 +150,17 @@ module.exports = {
 
             const grandTotal = (selectedRoom.price * ((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000) * stock );
             
-            await transaction.create({
-                userId: userId,
-                propertyId: propertyId,
-                roomId: roomId,
-                stock: stock,
-                price: grandTotal,
-                paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
-                status: 'pending',
-                checkIn: checkIn,
-                checkOut: checkOut
-            });
+            // await transaction.create({
+            //     userId: userId,
+            //     propertyId: propertyId,
+            //     roomId: roomId,
+            //     stock: stock,
+            //     price: grandTotal,
+            //     paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
+            //     status: 'pending',
+            //     checkIn: checkIn,
+            //     checkOut: checkOut
+            // });
 
             return res.status(200).send({
                 isError: false,

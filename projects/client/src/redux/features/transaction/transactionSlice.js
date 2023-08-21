@@ -137,7 +137,8 @@ export const updateStatus = (data) => async(dispatch) => {
                 dispatch(getOrder({
                     id: data.userId,
                     page: data.page,
-                    limit: data.limit
+                    limit: data.limit,
+                    month: data.month
                 })).then(
                     () => {},
                     (error) => {return Promise.reject(error)}
@@ -149,7 +150,8 @@ export const updateStatus = (data) => async(dispatch) => {
                 dispatch(getHistory({
                     id: data.userId,
                     page: data.page,
-                    limit: data.limit
+                    limit: data.limit,
+                    month: data.month
                 })).then(
                     () => {},
                     (error) => {return Promise.reject(error)}

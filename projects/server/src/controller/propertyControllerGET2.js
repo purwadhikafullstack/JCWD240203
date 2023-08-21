@@ -14,24 +14,24 @@ module.exports = {
     propertyDetailed: async(req, res) => {
         try {
             const propertyId = req.params.propertyId;
-            const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date();
-            const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date();
+            const startDate = (!isNaN(new Date(req.query.start)))? new Date(req.query.start) : new Date().setHours(0, 0, 0, 0);
+            const endDate = (!isNaN(new Date(req.query.end)))? new Date(req.query.end) : new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0, 0, 0, 0);
             const { limit, page } = req.query;
             
             let transactionFilter = {
                 status: 'completed',
                 [Op.or]: [
                     {
-                        checkIn: {[Op.lt]: startDate},
-                        checkOut: {[Op.gt]: startDate}
+                        checkIn: {[Op.lte]: startDate},
+                        checkOut: {[Op.gte]: startDate}
                     },
                     {
-                        checkIn: {[Op.lt]: endDate},
-                        checkOut: {[Op.gt]: endDate}
+                        checkIn: {[Op.lte]: endDate},
+                        checkOut: {[Op.gte]: endDate}
                     },
                     {
-                        checkIn: {[Op.gt]: startDate},
-                        checkOut: {[Op.lt]: endDate}
+                        checkIn: {[Op.gte]: startDate},
+                        checkOut: {[Op.lte]: endDate}
                     }
                 ]
             };

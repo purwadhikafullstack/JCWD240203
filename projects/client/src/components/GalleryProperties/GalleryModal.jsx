@@ -6,7 +6,7 @@ export default function GalleryModal(props) {
     }
 
     return(
-        <div className={`${(props?.showAllPhotos) ? '' : 'hideContainer'} absolute z-50 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>
+        <div className={`${(props?.showAllPhotos) ? '' : 'hideContainer'} absolute z-30 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>
             <div className={`${(props.showAllPhotos) ? 'modal-entering' : 'modal-exiting'} bg-gray-400/80 w-full h-full overflow-y-auto removeScroll`}>
                 <div onClick={onClose} className="absolute top-[10px] right-[10px] cursor-pointer">
                     <AiOutlineClose size={40}/>

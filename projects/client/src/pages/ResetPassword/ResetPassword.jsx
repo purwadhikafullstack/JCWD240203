@@ -183,7 +183,7 @@ export default function ResetPassword() {
                         })
                     }
                     <div className="w-[250px] flex justify-center mt-[15px]">
-                        <Button onClick={() => handleSubmit(resetForm.values)} disabled={resetForm.isSubmitting} size="medium" variant="contained" sx={{width: '175px'}}>
+                        <Button onClick={() => handleSubmit(resetForm.values)} disabled={resetForm.isSubmitting} size="medium" variant="contained" color="success" sx={{width: '175px'}}>
                             {(userExist)? 'Reset Password' : 'Send Code'}
                         </Button>
                     </div>

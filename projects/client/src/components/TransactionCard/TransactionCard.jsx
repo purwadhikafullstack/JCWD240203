@@ -58,9 +58,12 @@ export default function TransactionCard(props) {
                 token: JSON.parse(localStorage.getItem('user')).token,
                 page: props?.page,
                 limit: props?.limit,
-                type: 'History'
+                type: 'History',
+                month: props?.month
             })).then(
-                () => {toast.success('Order cancelled !', {id: loading})},
+                () => {
+                    toast.success('Order cancelled !', {id: loading});
+                },
                 (error) => {toast.error('Network error, please try again later !', {id: loading}); console.log(error)}
             )
         }

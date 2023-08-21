@@ -37,21 +37,23 @@ export default function TransactionPage() {
 
     useEffect(() => {
         if(localStorage.getItem('user')) {
-            call(getHistory({
-                id: JSON.parse(localStorage.getItem('user')).id,
-                page: page,
-                limit: limit,
-                status: status,
-                month: month
-            })).then(
-                () => {
-                    setLoading(false);
-                },
-                (error) => {
-                    toast.error('Network error !, unable to get transaction history', {id: 'TransactionHistoryToast'});
-                    console.log(error);
-                }
-            )
+            if(loading) {
+                call(getHistory({
+                    id: JSON.parse(localStorage.getItem('user')).id,
+                    page: page,
+                    limit: limit,
+                    status: status,
+                    month: month
+                })).then(
+                    () => {
+                        setLoading(false);
+                    },
+                    (error) => {
+                        toast.error('Network error !, unable to get transaction history', {id: 'TransactionHistoryToast'});
+                        console.log(error);
+                    }
+                )
+            }
         }
         else {
             navigate('/');
@@ -77,7 +79,7 @@ export default function TransactionPage() {
                         history?.map((value, index) => {
                             return(
                             <div key={index}>
-                                <TransactionCard data={value} page={page} limit={limit} index={index}/>
+                                <TransactionCard data={value} month={month} page={page} limit={limit} index={index} setLoading={setLoading}/>
                                 <hr className="my-4 border-gray-300" />
                             </div>
                             )

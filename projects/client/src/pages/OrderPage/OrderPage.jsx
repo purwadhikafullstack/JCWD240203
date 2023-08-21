@@ -78,7 +78,7 @@ export default function OrderPage() {
                         orders?.map((value, index) => {
                             return(
                             <div key={index} className="w-full">
-                                <OrderCard data={value} page={page} limit={limit}/>
+                                <OrderCard data={value} month={month} page={page} limit={limit} setLoading={setLoading}/>
                                 <hr className="my-4 border-gray-300" />
                             </div>
                             )

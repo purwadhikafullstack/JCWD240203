@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
@@ -137,6 +138,11 @@ return (
                                     <>
                                     </>
                             }
+                        </div>
+                        <div className="text-start w-full">
+                            <Link to={'/forgotpassword'} className="hover:underline">
+                                Forgot password ?
+                            </Link>
                         </div>
                     </div>
                     <div className="w-full">
