@@ -92,7 +92,7 @@ export default function ProductPage() {
                         }
                         {
                             (page + 1 <= totalProperties)?
-                            <div className="flex justify-center w-full col-span-full">
+                            <div className="flex justify-center items-center w-full col-span-full">
                                 <ThreeDots/>
                             </div>
                             :

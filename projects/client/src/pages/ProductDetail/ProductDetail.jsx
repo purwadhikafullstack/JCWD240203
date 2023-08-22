@@ -77,7 +77,6 @@ export default function ProductDetail() {
             id: params.id,
             start: start,
             end: end,
-            userId: JSON.parse(localStorage.getItem('user'))?.id || null,
         })).then(
             (response) => {
                 setProperty(response.data.data);
@@ -88,7 +87,7 @@ export default function ProductDetail() {
                 else {toast.error('Network error !', {id: 'FecthingPropertyDetail'})};
             }
         )
-    }, [call, params.id, start, end, currentUser, navigate]);
+    }, [call, params.id, start, end, navigate]);
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
@@ -204,7 +203,7 @@ export default function ProductDetail() {
                         </div>
                     </div>
                     <div className="review w-full">
-                        <CustomerReview currentUser={currentUser} page={page} limit={limit} propertyId={property?.id}/>
+                        <CustomerReview currentUser={currentUser} page={page} limit={limit} total={totalReview} propertyId={property?.id}/>
                     </div>
                 </main >
             }

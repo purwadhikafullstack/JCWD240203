@@ -13,7 +13,8 @@ export default function RoomCard(props) {
             })
             setPercentage(temp);
         }
-    }, [props?.data?.prices])
+    }, [props?.data?.prices]);
+    
     return(
         <div className="relative flex w-full bg-gray-200 p-[10px] rounded-[10px] justify-between h-auto md:h-[125px]">
             <div className={`${(percentage === 0)? 'hidden' : (percentage > 0) ? 'bg-red-600' : 'bg-green-600'} absolute flex items-center justify-center top-[-15px] right-[-10px] w-[40px] h-[40px] rounded-full text-[16px] rotate-[25deg]`}>
