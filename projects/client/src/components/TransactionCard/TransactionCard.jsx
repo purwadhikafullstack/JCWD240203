@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { BiSolidDownload } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { updatePaymentProof, updateStatus } from "../../redux/features/transaction/transactionSlice";
+import { format } from "date-fns";
 import './TransactionCard.css'
 
 export default function TransactionCard(props) {
@@ -10,6 +11,10 @@ export default function TransactionCard(props) {
     const [paymentProof, setPaymentProof] = useState(null);
     const dayMilisecond = 86400000;
     const call = useDispatch();
+
+    const formatDate = (date) => {
+        return format(date, "MM-dd-yyyy");
+    };
     
     const handleChange = (event) => {
         setPaymentProof(event?.target?.files[0]);
@@ -107,7 +112,12 @@ export default function TransactionCard(props) {
                     Rooms rented: {props?.data?.stock}
                 </div>
                 <div>
-                    Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
+                    <div>
+                        Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
+                    </div>
+                    <div className="text-[14px]">
+                        {formatDate(new Date(props?.data?.checkOut))} - {formatDate(new Date(props?.data?.checkIn))}
+                    </div>
                 </div>
                 <div className="mt-auto text-[20px] font-bold">
                     Grand total: {props?.data?.price?.toLocaleString('ID-id')}

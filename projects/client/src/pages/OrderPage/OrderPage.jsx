@@ -51,7 +51,7 @@ export default function OrderPage() {
                         setLoading(false);
                     },
                     (error) => {
-                        toast.error('Unable to get orders, please try again later !');
+                        toast.error('Unable to get orders, please try again later !', {id: 'OrderPageToast'});
                         console.log(error);
                     }
                 )
