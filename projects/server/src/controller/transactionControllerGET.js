@@ -18,10 +18,10 @@ module.exports = {
                 filter.status = status
             };
 
-            if(!month || (month < 0 || month > 11)) {
+            if(!month || (month < 0 || month > 11) || isNaN(new Date(year))) {
                 return res.status(400).send({
                     isError: true,
-                    message: 'bad request !',
+                    message: 'Bad Request !',
                     data: null
                 });
             };
@@ -85,10 +85,10 @@ module.exports = {
                 filter.status = status
             };
 
-            if(month < 0 || month > 11) {
+            if(!month || (month < 0 || month > 11) || isNaN(new Date(year))) {
                 return res.status(400).send({
                     isError: true,
-                    message: 'bad request !',
+                    message: 'Bad Request !',
                     data: null
                 });
             };

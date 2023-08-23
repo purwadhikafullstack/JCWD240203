@@ -151,11 +151,11 @@ export default function ProductDetail() {
                         
                         <div className="flex flex-col md:flex-row justify-between">
                             <div className="my-auto">
-                                <div className="features flex flex-col gap-[20px] mt-6 mb-6">
+                                <div className="features flex flex-col w-full max-h-[275px] overflow-y-scroll removeScroll gap-[20px] mb-6">
                                     {
                                         property?.rooms?.map((value, index) => {
                                             return(
-                                                <div key={index}>
+                                                <div key={index} className="max-w-[98%]">
                                                     <RoomCard data={value} setSelectedRoom={setSelectedRoom}/>
                                                 </div>
                                             )

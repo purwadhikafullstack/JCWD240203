@@ -16,6 +16,7 @@ export default function OrderPage() {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const currentUser = useSelector((state) => state.user.currentUser);
     const [month, setMonth] = useState(new Date().getMonth());
+    const [year, setYear] = useState(new Date().getFullYear());
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState('all');
     const [page, setPage] = useState(1);
@@ -37,26 +38,29 @@ export default function OrderPage() {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user')) || {};
         if(user.status === 'verified' && user.idCard) {
-            call(getOrder({
-                id: user.id,
-                page: page,
-                limit: limit,
-                status: status,
-                month: month
-            })).then(
-                () => {
-                    setLoading(false);
-                },
-                (error) => {
-                    toast.error('Unable to get orders, please try again later !');
-                    console.log(error);
-                }
-            )
+            if(loading) {
+                call(getOrder({
+                    id: user.id,
+                    page: page,
+                    limit: limit,
+                    status: status,
+                    month: month,
+                    year: year
+                })).then(
+                    () => {
+                        setLoading(false);
+                    },
+                    (error) => {
+                        toast.error('Unable to get orders, please try again later !');
+                        console.log(error);
+                    }
+                )
+            }
         }
         else {
             navigate('/')
         }
-    }, [call, page, status, month, currentUser, navigate]);
+    }, [call, page, loading, currentUser, navigate]);
 
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-full overflow-y-auto removeScroll">
@@ -67,7 +71,7 @@ export default function OrderPage() {
                     Your bookings
                 </div>
                 <div className="flex flex-col flex-grow py-[10px]">
-                    <OrderFilterBar months={months} month={month} setMonth={setMonth} status={status} setStatus={setStatus}/>
+                    <OrderFilterBar setYear={setYear} year={year} setLoading={setLoading} months={months} month={month} setMonth={setMonth} status={status} setStatus={setStatus}/>
                     {
                         (loading)?
                         <div className="flex flex-col flex-grow justify-center items-center w-full">
@@ -78,7 +82,7 @@ export default function OrderPage() {
                         orders?.map((value, index) => {
                             return(
                             <div key={index} className="w-full">
-                                <OrderCard data={value} month={month} page={page} limit={limit} setLoading={setLoading}/>
+                                <OrderCard data={value} year={year} month={month} page={page} limit={limit} setLoading={setLoading}/>
                                 <hr className="my-4 border-gray-300" />
                             </div>
                             )

@@ -140,7 +140,7 @@ module.exports = {
                 occupied += value.stock
             });
             
-            if(occupied >= selectedRoom.stock) {
+            if(occupied > selectedRoom.stock) {
                 return res.status(400).send({
                     isError: false,
                     message: 'Room unavailable !',
@@ -150,17 +150,17 @@ module.exports = {
 
             const grandTotal = (selectedRoom.price * ((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000) * stock );
             
-            // await transaction.create({
-            //     userId: userId,
-            //     propertyId: propertyId,
-            //     roomId: roomId,
-            //     stock: stock,
-            //     price: grandTotal,
-            //     paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
-            //     status: 'pending',
-            //     checkIn: checkIn,
-            //     checkOut: checkOut
-            // });
+            await transaction.create({
+                userId: userId,
+                propertyId: propertyId,
+                roomId: roomId,
+                stock: stock,
+                price: grandTotal,
+                paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
+                status: 'pending',
+                checkIn: checkIn,
+                checkOut: checkOut
+            });
 
             return res.status(200).send({
                 isError: false,
