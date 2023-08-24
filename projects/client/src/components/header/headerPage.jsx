@@ -45,7 +45,7 @@ export default function Header(props) {
                     {/* Right Header */}
                     <div className="flex items-center justify-between space-x-1 text-gray-500 ">
                         {
-                            (Object.keys(currentUser).length === 0 || (currentUser.id === null && currentUser.status === 'verified'))?
+                            (Object.keys(currentUser).length === 0 || (currentUser.idCard !== null && currentUser.status === 'verified'))?
                             null
                             :
                             <p onClick={onClickProfile} className="hidden lg:inline-flex cursor-pointer rounded-full py-2 px-4 text-center text-base font-semibold transition-all duration-400 bg-transparent hover:bg-gray-300 hover:bg-opacity-40 underline underline-offset-4">

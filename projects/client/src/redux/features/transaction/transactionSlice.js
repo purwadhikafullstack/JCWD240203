@@ -50,7 +50,7 @@ export const createTransaction = (data) => async(dispatch) => {
 
 export const getHistory = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/user/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}&&month=${data.month}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/user/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}&&month=${data.month}&&year=${data.year}`);
 
         dispatch(setTransaction(response.data.data.rows));
         dispatch(setTotalTransaction(response.data.data.count));
@@ -63,7 +63,7 @@ export const getHistory = (data) => async(dispatch) => {
 
 export const getOrder = (data) => async(dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}&&month=${data.month}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/transactions/order/${data.id}?page=${data.page}&&limit=${data.limit}&&status=${data.status}&&month=${data.month}&&year=${data.year}`);
 
         dispatch(setOrder(response.data.data.rows));
         dispatch(setTotalOrder(response.data.data.count));
@@ -107,12 +107,14 @@ export const updatePaymentProof = (data) => async(dispatch) => {
             dispatch(getHistory({
                 id: data.userId,
                 page: data.page,
-                limit: data.limit
+                limit: data.limit,
+                month: data.month,
+                year: data.year
             })).then(
                 () => {},
                 (error) => {return Promise.reject(error)}
             )
-        }, 400);
+        }, 200);
 
         return Promise.resolve(response);
     }
@@ -137,7 +139,9 @@ export const updateStatus = (data) => async(dispatch) => {
                 dispatch(getOrder({
                     id: data.userId,
                     page: data.page,
-                    limit: data.limit
+                    limit: data.limit,
+                    month: data.month,
+                    year: data.year
                 })).then(
                     () => {},
                     (error) => {return Promise.reject(error)}
@@ -149,7 +153,9 @@ export const updateStatus = (data) => async(dispatch) => {
                 dispatch(getHistory({
                     id: data.userId,
                     page: data.page,
-                    limit: data.limit
+                    limit: data.limit,
+                    month: data.month,
+                    year: data.year
                 })).then(
                     () => {},
                     (error) => {return Promise.reject(error)}

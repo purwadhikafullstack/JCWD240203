@@ -10,7 +10,7 @@ export default function PropertyFacilities(props) {
         return <ReactIcons.FiCircle/>;
       }
     
-      return <IconComponent />;
+      return <IconComponent className="text-green-800"/>;
     };
 
     return (

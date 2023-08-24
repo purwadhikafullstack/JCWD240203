@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { updateStatus } from "../../redux/features/transaction/transactionSlice";
+import { format } from "date-fns";
 import './OrderCard.css'
 import HoverProfileCard from "./HoverProfileCard";
 
@@ -10,6 +11,10 @@ export default function OrderCard(props) {
     const [hoverUser, setHoverUser] = useState(false);
     const dayMiliseconds = 86400000;
     const call = useDispatch();
+
+    const formatDate = (date) => {
+        return format(date, "MM-dd-yyyy");
+    };
 
     const handleAccept = async() => {
         setIsSendingResponse(true);
@@ -22,14 +27,18 @@ export default function OrderCard(props) {
                 token: JSON.parse(localStorage.getItem('user')).token,
                 page: props?.page,
                 limit: props?.limit,
-                type: 'Order'
+                type: 'Order',
+                month: props?.month,
+                year: props?.year
             })).then(
-                () => {toast.success('Order Accepted', {id: loading})},
+                () => {
+                    toast.success('Order Accepted', {id: loading});
+                },
                 (error) => {toast.error('Network error, please try again later !', {id: loading}); console.log(error)}
             )
         }
         else {
-            toast.error('Unauthorized access !', {id: loading})
+            toast.error('Unauthorized access !', {id: loading});
         }
         setTimeout(() => {
             setIsSendingResponse(false)
@@ -47,9 +56,13 @@ export default function OrderCard(props) {
                 token: JSON.parse(localStorage.getItem('user')).token,
                 page: props?.page,
                 limit: props?.limit,
-                type: 'Order'
+                type: 'Order',
+                month: props?.month,
+                year: props?.year
             })).then(
-                () => {toast.success('Order Rejected', {id: loading})},
+                () => {
+                    toast.success('Order Rejected', {id: loading});
+                },
                 (error) => {toast.error('Network error, please try again later !', {id: loading}); console.log(error)}
             )
         }
@@ -82,7 +95,7 @@ export default function OrderCard(props) {
                     Address: {props?.data?.property?.address}
                 </div>
             </div>
-            <div className=" detailsOrderr flex flex-col text-start flex-1 gap-[15px] p-[10px]">
+            <div className=" detailsOrderr flex flex-col text-start flex-1 gap-[10px] p-[5px]">
                 <div>
                     Rp.{props?.data?.room?.price.toLocaleString('ID-id')}/night
                 </div>
@@ -90,7 +103,12 @@ export default function OrderCard(props) {
                     Rooms rented: {props?.data?.stock}
                 </div>
                 <div>
-                    Duration: {((new Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ dayMiliseconds) || 0} nights
+                    <div>
+                        Duration: {((new  Date(props?.data?.checkOut).getTime() - new Date(props?.data?.checkIn).getTime())/ 86400000) || 0} nights
+                    </div>
+                    <div className="text-[14px]">
+                        {formatDate(new Date(props?.data?.checkOut))} - {formatDate(new Date(props?.data?.checkIn))}
+                    </div>
                 </div>
                 <div className="relative">
                     Tenant: <span onMouseEnter={() => setHoverUser(true)} onMouseLeave={() => setHoverUser(false)} className="hover:underline">{props?.data?.user?.username || 'N/A'}</span>
@@ -102,22 +120,22 @@ export default function OrderCard(props) {
                     Grand total: {props?.data?.price?.toLocaleString('ID-id')}
                 </div>
             </div>
-            <div className="paymentProoff flex flex-col justify-center items-center flex-1 gap-[15px] p-[10px]">
+            <div className="paymentProoff flex flex-col justify-center items-center flex-[1.1] gap-[15px] p-[10px]">
                 Payment proof:
                 <div className="flex w-full h-[325px] md:h-[175px]">
                     <img src={props?.data?.paymentProof} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
                 </div>
             </div>
-            <div className=" statusdets flex flex-col justify-center items-center flex-1 p-[10px]">
-                <div className="font-bold">
+            <div className="flex flex-col justify-center items-center flex-1 p-[10px]">
+                <div className="statusdets font-bold">
                     Status: {props?.data?.status}
                 </div>
             </div>
-            <div className="flex flex-col justify-center items-center flex-1 p-[10px] gap-[20px]">
-                <button onClick={handleAccept} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center w-[125px] h-[40px] rounded-[8px] font-bold bg-green-700 text-white ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-900 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white py-[5px]' }`}>
+            <div className="flex flex-col justify-center items-center flex-[0.7] p-[10px] gap-[20px]">
+                <button onClick={handleAccept} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center w-[125px] h-[40px] rounded-[8px] font-bold bg-green-700 text-white ${(isSendingResponse)? 'cursor-not-allowed' : 'hover:bg-green-900 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px]'} transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl text-white py-[5px]`}>
                     Accept Order
                 </button>
-                <button onClick={handleReject} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-red-700 w-[125px] h-[40px] rounded-[8px]  ${(isSendingResponse)? 'cursor-not-allowed' : 'cursor-pointer font-bold select-none active:scale-95 active:shadow-[0_0px_0_0_#8B0000,0_0px_0_0_#8B0000] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#8B0000,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white py-[5px]  hover:bg-red-800' }`}>
+                <button onClick={handleReject} disabled={isSendingResponse} className={`${(props?.data?.status === 'pending')? '' : 'hidden'} flex justify-center items-center bg-red-700 w-[125px] h-[40px] rounded-[8px]  ${(isSendingResponse)? 'cursor-not-allowed' : 'cursor-pointer font-bold select-none active:scale-95 active:shadow-[0_0px_0_0_#8B0000,0_0px_0_0_#8B0000] active:border-b-[0px] hover:bg-red-800'} transition-all duration-150 shadow-[0_10px_0_0_#8B0000,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white py-[5px]`}>
                     Reject Order
                 </button>
             </div>

@@ -11,11 +11,12 @@ import { useDispatch } from "react-redux";
 import { sendEmail } from "../../redux/features/user/userSlice";
 import { toast } from "react-hot-toast";
 import './OwnerCard.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function OwnerCard(props) {
     const [showPopup, setShowPopup] = useState((props?.status === 'verified') ? false : true);
     const [isSending, setIsSending] = useState(false);
+    const navigate = useNavigate();
     const call = useDispatch();
 
     const formatDate = (date) => { return format(date, "MM/dd/yyyy") };
@@ -45,9 +46,9 @@ export default function OwnerCard(props) {
 
     const handleChangeBirth = (date) => { if (props?.setBirthDate) { props.setBirthDate(formatDate(date)) } };
 
-    const handleClick = () => {
-        if (props.onSaveChange) { props.onSaveChange() };
-    }
+    const handleClick = () => {if (props.onSaveChange) { props.onSaveChange()}};
+
+    const toChangePassword = () => {navigate('/changepassword')}
 
     const onVerifyEmail = () => {
         setIsSending(true)
@@ -139,7 +140,7 @@ export default function OwnerCard(props) {
                                     <MenuItem value='Female'>Female</MenuItem>
                                 </Select>
                             </FormControl>
-                            <button className="flex md:hidden justify-center items-center text-white font-bold font-sans h-[35px] w-full text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                            <button onClick={toChangePassword} className="flex md:hidden justify-center items-center text-white font-bold font-sans h-[35px] w-full text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
                                 Change Password
                             </button>
                         </div>
@@ -156,11 +157,11 @@ export default function OwnerCard(props) {
                     </div>
                 </div>
                 <div className="flex flex-col justify-start items-start w-[300px] md:w-full px-[10px] py-[5px]">
-                    <div className="w-full flex justify-between items-center">
+                    <div className="w-full flex justify-between items-center my-[5px]">
                         <div className="font-bold text-[18px]">
                             Your listings
                         </div>
-                        <Link to={'/hostings'} className={`${(props?.status === 'unverified' || !props?.currentId)? 'hidden' : ''} flex justify-center items-center w-[125px] h-[35px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white  py-[5px]  hover:bg-green-900/70`}>
+                        <Link to={'/hostings'} className={`${(props?.status === 'unverified' || !props?.currentId)? 'hidden' : ''} flex justify-center items-center w-[125px] h-[35px] rounded-[20px] font-bold bg-green-600 cursor-pointer select-none active:scale-95 active:border-b-[0px] transition-all duration-150 border-b-[1px] drop-shadow-xl border-[1px] text-white  py-[5px]  hover:bg-green-700`}>
                             Add property
                         </Link>
                     </div>
@@ -182,7 +183,7 @@ export default function OwnerCard(props) {
                     </div>
                 </div>
                 <div className={`flex justify-center md:justify-between w-full py-[10px]`}>
-                    <button className="hidden md:flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                    <button onClick={toChangePassword} className="hidden md:flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
                         Change Password
                     </button>
                     <button onClick={handleClick} className="flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">

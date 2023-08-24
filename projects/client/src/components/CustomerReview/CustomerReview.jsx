@@ -5,8 +5,10 @@ import { AiOutlineStar } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getPropertyReview, postReview } from "../../redux/features/review/reviewSlice";
 import { toast } from "react-hot-toast";
+import ThreeDots from "../ThreeDotsLoading/ThreeDotsLoading";
 
 export default function CustomerReview(props) {
+    const [loading, setLoading] = useState(true);
     const [rating, setRating] = useState(0);
     const [description, setDescription] = useState('');
     const [isPosting, setIsPosting] = useState(false);
@@ -36,7 +38,7 @@ export default function CustomerReview(props) {
                 })).then(
                     () => {
                         toast.success('Review posted !', {id: loading});
-                        if(props?.setLoad) {props?.setLoad(!props?.load)};
+                        setLoading(true);
                     },
                     (error) => {console.log(error)}
                 )
@@ -51,14 +53,14 @@ export default function CustomerReview(props) {
     };
 
     useEffect(() => {
-        if(props?.propertyId) {
+        if(props?.propertyId && loading) {
             const userId = JSON.parse(localStorage.getItem('user'))?.id || null;
             call(getPropertyReview({id: props?.propertyId, limit: props?.limit, page: props?.page, userId: userId})).then(
-                () => {},
+                () => {setLoading(false)},
                 (error) => {console.log(error)}
             )
         }
-    }, [props?.page, props?.propertyId])
+    }, [props?.page, props?.propertyId, loading])
 
     return (
         <Card className="w-full drop-shadow-2xl bg-white rounded-[10px] p-[5px]">
@@ -109,6 +111,12 @@ export default function CustomerReview(props) {
                         </div>
                     </div>
                     {
+                        (loading) ?
+                        <div className="w-full flex justify-center items-center">
+                            <ThreeDots/>
+                        </div>
+                        :
+                        (reviews?.length > 0) ?
                         reviews?.map((value, index) => {
                             return(
                                 <div key={index} className="bg-gray-200 rounded-[10px] p-[10px]">
@@ -137,6 +145,18 @@ export default function CustomerReview(props) {
                                 </div>
                             )
                         })
+                        :
+                        <div className="w-full text-center font-bold">
+                            This property has no reviews
+                        </div>
+                    }
+                    {
+                        (props?.page + 1 <= props?.total) ?
+                        <div className="w-full flex justify-center items-center h-[50px]">
+                            <ThreeDots/>
+                        </div>
+                        :
+                        null
                     }
                 </div>
             </CardBody>

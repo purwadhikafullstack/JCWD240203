@@ -17,6 +17,7 @@ export default function TransactionPage() {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const currentUser = useSelector((state) => state.user.currentUser);
     const [month, setMonth] = useState(new Date().getMonth());
+    const [year, setYear] = useState(new Date().getFullYear());
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState('all');
     const [page, setPage] = useState(1);
@@ -37,26 +38,29 @@ export default function TransactionPage() {
 
     useEffect(() => {
         if(localStorage.getItem('user')) {
-            call(getHistory({
-                id: JSON.parse(localStorage.getItem('user')).id,
-                page: page,
-                limit: limit,
-                status: status,
-                month: month
-            })).then(
-                () => {
-                    setLoading(false);
-                },
-                (error) => {
-                    toast.error('Network error !, unable to get transaction history', {id: 'TransactionHistoryToast'});
-                    console.log(error);
-                }
-            )
+            if(loading) {
+                call(getHistory({
+                    id: JSON.parse(localStorage.getItem('user')).id,
+                    page: page,
+                    limit: limit,
+                    status: status,
+                    month: month,
+                    year: year
+                })).then(
+                    () => {
+                        setLoading(false);
+                    },
+                    (error) => {
+                        toast.error('Network error !, unable to get transaction history', {id: 'TransactionHistoryToast'});
+                        console.log(error);
+                    }
+                )
+            }
         }
         else {
             navigate('/');
         }
-    }, [call, page, status, month, currentUser, navigate])
+    }, [call, page, loading, currentUser, navigate])
     return(
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-full overflow-y-auto removeScroll">
             <Toaster/>
@@ -66,7 +70,7 @@ export default function TransactionPage() {
                     Your history
                 </div>
                 <div className="flex flex-col flex-grow py-[10px]">
-                    <TransactionFilterBar status={status} setStatus={setStatus} months={months} month={month} setMonth={setMonth}/>
+                    <TransactionFilterBar setYear={setYear} year={year} setLoading={setLoading} status={status} setStatus={setStatus} months={months} month={month} setMonth={setMonth}/>
                     {
                         (loading)?
                         <div className="w-full flex flex-col h-full items-center justify-center">
@@ -77,7 +81,7 @@ export default function TransactionPage() {
                         history?.map((value, index) => {
                             return(
                             <div key={index}>
-                                <TransactionCard data={value} page={page} limit={limit} index={index}/>
+                                <TransactionCard data={value} year={year} month={month} page={page} limit={limit} index={index} setLoading={setLoading}/>
                                 <hr className="my-4 border-gray-300" />
                             </div>
                             )

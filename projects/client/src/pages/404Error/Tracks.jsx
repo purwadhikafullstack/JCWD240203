@@ -99,6 +99,9 @@ export default function Tracks() {
                 <path className="st2" d="M580 282.4h-3l-6.8 25.2h3z" />
                 <path className="st2" d="M570 282.4h-3l-6.8 25.2h3z" />
                 <path className="st2" d="M560 282.4h-3l-6.8 25.2h3z" />
+                <path className="st2" d="M550 282.4h-3l-6.8 25.2h3z" />
+                <path className="st2" d="M540 282.4h-3l-6.8 25.2h3z" />
+                <path className="st2" d="M530 282.4h-3l-6.8 25.2h3z" />
                 <g>
                     <path className="st2" d="M-490.2 282.4h-3l-6.8 25.2h3z" />
                     <path className="st2" d="M-480.2 282.4h-3l-6.8 25.2h3z" />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
@@ -12,6 +13,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-hot-toast';
 import { onLogin } from "../../redux/features/user/userSlice";
+import { AiOutlineGoogle } from "react-icons/ai";
 import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import './LoginModal.css';
 
@@ -81,7 +83,7 @@ const login = useFormik({
 return (
     <div className={`${(props?.showLogin) ? '' : 'hideContainer'} absolute z-50 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>
         <div className={`${(props.showLogin) ? 'modal-entering' : 'modal-exiting'} flex justify-center items-center bg-gray-400/80 w-full h-full`}>
-            <div className="relative bg-white w-[300px] md:w-[450px] h-[400px] rounded-[10px] ">
+            <div className="relative bg-white w-[300px] md:w-[450px] h-[475px] rounded-[10px] ">
                 <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300 cursor-pointer">
                     <CloseIcon sx={{ scale: '1.4' }} />
                 </div>
@@ -137,6 +139,13 @@ return (
                                     <>
                                     </>
                             }
+                        </div>
+                    </div>
+                    <div className="w-full flex flex-col gap-[10px]">
+                        <div className="text-start w-full">
+                            <Link to={'/forgotpassword'} className="hover:underline">
+                                Forgot password ?
+                            </Link>
                         </div>
                     </div>
                     <div className="w-full">

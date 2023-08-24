@@ -7,8 +7,12 @@ export default function Banner () {
     return (
         <div className="relative bg-white">
             <div className="flex flex-col justify-between md:flex-row">
-                <CardBooking className='flex-1'/>
-                <Carousel className="flex-1 absolute top-0 left-0 right-0"/>
+                <div className='w-full md:w-[45%]'>
+                    <CardBooking/>
+                </div>
+                <div className='w-full md:w-[55%]'>
+                    <Carousel/>
+                </div>
             </div>
         </div>
     )

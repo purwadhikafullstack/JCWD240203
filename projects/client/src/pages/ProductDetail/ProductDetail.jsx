@@ -77,10 +77,12 @@ export default function ProductDetail() {
             id: params.id,
             start: start,
             end: end,
-            userId: JSON.parse(localStorage.getItem('user'))?.id || null,
         })).then(
             (response) => {
                 setProperty(response.data.data);
+                if(Object.keys(selectedRoom).length > 0) {
+                    setSelectedRoom(response.data.data.rooms.find((value) => {if(value.id === selectedRoom.id) return value}) || {});
+                }
                 setLoading(false);
             },
             (error) => {
@@ -88,7 +90,7 @@ export default function ProductDetail() {
                 else {toast.error('Network error !', {id: 'FecthingPropertyDetail'})};
             }
         )
-    }, [call, params.id, start, end, currentUser, navigate]);
+    }, [call, params.id, start, end, navigate]);
 
     return (
         <div onScroll={checkScroll} ref={listInnerRef} className="flex flex-col w-full h-[100vh] bg-white overflow-y-auto removeScroll">
@@ -125,86 +127,90 @@ export default function ProductDetail() {
                     <div className="imageList rounded-xl">
                         <GalleryProperties showAllPhotos={showAllPhotos} setShowAllPhotos={setShowAllPhotos} images={property?.propertyImages}/>
                     </div>
-                    <div className="flex flex-col md:flex-row-reverse justify-between gap-4">
-                        <div className="w-full flex flex-col justify-center items-center">
-                            <OrderDetail selectedRoom={selectedRoom} setShowPayment={setShowPayment}/>
-                        </div>
-                        <div className="leftSide">
-                            <div className="propsDesc text-left mb-[20px]">
-                                <div className="text-[30px] font-bold">
-                                    About this place
-                                </div>
-                                <div className="py-[13px] text-[19px]">
-                                    {property?.description || ''}
-                                </div>
+                    <div className="flex w-full flex-col gap-2">
+                        <div className="propsDesc text-left">
+                            <div className="text-[30px] font-bold">
+                                About this place
                             </div>
-                            <div className="roomOwner flex items-center gap-20 text-[25px] font-bold">
-                                <div>
-                                    Hosted by {property?.user?.username || ''}
-                                </div>
-                                <div className="w-[75px] h-[75px]">
-                                    <img src={property?.user?.profilePicture} alt="" className="w-full h-full rounded-full" />
-                                </div>
-                            </div>
-                            <hr className="my-4 border-gray-300" />
-                            <div className="features flex flex-col gap-[20px] mt-6 mb-6">
-                                {
-                                    property?.rooms?.map((value, index) => {
-                                        return(
-                                            <div key={index}>
-                                                <RoomCard data={value} setSelectedRoom={setSelectedRoom}/>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            <hr className="my-4 border-gray-300" />
-                            <div className="hostDetail text-left">
-                                <div className="text-[30px] font-bold px-[14px] py-[10px]">
-                                    Meet your host
-                                </div>
-                                <HostProfile user={property.user} />
-                            </div>
-                            <hr className="my-4 border-gray-300" />
-                            <div className="flex flex-col w-full justify-center items-center text-left">
-                                <div className="text-[30px] font-bold px-[14px] py-[10px]">
-                                    Check in & Check out
-                                </div>
-                                <div className="hidden md:flex h-[325px]">
-                                    <DayPicker
-                                    selected={{
-                                        from: (start !== '')? new Date(start) : '',
-                                        to: (end !== '')?new Date(end) : ''
-                                    }}
-                                    mode="range"
-                                    disabled={{before: new Date()}}
-                                    fromMonth={new Date()}
-                                    onSelect={handleSelect}
-                                    numberOfMonths={2}
-                                    />
-                                </div>
-                                <div className="flex md:hidden h-[325px]">
-                                    <DayPicker
-                                    selected={{
-                                        from: (start !== '')? new Date(start) : '',
-                                        to: (end !== '')?new Date(end) : ''
-                                    }}
-                                    mode="range"
-                                    disabled={{before: new Date()}}
-                                    fromMonth={new Date()}
-                                    onSelect={handleSelect}
-                                    numberOfMonths={1}
-                                    />
-                                </div>
-                            </div>
-                            <hr className="my-4 border-gray-300" />
-                            <div className="amenities text-left my-[10px]">
-                                <PropertyFacilities data={property.propertyFacilities}/>
+                            <div className="py-[13px] text-[19px]">
+                                {property?.description || ''}
                             </div>
                         </div>
+                        <div className="amenities text-left my-[10px]">
+                            <PropertyFacilities data={property.propertyFacilities}/>
+                        </div>
+                        <div className="roomOwner flex items-center gap-20 text-[25px] font-bold">
+                            <div>
+                                Hosted by {property?.user?.username || ''}
+                            </div>
+                            <div className="w-[75px] h-[75px]">
+                                <img src={property?.user?.profilePicture} alt="" className="w-full h-full rounded-full" />
+                            </div>
+                        </div>
+                        <hr className="my-4 border-gray-300" />
+                        
+                        <div className="flex flex-col md:flex-row justify-between">
+                            <div className="my-auto">
+                                <div className="features flex flex-col w-full max-h-[275px] overflow-y-scroll removeScroll gap-[20px] mb-6">
+                                    {
+                                        property?.rooms?.map((value, index) => {
+                                            return(
+                                                <div key={index} className="max-w-[98%]">
+                                                    <RoomCard data={value} setSelectedRoom={setSelectedRoom}/>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                <hr className="my-4 border-gray-300" />
+                                <div className="flex flex-col w-full justify-center items-center text-left">
+                                    <div className="text-[30px] font-bold px-[14px] py-[10px]">
+                                        Check in & Check out
+                                    </div>
+                                    <div className="hidden md:flex h-[325px]">
+                                        <DayPicker
+                                        selected={{
+                                            from: (start !== '')? new Date(start) : '',
+                                            to: (end !== '')?new Date(end) : ''
+                                        }}
+                                        mode="range"
+                                        disabled={{before: new Date()}}
+                                        fromMonth={new Date()}
+                                        onSelect={handleSelect}
+                                        numberOfMonths={2}
+                                        />
+                                    </div>
+                                    <div className="flex md:hidden h-[325px]">
+                                        <DayPicker
+                                        selected={{
+                                            from: (start !== '')? new Date(start) : '',
+                                            to: (end !== '')?new Date(end) : ''
+                                        }}
+                                        mode="range"
+                                        disabled={{before: new Date()}}
+                                        fromMonth={new Date()}
+                                        onSelect={handleSelect}
+                                        numberOfMonths={1}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="my-auto">
+                                <OrderDetail selectedRoom={selectedRoom} setShowPayment={setShowPayment}/>
+                            </div>
+                        </div>
+                        <hr className="my-4 border-gray-300" />
+
+                        <div className="hostDetail text-left">
+                            <div className="text-[30px] font-bold px-[14px] py-[10px]">
+                                Meet your host
+                            </div>
+                            <HostProfile user={property.user} />
+                        </div>
+                        <hr className="my-4 border-gray-300" />
                     </div>
                     <div className="review w-full">
-                        <CustomerReview currentUser={currentUser} page={page} limit={limit} propertyId={property?.id}/>
+                        <CustomerReview currentUser={currentUser} page={page} limit={limit} total={totalReview} propertyId={property?.id}/>
                     </div>
                 </main >
             }
