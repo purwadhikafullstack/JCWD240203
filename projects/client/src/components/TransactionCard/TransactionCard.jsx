@@ -134,7 +134,7 @@ export default function TransactionCard(props) {
                     }
                 </div>
                 <div className={`${((new Date(props?.data?.checkIn).getTime() - new Date().getTime()) / dayMilisecond >= 2 && props?.data?.status === 'pending')? '' : 'hidden'}  mt-auto`}>
-                    <input onChange={handleChange} id={`paymentProof${props?.index}`} type="file" className="hidden"/>
+                    <input onChange={handleChange} id={`paymentProof${props?.index}`} accept="image/png,image/jpeg" type="file" className="hidden"/>
                     <label htmlFor={`paymentProof${props?.index}`} className="flex items-center justify-center gap-[5px] border-[1px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl  text-white w-[165px] py-[5px]  hover:bg-green-900/70">
                         <BiSolidDownload size={25}/> Upload Payment
                     </label>

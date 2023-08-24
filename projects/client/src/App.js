@@ -21,16 +21,9 @@ import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import Error404 from "./pages/404Error/404Error";
 
 function App() {
-  //const [message, setMessage] = useState("");
   const call = useDispatch();
 
   useEffect(() => {
-    // (async () => {
-    //   const { data } = await axios.get(
-    //     `${process.env.REACT_APP_API_BASE_URL}/greetings`
-    //   );
-    //   setMessage(data?.message || "");
-    // })();
     if(localStorage.getItem('user')) {
       call(keepLogin()).then(
         () => {

@@ -53,9 +53,8 @@ export default function DateBox(props) {
   return (
     <Box
       sx={{
-        display: "flex",
+        display: "flex relative",
         flexDirection: "column",
-        border: isFocused ? "3px solid black" : "3px solid transparent",
         borderRadius: "10px",
         width: "100%",
         height: "auto",
@@ -87,7 +86,7 @@ export default function DateBox(props) {
           },
         }}
       />
-      <div className={`${(isOpen)? '' : 'hidden'} w-[1px]`}>
+      <div className={`${(isOpen)? 'border-black' : 'hidden border-transparent'} flex justify-center items-center border-[3px] rounded-[10px] left-0 right-0 m-auto z-50 absolute bg-white w-full`}>
         <DayPicker
           selected={(props.type === 'checkIn')?  new Date(start) : new Date(end)}
           onDayClick={handleDayClick}
@@ -95,7 +94,7 @@ export default function DateBox(props) {
             before: new Date()
           }}
           fromMonth={new Date()}
-          style={{scale: '0.83', margin: '0', padding: '0'}}
+          style={{scale: '0.90'}}
         />
       </div>
     </Box>
