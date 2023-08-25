@@ -66,6 +66,36 @@ Router.post('/login', async(req, res, next) => {
     }
 }, usersPOST.login);
 
+Router.post('/login/google',async(req, res, next) => {
+    await checkSchema({
+        'username': {
+            errorMessage: 'Username must not be empty !',
+            notEmpty: true,
+        },
+        'email': {
+            errorMessage: 'Email must not be empty !',
+            notEmpty: true
+        },
+        'uid': {
+            errorMessage: 'Uid must not be empty !',
+            notEmpty: true
+        }
+    }).run(req);
+
+    const result = validationResult(req);
+
+    if(!result.isEmpty()) {
+        return res.status(400).send({
+            isError: true,
+            message: result.errors,
+            data: null
+        });
+    }
+    else {
+        next();
+    }
+}, usersPOST.loginWithGoogle);
+
 // PATCH //
 Router.patch('/accountVerify', usersPATCH.verifyEmail);
 

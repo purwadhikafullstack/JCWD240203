@@ -36,7 +36,7 @@ module.exports = {
                 order: [
                     [{model: property}, {model: propertyImages} ,'id', 'ASC']
                 ],
-                attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
+                attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status', 'accountType']
             });
 
             if(!existingUser) {

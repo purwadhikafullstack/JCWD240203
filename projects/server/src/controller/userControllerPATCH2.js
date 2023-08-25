@@ -21,7 +21,7 @@ module.exports = {
                 });
             }
 
-            const userFilter = {};
+            const userFilter = {accountType: 'Local'};
 
             if(username.includes('@') && username.includes('.com')) {userFilter.email = username;}
             else {userFilter.username = username;}
@@ -86,7 +86,7 @@ module.exports = {
                 });
             }
 
-            const userFilter = {};
+            const userFilter = {accountType: 'Local'};
 
             if(username.includes('@') && username.includes('.com')) {userFilter.email = username;}
             else {userFilter.username = username;}

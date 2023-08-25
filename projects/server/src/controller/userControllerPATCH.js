@@ -88,10 +88,10 @@ module.exports = {
             const verify = Math.floor(Math.random()*90000) + 10000;
             
             const recipient = await user.findOne({
-                where: {id: id}
+                where: {id: id, status: 'verified', accountType: 'Local'}
             });
 
-            if(!recipient || recipient.status === 'verified') {
+            if(!recipient) {
                 return res.status(404).send({
                     isError: true,
                     message: 'Not found',
@@ -108,7 +108,7 @@ module.exports = {
                     id: id
                 }
             });
-            console.log('Current Working Directory:', process.cwd())
+            
             const template = handlebars.compile(
                 fs.readFileSync('./src/Public/templates/verifyEmail.html', {encoding: 'utf-8'})
             );
@@ -159,8 +159,16 @@ module.exports = {
             const verify = jwt.verify(token, process.env.KEY);
             
             const result = await user.findOne({
-                where: {id: verify.id}
+                where: {id: id, status: 'verified', accountType: 'Local'}
             })
+
+            if(!result) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'Not found',
+                    data: null
+                });
+            }
 
             const userToken = jwt.verify(result.code, process.env.KEY);
 

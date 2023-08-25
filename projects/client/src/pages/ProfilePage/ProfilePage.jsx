@@ -30,6 +30,7 @@ export default function ProfilePage() {
     const [status, setStatus] = useState('');
     const [gender, setGender] = useState('');
     const [birthDate, setBirthDate] = useState('');
+    const [accountType, setAccountType] = useState('');
     const [listings, setListings] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
     const params = useParams();
@@ -55,6 +56,7 @@ export default function ProfilePage() {
                 setNewId(response.data.data?.idCard);
                 setCurrentId(response.data.data?.idCard);
                 setListings(response.data.data?.properties);
+                setAccountType(response.data.data?.accountType);
                 setIsOwner(Number(params?.id) === JSON.parse(localStorage.getItem('user'))?.id);
                 setIsLoading(false);
             },
@@ -115,7 +117,7 @@ export default function ProfilePage() {
 
                 <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} listings={listings} phoneNumber={phoneNumber} currentId={currentId}
                 setNewUsername={setNewUsername} setNewPFP={setNewPFP} setNewEmail={setNewEmail} setNewPhoneNumber={setNewPhoneNumber} setNewId={setNewId} setDesc={setDesc} setGender={setGender} setBirthDate={setBirthDate}
-                onSaveChange={onSaveChange}/>
+                onSaveChange={onSaveChange} accountType={accountType}/>
                 :
                 <UserCard username={newUsername} PFP={newPFP} status={status} id={newId} phoneNumber={newPhoneNumber} desc={desc} listings={listings}/>
             }
