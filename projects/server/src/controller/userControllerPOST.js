@@ -30,7 +30,8 @@ module.exports = {
                 birthDate: birthDate || null,
                 profilePicture: `${process.env.LINK}/Default/DefaultProfile.png`,
                 phoneNumber: phoneNumber || null,
-                status: 'unverified'
+                status: 'unverified',
+                accountType: 'Local'
             });
 
             return res.status(200).send({
@@ -57,14 +58,16 @@ module.exports = {
             if(username.includes('@') && username.includes('.com')) {
                 existingUser = await user.findOne({
                     where: {
-                        email: username
+                        email: username,
+                        accountType: 'Local'
                     }
                 });
             }
             else {
                 existingUser = await user.findOne({
                     where: {
-                        username: username
+                        username: username,
+                        accountType: 'Local'
                     }
                 });
             };
@@ -118,5 +121,53 @@ module.exports = {
                 data: null
             });
         }
-    }
+    },
+
+    loginWithGoogle: async(req, res) => {
+        try {
+            const {username, email, uid} = req.body;
+
+            let userExist = await user.findOne({where: {accountType: 'Google', password: uid}});
+            
+            if(userExist === null) {
+                const newUser = await user.create({
+                    username: username,
+                    password: uid,
+                    email: email,
+                    profilePicture: `${process.env.LINK}/Default/DefaultProfile.png`,
+                    status: 'verified',
+                    accountType: 'Google'
+                });
+    
+                return res.status(200).send({
+                    isError: false,
+                    message: `Welcome ${username}`,
+                    data: newUser
+                });
+            }
+            else {
+                const token = jwt.sign({
+                    id: userExist.id,
+                    status: userExist.status
+                }, process.env.KEY);
+
+                userExist = JSON.parse(JSON.stringify(userExist));
+                userExist.token = token;
+                delete userExist.password;
+
+                return res.status(201).send({
+                    isError: false,
+                    message: `Welcome ${userExist.username} !`,
+                    data: userExist
+                });
+            }
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            });
+        }
+    },
 }

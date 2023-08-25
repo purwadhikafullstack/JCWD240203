@@ -44,7 +44,7 @@ export default function ResetPassword() {
             }
         )
         resetForm.setSubmitting(false);
-    }
+    };
 
     const handleSubmit = (values) => {
         if(!userExist) {
@@ -54,7 +54,7 @@ export default function ResetPassword() {
         else {
             resetForm.handleSubmit()
         }
-    }
+    };
 
     const validate = (value) => {
         const errors = {};
@@ -72,7 +72,7 @@ export default function ResetPassword() {
         if(value.confirmPassword !== value.newPassword && value.newPassword) {errors.confirmPassword = 'Password do not match !'};
 
         return errors;
-    }
+    };
 
     const selectName = (name) => {
         switch (name) {
@@ -82,21 +82,22 @@ export default function ResetPassword() {
             case 'code': {return 'Code';}
             default: {break;}
         };
-    }
+    };
     const checkVisibility = (name) => {
         switch (name) {
             case 'newPassword': {return showNewPassword;}
             case 'confirmPassword': {return showConfirmPassword;}
             default: {break;}
         };
-    }
+    };
     const changeVisibility = (name) => {
         switch (name) {
             case 'newPassword': {setShowNewPassword(!showNewPassword); break;}
             case 'confirmPassword': {setShowConfirmPassword(!showConfirmPassword); break}
             default: {break;}
         };
-    }
+    };
+
     const resetForm = useFormik({
         initialValues: {
             username: '',
@@ -114,7 +115,7 @@ export default function ResetPassword() {
             )
             resetForm.setSubmitting(false);
         }
-    })
+    });
 
     return(
         <div className="flex flex-col items-center justify-center w-full h-full overflow-y-auto removeScroll">

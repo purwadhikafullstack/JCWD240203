@@ -101,20 +101,23 @@ export default function OwnerCard(props) {
                         </div>
                         <div className="w-[225px] h-[175px]">
                             {
-                                (typeof props?.newId === 'string' || props?.newId === null) ?
-                                    <img src={props?.newId} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
-                                    :
-                                    <img src={URL.createObjectURL(props?.newId)} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
+                                (props?.newId === null) ?
+                                <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultTransaction.png`} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
+                                :
+                                (typeof props?.newId === 'string') ?
+                                <img src={props?.newId} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
+                                :
+                                <img src={URL.createObjectURL(props?.newId)} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
                             }
                         </div>
                         <div>
-                            <input id="IdCard" type="file" className="hidden" onChange={handleUploadId} />
+                            <input id="IdCard" type="file" accept="image/png,image/jpeg" className="hidden" onChange={handleUploadId} />
                             <label htmlFor="IdCard" className="flex justify-center items-center gap-[10px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-[165px] py-[5px]  hover:bg-green-900/70">
                                 <BiSolidDownload size={20} /> Upload ID Card
                             </label>
                         </div>
                         <div className="textId">
-                            <div className={`${(props.newId) ? 'hidden' : ''} text-[12px]`}>
+                            <div className={`${(props.currentId) ? 'hidden' : ''} text-[12px]`}>
                                 You need to upload an ID card to list your property !
                             </div>
                         </div>
@@ -140,7 +143,7 @@ export default function OwnerCard(props) {
                                     <MenuItem value='Female'>Female</MenuItem>
                                 </Select>
                             </FormControl>
-                            <button onClick={toChangePassword} className="flex md:hidden justify-center items-center text-white font-bold font-sans h-[35px] w-full text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                            <button onClick={toChangePassword} className={`${(props?.accountType === 'Local') ? 'flex md:hidden' : 'hidden'} justify-center items-center text-white font-bold font-sans h-[35px] w-full text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl`}>
                                 Change Password
                             </button>
                         </div>
@@ -182,8 +185,9 @@ export default function OwnerCard(props) {
                         }
                     </div>
                 </div>
-                <div className={`flex justify-center md:justify-between w-full py-[10px]`}>
-                    <button onClick={toChangePassword} className="hidden md:flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                {console.log(props?.accountType)}
+                <div className={`flex justify-center ${(props?.accountType === 'Local') ? 'md:justify-between' : 'md:justify-end'} w-full py-[10px]`}>
+                    <button onClick={toChangePassword} className={`${(props?.accountType === 'Local') ? 'hidden md:flex' : 'hidden'} justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl`}>
                         Change Password
                     </button>
                     <button onClick={handleClick} className="flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">

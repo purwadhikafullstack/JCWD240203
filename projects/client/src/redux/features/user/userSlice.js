@@ -47,6 +47,24 @@ export const onLogin = (loginCredentials) => async(dispatch) => {
     }
 };
 
+export const onLoginWithGoogle = (loginCredentials) => async(dispatch) => {
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/users/login/google`, {
+            username: loginCredentials.username,
+            email: loginCredentials.email,
+            uid: loginCredentials.uid
+        });
+        
+        dispatch(setUser(response.data.data));
+        localStorage.setItem('user' ,JSON.stringify(response.data.data));
+        return Promise.resolve(response.data);
+    }
+    catch(error) {
+        return Promise.reject(error);
+        
+    }
+};
+
 export const getUser = (data) => async() => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/${data.id}`)
