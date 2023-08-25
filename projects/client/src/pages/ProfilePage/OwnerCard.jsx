@@ -86,15 +86,15 @@ export default function OwnerCard(props) {
             </div>
             <OwnerProfileCard newPFP={props?.newPFP} newUsername={props?.newUsername} setNewUsername={props?.setNewUsername} setNewPFP={props?.setNewPFP} status={props?.status} phoneNumber={props?.phoneNumber} id={props?.id} />
             <div className="flex flex-col w-full md:h-full justify-center items-center md:justify-start md:items-start md:px-[50px] py-[10px] overflow-y-auto removeScroll">
-                <div className="flex flex-col justify-start items-start w-[300px] md:w-full h-auto border-b-[1px] border-gray-500 drop-shadow-lg">
+                <div className="flex flex-col justify-start items-start w-[300px] md:w-full border-b-[1px] border-gray-500 pb-[5px] drop-shadow-lg">
                     <div className="aboutYouField text-[25px] font-bold">
                         👤 About you
                     </div>
-                    <div className="w-full">
-                        <textarea onChange={(e) => handleChangeDesc(e)} value={props?.desc || ''} maxLength={255} className="w-full h-[225px] border-[1px] border-gray-500 rounded-[5px] px-[10px] py-[5px] resize-none" />
+                    <div className="w-full h-[225px]">
+                        <textarea onChange={(e) => handleChangeDesc(e)} value={props?.desc || ''} maxLength={255} className="w-full h-full border-[1px] border-gray-500 rounded-[5px] px-[10px] py-[5px] resize-none" />
                     </div>
                 </div>
-                <div className="flex flex-col md:flex-row w-[300px] md:w-full justify-center items-center border-b-[1px] border-gray-500 px-[10px] py-[5px] gap-[50px]">
+                <div className="flex flex-col lg:flex-row w-[300px] md:w-full justify-center items-center border-b-[1px] border-gray-500 px-[10px] py-[5px] gap-[30px]">
                     <div className={`flex flex-col gap-[10px] justify-center items-center px-[15px] py-[10px] rounded-xl drop-shadow-xl ${(props.newId) ? '' : ' bg-white border-[1px] border-green-950 drop-shadow-xl'}`}>
                         <div className="idCard text-[20px] font-bold">
                             🪪  Id Card:
@@ -123,9 +123,9 @@ export default function OwnerCard(props) {
                         </div>
                     </div>
                     <div className="flex flex-col gap-[25px] justify-center items-center md:items-start w-full md:w-[auto]">
-                        <div className="flex flex-col gap-[10px] justify-center md:justify-start md:w-[200px] text-start">
+                        <div className="flex flex-col gap-[10px] justify-center md:justify-start w-[250px] lg:w-[200px] text-start">
                             <div className="h-[55px]">
-                                <TextField onChange={(e) => handleChange(e, 'email')} size="small" label='Email' value={props?.newEmail || ''} sx={{ width: '200px' }} />
+                                <TextField onChange={(e) => handleChange(e, 'email')} size="small" label='Email' value={props?.newEmail || ''} fullWidth/>
                                 <div className={`${(!/^(?=.*[@]).*\.com$/g.test(props.newEmail)) ? '' : 'hidden'} text-[12px] text-red-600`}>
                                     Must be valid email !
                                 </div>
@@ -134,7 +134,7 @@ export default function OwnerCard(props) {
                                 Verify Email !
                             </button>
                         </div>
-                        <div className="flex flex-col gap-[10px] w-[200px]">
+                        <div className="flex flex-col gap-[10px] w-[250px] lg:w-[200px]">
                             <TextField onChange={(e) => handleChange(e, 'phoneNumber')} size="small" label='Phone number' value={props?.newPhoneNumber || ''} />
                             <FormControl fullWidth>
                                 <InputLabel size="small">Gender</InputLabel>
@@ -148,13 +148,13 @@ export default function OwnerCard(props) {
                             </button>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-start items-center md:items-start w-[400px] h-full">
+                    <div className="flex flex-col justify-center items-center md:items-start h-full">
                         <DayPicker
                             selected={(isNaN(new Date(props?.birthDate))) ? '' : new Date(props?.birthDate)}
                             defaultMonth={(isNaN(new Date(props?.birthDate))) ? '' : new Date(props?.birthDate)}
                             captionLayout="dropdown" fromYear={2000} toYear={new Date().getFullYear()}
                             onDayClick={handleChangeBirth}
-                            footer={`Birthdate: ${(isNaN(new Date(props?.birthDate))) ? 'not selected' : formatDate(new Date(props?.birthDate))}`}
+                            footer={`Birthdate: ${(!props?.birthDate || isNaN(new Date(props?.birthDate))) ? 'not selected' : formatDate(new Date(props?.birthDate))}`}
                             style={{ scale: '0.95', padding: 0, margin: 0 }}
                         />
                     </div>
