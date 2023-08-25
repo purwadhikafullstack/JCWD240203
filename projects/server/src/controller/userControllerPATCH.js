@@ -88,7 +88,7 @@ module.exports = {
             const verify = Math.floor(Math.random()*90000) + 10000;
             
             const recipient = await user.findOne({
-                where: {id: id, status: 'verified', accountType: 'Local'}
+                where: {id: id, status: 'unverified', accountType: 'Local'}
             });
 
             if(!recipient) {
@@ -159,7 +159,7 @@ module.exports = {
             const verify = jwt.verify(token, process.env.KEY);
             
             const result = await user.findOne({
-                where: {id: id, status: 'verified', accountType: 'Local'}
+                where: {id: id, status: 'unverified', accountType: 'Local'}
             })
 
             if(!result) {
