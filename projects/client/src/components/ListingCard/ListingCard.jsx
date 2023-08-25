@@ -19,10 +19,10 @@ export default function ListingCard(props) {
             <Link to={`/property/${props?.data?.id}`} className="w-full h-full">
                 &nbsp;
             </Link>
-            <div onClick={onMenuClick} className="h-full px-[5px]">
+            <div onClick={onMenuClick} className={`${(props?.setShowModal)? 'h-full px-[5px]' : 'hidden'}`}>
               <AiOutlineEllipsis size={20}/>
             </div>
-            <div className={`${(showMenu)? 'w-[75px] h-[50px] z-[10]' : 'w-[75px] h-0 z-[-1]'} flex flex-col transition-all duration-400 whitespace-nowrap absolute bg-white top-[20px] md:right-[-20px] border-[1px] border-gray-600 rounded-[5px] overflow-hidden`}>
+            <div className={`${(showMenu)? 'w-[75px] h-[50px] z-[10] border-gray-600' : 'w-[75px] h-0 z-[-1] border-transparent'} flex flex-col transition-all duration-400 whitespace-nowrap absolute bg-white top-[20px] md:right-[-20px] border-[1px] rounded-[5px] overflow-hidden`}>
                 <Link to={`/hostings/updateproperty/${props?.data?.id}`} className="flex-1 bg-white transition-all duration-300 hover:bg-gray-400">
                     Edit
                 </Link>

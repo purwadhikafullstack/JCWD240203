@@ -168,7 +168,7 @@ export default function OwnerCard(props) {
                             Add property
                         </Link>
                     </div>
-                    <div className="w-full flex flex-nowrap gap-[25px] overflow-x-auto mobileScroll p-[10px] whitespace-nowrap">
+                    <div className="w-full flex gap-[25px] overflow-x-auto mobileScroll">
                         {
                             (props?.listings?.length > 0) ?
                             props?.listings?.map((value, index) => {
@@ -185,7 +185,6 @@ export default function OwnerCard(props) {
                         }
                     </div>
                 </div>
-                {console.log(props?.accountType)}
                 <div className={`flex justify-center ${(props?.accountType === 'Local') ? 'md:justify-between' : 'md:justify-end'} w-full py-[10px]`}>
                     <button onClick={toChangePassword} className={`${(props?.accountType === 'Local') ? 'hidden md:flex' : 'hidden'} justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl`}>
                         Change Password
