@@ -53,10 +53,10 @@ function Carousel() {
   };
 
   return (
-    <div className='carousel h-[780px] mx-auto w-full m-auto px-4 relative group'>
+    <div className='carousel h-full w-full relative group'>
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-        className='carousel w-full h-full rounded-2xl bg-center bg-cover duration-500 ease-in-out'
+        className='carousel w-full h-full rounded-lg bg-center bg-cover duration-500 ease-in-out'
       ></div>
       <div className='hidden group-hover:block hover:bg-black/75 transition-all duration-400 absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
         <BsChevronCompactLeft onClick={prevSlide} size={30} />

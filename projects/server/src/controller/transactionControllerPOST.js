@@ -4,6 +4,7 @@ const transaction = db.transaction;
 const property = db.property;
 const price = db.price;
 const room = db.room;
+const user = db.user;
 require('dotenv').config();
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
             if(isNaN(new Date(checkIn)) || isNaN(new Date(checkOut)) || !userId || !propertyId || !roomId) {
                 return res.status(400).send({
                     isError: true,
-                    message: 'bad request',
+                    message: 'Bad Request !',
                     data: null
                 })
             };
@@ -21,7 +22,7 @@ module.exports = {
             if((new Date(checkIn) >= new Date(checkOut)) || (new Date(checkIn) < new Date().setHours(0, 0, 0, 0)) || (new Date(checkOut) < new Date().setHours(0, 0, 0, 0))) {
                 return res.status(400).send({
                     isError: true,
-                    message: 'Bad request !',
+                    message: 'Bad Request !',
                     data: null
                 })
             };
@@ -36,11 +37,13 @@ module.exports = {
                     }
                 ]
             });
+
+            const userExist = await user.findOne({where: {id: userId}});
             
-            if(!propertyWithRoomExist) {
+            if(!propertyWithRoomExist || !userExist) {
                 return res.status(400).send({
                     isError: true,
-                    message: 'Bad request !',
+                    message: 'Bad Request !',
                     data: null
                 })
             }
