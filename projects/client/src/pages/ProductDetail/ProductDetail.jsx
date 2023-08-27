@@ -81,7 +81,7 @@ export default function ProductDetail() {
             (response) => {
                 setProperty(response.data.data);
                 if(Object.keys(selectedRoom).length > 0) {
-                    setSelectedRoom(response.data.data.rooms.find((value) => {if(value.id === selectedRoom.id) return value}) || {});
+                    setSelectedRoom(response.data.data.rooms.find((value) => value.id === selectedRoom.id) || {});
                 }
                 setLoading(false);
             },
