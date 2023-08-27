@@ -44,19 +44,19 @@ export default function ProfilePage() {
         })).then(
             (response) => {
                 toast.dismiss(loading);
-                setNewUsername(response.data.data?.username);
-                setNewPhoneNumber(response.data.data?.phoneNumber);
-                setPhoneNumber(response.data.data?.phoneNumber);
-                setNewEmail(response.data.data?.email);
                 setDesc(response.data.data?.desc);
+                setNewId(response.data.data?.idCard);
                 setStatus(response.data.data?.status);
                 setGender(response.data.data?.gender);
-                setBirthDate(response.data.data?.birthDate);
-                setNewPFP(response.data.data?.profilePicture);
-                setNewId(response.data.data?.idCard);
+                setNewEmail(response.data.data?.email);
                 setCurrentId(response.data.data?.idCard);
+                setBirthDate(response.data.data?.birthDate);
                 setListings(response.data.data?.properties);
+                setNewUsername(response.data.data?.username);
+                setNewPFP(response.data.data?.profilePicture);
                 setAccountType(response.data.data?.accountType);
+                setPhoneNumber(response.data.data?.phoneNumber);
+                setNewPhoneNumber(response.data.data?.phoneNumber);
                 setIsOwner(Number(params?.id) === JSON.parse(localStorage.getItem('user'))?.id);
                 setIsLoading(false);
             },
