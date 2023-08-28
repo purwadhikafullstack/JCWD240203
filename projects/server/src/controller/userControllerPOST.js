@@ -103,7 +103,7 @@ module.exports = {
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status
-            }, process.env.KEY);
+            }, process.env.KEY, {expiresIn: '24h'});
             existingUser = JSON.parse(JSON.stringify(existingUser)); // stringify and parse needed to delete password key
             existingUser.token = token;
             delete existingUser.password;
@@ -149,7 +149,7 @@ module.exports = {
                 const token = jwt.sign({
                     id: userExist.id,
                     status: userExist.status
-                }, process.env.KEY);
+                }, process.env.KEY, {expiresIn: '24h'});
 
                 userExist = JSON.parse(JSON.stringify(userExist));
                 userExist.token = token;

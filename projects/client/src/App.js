@@ -4,8 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/landingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
-import { keepLogin } from "./redux/features/user/userSlice";
-import { useDispatch } from "react-redux";
+import { keepLogin, onLogout } from "./redux/features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import TransactionPage from "./pages/TransactionPage/TransactionPage";
 import VerifyPage from "./pages/VerifyPage/VerifyPage";
@@ -21,20 +21,35 @@ import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import Error404 from "./pages/404Error/404Error";
 
 function App() {
+  const currentUser = useSelector((state) => state.user.currentUser);
   const call = useDispatch();
 
   useEffect(() => {
-    if(localStorage.getItem('user')) {
-      call(keepLogin()).then(
-        () => {
-  
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
+    const user = JSON.parse(localStorage.getItem('user'));
+    if(user) {
+      call(keepLogin());
     }
-  }, []);
+  }, [call]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if(user) {
+      const exp = (user.token)? JSON.parse(atob(user.token.split('.')[1])).exp : Date.now() + 1;
+      if(Date.now() >= exp * 1000) {
+        call(onLogout())
+      }
+      
+      const checkToken = setInterval(() => {
+        const exp = (user.token)? JSON.parse(atob(user.token.split('.')[1])).exp : Date.now() + 1;
+        if(Date.now() >= exp * 1000) {
+          call(onLogout())
+        }
+      }, 5000);
+  
+      return () => {clearInterval(checkToken)};
+    }
+  }, [call, currentUser]);
  
   return (
     <div className="App h-[100vh]">

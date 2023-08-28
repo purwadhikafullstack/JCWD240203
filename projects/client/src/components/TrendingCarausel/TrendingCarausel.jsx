@@ -15,7 +15,8 @@ export default function TrendingCarausel() {
     useEffect(() => {
       call(getProperty({
         page: 1,
-        limit: limit
+        limit: limit,
+        sort: 'Review'
     })).then(
         () => {
 
@@ -35,9 +36,9 @@ export default function TrendingCarausel() {
         <div className="these text-left text-[48px] font-thin">
           These homes get lots attention on Rentify
         </div>
-        <div className="flex w-full overflow-x-auto mobileScroll gap-[25px] px-[20px] py-[15px]">
+        <div className="flex w-full overflow-x-auto mobileScroll removeScroll gap-[25px] px-[20px] py-[15px]">
           {properties.map((property, index) => (
-            <div key={index} className='min-w-[250px] h-[350px]'>
+            <div key={index} className='min-w-[250px] h-[325px] md:h-[350px]'>
               <PropertyCard data={property}/>
             </div>
           ))}

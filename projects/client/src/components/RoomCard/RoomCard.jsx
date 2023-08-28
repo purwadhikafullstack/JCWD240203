@@ -5,7 +5,7 @@ export default function RoomCard(props) {
     const handleClick = (value) => {if(props?.setSelectedRoom) {props?.setSelectedRoom(value)}};
 
     useEffect(() => {
-        if(props?.data?.prices?.length > 0) {
+        if(props?.data?.prices) {
             let temp = 0;
             props?.data?.prices?.forEach((value) => {
                 if(value.type === 'Mark up') {temp += value.percentage}

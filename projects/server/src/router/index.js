@@ -5,6 +5,7 @@ const transactions = require('./transactionRouter');
 const categories = require('./categoryRouter');
 const facilities = require('./facilityRouter');
 const prices = require('./priceRouter');
+const rooms = require('./roomRouter');
 
 module.exports = {
     users,
@@ -13,5 +14,6 @@ module.exports = {
     transactions,
     categories,
     facilities,
-    prices
+    prices,
+    rooms
 }

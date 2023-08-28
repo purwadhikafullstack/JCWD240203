@@ -11,18 +11,23 @@ const GalleryProperties = (props) => {
       <div className="collage flex-col md:flex-row gap-[10px]">
         <div className="medium-image">
           {
-            (props?.images)?
+            (props?.images?.length > 0)?
             <img src={props?.images[0]?.url} alt='' />
             :
-            null
+            <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt=''/>
           }
         </div>
         <div className="small-images">
-          {props?.images?.slice(1, 5).map((obj, index) => (
-            <div key={index} className='w-full h-[195px]'>
-              <img src={obj.url} alt='' className='w-full h-full'/>
-            </div>
-          ))}
+          {
+            (props?.images?.length > 0)?
+            props?.images?.slice(1, 5).map((obj, index) => (
+              <div key={index} className='w-full h-[195px]'>
+                <img src={obj.url} alt='' className='w-full h-full'/>
+              </div>
+            ))
+            :
+            null
+          }
         </div>
       </div>
       <button onClick={toggleShowAllPhotos} className="px-[50px] py-[8px] mt-6 mb-6 text-sm font-sans rounded-[10px] border-solid border-2 border-black text-black font-bold cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#3F3F3F,0_0px_0_0_#3F3F3F] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#3F3F3F,0_15px_0_0_] border-b-[1px] drop-shadow-xl">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
@@ -16,7 +16,7 @@ import { onLogin, onLoginWithGoogle } from "../../redux/features/user/userSlice"
 import { AiOutlineGoogle } from "react-icons/ai";
 import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import { auth } from "../../firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "firebase/auth";
 import './LoginModal.css';
 
 const provider = new GoogleAuthProvider();
@@ -39,8 +39,8 @@ export default function LoginModal(props) {
     }
 
     const loginWithGoogle = async() => {
-        const result = await signInWithPopup(auth, provider);
         const loading = toast.loading('Logging in...', {id: 'LoginLoadingToast'});
+        const result = await signInWithPopup(auth, provider);
         login.setSubmitting(true);
         try
         {
@@ -100,14 +100,14 @@ export default function LoginModal(props) {
         login.setSubmitting(false);
     };
 
-const login = useFormik({
-    initialValues: {
-        username: '',
-        password: '',
-    },
-    validate,
-    onSubmit: handleSubmit,
-});
+    const login = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+        },
+        validate,
+        onSubmit: handleSubmit,
+    });
 
 return (
     <div className={`${(props?.showLogin) ? '' : 'hideContainer'} absolute z-50 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>

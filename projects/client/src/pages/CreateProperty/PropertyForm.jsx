@@ -52,13 +52,13 @@ export default function PropertyForm(props) {
                 <Box>
                     <TextInput
                       withAsterisk
-                      label="Listing Title"
+                      label="Property name"
                       placeholder="Listing title"
                       {...form.getInputProps("propertyName")}
                     />
                     <Textarea
                       placeholder="Description"
-                      label="Listing description"
+                      label="Property description"
                       withAsterisk
                       {...form.getInputProps("description")}
                     />

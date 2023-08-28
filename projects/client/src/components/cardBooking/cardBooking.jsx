@@ -14,7 +14,7 @@ export default function CardBooking() {
   }
 
   return (
-    <Card className="mt-6 mb-12 w-full mx-auto drop-shadow-2xl bg-white rounded-lg">
+    <Card className="w-full bg-white drop-shadow-2xl rounded-lg">
       <CardBody>
         <div className="typography">
           <h5 color="blue-gray" className="mb-2 text-6xl font-bold text-gray-900 ">
