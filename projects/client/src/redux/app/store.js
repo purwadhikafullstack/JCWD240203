@@ -5,6 +5,7 @@ import country from '../features/country/countrySlice';
 import transaction from '../features/transaction/transactionSlice';
 import review from '../features/review/reviewSlice';
 import category from '../features/category/categorySlice';
+import room from '../features/room/roomSlice';
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         country,
         transaction,
         review,
-        category
+        category,
+        room
     }
 })

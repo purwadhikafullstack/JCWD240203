@@ -35,9 +35,13 @@ function App() {
     const user = JSON.parse(localStorage.getItem('user'));
 
     if(user) {
+      const exp = (user.token)? JSON.parse(atob(user.token.split('.')[1])).exp : Date.now() + 1;
+      if(Date.now() >= exp * 1000) {
+        call(onLogout())
+      }
+      
       const checkToken = setInterval(() => {
         const exp = (user.token)? JSON.parse(atob(user.token.split('.')[1])).exp : Date.now() + 1;
-        console.log(Date.now(),  exp * 1000);
         if(Date.now() >= exp * 1000) {
           call(onLogout())
         }
@@ -45,7 +49,7 @@ function App() {
   
       return () => {clearInterval(checkToken)};
     }
-  }, [currentUser]);
+  }, [call, currentUser]);
  
   return (
     <div className="App h-[100vh]">

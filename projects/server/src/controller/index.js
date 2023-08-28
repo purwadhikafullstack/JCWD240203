@@ -8,6 +8,7 @@ const propertiesGET3 = require('./propertyControllerGET3');
 const propertiesPOST = require('./propertyControllerPOST');
 const propertiesPATCH = require('./propertyControllerPATCH');
 const propertiesPATCH2 = require('./propertyControllerPATCH2');
+const rooms = require('./roomController');
 const reviews = require('./reviewController');
 const countries = require('./countryController');
 const transactionsGET = require('./transactionControllerGET');
@@ -29,6 +30,7 @@ module.exports = {
     propertiesPOST,
     propertiesPATCH,
     propertiesPATCH2,
+    rooms,
     reviews,
     countries,
     transactionsGET,

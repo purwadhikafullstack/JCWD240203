@@ -1,3 +1,5 @@
+import { signOut } from "firebase/auth";
+import { auth } from "../../../firebase";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -209,6 +211,7 @@ export const changePassword = (data) => async() => {
 }
 
 export const onLogout = () => (dispatch) => {
+    if(auth.currentUser !== null) {signOut(auth)};
     localStorage.removeItem('user');
     dispatch(setUser({}));;
 };

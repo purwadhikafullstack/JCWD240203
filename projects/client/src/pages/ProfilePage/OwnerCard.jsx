@@ -95,11 +95,11 @@ export default function OwnerCard(props) {
                     </div>
                 </div>
                 <div className="flex flex-col lg:flex-row w-[300px] md:w-full justify-center items-center border-b-[1px] border-gray-500 px-[10px] py-[5px] gap-[30px]">
-                    <div className={`flex flex-col gap-[10px] justify-center items-center px-[15px] py-[10px] rounded-xl drop-shadow-xl ${(props.newId) ? '' : ' bg-white border-[1px] border-green-950 drop-shadow-xl'}`}>
-                        <div className="idCard text-[20px] font-bold">
+                    <div className={`flex flex-col w-full lg:w-auto gap-[10px] justify-center items-center px-[15px] py-[10px] rounded-xl drop-shadow-xl ${(props.newId) ? '' : ' bg-white border-[1px] border-green-950 drop-shadow-xl'}`}>
+                        <div className="idCard text-[20px] font-bold text-center">
                             🪪  Id Card:
                         </div>
-                        <div className="w-[225px] h-[175px]">
+                        <div className="w-full lg:w-[225px] h-[225px] lg:h-[175px]">
                             {
                                 (props?.newId === null) ?
                                 <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultTransaction.png`} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
@@ -122,19 +122,19 @@ export default function OwnerCard(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-[25px] justify-center items-center md:items-start w-full md:w-[auto]">
-                        <div className="flex flex-col gap-[10px] justify-center md:justify-start w-[250px] lg:w-[200px] text-start">
+                    <div className="flex flex-col gap-[25px] justify-center items-center md:items-start w-full lg:w-[auto]">
+                        <div className="flex flex-col gap-[10px] justify-center md:justify-start w-[250px] sm:w-full lg:w-[200px] text-start">
                             <div className="h-[55px]">
                                 <TextField onChange={(e) => handleChange(e, 'email')} size="small" label='Email' value={props?.newEmail || ''} fullWidth/>
                                 <div className={`${(!/^(?=.*[@]).*\.com$/g.test(props.newEmail)) ? '' : 'hidden'} text-[12px] text-red-600`}>
                                     Must be valid email !
                                 </div>
                             </div>
-                            <button disabled={isSending} onClick={onVerifyEmail} className={`${(props?.status === 'verified') ? 'hidden' : ''} flex justify-center items-center h-[40px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-full py-[5px]  hover:bg-green-900/70`}>
+                            <button disabled={isSending} onClick={onVerifyEmail} className={`${(props?.status === 'sverified') ? 'hidden' : ''} flex justify-center items-center h-[40px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-full sm:w-[200px] lg:w-full py-[5px]  hover:bg-green-900/70`}>
                                 Verify Email !
                             </button>
                         </div>
-                        <div className="flex flex-col gap-[10px] w-[250px] lg:w-[200px]">
+                        <div className="flex flex-col gap-[10px] w-[250px] sm:w-full lg:w-[200px]">
                             <TextField onChange={(e) => handleChange(e, 'phoneNumber')} size="small" label='Phone number' value={props?.newPhoneNumber || ''} />
                             <FormControl fullWidth>
                                 <InputLabel size="small">Gender</InputLabel>

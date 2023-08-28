@@ -17,9 +17,9 @@ import { format } from "date-fns";
 import PaymentModal from "../../components/PaymentModal/PaymentModal";
 import LoginModal from "../../components/LoginModal/LoginModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
-import RoomCard from "../../components/RoomCard/RoomCard";
 import GalleryModal from "../../components/GalleryProperties/GalleryModal";
 import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
+import RoomList from "./RoomList";
 
 export default function ProductDetail() {
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -36,6 +36,7 @@ export default function ProductDetail() {
     const totalReview = Math.ceil(useSelector((state) => state.review.totalReview)/limit);
     const [showAllPhotos, setShowAllPhotos] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [roomLoading, setRoomLoading] = useState(true);
     const navigate = useNavigate();
     const params = useParams();
     const call = useDispatch();
@@ -43,6 +44,7 @@ export default function ProductDetail() {
     const formatDate = (date) => {return format(date, "MM/dd/yyyy")};
 
     const handleSelect = (date) => {
+        setRoomLoading(true);
         if(date?.from && date?.to) {
             if(new Date(date.from).getTime() <= new Date(date.to).getTime()) {
                 call(setStart(formatDate(date.from)));
@@ -74,9 +76,7 @@ export default function ProductDetail() {
 
     useEffect(() => {
         call(getDetailed({
-            id: params.id,
-            start: start,
-            end: end,
+            id: params.id
         })).then(
             (response) => {
                 setProperty(response.data.data);
@@ -149,18 +149,10 @@ export default function ProductDetail() {
                         </div>
                         <hr className="my-4 border-gray-300" />
                         
-                        <div className="flex flex-col md:flex-row justify-between">
-                            <div className="my-auto">
-                                <div className="features flex flex-col w-full max-h-[275px] overflow-y-auto removeScroll gap-[20px] mb-6">
-                                    {
-                                        property?.rooms?.map((value, index) => {
-                                            return(
-                                                <div key={index} className="max-w-[98%]">
-                                                    <RoomCard data={value} setSelectedRoom={setSelectedRoom}/>
-                                                </div>
-                                            )
-                                        })
-                                    }
+                        <div className="flex flex-col gap-[50px] md:flex-row justify-between">
+                            <div className="my-auto w-full">
+                                <div className="w-full h-[275px] overflow-y-auto removeScroll">
+                                    <RoomList propertyId={property?.id} start={start} end={end} roomLoading={roomLoading} setRoomLoading={setRoomLoading} setSelectedRoom={setSelectedRoom}/>
                                 </div>
                                 <hr className="my-4 border-gray-300" />
                                 <div className="flex flex-col w-full justify-center items-center text-left">

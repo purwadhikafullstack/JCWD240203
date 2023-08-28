@@ -32,7 +32,7 @@ export default function OrderDetail(props) {
         }
     };
     return (
-        <div className="orderDetail w-full md:w-[400px] py-[20px] drop-shadow-2xl rounded-2xl bg-[#F0EFE9]">
+        <div className="orderDetail w-full md:w-[400px] py-[20px] rounded-2xl bg-[#F0EFE9]">
             <div className="mx-24 top-[-10px]">
                 <img
                     alt=""
