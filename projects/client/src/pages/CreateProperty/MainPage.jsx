@@ -54,8 +54,8 @@ export default function CreateProperty() {
     }
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user')) || {};
-        if(user.idCard === null || user.status === 'unverified') {
+        const user = JSON.parse(localStorage.getItem('user')) || null;
+        if(!user || user?.idCard === null || user?.status === 'unverified') {
             navigate('/');
         }
     }, [navigate, currentUser]);

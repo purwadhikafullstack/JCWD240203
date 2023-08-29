@@ -73,16 +73,18 @@ export default function UpdateForm(props) {
                   <div className="listingName text-left text-[18px]">
                     <Box>
                         <TextInput
-                          label="Listing Title"
-                          placeholder="Listing title"
+                          label="Property Name"
+                          placeholder="name"
                           withAsterisk
                           {...form.getInputProps("propertyName")}
+                          maxLength={255}
                         />
                         <Textarea
                           placeholder="Description"
                           label="Listing description"
                           withAsterisk
                           {...form.getInputProps("description")}
+                          maxLength={255}
                         />
                         <CategoryListing
                           form={form}
@@ -95,6 +97,7 @@ export default function UpdateForm(props) {
                           label="Address Details"
                           withAsterisk
                           {...form.getInputProps("address")}
+                          maxLength={255}
                         />
                         <FacilitySelect form={form}/>
                         <Select

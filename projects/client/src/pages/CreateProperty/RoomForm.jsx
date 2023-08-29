@@ -52,6 +52,7 @@ export default function RoomForm(props) {
             label="Room name"
             withAsterisk
             {...form.getInputProps("roomName")}
+            maxLength={255}
           />
           <TextInput
             withAsterisk
@@ -62,12 +63,14 @@ export default function RoomForm(props) {
             onChange={(e) => {if(!isNaN(e.target.value)) {form.getInputProps("roomStock").onChange(e)}}}
             onBlur={form.getInputProps("roomStock").onBlur}
             onFocus={form.getInputProps("roomStock").onFocus}
+            maxLength={5}
           />
           <Textarea
             placeholder="Description"
             label="Room's description"
             withAsterisk
             {...form.getInputProps("roomDescription")}
+            maxLength={255}
           />
           <Select
             label="Room capacity"
@@ -88,6 +91,7 @@ export default function RoomForm(props) {
             onChange={(e) => {if(!isNaN(e.target.value)) {form.getInputProps("price").onChange(e)}}}
             onBlur={form.getInputProps("price").onBlur}
             onFocus={form.getInputProps("price").onFocus}
+            maxLength={10}
           />
           <div className="flex mt-[10px] w-full justify-end">
             <button onClick={form.onSubmit(addRoom)} className="flex items-center justify-center w-[125px] h-[45px] bg-green-500 transition-all duration-400 rounded-[5px] hover:bg-green-600 active:bg-green-700 active:scale-95">
