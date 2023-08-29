@@ -19,7 +19,7 @@ import { auth } from "../../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import './LoginModal.css';
 
-const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider()
 provider.setCustomParameters({
     prompt: 'select_account'
 });
