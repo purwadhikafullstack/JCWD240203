@@ -55,12 +55,14 @@ export default function PropertyForm(props) {
                       label="Property name"
                       placeholder="Listing title"
                       {...form.getInputProps("propertyName")}
+                      maxLength={255}
                     />
                     <Textarea
                       placeholder="Description"
                       label="Property description"
                       withAsterisk
                       {...form.getInputProps("description")}
+                      maxLength={255}
                     />
                     <CategoryListing
                       form={form}
@@ -73,6 +75,7 @@ export default function PropertyForm(props) {
                       label="Address Details"
                       withAsterisk
                       {...form.getInputProps("address")}
+                      maxLength={255}
                     />
                     <FacilitySelect form={form}/>
                 </Box>

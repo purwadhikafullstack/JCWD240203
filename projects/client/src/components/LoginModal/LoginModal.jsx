@@ -16,7 +16,7 @@ import { onLogin, onLoginWithGoogle } from "../../redux/features/user/userSlice"
 import { AiOutlineGoogle } from "react-icons/ai";
 import rentifyLogo from "../assets/icons/rentifyLogo.png";
 import { auth } from "../../firebase";
-import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import './LoginModal.css';
 
 const provider = new GoogleAuthProvider();
@@ -34,16 +34,15 @@ export default function LoginModal(props) {
     const handleClose = () => {
         if (props.setShowLogin) {
             props.setShowLogin(false);
+            login.resetForm();
         }
-        login.resetForm();
     }
 
     const loginWithGoogle = async() => {
         const loading = toast.loading('Logging in...', {id: 'LoginLoadingToast'});
-        const result = await signInWithPopup(auth, provider);
         login.setSubmitting(true);
-        try
-        {
+        try {
+            const result = await signInWithPopup(auth, provider);
             const response = await call(onLoginWithGoogle({
                 username: result.user.displayName,
                 email: result.user.email,
@@ -52,8 +51,7 @@ export default function LoginModal(props) {
             toast.success(response.message, {id: loading});
             handleClose();
         }
-        catch(error)
-        {
+        catch(error) {
             toast.error('Unable to log in with google, please try again later !', {id: loading});
             console.log(error);
         }
@@ -74,7 +72,7 @@ export default function LoginModal(props) {
         return error;
     }
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async(values) => {
         login.setSubmitting(true);
         const loading = toast.loading('Logging in...', {id: 'LoginLoadingToast'});
         try {
@@ -82,7 +80,7 @@ export default function LoginModal(props) {
                 username: values.username,
                 password: values.password
             }));
-            
+
             toast.success(response.message, {id: loading});
             handleClose();
         } catch (error) {
@@ -113,9 +111,9 @@ return (
     <div className={`${(props?.showLogin) ? '' : 'hideContainer'} absolute z-50 top-0 w-full h-[100vh] overflow-hidden bg-transparent`}>
         <div className={`${(props.showLogin) ? 'modal-entering' : 'modal-exiting'} flex justify-center items-center bg-gray-400/80 w-full h-full`}>
             <div className="relative bg-white w-[300px] md:w-[450px] h-[465px] rounded-[10px] ">
-                <div onClick={handleClose} className="absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full hover:bg-gray-300 cursor-pointer">
+                <button onClick={handleClose} disabled={login.isSubmitting} className={`${(login.isSubmitting)? 'cursor-not-allowed' : 'hover:bg-gray-300 cursor-pointer'} absolute flex justify-center items-center left-[20px] top-[10px] p-[5px] bg-transparent transition-all duration-400 rounded-full`}>
                     <CloseIcon sx={{ scale: '1.4' }} />
-                </div>
+                </button>
                 <div className="loginTitle w-full py-[10px] text-center text-[20px] font-display font-semibold text-zinc-700/90 border-b-[1px] border-gray-400">
                     Login
                 </div>

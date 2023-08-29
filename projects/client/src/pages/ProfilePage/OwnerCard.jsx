@@ -13,7 +13,7 @@ import { toast } from "react-hot-toast";
 import './OwnerCard.css'
 import { Link, useNavigate } from "react-router-dom";
 
-export default function OwnerCard(props) {
+export default function OwnerCard({isSaving, ...props}) {
     const [showPopup, setShowPopup] = useState((props?.status === 'verified') ? false : true);
     const [isSending, setIsSending] = useState(false);
     const navigate = useNavigate();
@@ -75,7 +75,7 @@ export default function OwnerCard(props) {
     }
 
     return (
-        <div className="relative md:flex flex-row h-[100vh] md:h-full w-full justify-center items-center md:px-[20px] py-[40px] overflow-y-auto removeScroll">
+        <div className="relative md:flex flex-row h-full w-full justify-center items-center md:px-[20px] py-[20px] overflow-y-auto removeScroll">
             <div className={`${(showPopup) ? '' : 'hidden'} z-[2] absolute flex justify-start md:justify-center items-center text-[16px] top-0 w-full h-[40px] bg-yellow-400 px-[25px]`}>
                 <div className="emailReminder text-[12px] md:text-[18px] font-bold items-center underline">
                     📧 This Email is not verified, please verify your email to list your property !
@@ -84,7 +84,7 @@ export default function OwnerCard(props) {
                     <AiOutlineClose />
                 </div>
             </div>
-            <OwnerProfileCard newPFP={props?.newPFP} newUsername={props?.newUsername} setNewUsername={props?.setNewUsername} setNewPFP={props?.setNewPFP} status={props?.status} phoneNumber={props?.phoneNumber} id={props?.id} />
+            <OwnerProfileCard newPFP={props?.newPFP} newUsername={props?.newUsername} setNewUsername={props?.setNewUsername} setNewPFP={props?.setNewPFP} status={props?.status} phoneNumber={props?.phoneNumber} currentId={props?.currentId} />
             <div className="flex flex-col w-full md:h-full justify-center items-center md:justify-start md:items-start md:px-[50px] py-[10px] overflow-y-auto removeScroll">
                 <div className="flex flex-col justify-start items-start w-[300px] md:w-full border-b-[1px] border-gray-500 pb-[5px] drop-shadow-lg">
                     <div className="aboutYouField text-[25px] font-bold">
@@ -130,7 +130,7 @@ export default function OwnerCard(props) {
                                     Must be valid email !
                                 </div>
                             </div>
-                            <button disabled={isSending} onClick={onVerifyEmail} className={`${(props?.status === 'sverified') ? 'hidden' : ''} flex justify-center items-center h-[40px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-full sm:w-[200px] lg:w-full py-[5px]  hover:bg-green-900/70`}>
+                            <button disabled={isSending} onClick={onVerifyEmail} className={`${(props?.status === 'verified') ? 'hidden' : ''} flex justify-center items-center h-[40px] rounded-[20px] font-bold bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl border-[1px] text-white w-full sm:w-[200px] lg:w-full py-[5px]  hover:bg-green-900/70`}>
                                 Verify Email !
                             </button>
                         </div>
@@ -168,12 +168,12 @@ export default function OwnerCard(props) {
                             Add property
                         </Link>
                     </div>
-                    <div className="w-full flex gap-[25px] overflow-x-auto mobileScroll">
+                    <div className="w-full flex gap-[25px] overflow-x-auto mobileScroll removeScroll">
                         {
                             (props?.listings?.length > 0) ?
                             props?.listings?.map((value, index) => {
                                 return (
-                                    <div key={index} className="min-w-[250px] h-[300px] inline-block">
+                                    <div key={index} className="w-[250px] h-[300px] flex-none">
                                         <ListingCard data={value} />
                                     </div>
                                 )
@@ -189,7 +189,7 @@ export default function OwnerCard(props) {
                     <button onClick={toChangePassword} className={`${(props?.accountType === 'Local') ? 'hidden md:flex' : 'hidden'} justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl`}>
                         Change Password
                     </button>
-                    <button onClick={handleClick} className="flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 cursor-pointer select-none active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl">
+                    <button onClick={handleClick} disabled={isSaving} className={`${(isSaving)? 'cursor-not-allowed' : 'active:scale-95 active:shadow-[0_0px_0_0_#166534,0_0px_0_0_#166534] cursor-pointer'} flex justify-center items-center text-white font-bold font-sans h-[45px] w-[200px] text-[20px] rounded-[35px] bg-green-800/70 select-none active:border-b-[0px] transition-all duration-150 shadow-[0_10px_0_0_#166534,0_15px_0_0_] border-b-[1px] drop-shadow-xl`}>
                         Save Changes
                     </button>
                 </div>

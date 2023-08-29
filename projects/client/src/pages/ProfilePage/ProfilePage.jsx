@@ -19,6 +19,7 @@ export default function ProfilePage() {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
     const [desc, setDesc] = useState('');
     const [newUsername, setNewUsername]= useState('');
     const [newPhoneNumber, setNewPhoneNumber]= useState('');
@@ -66,12 +67,13 @@ export default function ProfilePage() {
         )
     }
 
-    const onSaveChange = () => {
+    const onSaveChange = async() => {
+        setIsSaving(true);
         const token = JSON.parse(localStorage.getItem('user'), null, 2)?.token;
-        const loading = toast.loading('Saving Data');
+        const loading = toast.loading('Saving Data', {id: 'SavingNewProfileToast'});
         const validate = /^(?=.*[@]).*\.com$/g.test(newEmail);
         if(validate) {
-            call(updateUser({
+            await call(updateUser({
                 id: params.id,
                 newUsername: newUsername,
                 newEmail: newEmail,
@@ -95,6 +97,7 @@ export default function ProfilePage() {
         else {
             toast.error('Email must be valid !', {id: loading});
         }
+        setIsSaving(false);
     }
 
     useEffect(() => {
@@ -117,7 +120,7 @@ export default function ProfilePage() {
 
                 <OwnerCard newUsername={newUsername} newPFP={newPFP} newEmail={newEmail} status={status} newId={newId} newPhoneNumber={newPhoneNumber} desc={desc} gender={gender} birthDate={birthDate} listings={listings} phoneNumber={phoneNumber} currentId={currentId}
                 setNewUsername={setNewUsername} setNewPFP={setNewPFP} setNewEmail={setNewEmail} setNewPhoneNumber={setNewPhoneNumber} setNewId={setNewId} setDesc={setDesc} setGender={setGender} setBirthDate={setBirthDate}
-                onSaveChange={onSaveChange} accountType={accountType}/>
+                onSaveChange={onSaveChange} accountType={accountType} isSaving={isSaving}/>
                 :
                 <UserCard username={newUsername} PFP={newPFP} status={status} id={newId} phoneNumber={newPhoneNumber} desc={desc} listings={listings}/>
             }

@@ -102,10 +102,11 @@ export default function UpdateRoomForm(props) {
               </List>
             </div>
             <TextInput
-              placeholder="Name of the room"
               label="Room name"
+              placeholder="Name of the room"
               withAsterisk
               {...form.getInputProps("roomName")}
+              maxLength={255}
             />
             <TextInput
               withAsterisk
@@ -116,12 +117,14 @@ export default function UpdateRoomForm(props) {
               onChange={(e) => {if(!isNaN(e.target.value)) {form.getInputProps("roomStock").onChange(e)}}}
               onBlur={form.getInputProps("roomStock").onBlur}
               onFocus={form.getInputProps("roomStock").onFocus}
+              maxLength={5}
             />
             <Textarea
               placeholder="Description"
               label="Room's description"
               withAsterisk
               {...form.getInputProps("roomDescription")}
+              maxLength={255}
             />
             <Select
               label="Room capacity"
@@ -142,6 +145,7 @@ export default function UpdateRoomForm(props) {
               onChange={(e) => {if(!isNaN(e.target.value)) {form.getInputProps("price").onChange(e)}}}
               onBlur={form.getInputProps("price").onBlur}
               onFocus={form.getInputProps("price").onFocus}
+              maxLength={10}
             />
             <div className="flex mt-[10px] w-full justify-end">
               {
