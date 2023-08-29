@@ -22,11 +22,12 @@ export default function ListingCard(props) {
             <div onClick={onMenuClick} className={`${(props?.setShowModal)? 'h-full px-[5px]' : 'hidden'}`}>
               <AiOutlineEllipsis size={20}/>
             </div>
-            <div className={`${(showMenu)? 'w-[75px] h-[50px] z-[10] border-gray-600' : 'w-[75px] h-0 z-[-1] border-transparent'} flex flex-col transition-all duration-400 whitespace-nowrap absolute bg-white top-[20px] md:right-[-20px] border-[1px] rounded-[5px] overflow-hidden`}>
-                <Link to={`/hostings/updateproperty/${props?.data?.id}`} className="flex-1 bg-white transition-all duration-300 hover:bg-gray-400">
+            <div className={`${(showMenu)? 'w-[75px] h-[75px] z-[10] border-gray-600' : 'w-[75px] h-0 z-[-1] border-transparent'} flex flex-col transition-all duration-400 whitespace-nowrap absolute bg-white top-[20px] md:right-[-20px] border-[1px] rounded-[5px] overflow-hidden`}>
+                <Link to={`/hostings/updateproperty/${props?.data?.id}`} className="flex items-center justify-center flex-1 bg-white transition-all duration-300 hover:bg-gray-400">
                     Edit
                 </Link>
-                <div onClick={() => showDeleteModal(props?.data)} className="flex-1 bg-white transition-all duration-300 hover:bg-gray-300">
+                <div className="w-full h-[1px] bg-black">&npsb;</div>
+                <div onClick={() => showDeleteModal(props?.data)} className="flex items-center justify-center flex-1 bg-white transition-all duration-300 hover:bg-gray-300">
                     Delete
                 </div>
             </div>

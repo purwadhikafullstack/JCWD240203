@@ -17,9 +17,9 @@ export default function OwnerProfileCard(props) {
     }
 
     return (
-        <div className="flex flex-col gap-[20px] w-full md:w-auto justify-center items-center">
+        <div className="flex flex-col h-full gap-[20px] w-full md:w-auto justify-center items-center">
             <div className="flex flex-col gap-[15px] justify-center items-center w-[300px] h-[265px] bg-white border-[1px] border-gray-500 rounded-[10px] drop-shadow-lg">
-                <div className="w-[125px] h-[125px] rounded-full overflow-hidden">
+                <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
                     {
                         (props?.newPFP === '' || props?.newPFP === null) ?
                         <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProfile.png`} alt="" className="w-full h-[175px] md:h-[200px] rounded-[10px]" />
@@ -45,7 +45,7 @@ export default function OwnerProfileCard(props) {
                     your confirmed info
                 </div>
                 <div className="flex h-[35px] gap-[10px] items-center">
-                    {(props?.id) ? <AiOutlineCheck size={30} /> : <AiOutlineClose size={30} />} Identity
+                    {(props?.currentId) ? <AiOutlineCheck size={30} /> : <AiOutlineClose size={30} />} Identity
                 </div>
                 <div className="flex h-[35px] gap-[10px] items-center">
                     {(props?.status === 'verified') ? <AiOutlineCheck size={30} /> : <AiOutlineClose size={30} />} Email
