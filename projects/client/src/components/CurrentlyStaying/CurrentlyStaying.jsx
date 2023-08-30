@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import './CurrentlyStaying.css'
 import { useDispatch } from "react-redux";
 import { getCurrent } from "../../redux/features/transaction/transactionSlice";
-import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
+import SpinnerLoader from "../SpinnerLoading/SpinnerLoading";
 import format from "date-fns/format";
 
 
@@ -28,8 +28,10 @@ export default function CurrentlyStaying() {
         <div className="flex w-full bg-slate-200/25 h-[225px] p-[15px] rounded-[10px] gap-[15px] overflow-x-auto mobileScroll removeScroll">
             {
                 (loading)?
-                <div className="flex justify-center h-full w-full">
-                    <ThreeDots/>
+                <div className="flex justify-center items-center h-full w-full">
+                    <div className='w-[100px] h-[100px]'>
+                        <SpinnerLoader/>
+                    </div>
                 </div>
                 :
                 (current?.length > 0)?

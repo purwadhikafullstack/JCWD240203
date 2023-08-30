@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import './UpcomingBooked.css'
 import { useDispatch } from "react-redux";
 import { getUpcoming } from "../../redux/features/transaction/transactionSlice";
-import ThreeDots from "../ThreeDotsLoading/ThreeDotsLoading";
+import SpinnerLoader from "../SpinnerLoading/SpinnerLoading";
 import { format } from "date-fns";
 
 export default function UpcomingBooked() {
@@ -27,7 +27,9 @@ export default function UpcomingBooked() {
             {
                 (loading)? 
                 <div className="w-full h-full flex items-center justify-center">
-                    <ThreeDots/>
+                    <div className='w-[100px] h-[100px]'>
+                        <SpinnerLoader/>
+                    </div>
                 </div>
                 :
                 (upcoming?.length > 0)?

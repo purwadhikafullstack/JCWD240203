@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ListingCard from "../ListingCard/ListingCard";
 import './TopAddProperty.css'
-import ThreeDots from "../ThreeDotsLoading/ThreeDotsLoading";
+import SpinnerLoader from "../SpinnerLoading/SpinnerLoading";
 import DeletePropertyModal from "../DeletePropertyModal/DeletePropertyModal";
 
 export default function TopAddProperty(props) { 
@@ -18,7 +18,9 @@ export default function TopAddProperty(props) {
               {
                 (props?.loading)?
                 <div className="flex w-full col-span-full justify-center items-center">
-                  <ThreeDots/>
+                  <div className="w-[80px] h-[80px]">
+                    <SpinnerLoader/>
+                  </div>
                 </div>
                 :
                 (props?.currentUser?.properties?.length > 0)?

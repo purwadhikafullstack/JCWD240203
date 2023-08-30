@@ -8,6 +8,7 @@ import SalesFilterBar from "./SalesFilterBar";
 import { useNavigate } from "react-router-dom";
 import "./SalesReport.css";
 import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
+import Footer from "../../components/footerRentify/footerPage";
 
 export default function SalesReport() {
     Chart.register(
@@ -37,7 +38,7 @@ export default function SalesReport() {
                 tempLabel.push(month);
                 let totalSales = 0;
                 rawData.forEach((transaction) => {
-                    let transactionMonth = new Date(transaction.updatedAt).getMonth();
+                    let transactionMonth = new Date(transaction.createdAt).getMonth();
                     if(months[transactionMonth] === month) {
                         totalSales += transaction.price;
                     }
@@ -59,7 +60,7 @@ export default function SalesReport() {
             let tempProfit = 0;
             rawData.forEach((transaction) => {
                 if (transaction) {
-                    let transactionDay = new Date(transaction.updatedAt).getDate();
+                    let transactionDay = new Date(transaction.createdAt).getDate();
                     if (transactionDay === i) {
                         tempProfit += transaction.price;
                     }
@@ -103,7 +104,7 @@ export default function SalesReport() {
         <div className="flex flex-col w-full h-full overflow-y-auto removeScroll">
             <Toaster/>
             <HeaderProperty/>
-            <div className="flex flex-col h-full px-[5px] md:px-[20px] py-[10px]">
+            <div className="flex flex-col flex-grow px-[5px] md:px-[20px] py-[10px]">
                 <SalesFilterBar months={months} year={year} setYear={setYear} 
                 startingMonth={startingMonth} setStartingMonth={setStartingMonth}
                 endingMonth={endingMonth} setEndingMonth={setEndingMonth}
@@ -128,7 +129,7 @@ export default function SalesReport() {
                     }}
                     />
                 </div>
-                <div className='w-full py-[10px] px-[10px] gap-4 flex flex-col md:flex-row justify-center '>
+                <div className='w-full py-[10px] px-[10px] gap-4 flex flex-col md:flex-row justify-center'>
                     <div className='cardGross bg-green-600 rounded-xl py-4 px-4 '>
                         {year || new Date().getFullYear()} Gross Profit: Rp. {grossProfit.toLocaleString('id-ID')}
                     </div>
@@ -148,6 +149,7 @@ export default function SalesReport() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import './CheckingOutCard.css'
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCheckingOut } from "../../redux/features/transaction/transactionSlice";
-import ThreeDots from "../../components/ThreeDotsLoading/ThreeDotsLoading";
+import SpinnerLoader from '../SpinnerLoading/SpinnerLoading';
 import format from "date-fns/format";
 
 
@@ -28,8 +28,10 @@ export default function CheckingOutCard() {
         <div className="flex w-full h-[225px] overflow-x-auto mobileScroll removeScroll p-[15px] rounded-[10px] gap-[15px] bg-slate-200/25 py-1 rounded-[10px]">
             {
                 (loading)?
-                <div className="flex justify-center h-full w-full">
-                    <ThreeDots/>
+                <div className="flex justify-center items-center h-full w-full">
+                    <div className='w-[100px] h-[100px]'>
+                        <SpinnerLoader/>
+                    </div>
                 </div>
                 :
                 (leaving.length > 0) ?
