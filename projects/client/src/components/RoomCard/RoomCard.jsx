@@ -30,9 +30,6 @@ export default function RoomCard(props) {
             <div className={`ribbon ${percentage > 0 ? "ribbon-positive" : "ribbon-negative"}`}>
                 <span>{percentage < 0 ? `${percentage}%` : `+${percentage}%`}</span>
             </div>
-            {/* <div className="ribbon2">
-                <span>{percentage < 0 ? `${percentage}%` : `+${percentage}%`}</span>
-            </div> */}
             <div className="flex flex-col items-start text-start gap-[5px] justify-center mx-3">
                 <div className="text-[22px] md:text-[24px] font-bold">
                     {props?.data?.name}
