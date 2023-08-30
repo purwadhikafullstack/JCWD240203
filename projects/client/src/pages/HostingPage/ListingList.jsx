@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import HeaderProperty from "../../components/HeaderProperty/HeaderProperty";
 import ListingListCard from "../../components/ListingListCard/ListingListCard";
-import Footer from "../../components/footerRentify/footerPage";
 import './ListingList.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
