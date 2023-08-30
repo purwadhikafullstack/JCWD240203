@@ -34,6 +34,7 @@
     "@mantine/form": "^6.0.17",
     "@mantine/hooks": "^6.0.17",
     "@zach.codes/react-calendar": "^0.3.2",
+    "antd": "^5.8.5",
     "dayjs": "^1.11.9",
     "nodemailer": "^6.9.4",
     "react-big-calendar": "^1.8.1",
@@ -42,6 +43,7 @@
     "react-google-recaptcha": "^3.1.0",
     "react-loading-skeleton": "^3.3.1",
     "react-modal": "^3.16.1",
+    "react-ribbons": "^1.1.7",
     "smart-webcomponents-react": "^15.2.11",
     "styled-icons": "^10.47.0"
   }
