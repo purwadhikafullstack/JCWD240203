@@ -8,7 +8,7 @@ export default function UpdateRoomPreview(props) {
             props?.setRooms(temp);
         }
     }
-//${(props?.data?.id)? 'hidden' : ''}
+
     return(
         <div className="relative w-full h-full border-[1px] border-black rounded-[5px] transition-all duration-200 hover:bg-gray-300 cursor-pointer">
             <div onClick={onDelete} className={`absolute z-[2] right-[1px] top-[1px] cursor-pointer`}>
