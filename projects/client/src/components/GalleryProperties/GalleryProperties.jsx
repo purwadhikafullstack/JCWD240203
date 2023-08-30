@@ -9,15 +9,15 @@ const GalleryProperties = (props) => {
   return (
     <div className="my-[20px] drop-shadow-sm">
       <div className="collage flex-col md:flex-row gap-[10px]">
-        <div className="medium-image">
+        <div className="flex-[1.75] h-[400px]">
           {
             (props?.images?.length > 0)?
-            <img src={props?.images[0]?.url} alt='' />
+            <img src={props?.images[0]?.url} alt='' className='w-full h-full'/>
             :
-            <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt=''/>
+            <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt='' className='w-full h-full'/>
           }
         </div>
-        <div className="small-images">
+        <div className={`${(props?.images?.length <= 1) ? 'hidden' : (props?.images?.length <= 3) ? 'flex-[0.75] grid grid-cols-1 gap-[10px]' : 'flex-1 grid grid-cols-2 gap-[10px]'}`}>
           {
             (props?.images?.length > 0)?
             props?.images?.slice(1, 5).map((obj, index) => (

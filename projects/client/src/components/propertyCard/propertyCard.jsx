@@ -8,31 +8,17 @@ export default function PropertyCard(props) {
     <div className="w-full p-[5px]">
     {
         (props?.data?.propertyImages?.length > 0) ?
-        (
-            <>
-                {props.data.propertyImages.map((image, index) => {
-                    console.log("Property Image URL:", image.url);
-                    return (
-                        <img
-                            key={index}
-                            src={image.url}
-                            alt=""
-                            className="w-full h-[175px] md:h-[200px] rounded-[10px]"
-                        />
-                    );
-                })}
-            </>
-        ) :
-        (
-            <>
-                <img
-                    src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`}
-                    alt=""
-                    className="w-full h-[175px] md:h-[200px] rounded-[10px]"
-                />
-                {console.log("Using default property image")}
-            </>
-        )
+          <img
+              src={props.data.propertyImages[0].url}
+              alt=""
+              className="w-full h-[175px] md:h-[200px] rounded-[10px]"
+          />
+        :
+          <img
+              src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`}
+              alt=""
+              className="w-full h-[175px] md:h-[200px] rounded-[10px]"
+          />
     }
 </div>
       <div className="flex flex-col gap-[10px] h-full px-[10px] py-[5px]">
