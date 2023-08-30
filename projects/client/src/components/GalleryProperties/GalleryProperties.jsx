@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './GalleryProperties.css';
 
 const GalleryProperties = (props) => {
