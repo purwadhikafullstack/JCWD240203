@@ -14,7 +14,7 @@ export default function ListingListCard(props) {
                         }
                     </div>
                     <div className="flex flex-col md:w-[280px] md:h-[72px] gap-[20px] justify-center">
-                        <div className="text-left text-[16px] w-full font-bold">
+                        <div className="text-left text-[16px] w-full font-bold ">
                             {props?.data?.name || ''}
                         </div>
                         <div className="md:hidden text-start w-full font-bold">
@@ -23,10 +23,10 @@ export default function ListingListCard(props) {
                     </div>
                 </div>
             </div>
-            <div className="hidden md:flex text-left items-center w-full md:w-[200px] px-[10px] py-[10px] font-bold">
+            <div className="hidden md:flex text-left items-center w-full md:w-[200px] px-[10px] py-[10px] font-bold ">
                 {props?.data?.status || ''}
             </div>
-            <div className="flex items-center w-full md:w-[275px] items-center px-[8px] py-[10px] font-bold text-left text-[14px]">
+            <div className="flex w-full md:w-[275px] items-center px-[8px] py-[10px] font-bold text-left text-[14px]">
                 {props?.data?.address || ''}
             </div>
             <div className="flex md:flex-col gap-[30px] w-full md:w-auto justify-center">

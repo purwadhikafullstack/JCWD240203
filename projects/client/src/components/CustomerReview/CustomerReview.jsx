@@ -86,7 +86,7 @@ export default function CustomerReview(props) {
                                     if(index + 1 <= rating) {
                                         return(
                                             <div key={index} className="cursor-pointer" onClick={() => handleChangeRating(index + 1)}>
-                                                <AiFillStar size={25}/>
+                                                <AiFillStar size={25} color="#FFD700" />
                                             </div>
                                         )
                                     }

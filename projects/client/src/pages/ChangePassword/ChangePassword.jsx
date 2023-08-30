@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { changePassword } from "../../redux/features/user/userSlice";
+import changePassword  from "../../redux/features/user/userSlice";
+// import { changePassword } from "../../redux/features/user/userSlice";
 
 export default function ChangePassword() {
     const currentUser = useSelector((state) => state.user.currentUser);

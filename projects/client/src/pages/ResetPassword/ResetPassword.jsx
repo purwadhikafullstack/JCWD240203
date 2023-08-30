@@ -6,7 +6,8 @@ import rentifyLogo from '../../components/assets/icons/rentifyLogo.png'
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { resetPassword, sendPasswordResetEmail } from "../../redux/features/user/userSlice";
+import resetPassword from "../../redux/features/user/userSlice";
+import sendPasswordResetEmail  from "../../redux/features/user/userSlice"
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

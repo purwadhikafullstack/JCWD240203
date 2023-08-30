@@ -67,7 +67,7 @@ export default function TransactionPage() {
             <Header/>
             <div className="flex flex-col flex-grow justify-start px-[15px] py-[10px]">
                 <div className="yourHistory text-[26px] font-bold text-start border-b-[1px] border-gray-600">
-                    Your history
+                    Your booking history
                 </div>
                 <div className="flex flex-col flex-grow py-[10px]">
                     <TransactionFilterBar setYear={setYear} year={year} setLoading={setLoading} status={status} setStatus={setStatus} months={months} month={month} setMonth={setMonth}/>

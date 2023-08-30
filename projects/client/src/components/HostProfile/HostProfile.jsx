@@ -3,24 +3,30 @@ import React from "react";
 export default function HostProfile(props) {
     return (
         <div className="bg-[#F0EFE9] p-[35px] rounded-xl">
-            <div className="bg-white p-[20px] rounded-xl drop-shadow-2xl">
-                <div className="flex flex-col gap-[10px] items-center text-center justify-center">
-                    <div className="w-[100px] h-[100px]">
-                        <img src={props?.user?.profilePicture} alt="" className="w-full h-full rounded-full"/>
+            <div className="bg-white p-[20px] rounded-xl shadow-lg">
+                <div className="flex flex-col items-center text-center justify-center">
+                    <div className="w-[100px] h-[100px] overflow-hidden rounded-full border-4 border-white">
+                        <img
+                            src={props?.user?.profilePicture}
+                            alt=""
+                            className="w-full h-full object-cover"
+                        />
                     </div>
-                    <div className="font-bold text-[20px]">
-                        {props?.user?.username || ''}
+                    <div className="font-bold text-2xl mt-4 text-gray-800">
+                        <span className="border-b-2 pb-1 ">
+                            {props?.user?.username || "Username"}
+                        </span>
                     </div>
                 </div>
-                <div className="flex flex-col justify-center items-start gap-[15px]">
-                    <div className="font-bold text-[20px]">
+                <div className="mt-6">
+                    <div className="font-bold text-xl mb-2 text-gray-800">
                         About me
                     </div>
-                    <div className="w-full h-[125px] border-[1px] border-gray-600 rounded-[5px] px-[10px] py-[5px]">
-                        <textarea disabled className="w-full h-full bg-transparent resize-none" value={props?.user?.desc}/>
+                    <div className="bg-gray-100 p-4 rounded-md">
+                        <p className="text-gray-700">{props?.user?.desc}</p>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }

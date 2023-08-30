@@ -43,10 +43,10 @@ export default function ListingList() {
                             <div className="flex justify-center items-center text-left w-[380px] px-[10px] py-[10px]">
                                 LISTING
                             </div>
-                            <div className="flex justify-center items-center text-left w-[200px] px-[10px] py-[10px]">
+                            <div className="flex justify-center items-center text-left w-[200px] px-[8px] py-[10px]">
                                 STATUS
                             </div>
-                            <div className="flex justify-center items-center text-left w-[400px] px-[10px] py-[10px]">
+                            <div className="flex justify-center items-center text-left w-[540px] px-[10px] py-[10px]">
                                 LOCATION
                             </div>
                         </div>

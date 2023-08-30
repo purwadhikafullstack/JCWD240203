@@ -18,6 +18,9 @@ app.use(
 
 app.use(express.json());
 app.use(express.static(join(__dirname, 'Public')));
+app.use('/public', express.static('public'));
+// app.use(express.static(`src/public/images`))
+// app.use(express.static(`public`))
 //#region API ROUTES
 
 // ===========================
