@@ -23,7 +23,7 @@ export default function RoomList({roomLoading, setRoomLoading, setSelectedRoom, 
     }, [call, roomLoading, propertyId]);
 
     return (
-        <div className="features flex flex-col w-full h-full gap-[20px] justify-center items-center">
+        <div className="features flex flex-col z-[50] w-full min-h-full gap-[20px] justify-center">
             {
                 (roomLoading)?
                 <div className="flex justify-center items-center w-full h-full">

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { Card, CardBody } from "@material-tailwind/react";
 import LocationBox from "../LocationBox/locationBox";
-import DateBox from "../DateBox/dateBox";
-import GuestBox from "../GuestBox/guestBox";
+import DateBox from "../DateBox/DateBox";
+import GuestBox from "../GuestBox/GuestBox";
 import './cardBooking.css'
 
 
@@ -27,17 +27,15 @@ export default function CardBooking() {
         <div className="locationBox flex px-[10px] md:px-[30px]">
           <LocationBox/>
         </div>
-        <div className="dateBox relative w-full h-[100px] z-20">
-          <div className="absolute w-full px-[10px] md:px-[30px] flex gap-[10px]">
+        <div className="dateBox w-full h-[100px] px-[10px] md:px-[30px] flex gap-[10px]">
             <div className="w-full">
               <DateBox label="CHECK IN" type={'checkIn'} />
             </div>
             <div className="w-full">
               <DateBox label="CHECK OUT" type={'checkOut'} />
             </div>
-          </div>
         </div>
-        <div className="guestBox relative w-full h-[100px] z-10">
+        <div className="guestBox w-full h-[100px]">
           <div className="flex justify-center gap-[10px] px-[10px] md:px-[30px]">
             <div className="w-full">
               <GuestBox label="GUESTS" />
