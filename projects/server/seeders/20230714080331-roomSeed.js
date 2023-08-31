@@ -10,7 +10,8 @@ module.exports = {
         price: 900000,
         description: 'a room with twin beds, perfect for 2 guest.',
         capacity: 2,
-        stock: 5
+        stock: 5,
+        deleted: 'false'
       },
       {
         propertyId: 2,
@@ -18,7 +19,8 @@ module.exports = {
         price: 750000,
         description: 'a studio with 2 beds.',
         capacity: 2,
-        stock: 5
+        stock: 5,
+        deleted: 'false'
       },
       {
         propertyId: 2,
@@ -26,7 +28,8 @@ module.exports = {
         price: 1000000,
         description: 'a room with a king sized bed.',
         capacity: 3,
-        stock: 5
+        stock: 5,
+        deleted: 'false'
       },
       {
         propertyId: 3,
@@ -34,7 +37,8 @@ module.exports = {
         price: 1300000,
         description: 'a villa with a king sized bed.',
         capacity: 3,
-        stock: 5
+        stock: 5,
+        deleted: 'false'
       },
       {
         propertyId: 4,
@@ -42,7 +46,8 @@ module.exports = {
         price: 850000,
         description: 'a small studio, with 1 bed.',
         capacity: 1,
-        stock: 3
+        stock: 3,
+        deleted: 'false'
       },
       {
         propertyId: 4,
@@ -50,7 +55,8 @@ module.exports = {
         price: 850000,
         description: 'a small studio, with twin beds.',
         capacity: 2,
-        stock: 2
+        stock: 2,
+        deleted: 'false'
       },
       {
         propertyId: 5,
@@ -58,7 +64,8 @@ module.exports = {
         price: 1050000,
         description: 'A standard Javanese Limas House',
         capacity: 2,
-        stock: 3
+        stock: 3,
+        deleted: 'false'
       },
       {
         propertyId: 6,
@@ -66,7 +73,8 @@ module.exports = {
         price: 1000000,
         description: 'A cabin with 2 beds',
         capacity: 2,
-        stock: 3
+        stock: 3,
+        deleted: 'false'
       },
       {
         propertyId: 7,
@@ -74,7 +82,8 @@ module.exports = {
         price: 1200000,
         description: 'A nice medium room with 2 beds, cozy and comfy.',
         capacity: 2,
-        stock: 3
+        stock: 3,
+        deleted: 'false'
       },
       {
         propertyId: 8,
@@ -82,7 +91,8 @@ module.exports = {
         price: 500000,
         description: 'A small studio with 1 bed.',
         capacity: 1,
-        stock: 10
+        stock: 10,
+        deleted: 'false'
       },
       {
         propertyId: 8,
@@ -90,7 +100,8 @@ module.exports = {
         price: 750000,
         description: 'A small studio with 2 bed.',
         capacity: 2,
-        stock: 5
+        stock: 5,
+        deleted: 'false'
       },
       {
         propertyId: 9,
@@ -98,7 +109,8 @@ module.exports = {
         price: 1050000,
         description: 'A room with a queen sized bed.',
         capacity: 2,
-        stock: 3
+        stock: 3,
+        deleted: 'false'
       },
       {
         propertyId: 10,
@@ -106,7 +118,8 @@ module.exports = {
         price: 1800000,
         description: 'A spacious room with a queen sized bed, a bathub, and a private kitchen',
         capacity: 2,
-        stock: 3
+        stock: 3,
+        deleted: 'false'
       }
     ], {});
   },
