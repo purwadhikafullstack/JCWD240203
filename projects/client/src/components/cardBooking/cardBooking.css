@@ -1,0 +1,41 @@
+@import url('https://fonts.cdnfonts.com/css/mcdonalds-helvetica');
+@import url('https://fonts.cdnfonts.com/css/geograph-edit-black');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500&family=Righteous&family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Days+One&family=Outfit:wght@400;500&family=Paytone+One&family=Righteous&family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Days+One&family=Paytone+One&display=swap');
+
+
+.typography h5 {
+    font-family: 'McDonalds Helvetica', sans-serif;
+}
+
+.typography h4 {
+    font-family: 'Geomanist', sans-serif;
+    font-size: 1.7em;
+}
+
+.locationBox {
+    font-family: 'Secular One', sans-serif; 
+}
+
+.dateBox {
+    font-family: 'Secular One', sans-serif;
+}
+
+.guestBox {
+    font-family: 'Secular One', sans-serif;
+}
+
+.searchButton {
+    font-family: 'Alata', sans-serif;
+    width: 270px;
+}
+
+@media (max-width: 600px) {
+    .searchButton {
+      /* Adjusted width for smaller screens */
+      width: 100%;
+      max-width: 270px; /* Set a maximum width if desired */
+    }
+  }

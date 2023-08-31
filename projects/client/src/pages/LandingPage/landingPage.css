@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque&family=Mochiy+Pop+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gayathri:wght@700&family=Roboto+Flex&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gayathri&display=swap');
+
+.experience {
+    font-family: 'Darker Grotesque', sans-serif;
+}
+
+.over {
+    font-family: 'Darker Grotesque', sans-serif;
+}
+
+.utilize {
+    font-family: 'Darker Grotesque', sans-serif;
+}
+
+.trending {
+    font-family: 'Gayathri', sans-serif;
+    font-size: 55px
+}
+
+.these {
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 45px
+}
+
+
+
+.executive {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 24px;
+}
+
+.desc1 {
+    font-size: 16px;
+}
+
+.qnaCard {
+    font-family: 'Gayathri', sans-serif;
+}
+
+.qnaCard .text-6xl {
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-left: 4px;
+    text-align: left;
+}

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,54 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* universal class to remove scroll bar */
+.removeScroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.removeScroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* mobile scrolling */
+.mobileScroll {
+  -webkit-overflow-scrolling: auto;
+}
+
+/* modal animation */
+@keyframes slideUp {
+  from {
+      transform: translateY(100%);
+  }
+
+  to {
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+      transform: translateY(0);
+  }
+
+  to {
+      transform: translateY(100%);
+  }
+}
+
+.modal-entering {
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.modal-exiting {
+  animation: slideDown 0.3s ease-in-out;
+}
+
+.hideContainer {
+  transition-delay: 0.3s;
+  transform-origin: bottom;
+  transform: scale(0);
 }

@@ -1,0 +1,57 @@
+/* RoomCard.css */
+
+.carddetailss {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ribbon {
+    position: absolute;
+    left: 0px; /* Adjusted value */
+    top: 0px; /* Adjusted value */
+    z-index: 1;
+    overflow: hidden;
+    width: 100px; /* Adjusted value */
+    height: 90px; /* Adjusted value */
+    text-align: right;
+}
+
+.ribbon span {
+    font-size: 16px; /* Adjusted value */
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 25px; /* Adjusted value */
+    transform: rotate(-45deg);
+    width: 100%; /* Adjusted value */
+    display: block;
+    background: #c91a0d;
+    background: linear-gradient(#c91a0d 0%, #741711 100%);
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+    position: absolute;
+    right: 30px; /* Adjusted value */
+    top: 10px; /* Adjusted value */
+}
+
+.ribbon span::before,
+.ribbon span::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border: 4px solid transparent; /* Adjusted value */
+}
+
+.ribbon span::before {
+    border-top-color: #c91a0d;
+    border-left-color: #c91a0d;
+    top: 0;
+    right: 0;
+}
+
+.ribbon span::after {
+    border-bottom-color: #c91a0d;
+    border-right-color: #c91a0d;
+    bottom: 0;
+    left: 0;
+}
+

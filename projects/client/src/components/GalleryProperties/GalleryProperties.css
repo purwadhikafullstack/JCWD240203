@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap');
+  
+.collage {
+  display: flex;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.allPhotoButton {
+  margin-top: 10px;
+  font-family: 'Happy Monkey', cursive;
+}
+  

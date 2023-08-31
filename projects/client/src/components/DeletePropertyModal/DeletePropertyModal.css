@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist&display=swap');
+
+
+.headerText {
+    font-family: 'Prompt', sans-serif;
+}
+
+
+.descriptionText {
+    font-family: 'Urbanist', sans-serif;
+}

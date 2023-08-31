@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Niramit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geologica&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
+
+.username {
+    font-family: 'Comfortaa', cursive;
+    font-size: large;
+    /* font-family: 'Outfit', sans-serif; */
+}
+
+.emailReminder {
+    font-family: 'Niramit', sans-serif;
+}
+
+.aboutYouField {
+    font-family: 'Baloo 2', cursive;
+}
+
+.idCard {
+    font-family: 'Baloo 2', cursive;
+}
+
+.textId {
+    font-family: 'Geologica', sans-serif;
+}
