@@ -11,7 +11,8 @@ module.exports = {
         phoneNumber: '000000000',
         gender: 'Male',
         birthDate: '2003-11-10',
-        status: 'unverified'
+        status: 'unverified',
+        accountType: 'Local'
       },
       {
         username: 'John Doe',
@@ -20,7 +21,8 @@ module.exports = {
         phoneNumber: '000000000',
         gender: 'Male',
         birthDate: '2003-11-10',
-        status: 'unverified'
+        status: 'unverified',
+        accountType: 'Local'
       }
     ], {});
   },
