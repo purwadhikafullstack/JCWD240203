@@ -1,6 +1,6 @@
 // { imageUrl, title, description, bedType, date, price }
 import './TrendingCarausel.css';
-import PropertyCard from '../PropertyCard/propertyCard';
+import PropertyCard from '../PropertyCard/PropertyCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getProperty } from '../../redux/features/property/propertySlice';

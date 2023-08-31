@@ -4,7 +4,7 @@ import Footer from "../../components/footerRentify/footerPage";
 import { HiOutlineShieldCheck } from 'react-icons/hi'
 import { BiHomeHeart } from 'react-icons/bi'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
-import './landingPage.css'
+import './LandingPage.css'
 import { useState } from "react";
 import QnaCard from "../../components/QnACard/qnaCard";
 import TrendingCarausel from '../../components/TrendingCarausel/TrendingCarausel';

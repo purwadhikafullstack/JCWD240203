@@ -1,4 +1,4 @@
-import './propertyCard.css'
+import './PropertyCard.css'
 import { Link } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 

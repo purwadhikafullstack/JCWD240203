@@ -53,18 +53,18 @@ function Carousel() {
   };
 
   return (
-    <div className='carousel h-full w-full relative group'>
+    <div className='carousel flex flex-col md:block h-[425px] md:h-full w-full relative group'>
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className='carousel w-full h-full rounded-lg bg-center bg-cover duration-500 ease-in-out'
-      ></div>
+      >&nbsp;</div>
       <div className='hidden group-hover:block hover:bg-black/75 transition-all duration-400 absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
         <BsChevronCompactLeft onClick={prevSlide} size={30} />
       </div>
       <div className='hidden group-hover:block hover:bg-black/75 transition-all duration-400 absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
-      <div className='flex top-4 justify-center py-2'>
+      <div className='flex justify-center py-2'>
         {slides.map((slide, slideIndex) => (
           <div
             key={slideIndex}

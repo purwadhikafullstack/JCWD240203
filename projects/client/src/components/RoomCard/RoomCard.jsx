@@ -26,7 +26,7 @@ export default function RoomCard(props) {
     }, [props?.data?.prices]);
 
     return (
-        <div className="relative carddetailss flex w-full bg-gray-200 p-[10px] rounded-[10px] justify-between h-auto md:h-[125px] overflow-hidden">
+        <div className="relative carddetailss flex w-full bg-gray-200 p-[10px] rounded-[10px] justify-between h-[125px] overflow-hidden">
             <div className={`${(percentage > 0 || percentage < 0) ? "ribbon" : "hidden"}`}>
                 <span>{percentage < 0 ? `${percentage}%` : `+ ${percentage}%`}</span>
             </div>

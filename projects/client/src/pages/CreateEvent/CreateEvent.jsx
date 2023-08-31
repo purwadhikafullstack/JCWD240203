@@ -12,7 +12,6 @@ import Footer from "../../components/footerRentify/footerPage";
 import { useDispatch, useSelector } from "react-redux";
 import { createPrice, getPropertyDetail } from "../../redux/features/property/propertySlice";
 import { toast } from "react-hot-toast";
-import { Calendar } from "@fullcalendar/core";
 
 export default function CreateEvent() {
   const currentUser = useSelector((state) => state.user.currentUser);
