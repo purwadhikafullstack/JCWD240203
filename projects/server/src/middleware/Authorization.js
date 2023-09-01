@@ -15,7 +15,7 @@ module.exports = {
                     data: null
                 })
             }
-
+            
             token = token.split(' ')[1];
             const verify = jwt.verify(token, process.env.KEY);
             
@@ -84,7 +84,7 @@ module.exports = {
 
     isHost: (req, res, next) => {
         try {
-            const {idCard} = req.body;
+            const { idCard } = req.body;
             let token = req.headers.authorization;
             
             if(!token) {

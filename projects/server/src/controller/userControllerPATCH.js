@@ -99,7 +99,24 @@ module.exports = {
                 });
             }
 
-            const token = jwt.sign({code: verify, id: id}, process.env.KEY, {expiresIn: '1h'});
+            const tokenAlreadyExist = recipient.code;
+            if(tokenAlreadyExist) {
+                try {
+                    const decoded = jwt.decode(recipient.code);
+                    if(Date.now() < decoded.exp * 1000 && decoded.type === 'AccountVerification') {
+                        return res.status(400).send({
+                            isError: true,
+                            message: 'Email already sent !',
+                            data: null
+                        })
+                    }
+                }
+                catch(error) {
+                    // do nothing and continue
+                }
+            } 
+
+            const token = jwt.sign({code: verify, id: id, type: 'AccountVerification'}, process.env.KEY, {expiresIn: '1h'});
 
             await user.update({
                 code: token
@@ -159,9 +176,9 @@ module.exports = {
             const verify = jwt.verify(token, process.env.KEY);
             
             const result = await user.findOne({
-                where: {id: id, status: 'unverified', accountType: 'Local'}
+                where: {id: verify.id, status: 'unverified', accountType: 'Local'}
             })
-
+            
             if(!result) {
                 return res.status(404).send({
                     isError: true,
@@ -171,7 +188,7 @@ module.exports = {
             }
 
             const userToken = jwt.verify(result.code, process.env.KEY);
-
+            
             if(verify.code === userToken.code && verify.id === userToken.id) {
                 await user.update({
                     status: 'verified',

@@ -36,34 +36,36 @@ export default function AddCategoryModal(props) {
     };
 
     return(
-        <div className={`${(props?.showModal)? '' : 'hidden'} absolute flex justify-center items-center w-full h-full bg-gray-500/70 z-50 top-0`}>
-            <div className="relative flex flex-col w-[300px] h-[200px] bg-white rounded-[10px] px-[10px] py-[20px]">
-                <div onClick={handleClose} className="absolute right-[10px] top-[10px] cursor-pointer">
-                    <AiOutlineClose size={25}/>
-                </div>
-                <div className="text-[16px] font-bold">
-                    Add a new Category
-                </div>
-                <div className="flex flex-col h-full w-full justify-center items-center gap-[20px]">
-                    <div>
-                        <TextField
-                        onChange={(e) => setNewType(e.target.value)}
-                        value={newType}
-                        label='Category'
-                        fullWidth
-                        size="small"
-                        />
+        <div className={`${(props?.showModal)? '' : 'hideContainer'} w-full h-full top-0 left-0 right-0 absolute z-50 overflow-y-hidden`}>
+            <div className={`${(props?.showModal)? 'modal-entering' : 'modal-exiting'} flex justify-center items-center w-full h-full bg-gray-300/80`}>
+                <div className="relative flex flex-col w-[300px] h-[200px] bg-white rounded-[10px] px-[10px] py-[20px]">
+                    <div onClick={handleClose} className="absolute right-[10px] top-[10px] cursor-pointer">
+                        <AiOutlineClose size={25}/>
                     </div>
-                    <div>
-                        <Button
-                        onClick={AddCategory}
-                        disabled={isSubmitting}
-                        variant="contained"
-                        size="medium"
-                        color="success"
-                        >
-                            Create category
-                        </Button>
+                    <div className="text-[16px] font-bold">
+                        Add a new Category
+                    </div>
+                    <div className="flex flex-col h-full w-full justify-center items-center gap-[20px]">
+                        <div>
+                            <TextField
+                            onChange={(e) => setNewType(e.target.value)}
+                            value={newType}
+                            label='Category'
+                            fullWidth
+                            size="small"
+                            />
+                        </div>
+                        <div>
+                            <Button
+                            onClick={AddCategory}
+                            disabled={isSubmitting}
+                            variant="contained"
+                            size="medium"
+                            color="success"
+                            >
+                                Create category
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>

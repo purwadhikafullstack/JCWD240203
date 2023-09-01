@@ -76,6 +76,21 @@ export const getUser = (data) => async() => {
     catch(error) {
         return Promise.reject(error);
     }
+};
+
+export const renewUser = (data) => async() => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/renew/${data.id}`, {
+            headers: {
+                authorization: `Bearer ${data.token}`
+            }
+        });
+
+        return Promise.resolve(response);
+    }
+    catch(error) {
+        return Promise.reject(error);
+    }
 }
 
 export const updateUser = (data) => async(dispatch) => {
@@ -143,10 +158,8 @@ export const verifyAccount = (data) => async(dispatch) => {
         });
 
         setTimeout(() => {
-            dispatch(getUser({id: data.id, token: data.token})).then(
+            dispatch(renewUser({id: data.id, token: data.token})).then(
                 (response) => {
-                    const token = JSON.parse(localStorage.getItem('user')).token;
-                    response.data.data.token = token;
                     localStorage.setItem('user', JSON.stringify(response.data.data));
                     dispatch(setUser(response.data.data));
                 },
