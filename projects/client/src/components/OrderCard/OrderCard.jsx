@@ -123,7 +123,12 @@ export default function OrderCard(props) {
             <div className="paymentProoff flex flex-col justify-center items-center flex-[1.1] gap-[15px] p-[10px]">
                 Payment proof:
                 <div className="flex w-full h-[325px] md:h-[175px]">
-                    <img src={props?.data?.paymentProof} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
+                    {
+                        (props?.data?.paymentProof)?
+                        <img src={props?.data?.paymentProof} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
+                        :
+                        <img src={'http://localhost:8000/default/DefaultTransaction.png'} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
+                    }
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center flex-1 p-[10px]">

@@ -17,7 +17,7 @@ export default function OwnerProfileCard(props) {
     }
 
     return (
-        <div className="flex flex-col h-full gap-[20px] w-full md:w-auto justify-center items-center">
+        <div className="flex flex-col md:h-full gap-[20px] w-full md:w-auto justify-center items-center">
             <div className="flex flex-col gap-[15px] justify-center items-center w-[300px] h-[265px] bg-white border-[1px] border-gray-500 rounded-[10px] drop-shadow-lg">
                 <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
                     {

@@ -4,10 +4,9 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import rentifyLogo from '../../components/assets/icons/rentifyLogo.png'
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import resetPassword from "../../redux/features/user/userSlice";
-import sendPasswordResetEmail  from "../../redux/features/user/userSlice"
+import { resetPassword, sendPasswordResetEmail } from "../../redux/features/user/userSlice";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 

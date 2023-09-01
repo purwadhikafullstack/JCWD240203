@@ -79,7 +79,7 @@ export default function DateBox(props) {
           disabled={
             (props?.type === 'checkOut')?
             {
-              before: (!isNaN(new Date(start)))? new Date(start).setDate(new Date().getDate() + 2) : new Date()
+              before: (!isNaN(new Date(start)))? new Date(start).setDate(new Date(start).getDate() + 2) : new Date()
             }
             :
             {

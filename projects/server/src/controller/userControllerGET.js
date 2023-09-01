@@ -1,6 +1,7 @@
 const db = require('../../models');
 const { Op } = require('sequelize');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const user = db.user;
 const property = db.property;
 const propertyImages = db.propertyImages;
@@ -74,6 +75,42 @@ module.exports = {
                 message: error.message,
                 data: null
             })
+        }
+    },
+
+    renewToken: async(req, res) => {
+        try {
+            const id = req.params.id;
+            let existingUser = await user.findOne({where: {id: id}});
+
+            if(!existingUser) {
+                return res.status(404).send({
+                    isError: true,
+                    message: 'Not Found !',
+                    data: null
+                });
+            };
+
+            const token = jwt.sign({
+                id: existingUser.id,
+                status: existingUser.status
+            }, process.env.KEY, {expiresIn: '24h'});
+            existingUser = JSON.parse(JSON.stringify(existingUser)); // stringify and parse needed to delete password key
+            existingUser.token = token;
+            delete existingUser.password;
+
+            return res.status(200).send({
+                isError: false,
+                message: 'User renewed !',
+                data: existingUser
+            });
+        }
+        catch(error) {
+            return res.status(500).send({
+                isError: true,
+                message: error.message,
+                data: null
+            });
         }
     }
 }
