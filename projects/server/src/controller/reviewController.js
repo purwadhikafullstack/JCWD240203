@@ -8,27 +8,37 @@ module.exports = {
     createReview: async(req, res) => {
         try {
             const {userId, propertyId, rating, description} = req.body;
+            
+            if(!userId || !propertyId || !rating || !description) {
+                return res.status(400).send({
+                    isError: true,
+                    message: 'Bad Request !',
+                    data: null
+                });
+            };
 
-            const dataExist = property.findOne({
+            const propertyExist = property.findOne({
                 where: {
-                    id: propertyId
+                    id: propertyId,
+                    status: 'Public'
                 }
             })
 
             const hasReviewed = await review.findOne({
                 where: {
+                    propertyId: propertyId,
                     userId: userId
                 }
             });
 
-            if(!dataExist) {
+            if(!propertyExist) {
                 return res.status(404).send({
                     isError: true,
-                    message: 'not found',
+                    message: 'Not Found !',
                     data: null
                 });   
             }
-            else if (Object.keys(hasReviewed).length > 0) {
+            else if (hasReviewed) {
                 return res.status(404).send({
                     isError: true,
                     message: 'User can only review a property once',
@@ -82,7 +92,8 @@ module.exports = {
                 const transactions = await transaction.findOne({
                     where: {
                         propertyId: propertyId,
-                        userId: userId
+                        userId: userId,
+                        status: 'completed'
                     }
                 });
 
