@@ -38,13 +38,10 @@ export default function ProfilePage() {
     const call = useDispatch();
 
     const setValue = () => {
-        const loading = 'fetchingData';
-        toast.loading('fetching your data !', {id: loading});
         call(getUser({
             id: params.id
         })).then(
             (response) => {
-                toast.dismiss(loading);
                 setDesc(response.data.data?.desc);
                 setNewId(response.data.data?.idCard);
                 setStatus(response.data.data?.status);
@@ -62,7 +59,7 @@ export default function ProfilePage() {
                 setIsLoading(false);
             },
             (error) => {
-                toast.error('network error', {id: loading});
+                toast.error('Network error !');
             }
         )
     }
