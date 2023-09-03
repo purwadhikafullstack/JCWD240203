@@ -12,7 +12,7 @@ module.exports = {
         gender: 'Male',
         birthDate: '2003-11-10',
         profilePicture: 'http://localhost:8000/default/DefaultProfile.png',
-        status: 'unverified',
+        status: 'verified',
         accountType: 'Local'
       },
       {
