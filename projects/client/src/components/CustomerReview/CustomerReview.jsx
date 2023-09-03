@@ -32,7 +32,7 @@ export default function CustomerReview(props) {
             if(rating > 0 && description) {
                 call(postReview({
                    userId: JSON.parse(localStorage.getItem('user')).id,
-                   propertyId: props?.property?.id,
+                   propertyId: props?.propertyId,
                    rating: rating,
                    description: description
                 })).then(
@@ -40,7 +40,10 @@ export default function CustomerReview(props) {
                         toast.success('Review posted !', {id: loading});
                         setLoading(true);
                     },
-                    (error) => {console.log(error)}
+                    (error) => {
+                        toast.error('Unable to post review, try again later !', {id: loading});
+                        console.log(error)
+                    }
                 )
             }
             else {

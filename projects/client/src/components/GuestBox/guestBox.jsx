@@ -1,7 +1,6 @@
 import { Box, TextField, MenuItem, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setGuest } from "../../redux/features/property/propertySlice";
-import './guestBox.css'
 
 export default function GuestBox({ label }) {
     const data = ['1', '2', '3', '4', '5'];

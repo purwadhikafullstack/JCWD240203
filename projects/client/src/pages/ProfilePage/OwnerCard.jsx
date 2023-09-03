@@ -61,8 +61,12 @@ export default function OwnerCard({isSaving, ...props}) {
                     toast.success(`Verification link has been sent !`)
                 },
                 (error) => {
-                    toast.error('Network error, try again later !')
-                    console.log(error);
+                    if(error.response.data.message) {
+                        toast.error(error.response.data.message);
+                    }
+                    else {
+                        toast.error('Network error, try again later !')
+                    }
                 }
             )
         }

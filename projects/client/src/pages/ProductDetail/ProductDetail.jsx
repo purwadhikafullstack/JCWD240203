@@ -202,7 +202,7 @@ export default function ProductDetail() {
                         <hr className="my-4 border-gray-300" />
                     </div>
                     <div className="review w-full">
-                        <CustomerReview currentUser={currentUser} page={page} limit={limit} total={totalReview} propertyId={property?.id}/>
+                        <CustomerReview currentUser={currentUser} page={page} limit={limit} total={totalReview} propertyId={property?.id} average={property?.average}/>
                     </div>
                 </main >
             }

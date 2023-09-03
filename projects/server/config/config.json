@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "jcwd2402",
-    "database": "property_rent",
+    "database": "jcwd240203",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -14,9 +14,9 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "username": "jcwd240203",
+    "password": "group03",
+    "database": "jcwd240203",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

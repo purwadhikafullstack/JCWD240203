@@ -9,6 +9,8 @@ const Router = express.Router();
 // GET //
 Router.get('/:id', usersGET.getUser);
 
+Router.get('/renew/:id', Authorization.isOwner , usersGET.renewToken);
+
 // POST //
 Router.post('/', async(req, res, next) => {
     await checkSchema({

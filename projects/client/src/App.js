@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./pages/LandingPage/landingPage";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import { keepLogin, onLogout } from "./redux/features/user/userSlice";
@@ -19,6 +19,7 @@ import CreateEvent from "./pages/CreateEvent/CreateEvent";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import Error404 from "./pages/404Error/404Error";
+import 'react-day-picker/dist/style.css';
 
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);

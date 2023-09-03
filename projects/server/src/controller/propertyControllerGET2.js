@@ -2,9 +2,9 @@ const db = require('../../models');
 const { Op } = require('sequelize');
 const propertyFacility = db.propertyFacility;
 const propertyImages = db.propertyImages;
-const transaction = db.transaction;
 const property = db.property;
 const facility = db.facility;
+const review = db.review;
 const user = db.user;
 
 module.exports = {
@@ -23,6 +23,7 @@ module.exports = {
                         include: [{model: facility}]
                     },
                     { model: propertyImages },
+                    { model: review}
                 ],
                 where: {
                     id: propertyId,
@@ -40,6 +41,17 @@ module.exports = {
                     data: null
                 })
             };
+            
+            result = JSON.parse(JSON.stringify(result, null, 2));
+
+            let temp = 0;
+            if(result.reviews.length > 0) {
+                result.reviews.forEach((review) => {
+                    temp += review.rating;
+                })
+                temp /= result.reviews.length;
+            }
+            result.average = temp.toFixed(2);
 
             return res.status(200).send({
                 isError: true,
