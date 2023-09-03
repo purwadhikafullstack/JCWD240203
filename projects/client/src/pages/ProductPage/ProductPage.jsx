@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Header from "../../components/header/headerPage";
-import PropertyCard from "../../components/propertyCard/propertyCard";
+import PropertyCard from "../../components/PropertyCard/PropertyCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getProperty} from "../../redux/features/property/propertySlice";
 import { toast } from "react-hot-toast";

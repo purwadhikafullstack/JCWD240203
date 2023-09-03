@@ -4,14 +4,14 @@ import Footer from "../../components/footerRentify/footerPage";
 import { HiOutlineShieldCheck } from 'react-icons/hi'
 import { BiHomeHeart } from 'react-icons/bi'
 import { TbAdjustmentsHorizontal } from 'react-icons/tb'
-import './LandingPage.css'
 import { useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import QnaCard from "../../components/QnACard/qnaCard";
 import TrendingCarausel from '../../components/TrendingCarausel/TrendingCarausel';
 import LoginModal from '../../components/LoginModal/LoginModal';
 import RegisterModal from '../../components/RegisterModal/RegisterModal';
-import { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import './LandingPage.css'
 
 export default function LandingPage() {
     const [showRegister, setShowRegister] = useState(false);
