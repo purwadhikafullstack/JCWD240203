@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, TextField, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { DayPicker } from 'react-day-picker';
 import { format } from "date-fns";
 import { setStart, setEnd } from "../../redux/features/property/propertySlice";

@@ -6,7 +6,7 @@ import Footer from "../../components/footerRentify/footerPage";
 import "./MainPage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createProperty } from "../../redux/features/property/propertySlice";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import AddCategoryModal from "../../components/AddCategoryModal/AddCategoryModal";
 
