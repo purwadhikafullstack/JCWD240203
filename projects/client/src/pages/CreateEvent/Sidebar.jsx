@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import EventCalendarModal from "../../components/EventModalCalendar/EventModalCalendar";
 import { Slider, TextField } from "@mui/material";
 import { Select } from "@mantine/core";
 
@@ -103,8 +102,6 @@ export default function Sidebar({eventStart, eventEnd, percentage, setPercentage
                     </button>
                 </div>
             </div>
-            {/* Modal content and form */}
-            <EventCalendarModal/>
         </div>
     );
 }
