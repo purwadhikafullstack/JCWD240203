@@ -1,4 +1,4 @@
-const db = require('../../models');
+const db = require('../models');
 const country = db.country;
 const city = db.city;
 

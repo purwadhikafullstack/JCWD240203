@@ -1,4 +1,4 @@
-const db = require('../../models');
+const db = require('../models');
 const { deleteFiles } = require('../helper/deleteFiles');
 const property = db.property;
 const propertyImages = db.propertyImages;

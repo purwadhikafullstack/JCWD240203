@@ -1,4 +1,4 @@
-const db = require('../../models');
+const db = require('../models');
 const property = db.property;
 
 module.exports = {
