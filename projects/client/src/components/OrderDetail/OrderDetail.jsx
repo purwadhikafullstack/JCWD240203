@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GuestBox from "../GuestBox/guestBox";
+import GuestBox from "../GuestBox/GuestBox";
 import { useSelector } from "react-redux";
 import HotelBooking from "../../components/OrderDetail/HotelBooking.png"
 import './OrderDetail.css'
