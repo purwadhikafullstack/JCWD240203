@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { Card, CardBody } from "@material-tailwind/react";
 import LocationBox from "../LocationBox/locationBox";
 import DateBox from "../DateBox/DateBox";
-import GuestBox from "../GuestBox/GuestBox";
+import GuestBox from "../GuestBox/guestBox";
 import './cardBooking.css'
 
 
