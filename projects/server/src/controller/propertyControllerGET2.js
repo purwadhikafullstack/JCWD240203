@@ -1,7 +1,7 @@
 const db = require('../models');
 const { Op } = require('sequelize');
-const propertyFacility = db.propertyFacility;
-const propertyImages = db.propertyImages;
+const propertyfacility = db.propertyfacility;
+const propertyimages = db.propertyimages;
 const property = db.property;
 const facility = db.facility;
 const review = db.review;
@@ -19,10 +19,10 @@ module.exports = {
                         attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status']
                     },
                     { 
-                        model: propertyFacility,
+                        model: propertyfacility,
                         include: [{model: facility}]
                     },
-                    { model: propertyImages },
+                    { model: propertyimages },
                     { model: review}
                 ],
                 where: {
@@ -30,7 +30,7 @@ module.exports = {
                     status: 'Public'
                 },
                 order: [
-                    [{model: propertyImages} ,'id', 'ASC']
+                    [{model: propertyimages} ,'id', 'ASC']
                 ],
             });
 

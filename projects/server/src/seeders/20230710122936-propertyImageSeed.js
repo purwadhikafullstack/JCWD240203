@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('propertyImages', [
+    await queryInterface.bulkInsert('propertyimages', [
       {
         url: 'https://a0.muscache.com/im/pictures/miso/Hosting-735147908258997419/original/7990ebca-0115-463f-83da-f92d11f72df9.jpeg?im_w=960',
         propertyId: 1
@@ -168,6 +168,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('propertyImages', null, {})
+    await queryInterface.bulkDelete('propertyimages', null, {})
   }
 };

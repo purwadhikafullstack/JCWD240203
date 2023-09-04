@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 const { deleteFiles } = require('../helper/deleteFiles');
 const transaction = db.transaction;
 const property = db.property;
-const propertyImages = db.propertyImages;
+const propertyimages = db.propertyimages;
 const room = db.room;
 require('dotenv').config();
 

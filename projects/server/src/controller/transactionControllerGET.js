@@ -2,7 +2,7 @@ const db = require('../models');
 const { Op } = require('sequelize');
 const transaction = db.transaction;
 const property = db.property;
-const propertyImages = db.propertyImages;
+const propertyimages = db.propertyimages;
 const room = db.room;
 const user = db.user;
 require('dotenv').config();
@@ -34,14 +34,14 @@ module.exports = {
                         model: property,
                         include: [
                             {
-                                model: propertyImages
+                                model: propertyimages
                             }
                         ]
                     },
                     {model: room}
                 ],
                 order: [
-                    [{model: property}, {model: propertyImages} ,'id', 'ASC'],
+                    [{model: property}, {model: propertyimages} ,'id', 'ASC'],
                     ['id', 'ASC']
                 ],
                 limit: limit * page || 999999999999,
@@ -102,7 +102,7 @@ module.exports = {
                         model: property,
                         include: [
                             {
-                                model: propertyImages
+                                model: propertyimages
                             }
                         ],
                         where: {
@@ -114,7 +114,7 @@ module.exports = {
                     {model: user}
                 ],
                 order: [
-                    [{model: property}, {model: propertyImages} ,'id', 'ASC'],
+                    [{model: property}, {model: propertyimages} ,'id', 'ASC'],
                     ['id', 'ASC']
                 ],
                 limit: limit * page || 999999999999,

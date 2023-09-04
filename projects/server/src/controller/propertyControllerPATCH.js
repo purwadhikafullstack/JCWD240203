@@ -1,8 +1,8 @@
 const db = require('../models');
 const { deleteFiles } = require('../helper/deleteFiles');
 const property = db.property;
-const propertyImages = db.propertyImages;
-const propertyFacility = db.propertyFacility;
+const propertyimages = db.propertyimages;
+const propertyfacility = db.propertyfacility;
 const room = db.room;
 require('dotenv').config();
 
@@ -79,7 +79,7 @@ module.exports = {
                     })
                 };
 
-                const prevImages = await propertyImages.findAll({
+                const prevImages = await propertyimages.findAll({
                     where: {
                         propertyId: propertyId
                     }
@@ -93,14 +93,14 @@ module.exports = {
                     }
                 }
     
-                await propertyImages.bulkCreate(dataImage, {transaction: t});
+                await propertyimages.bulkCreate(dataImage, {transaction: t});
                 if(oldRows?.length > 0) {
-                    await propertyImages.destroy({where: {id: oldRows}}, {transaction: t})
+                    await propertyimages.destroy({where: {id: oldRows}}, {transaction: t})
                 }
             }
 
 
-            const prevFacility = await propertyFacility.findAll({
+            const prevFacility = await propertyfacility.findAll({
                 where: {
                     propertyId: propertyId
                 }
@@ -134,9 +134,9 @@ module.exports = {
                 }
             };
             
-            await propertyFacility.bulkCreate(dataFacility, {transaction: t});
+            await propertyfacility.bulkCreate(dataFacility, {transaction: t});
             if(deletedFacility?.length > 0) {
-                await propertyFacility.destroy({where: {id: deletedFacility}}, {transaction: t})
+                await propertyfacility.destroy({where: {id: deletedFacility}}, {transaction: t})
             }
             
             await room.bulkCreate(dataRoom, {
