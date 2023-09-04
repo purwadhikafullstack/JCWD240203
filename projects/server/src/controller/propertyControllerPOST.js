@@ -1,8 +1,8 @@
 const db = require('../models');
 const { deleteFiles } = require('../helper/deleteFiles');
 const property = db.property;
-const propertyImages = db.propertyImages;
-const propertyFacility = db.propertyFacility;
+const propertyimages = db.propertyimages;
+const propertyfacility = db.propertyfacility;
 const room = db.room;
 require('dotenv').config();
 
@@ -56,9 +56,9 @@ module.exports = {
                 dataFacility.push({propertyId: newProperty.id, facilityId: value})
             });
             
-            await propertyFacility.bulkCreate(dataFacility, {transaction: t});
+            await propertyfacility.bulkCreate(dataFacility, {transaction: t});
             
-            await propertyImages.bulkCreate(dataImage, {transaction: t});
+            await propertyimages.bulkCreate(dataImage, {transaction: t});
 
             await room.bulkCreate(newRooms, {transaction: t});
             

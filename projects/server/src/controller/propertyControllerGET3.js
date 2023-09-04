@@ -1,8 +1,8 @@
 const { Op } = require('sequelize');
 const db = require('../models');
 const property = db.property;
-const propertyImages = db.propertyImages;
-const propertyFacility = db.propertyFacility;
+const propertyimages = db.propertyimages;
+const propertyfacility = db.propertyfacility;
 const facility = db.facility;
 const category = db.category;
 const price = db.price;
@@ -29,7 +29,7 @@ module.exports = {
             let result = await property.findOne({
                 include: [
                     { 
-                        model: propertyFacility,
+                        model: propertyfacility,
                         include: [{model: facility}]
                     },
                     { 
@@ -44,7 +44,7 @@ module.exports = {
                         where: {deleted: 'false'}
                     },
                     { model: category },
-                    { model: propertyImages }
+                    { model: propertyimages }
                 ],
                 where: {
                     id: propertyId,
@@ -52,7 +52,7 @@ module.exports = {
                     [Op.or]: [{status: 'Public'}, {status: 'Private'}]
                 },
                 order: [
-                    [{model: propertyImages} ,'id', 'ASC']
+                    [{model: propertyimages} ,'id', 'ASC']
                 ],
             });
 

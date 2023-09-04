@@ -59,7 +59,7 @@ export default function ProfilePage() {
                 setIsLoading(false);
             },
             (error) => {
-                toast.error('Network error !');
+                toast.error('Network error !', {id: 'ProfilePageErrorToast'});
             }
         )
     }

@@ -98,7 +98,7 @@ export default function ProductDetail() {
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin}/>
             <RegisterModal showRegister={showRegister} setShowRegister={setShowRegister}/>
             <PaymentModal showPayment={showPayment} selectedProperty={property} selectedRoom={selectedRoom} start={start} end={end} guest={guest} setShowPayment={setShowPayment} setShowLogin={setShowLogin}/>
-            <GalleryModal showAllPhotos={showAllPhotos} setShowAllPhotos={setShowAllPhotos} images={property?.propertyImages}/>
+            <GalleryModal showAllPhotos={showAllPhotos} setShowAllPhotos={setShowAllPhotos} images={property?.propertyimages}/>
             {
                 (loading)?
                 <div className="flex w-full h-full items-center justify-center">
@@ -125,7 +125,7 @@ export default function ProductDetail() {
                         </div>
                     </div>
                     <div className="imageList rounded-xl">
-                        <GalleryProperties showAllPhotos={showAllPhotos} setShowAllPhotos={setShowAllPhotos} images={property?.propertyImages}/>
+                        <GalleryProperties showAllPhotos={showAllPhotos} setShowAllPhotos={setShowAllPhotos} images={property?.propertyimages}/>
                     </div>
                     <div className="flex w-full flex-col gap-2">
                         <div className="propsDesc text-left">
