@@ -1,4 +1,4 @@
-const db = require('../../models');
+const db = require('../models');
 const transaction = db.transaction;
 const property = db.property;
 const review = db.review;
