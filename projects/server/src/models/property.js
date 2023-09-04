@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId'
       });
 
-      property.hasMany(models.propertyImages, {
+      property.hasMany(models.propertyimages, {
         foreignKey: 'propertyId'
       });
 
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'propertyId'
       });
 
-      property.hasMany(models.propertyFacility, {
+      property.hasMany(models.propertyfacility, {
         foreignKey: 'propertyId'
       });
 

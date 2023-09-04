@@ -7,9 +7,9 @@ export default function PropertyCard(props) {
     <Link to={`/property/${props?.data?.id}`} className="flex flex-col h-full w-full bg-gray-100  drop-shadow rounded-[10px] transition-all duration-500 hover:scale-105 active:scale-100 cursor-pointer hover:bg-green-800/70">
     <div className="w-full p-[5px]">
     {
-        (props?.data?.propertyImages?.length > 0) ?
+        (props?.data?.propertyimages?.length > 0) ?
           <img
-              src={props.data.propertyImages[0].url}
+              src={props.data.propertyimages[0].url}
               alt=""
               className="w-full h-[175px] md:h-[200px] rounded-[10px]"
           />

@@ -4,7 +4,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const user = db.user;
 const property = db.property;
-const propertyImages = db.propertyImages;
+const propertyimages = db.propertyimages;
 const category = db.category;
 const review = db.review;
 
@@ -19,7 +19,7 @@ module.exports = {
                         where: {[Op.or]: [{status: 'Public'}, {status: 'Private'}]},
                         include: [
                             {
-                                model: propertyImages
+                                model: propertyimages
                             },
                             {
                                 model: category
@@ -36,7 +36,7 @@ module.exports = {
                 },
                 order: [
                     [{model: property} ,'id', 'ASC'],
-                    [{model: property}, {model: propertyImages} ,'id', 'ASC']
+                    [{model: property}, {model: propertyimages} ,'id', 'ASC']
                 ],
                 attributes: ['id', 'username', 'email', 'desc', 'phoneNumber', 'gender', 'birthDate', 'profilePicture', 'idCard', 'status', 'accountType']
             });

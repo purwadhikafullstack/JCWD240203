@@ -1,7 +1,7 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const property = db.property;
-const propertyImages = db.propertyImages;
+const propertyimages = db.propertyimages;
 const category = db.category;
 const room = db.room;
 const price = db.price;
@@ -78,12 +78,12 @@ module.exports = {
                         where: categoryFilter,
                         required: true
                     },
-                    { model: propertyImages },
+                    { model: propertyimages },
                     { model: review }
                 ],
                 order: [
                     ['rooms', 'price', 'ASC'],
-                    ['propertyImages','id', 'ASC'],
+                    ['propertyimages','id', 'ASC'],
                     ['reviews', 'rating', 'ASC']
                 ],
                 //offset: limit*(page - 1) || 0,

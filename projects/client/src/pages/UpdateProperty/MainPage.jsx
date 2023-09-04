@@ -100,10 +100,10 @@ export default function UpdateProperty() {
                       <div className="photosTitle drop-shadow-xl bg-white border-2 rounded-xl border-gray-500 mb-8 text-left text-[20px] font-bold w-full border rounded-[10px] px-4 py-4">
                           <div className="text-left text-[30px] font-bold">Current pictures</div>
                           {
-                            (property?.propertyImages?.length > 0)?
+                            (property?.propertyimages?.length > 0)?
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full h-[275px] gap-[20px] overflow-y-auto mobileScroll removeScroll">
                               {
-                                property?.propertyImages?.map((value, index) => {
+                                property?.propertyimages?.map((value, index) => {
                                   return(
                                     <div key={index} className="flex items-center justify-center w-full h-full">
                                       <img src={value?.url} alt="" className="w-full h-[200px]"/>

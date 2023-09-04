@@ -87,8 +87,8 @@ export default function TransactionCard(props) {
         <div className="flex flex-col w-full h-auto lg:h-[250px] lg:flex-row gap-[15px] justify-between border-[2px] border-green-700  p-[5px] rounded-[10px] bg-neutral-200/50">
             <div className="w-full md:w-[250px] h-[250px] md:h-full">
                 {
-                    (props?.data?.property?.propertyImages?.length > 0)?
-                    <img src={props?.data?.property?.propertyImages[0]?.url} alt="" className="w-full h-full rounded-[5px]" />
+                    (props?.data?.property?.propertyimages?.length > 0)?
+                    <img src={props?.data?.property?.propertyimages[0]?.url} alt="" className="w-full h-full rounded-[5px]" />
                     :
                     <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full rounded-[5px]" />
                 }
