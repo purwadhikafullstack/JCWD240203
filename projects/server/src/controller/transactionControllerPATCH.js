@@ -5,7 +5,6 @@ const transaction = db.transaction;
 const property = db.property;
 const propertyimages = db.propertyimages;
 const room = db.room;
-require('dotenv').config();
 
 module.exports = {
     updatePaymentProof: async(req, res) => {

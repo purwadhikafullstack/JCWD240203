@@ -5,7 +5,6 @@ const property = db.property;
 const propertyimages = db.propertyimages;
 const room = db.room;
 const user = db.user;
-require('dotenv').config();
 
 module.exports = {
     getTransaction: async(req, res) => {
@@ -42,7 +41,7 @@ module.exports = {
                 ],
                 order: [
                     [{model: property}, {model: propertyimages} ,'id', 'ASC'],
-                    ['id', 'ASC']
+                    ['createdAt', 'ASC']
                 ],
                 limit: limit * page || 999999999999,
                 distinct: true
@@ -115,7 +114,7 @@ module.exports = {
                 ],
                 order: [
                     [{model: property}, {model: propertyimages} ,'id', 'ASC'],
-                    ['id', 'ASC']
+                    ['createdAt', 'ASC']
                 ],
                 limit: limit * page || 999999999999,
                 distinct: true

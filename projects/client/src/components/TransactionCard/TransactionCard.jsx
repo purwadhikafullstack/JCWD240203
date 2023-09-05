@@ -33,7 +33,8 @@ export default function TransactionCard(props) {
                     page: props?.page,
                     limit: props?.limit,
                     month: props?.month,
-                    year: props?.year
+                    year: props?.year,
+                    status: props?.status
                 })).then(
                     () => {
                         toast.success('Changes saved !', {id: loading});
@@ -67,7 +68,8 @@ export default function TransactionCard(props) {
                 limit: props?.limit,
                 type: 'History',
                 month: props?.month,
-                year: props?.year
+                year: props?.year,
+                status: props?.status
             })).then(
                 () => {
                     toast.success('Order cancelled !', {id: loading});

@@ -4,7 +4,6 @@ const transaction = db.transaction;
 const property = db.property;
 const room = db.room;
 const user = db.user;
-require('dotenv').config();
 
 module.exports = {
     getCurrent: async(req, res) => {
