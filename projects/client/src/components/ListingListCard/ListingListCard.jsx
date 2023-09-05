@@ -10,7 +10,7 @@ export default function ListingListCard(props) {
                             (props?.data?.propertyimages?.length > 0)?
                             <img src={props?.data?.propertyimages[0]?.url} alt="" className="w-full h-full" />
                             :
-                            <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full" />
+                            <img src={`${process.env.REACT_APP_API_IMG_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full" />
                         }
                     </div>
                     <div className="flex flex-col md:w-[280px] md:h-[72px] gap-[20px] justify-center">

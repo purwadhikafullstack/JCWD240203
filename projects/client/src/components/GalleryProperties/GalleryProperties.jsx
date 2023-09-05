@@ -13,7 +13,7 @@ const GalleryProperties = (props) => {
             (props?.images?.length > 0)?
             <img src={props?.images[0]?.url} alt='' className='w-full h-full'/>
             :
-            <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt='' className='w-full h-full'/>
+            <img src={`${process.env.REACT_APP_API_IMG_URL}/default/DefaultProperty.png`} alt='' className='w-full h-full'/>
           }
         </div>
         <div className={`${(props?.images?.length <= 1) ? 'hidden' : (props?.images?.length <= 3) ? 'flex-[0.75] grid grid-cols-1 gap-[10px]' : 'flex-1 grid grid-cols-2 gap-[10px]'}`}>

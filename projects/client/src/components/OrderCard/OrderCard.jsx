@@ -83,7 +83,7 @@ export default function OrderCard(props) {
                     (props?.data?.property?.propertyimages?.length > 0)?
                     <img src={props?.data?.property?.propertyimages[0]?.url} alt="" className="w-full h-full rounded-[5px]" />
                     :
-                    <img src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full rounded-[5px]" />
+                    <img src={`${process.env.REACT_APP_API_IMG_URL}/default/DefaultProperty.png`} alt="" className="w-full h-full rounded-[5px]" />
                 }
             </div>
             <div className="flex flex-col justify-center text-start flex-[1.3] gap-[15px]">
@@ -129,7 +129,7 @@ export default function OrderCard(props) {
                         (props?.data?.paymentProof)?
                         <img src={props?.data?.paymentProof} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
                         :
-                        <img src={'http://localhost:8000/default/DefaultTransaction.png'} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
+                        <img src={`${process.env.REACT_APP_API_IMG_URL}/default/DefaultTransaction.png`} alt="" className="w-full h-full border-[1px] border-gray-600 rounded-[5px]"/>
                     }
                 </div>
             </div>

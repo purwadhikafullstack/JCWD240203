@@ -15,7 +15,7 @@ export default function PropertyCard(props) {
           />
         :
           <img
-              src={`${process.env.REACT_APP_API_BASE_URL}/default/DefaultProperty.png`}
+              src={`${process.env.REACT_APP_API_IMG_URL}/default/DefaultProperty.png`}
               alt=""
               className="w-full h-[175px] md:h-[200px] rounded-[10px]"
           />

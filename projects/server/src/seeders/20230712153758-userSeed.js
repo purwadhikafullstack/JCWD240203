@@ -11,7 +11,7 @@ module.exports = {
         phoneNumber: '000000000',
         gender: 'Male',
         birthDate: '2003-11-10',
-        profilePicture: 'http://localhost:8000/default/DefaultProfile.png',
+        profilePicture: 'http://localhost:8000/Public/default/DefaultProfile.png',
         status: 'verified',
         accountType: 'Local'
       },
@@ -22,7 +22,7 @@ module.exports = {
         phoneNumber: '000000000',
         gender: 'Male',
         birthDate: '2003-11-10',
-        profilePicture: 'http://localhost:8000/default/DefaultProfile.png',
+        profilePicture: 'http://localhost:8000/Public/default/DefaultProfile.png',
         status: 'unverified',
         accountType: 'Local'
       }
