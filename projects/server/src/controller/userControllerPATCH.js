@@ -38,8 +38,8 @@ module.exports = {
                 phoneNumber: newPhoneNumber,
                 gender: gender,
                 birthDate: birthDate,
-                profilePicture: (newPFP)? process.env.API_LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
-                idCard: (newId)? process.env.API_LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
+                profilePicture: (newPFP)? process.env.API_IMG_LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
+                idCard: (newId)? process.env.API_IMG_LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
             }
 
             if(newEmail !== dataExist.email) {fields.status = 'unverified'};
@@ -51,11 +51,11 @@ module.exports = {
             
             let old = [];
             for(let i in req?.files) {
-                if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.API_LINK + '/Default/DefaultProfile.png') {
-                    old.push({path: 'src/Public/' + dataExist.profilePicture.split(`${process.env.API_LINK}/`)[1]})
+                if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.API_IMG_LINK + '/Default/DefaultProfile.png') {
+                    old.push({path: 'src/Public/' + dataExist.profilePicture.split(`${process.env.API_IMG_LINK}/`)[1]})
                 }
                 else if(i === 'newId' && dataExist.idCard) {
-                    old.push({path: 'src/Public/' + dataExist.idCard.split(`${process.env.API_LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.idCard.split(`${process.env.API_IMG_LINK}/`)[1]})
                 }
             }
 

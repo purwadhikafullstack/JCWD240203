@@ -27,7 +27,7 @@ module.exports = {
             }
 
             await transaction.update({
-                paymentProof: (paymentProof)? `${process.env.API_LINK}/PaymentProofs/${paymentProof[0].filename}` : dataExist.paymentProof
+                paymentProof: (paymentProof)? `${process.env.API_IMG_LINK}/PaymentProofs/${paymentProof[0].filename}` : dataExist.paymentProof
             }, {
                 where: {
                     id: id
@@ -39,8 +39,8 @@ module.exports = {
 
             let old = [];
             for(let i in req?.files) {
-                if(dataExist.paymentProof && dataExist.paymentProof !== process.env.API_LINK + '/Default/DefaultTransaction.png') {
-                    old.push({path: 'src/Public/' + dataExist.paymentProof.split(`${process.env.API_LINK}/`)[1]})
+                if(dataExist.paymentProof && dataExist.paymentProof !== process.env.API_IMG_LINK + '/Default/DefaultTransaction.png') {
+                    old.push({path: 'src/Public/' + dataExist.paymentProof.split(`${process.env.API_IMG_LINK}/`)[1]})
                 }
             }
 
