@@ -116,7 +116,7 @@ module.exports = {
                 }
             } 
 
-            const token = jwt.sign({code: verify, id: id, type: 'AccountVerification'}, process.env.PRIVATE_KEY, {expiresIn: '1h'});
+            const token = jwt.sign({code: verify, id: id, type: 'AccountVerification'}, 'UKMD', {expiresIn: '1h'});
 
             await user.update({
                 code: token
@@ -173,7 +173,7 @@ module.exports = {
                     data: null
                 })
             }
-            const verify = jwt.verify(token, process.env.PRIVATE_KEY);
+            const verify = jwt.verify(token, 'UKMD');
             
             const result = await user.findOne({
                 where: {id: verify.id, status: 'unverified', accountType: 'Local'}
@@ -187,7 +187,7 @@ module.exports = {
                 });
             }
 
-            const userToken = jwt.verify(result.code, process.env.PRIVATE_KEY);
+            const userToken = jwt.verify(result.code, 'UKMD');
             
             if(verify.code === userToken.code && verify.id === userToken.id) {
                 await user.update({

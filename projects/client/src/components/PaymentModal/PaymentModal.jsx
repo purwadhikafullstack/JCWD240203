@@ -5,8 +5,6 @@ import { createTransaction } from '../../redux/features/transaction/transactionS
 import { toast } from 'react-hot-toast';
 import './PaymentModal.css'
 
-
-
 export default function PaymentModal(props) {
     const [nights, setNights] = useState(0);
     const [rooms, setRooms] = useState(1);
@@ -28,6 +26,7 @@ export default function PaymentModal(props) {
             })).then(
                 () => {
                     toast.success('Room booked !', { id: loading });
+                    handleClick();
                 },
                 (error) => {
                     if (!error.response.data) {

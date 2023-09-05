@@ -4,7 +4,6 @@ const handlebars = require('handlebars');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const transporter = require('../transport/transport');
-require('dotenv').config();
 const user = db.user;
 
 module.exports = {
@@ -38,7 +37,7 @@ module.exports = {
                 });
             }
 
-            const token = jwt.sign({code: code}, process.env.PRIVATE_KEY, {expiresIn: '10m'});
+            const token = jwt.sign({code: code}, 'UKMD', {expiresIn: '10m'});
 
             await user.update({code: token}, {
                 where: {id: recipient.id}
@@ -105,7 +104,7 @@ module.exports = {
 
             let storedCode = null;
 
-            try {storedCode = jwt.verify(existingUser.code, process.env.PRIVATE_KEY);}
+            try {storedCode = jwt.verify(existingUser.code, 'UKMD');}
             catch(error) {
                 return res.status(500).send({
                     isError: true,

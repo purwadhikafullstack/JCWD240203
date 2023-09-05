@@ -29,7 +29,8 @@ export default function OrderCard(props) {
                 limit: props?.limit,
                 type: 'Order',
                 month: props?.month,
-                year: props?.year
+                year: props?.year,
+                status: props?.status
             })).then(
                 () => {
                     toast.success('Order Accepted', {id: loading});
@@ -58,7 +59,8 @@ export default function OrderCard(props) {
                 limit: props?.limit,
                 type: 'Order',
                 month: props?.month,
-                year: props?.year
+                year: props?.year,
+                status: props?.status
             })).then(
                 () => {
                     toast.success('Order Rejected', {id: loading});

@@ -5,7 +5,6 @@ const property = db.property;
 const price = db.price;
 const room = db.room;
 const user = db.user;
-require('dotenv').config();
 
 module.exports = {
     createTransaction: async(req, res) => {
