@@ -73,7 +73,7 @@ module.exports = {
             if(images) {
                 for(let image of images) {
                     dataImage.push({
-                        url: `${process.env.API_LINK}/Property/${image.filename}`,
+                        url: `${process.env.API_IMG_LINK}/Property/${image.filename}`,
                         propertyId: propertyId
                     })
                 };
@@ -87,8 +87,8 @@ module.exports = {
                 for(let image of prevImages) {
                     oldRows.push(image.id);
                     //unnecessary if statement for production. Delete it if you want
-                    if(image.url.split(`${process.env.API_LINK}/`)[1]) {
-                        old.push({path: 'src/Public/' + image.url.split(`${process.env.API_LINK}/`)[1]})
+                    if(image.url.split(`${process.env.API_IMG_LINK}/`)[1]) {
+                        old.push({path: 'src/Public/' + image.url.split(`${process.env.API_IMG_LINK}/`)[1]})
                     }
                 }
     

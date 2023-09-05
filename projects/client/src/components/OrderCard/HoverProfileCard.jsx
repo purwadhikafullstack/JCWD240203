@@ -15,7 +15,7 @@ export default function HoverProfileCard(props) {
                     <div className="relative h-[35px] w-[35px] overflow-hidden">
                         <img
                             alt=""
-                            src={`${process.env.REACT_APP_API_BASE_URL}/Default/DefaultProfile.png`}
+                            src={`${process.env.REACT_APP_API_IMG_URL}/Default/DefaultProfile.png`}
                             className="rounded-full w-[35px] h-[35px]"
                         />
                     </div>

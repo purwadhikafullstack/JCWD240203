@@ -44,7 +44,7 @@ module.exports = {
             if(images) {
                 for(let image of images) {
                     dataImage.push({
-                        url: `${process.env.API_LINK}/Property/${image.filename}`,
+                        url: `${process.env.API_IMG_LINK}/Property/${image.filename}`,
                         propertyId: newProperty.id
                     })
                 }

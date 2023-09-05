@@ -158,7 +158,7 @@ module.exports = {
                 roomId: roomId,
                 stock: stock,
                 price: grandTotal,
-                paymentProof: `${process.env.API_LINK}/Default/DefaultTransaction.png`,
+                paymentProof: `${process.env.API_IMG_LINK}/Default/DefaultTransaction.png`,
                 status: 'pending',
                 checkIn: checkIn,
                 checkOut: checkOut
