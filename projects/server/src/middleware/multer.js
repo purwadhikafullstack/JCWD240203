@@ -1,7 +1,8 @@
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 
-const defaultPath = 'src/Public';
+const defaultPath = path.join(__dirname, '../Public');
 const storage = multer.diskStorage({
     destination: async(req, file, cb) => {
         const folder = (file.fieldname === 'newPFP')? 'ProfilePicture' : (file.fieldname === 'newId')? 'IdCards' : 'Property';
