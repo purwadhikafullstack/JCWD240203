@@ -25,14 +25,14 @@ export default function TrendingCarausel() {
     }, [call])
   
     return (
-      <div className="flex flex-col items-center overflow-hidden mx-[20px]">
+      <div className="flex flex-col items-center overflow-hidden m-[10px] md:mx-[20px]">
         <div className="trending text-left text-[60px] font-bold">
           Trending stays in Indonesia
         </div>
         <div className="these text-left text-[48px] font-thin">
           These homes get lots attention on Rentify
         </div>
-        <div className="flex w-full overflow-x-auto mobileScroll removeScroll gap-[25px] px-[20px] py-[15px]">
+        <div className="flex w-full overflow-x-auto mobileScroll removeScroll gap-[25px] py-[15px]">
           {
             (loading) ?
             <div className='flex-none flex items-center justify-center w-full h-[325px] md:h-[350px]'>

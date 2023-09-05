@@ -38,8 +38,8 @@ module.exports = {
                 phoneNumber: newPhoneNumber,
                 gender: gender,
                 birthDate: birthDate,
-                profilePicture: (newPFP)? process.env.LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
-                idCard: (newId)? process.env.LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
+                profilePicture: (newPFP)? process.env.API_LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
+                idCard: (newId)? process.env.API_LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
             }
 
             if(newEmail !== dataExist.email) {fields.status = 'unverified'};
@@ -51,11 +51,11 @@ module.exports = {
             
             let old = [];
             for(let i in req?.files) {
-                if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.LINK + '/Default/DefaultProfile.png') {
-                    old.push({path: 'src/Public/' + dataExist.profilePicture.split(`${process.env.LINK}/`)[1]})
+                if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.API_LINK + '/Default/DefaultProfile.png') {
+                    old.push({path: 'src/Public/' + dataExist.profilePicture.split(`${process.env.API_LINK}/`)[1]})
                 }
                 else if(i === 'newId' && dataExist.idCard) {
-                    old.push({path: 'src/Public/' + dataExist.idCard.split(`${process.env.LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.idCard.split(`${process.env.API_LINK}/`)[1]})
                 }
             }
 
@@ -116,7 +116,7 @@ module.exports = {
                 }
             } 
 
-            const token = jwt.sign({code: verify, id: id, type: 'AccountVerification'}, process.env.KEY, {expiresIn: '1h'});
+            const token = jwt.sign({code: verify, id: id, type: 'AccountVerification'}, 'UKMD', {expiresIn: '1h'});
 
             await user.update({
                 code: token
@@ -130,7 +130,7 @@ module.exports = {
                 fs.readFileSync('./src/Public/templates/verifyEmail.html', {encoding: 'utf-8'})
             );
 
-            const domain = process.env.DOMAIN;
+            const domain = process.env.CLIENT_DOMAIN;
             const path = `verify`;
             const data = {
                 "username": recipient.username,
@@ -173,7 +173,7 @@ module.exports = {
                     data: null
                 })
             }
-            const verify = jwt.verify(token, process.env.KEY);
+            const verify = jwt.verify(token, 'UKMD');
             
             const result = await user.findOne({
                 where: {id: verify.id, status: 'unverified', accountType: 'Local'}
@@ -187,7 +187,7 @@ module.exports = {
                 });
             }
 
-            const userToken = jwt.verify(result.code, process.env.KEY);
+            const userToken = jwt.verify(result.code, 'UKMD');
             
             if(verify.code === userToken.code && verify.id === userToken.id) {
                 await user.update({

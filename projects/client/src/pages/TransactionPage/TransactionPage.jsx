@@ -81,7 +81,7 @@ export default function TransactionPage() {
                         history?.map((value, index) => {
                             return(
                             <div key={index}>
-                                <TransactionCard data={value} year={year} month={month} page={page} limit={limit} index={index} setLoading={setLoading}/>
+                                <TransactionCard data={value} year={year} month={month} page={page} limit={limit} status={status} index={index} setLoading={setLoading}/>
                                 <hr className="my-4 border-gray-300" />
                             </div>
                             )

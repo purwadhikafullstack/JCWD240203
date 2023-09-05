@@ -7,20 +7,17 @@ const { users, properties, countries, transactions, categories, facilities, pric
 const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(
-  cors()
+  cors({
+    origin: [
+      process.env.CLIENT_DOMAIN &&
+        process.env.CLIENT_DOMAIN.split(","),
+    ],
+  })
 );
-// {
-//   origin: [
-//     process.env.WHITELISTED_DOMAIN &&
-//       process.env.WHITELISTED_DOMAIN.split(","),
-//   ],
-// }
 
 app.use(express.json());
 app.use(express.static(join(__dirname, 'Public')));
-app.use('/public', express.static('public'));
-// app.use(express.static(`src/public/images`))
-// app.use(express.static(`public`))
+
 //#region API ROUTES
 
 // ===========================
@@ -37,6 +34,15 @@ app.get("/api/greetings", (req, res, next) => {
 });
 
 // ===========================
+
+app.use("/api/users", users);
+app.use("/api/properties", properties);
+app.use("/api/countries", countries);
+app.use("/api/transactions", transactions);
+app.use("/api/categories", categories);
+app.use("/api/facilities", facilities);
+app.use("/api/prices", prices);
+app.use("/api/rooms", rooms);
 
 // not found
 app.use((req, res, next) => {
@@ -64,18 +70,9 @@ const clientPath = "../../client/build";
 app.use(express.static(join(__dirname, clientPath)));
 
 // Serve the HTML page
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(join(__dirname, clientPath, "index.html"));
 });
-
-app.use("/users", users);
-app.use("/properties", properties);
-app.use("/countries", countries);
-app.use("/transactions", transactions);
-app.use("/categories", categories);
-app.use("/facilities", facilities);
-app.use("/prices", prices);
-app.use("/rooms", rooms);
 
 //#endregion
 

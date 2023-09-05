@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { deleteFiles, formatReqFiles } = require('../helper/deleteFiles');
-require('dotenv').config();
 
 module.exports = {
     isOwner: (req, res, next) => {
@@ -17,7 +16,7 @@ module.exports = {
             }
             
             token = token.split(' ')[1];
-            const verify = jwt.verify(token, process.env.KEY);
+            const verify = jwt.verify(token, 'UKMD');
             
             if(!verify || verify.id !== Number(id)) {
                 return res.status(400).send({
@@ -55,7 +54,7 @@ module.exports = {
             }
 
             token = token.split(' ')[1];
-            const verify = jwt.verify(token, process.env.KEY);
+            const verify = jwt.verify(token, 'UKMD');
             
             if(!verify || verify.id !== Number(id)) {
                 if(req.files) {
@@ -99,7 +98,7 @@ module.exports = {
             }
 
             token = token.split(' ')[1];
-            const verify = jwt.verify(token, process.env.KEY);
+            const verify = jwt.verify(token, 'UKMD');
             
             if(!verify || verify.status !== 'verified' || !idCard) {
                 if(req.files) {

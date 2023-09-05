@@ -1,6 +1,5 @@
 const db = require('../models');
 const { Op } = require('sequelize');
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const user = db.user;
 const property = db.property;
@@ -94,7 +93,7 @@ module.exports = {
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status
-            }, process.env.KEY, {expiresIn: '24h'});
+            }, 'UKMD', {expiresIn: '24h'});
             existingUser = JSON.parse(JSON.stringify(existingUser)); // stringify and parse needed to delete password key
             existingUser.token = token;
             delete existingUser.password;

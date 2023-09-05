@@ -4,7 +4,6 @@ const property = db.property;
 const propertyimages = db.propertyimages;
 const propertyfacility = db.propertyfacility;
 const room = db.room;
-require('dotenv').config();
 
 module.exports = {
     addProperty: async(req, res) => {
@@ -45,7 +44,7 @@ module.exports = {
             if(images) {
                 for(let image of images) {
                     dataImage.push({
-                        url: `${process.env.LINK}/Property/${image.filename}`,
+                        url: `${process.env.API_LINK}/Property/${image.filename}`,
                         propertyId: newProperty.id
                     })
                 }

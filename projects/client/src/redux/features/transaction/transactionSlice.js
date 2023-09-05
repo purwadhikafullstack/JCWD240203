@@ -109,7 +109,8 @@ export const updatePaymentProof = (data) => async(dispatch) => {
                 page: data.page,
                 limit: data.limit,
                 month: data.month,
-                year: data.year
+                year: data.year,
+                status: data.status
             })).then(
                 () => {},
                 (error) => {return Promise.reject(error)}
@@ -141,7 +142,8 @@ export const updateStatus = (data) => async(dispatch) => {
                     page: data.page,
                     limit: data.limit,
                     month: data.month,
-                    year: data.year
+                    year: data.year,
+                    status: data.status
                 })).then(
                     () => {},
                     (error) => {return Promise.reject(error)}
@@ -155,7 +157,8 @@ export const updateStatus = (data) => async(dispatch) => {
                     page: data.page,
                     limit: data.limit,
                     month: data.month,
-                    year: data.year
+                    year: data.year,
+                    status: data.status
                 })).then(
                     () => {},
                     (error) => {return Promise.reject(error)}

@@ -5,7 +5,6 @@ const property = db.property;
 const price = db.price;
 const room = db.room;
 const user = db.user;
-require('dotenv').config();
 
 module.exports = {
     createTransaction: async(req, res) => {
@@ -159,7 +158,7 @@ module.exports = {
                 roomId: roomId,
                 stock: stock,
                 price: grandTotal,
-                paymentProof: `${process.env.LINK}/Default/DefaultTransaction.png`,
+                paymentProof: `${process.env.API_LINK}/Default/DefaultTransaction.png`,
                 status: 'pending',
                 checkIn: checkIn,
                 checkOut: checkOut
