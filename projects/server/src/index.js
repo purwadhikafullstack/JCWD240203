@@ -2,6 +2,7 @@ require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
+const path = require('path');
 const { users, properties, countries, transactions, categories, facilities, prices, rooms } = require("./router");
 
 const PORT = process.env.PORT || 8000;
@@ -16,7 +17,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use('/Public', express.static(join(__dirname, 'Public')));
+app.use(express.static(path.join(__dirname, 'Public')));
 
 //#region API ROUTES
 
