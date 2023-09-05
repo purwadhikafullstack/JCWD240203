@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { keepLogin, onLogout } from "./redux/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
@@ -71,6 +71,7 @@ function App() {
         <Route path={'/changepassword'} element={<ChangePassword/>}/>
         <Route path={'/forgotpassword'} element={<ResetPassword/>}/>
         <Route path={'/notfound'} element={<Error404/>}/>
+        <Route path={'*'} element={<Navigate to={'/notfound'}/>}/>
       </Routes>
     </div>
   );
