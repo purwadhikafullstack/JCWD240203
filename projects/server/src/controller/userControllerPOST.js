@@ -28,7 +28,7 @@ module.exports = {
                 email: email,
                 gender: gender,
                 birthDate: birthDate || null,
-                profilePicture: `${process.env.API_IMG_LINK}/Default/DefaultProfile.png`,
+                profilePicture: `https://jcwd240203.purwadhikabootcamp.com/Default/DefaultProfile.png`,
                 phoneNumber: phoneNumber || null,
                 status: 'unverified',
                 accountType: 'Local'
@@ -134,7 +134,7 @@ module.exports = {
                     username: username,
                     password: uid,
                     email: email,
-                    profilePicture: `${process.env.API_IMG_LINK}/Default/DefaultProfile.png`,
+                    profilePicture: `https://jcwd240203.purwadhikabootcamp.com/Default/DefaultProfile.png`,
                     status: 'verified',
                     accountType: 'Google'
                 });

@@ -52,10 +52,10 @@ module.exports = {
             let old = [];
             for(let i in req?.files) {
                 if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.API_IMG_LINK + '/Default/DefaultProfile.png') {
-                    old.push({path: 'src/Public/' + dataExist.profilePicture.split(`${process.env.API_IMG_LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.profilePicture.split(`https://jcwd240203.purwadhikabootcamp.com/`)[1]})
                 }
                 else if(i === 'newId' && dataExist.idCard) {
-                    old.push({path: 'src/Public/' + dataExist.idCard.split(`${process.env.API_IMG_LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.idCard.split(`https://jcwd240203.purwadhikabootcamp.com/`)[1]})
                 }
             }
 

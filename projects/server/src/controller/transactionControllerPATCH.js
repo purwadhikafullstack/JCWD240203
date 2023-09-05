@@ -27,7 +27,7 @@ module.exports = {
             }
 
             await transaction.update({
-                paymentProof: (paymentProof)? `${process.env.API_IMG_LINK}/PaymentProofs/${paymentProof[0].filename}` : dataExist.paymentProof
+                paymentProof: (paymentProof)? `https://jcwd240203.purwadhikabootcamp.com/PaymentProofs/${paymentProof[0].filename}` : dataExist.paymentProof
             }, {
                 where: {
                     id: id
@@ -40,7 +40,7 @@ module.exports = {
             let old = [];
             for(let i in req?.files) {
                 if(dataExist.paymentProof && dataExist.paymentProof !== process.env.API_IMG_LINK + '/Default/DefaultTransaction.png') {
-                    old.push({path: 'src/Public/' + dataExist.paymentProof.split(`${process.env.API_IMG_LINK}/`)[1]})
+                    old.push({path: 'src/Public/' + dataExist.paymentProof.split(`https://jcwd240203.purwadhikabootcamp.com/`)[1]})
                 }
             }
 
