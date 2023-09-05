@@ -8,12 +8,7 @@ const { users, properties, countries, transactions, categories, facilities, pric
 const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(
-  cors({
-    origin: [
-      process.env.CLIENT_DOMAIN &&
-        process.env.CLIENT_DOMAIN.split(","),
-    ],
-  })
+  cors()
 );
 
 app.use(express.json());
