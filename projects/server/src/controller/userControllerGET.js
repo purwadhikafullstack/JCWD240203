@@ -94,7 +94,7 @@ module.exports = {
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status
-            }, process.env.KEY, {expiresIn: '24h'});
+            }, process.env.PRIVATE_KEY, {expiresIn: '24h'});
             existingUser = JSON.parse(JSON.stringify(existingUser)); // stringify and parse needed to delete password key
             existingUser.token = token;
             delete existingUser.password;

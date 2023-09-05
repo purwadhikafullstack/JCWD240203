@@ -7,14 +7,13 @@ const { users, properties, countries, transactions, categories, facilities, pric
 const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(
-  cors()
+  cors({
+    origin: [
+      process.env.CLIENT_DOMAIN &&
+        process.env.CLIENT_DOMAIN.split(","),
+    ],
+  })
 );
-// {
-//   origin: [
-//     process.env.WHITELISTED_DOMAIN &&
-//       process.env.WHITELISTED_DOMAIN.split(","),
-//   ],
-// }
 
 app.use(express.json());
 app.use(express.static(join(__dirname, 'Public')));
@@ -63,11 +62,6 @@ app.use((err, req, res, next) => {
 const clientPath = "../../client/build";
 app.use(express.static(join(__dirname, clientPath)));
 
-// Serve the HTML page
-app.get("/", (req, res) => {
-  res.sendFile(join(__dirname, clientPath, "index.html"));
-});
-
 app.use("/users", users);
 app.use("/properties", properties);
 app.use("/countries", countries);
@@ -76,6 +70,11 @@ app.use("/categories", categories);
 app.use("/facilities", facilities);
 app.use("/prices", prices);
 app.use("/rooms", rooms);
+
+// Serve the HTML page
+app.get("*", (req, res) => {
+  res.sendFile(join(__dirname, clientPath, "index.html"));
+});
 
 //#endregion
 

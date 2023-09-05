@@ -17,7 +17,7 @@ module.exports = {
             }
             
             token = token.split(' ')[1];
-            const verify = jwt.verify(token, process.env.KEY);
+            const verify = jwt.verify(token, process.env.PRIVATE_KEY);
             
             if(!verify || verify.id !== Number(id)) {
                 return res.status(400).send({
@@ -55,7 +55,7 @@ module.exports = {
             }
 
             token = token.split(' ')[1];
-            const verify = jwt.verify(token, process.env.KEY);
+            const verify = jwt.verify(token, process.env.PRIVATE_KEY);
             
             if(!verify || verify.id !== Number(id)) {
                 if(req.files) {
@@ -99,7 +99,7 @@ module.exports = {
             }
 
             token = token.split(' ')[1];
-            const verify = jwt.verify(token, process.env.KEY);
+            const verify = jwt.verify(token, process.env.PRIVATE_KEY);
             
             if(!verify || verify.status !== 'verified' || !idCard) {
                 if(req.files) {
