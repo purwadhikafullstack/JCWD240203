@@ -12,7 +12,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'Public')));
+app.use("/api/profilepicture", express.static(__dirname + "/Public/ProfilePicture"));
 
 //#region API ROUTES
 
