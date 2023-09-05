@@ -20,7 +20,7 @@ module.exports = {
                 }
             }
             
-            const hash = await bcrypt.hash(password, Number(process.env.ROUNDS));
+            const hash = await bcrypt.hash(password, Number(10));
 
             await user.create({
                 username: username,
@@ -28,7 +28,7 @@ module.exports = {
                 email: email,
                 gender: gender,
                 birthDate: birthDate || null,
-                profilePicture: `${process.env.LINK}/Default/DefaultProfile.png`,
+                profilePicture: `${process.env.API_LINK}/Default/DefaultProfile.png`,
                 phoneNumber: phoneNumber || null,
                 status: 'unverified',
                 accountType: 'Local'
@@ -103,7 +103,7 @@ module.exports = {
             const token = jwt.sign({
                 id: existingUser.id,
                 status: existingUser.status
-            }, process.env.KEY, {expiresIn: '24h'});
+            }, process.env.PRIVATE_KEY, {expiresIn: '24h'});
             existingUser = JSON.parse(JSON.stringify(existingUser)); // stringify and parse needed to delete password key
             existingUser.token = token;
             delete existingUser.password;
@@ -134,7 +134,7 @@ module.exports = {
                     username: username,
                     password: uid,
                     email: email,
-                    profilePicture: `${process.env.LINK}/Default/DefaultProfile.png`,
+                    profilePicture: `${process.env.API_LINK}/Default/DefaultProfile.png`,
                     status: 'verified',
                     accountType: 'Google'
                 });
@@ -149,7 +149,7 @@ module.exports = {
                 const token = jwt.sign({
                     id: userExist.id,
                     status: userExist.status
-                }, process.env.KEY, {expiresIn: '24h'});
+                }, process.env.PRIVATE_KEY, {expiresIn: '24h'});
 
                 userExist = JSON.parse(JSON.stringify(userExist));
                 userExist.token = token;

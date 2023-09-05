@@ -38,7 +38,7 @@ module.exports = {
                 });
             }
 
-            const token = jwt.sign({code: code}, process.env.KEY, {expiresIn: '10m'});
+            const token = jwt.sign({code: code}, process.env.PRIVATE_KEY, {expiresIn: '10m'});
 
             await user.update({code: token}, {
                 where: {id: recipient.id}
@@ -105,7 +105,7 @@ module.exports = {
 
             let storedCode = null;
 
-            try {storedCode = jwt.verify(existingUser.code, process.env.KEY);}
+            try {storedCode = jwt.verify(existingUser.code, process.env.PRIVATE_KEY);}
             catch(error) {
                 return res.status(500).send({
                     isError: true,
@@ -122,7 +122,7 @@ module.exports = {
                 });
             };
 
-            const hash = await bcrypt.hash(newPassword, Number(process.env.ROUNDS));
+            const hash = await bcrypt.hash(newPassword, Number(10));
 
             await user.update({
                 password: hash,
@@ -180,7 +180,7 @@ module.exports = {
                 });
             };
 
-            const hash = await bcrypt.hash(newPassword, Number(process.env.ROUNDS));
+            const hash = await bcrypt.hash(newPassword, Number(10));
 
             await user.update({password: hash}, {
                 where: {id: existingUser.id}
