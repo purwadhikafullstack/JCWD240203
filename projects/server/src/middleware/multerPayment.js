@@ -1,7 +1,8 @@
 const multer = require('multer');
 const fs = require('fs');
+const { join } = require('path');
 
-const defaultPath = 'src/Public';
+const defaultPath = join(__dirname, '../Public');
 const storage = multer.diskStorage({
     destination: async(req, file, cb) => {
         const folder = 'PaymentProofs';

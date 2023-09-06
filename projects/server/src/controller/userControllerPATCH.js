@@ -131,7 +131,7 @@ module.exports = {
                 fs.readFileSync(join(__dirname, '../Public/templates/verifyEmail.html'), {encoding: 'utf-8'})
             );
 
-            const domain = process.env.CLIENT_DOMAIN;
+            const domain = 'https://jcwd240203.purwadhikabootcamp.com';
             const path = `verify`;
             const data = {
                 "username": recipient.username,
