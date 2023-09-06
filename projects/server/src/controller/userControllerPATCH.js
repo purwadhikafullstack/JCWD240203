@@ -39,7 +39,7 @@ module.exports = {
                 gender: gender,
                 birthDate: birthDate,
                 profilePicture: (newPFP)? `https://jcwd240203.purwadhikabootcamp.com/ProfilePicture/${newPFP[0].filename}` : dataExist.profilePicture,
-                idCard: (newId)? `https://jcwd240203.purwadhikabootcamp.com/IdCards/${newPFP[0].filename}` : dataExist.idCard
+                idCard: (newId)? `https://jcwd240203.purwadhikabootcamp.com/IdCards/${newId[0].filename}` : dataExist.idCard
             }
 
             if(newEmail !== dataExist.email) {fields.status = 'unverified'};
