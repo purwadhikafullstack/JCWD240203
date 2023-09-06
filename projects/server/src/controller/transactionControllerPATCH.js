@@ -39,7 +39,7 @@ module.exports = {
 
             let old = [];
             for(let i in req?.files) {
-                if(dataExist.paymentProof && dataExist.paymentProof !== process.env.API_IMG_LINK + '/Default/DefaultTransaction.png') {
+                if(dataExist.paymentProof && dataExist.paymentProof !== 'https://jcwd240203.purwadhikabootcamp.com/Default/DefaultTransaction.png') {
                     old.push({path: 'src/Public/' + dataExist.paymentProof.split(`https://jcwd240203.purwadhikabootcamp.com/`)[1]})
                 }
             }

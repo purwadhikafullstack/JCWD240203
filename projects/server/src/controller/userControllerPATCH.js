@@ -38,8 +38,8 @@ module.exports = {
                 phoneNumber: newPhoneNumber,
                 gender: gender,
                 birthDate: birthDate,
-                profilePicture: (newPFP)? process.env.API_IMG_LINK + '/ProfilePicture/' + newPFP[0].filename : dataExist.profilePicture,
-                idCard: (newId)? process.env.API_IMG_LINK + '/IdCards/' + newId[0].filename : dataExist.idCard
+                profilePicture: (newPFP)? `https://jcwd240203.purwadhikabootcamp.com/ProfilePicture/${newPFP[0].filename}` : dataExist.profilePicture,
+                idCard: (newId)? `https://jcwd240203.purwadhikabootcamp.com/IdCards/${newPFP[0].filename}` : dataExist.idCard
             }
 
             if(newEmail !== dataExist.email) {fields.status = 'unverified'};
@@ -51,7 +51,7 @@ module.exports = {
             
             let old = [];
             for(let i in req?.files) {
-                if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== process.env.API_IMG_LINK + '/Default/DefaultProfile.png') {
+                if(i === 'newPFP' && dataExist.profilePicture && dataExist.profilePicture !== 'https://jcwd240203.purwadhikabootcamp.com/Default/DefaultProfile.png') {
                     old.push({path: 'src/Public/' + dataExist.profilePicture.split(`https://jcwd240203.purwadhikabootcamp.com/`)[1]})
                 }
                 else if(i === 'newId' && dataExist.idCard) {
