@@ -1,5 +1,6 @@
 const db = require('../models');
 const fs = require('fs');
+const { join }= require('path');
 const handlebars = require('handlebars');
 const jwt = require('jsonwebtoken');
 const transporter = require('../transport/transport')
@@ -127,7 +128,7 @@ module.exports = {
             });
             
             const template = handlebars.compile(
-                fs.readFileSync('./src/Public/templates/verifyEmail.html', {encoding: 'utf-8'})
+                fs.readFileSync(join(__dirname, '../Public/templates/verifyEmail.html'), {encoding: 'utf-8'})
             );
 
             const domain = process.env.CLIENT_DOMAIN;
