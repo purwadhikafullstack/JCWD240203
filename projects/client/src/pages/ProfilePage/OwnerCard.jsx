@@ -106,7 +106,7 @@ export default function OwnerCard({isSaving, ...props}) {
                         <div className="w-full lg:w-[225px] h-[225px] lg:h-[175px]">
                             {
                                 (props?.newId === null) ?
-                                <img src={`${process.env.REACT_APP_API_IMG_URL}/default/DefaultTransaction.png`} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
+                                <img src={`${process.env.REACT_APP_API_IMG_URL}/Default/DefaultTransaction.png`} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />
                                 :
                                 (typeof props?.newId === 'string') ?
                                 <img src={props?.newId} alt="" className="w-full h-full rounded-[10px] border-[1px] border-gray-600" />

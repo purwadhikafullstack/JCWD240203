@@ -37,7 +37,7 @@ export default function ListingCard(props) {
                   (props?.data?.propertyimages?.length > 0)?
                   <img src={props?.data?.propertyimages[0]?.url} alt="" className="w-full h-[150px] md:h-[175px] rounded-[10px]" />
                   :
-                  <img src={`${process.env.REACT_APP_API_IMG_URL}/default/DefaultProperty.png`} alt="" className="w-full h-[150px] md:h-[175px] rounded-[10px]" />
+                  <img src={`${process.env.REACT_APP_API_IMG_URL}/Default/DefaultProperty.png`} alt="" className="w-full h-[150px] md:h-[175px] rounded-[10px]" />
               }
           </Link>
           <Link to={`/property/${props?.data?.id}`} className="flex flex-col w-full items-start gap-[5px] h-full px-[10px] py-[5px]">
